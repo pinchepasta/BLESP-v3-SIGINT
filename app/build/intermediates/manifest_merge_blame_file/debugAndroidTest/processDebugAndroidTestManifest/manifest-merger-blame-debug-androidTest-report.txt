@@ -1,0 +1,31 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.radar.blewifi.test" >
+4
+5    <uses-sdk
+5-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:5:5-74
+6        android:minSdkVersion="26"
+6-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:5:15-41
+7        android:targetSdkVersion="34" />
+7-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:5:42-71
+8
+9    <instrumentation
+9-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:7:5-11:67
+10        android:name="androidx.test.runner.AndroidJUnitRunner"
+10-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:7:22-76
+11        android:functionalTest="false"
+11-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:10:22-52
+12        android:handleProfiling="false"
+12-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:9:22-53
+13        android:label="Tests for com.radar.blewifi"
+13-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:11:22-65
+14        android:targetPackage="com.radar.blewifi" />
+14-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest7662606386579670729.xml:8:22-63
+15
+16    <application
+16-->INJECTED
+17        android:debuggable="true"
+18        android:extractNativeLibs="false" />
+18-->INJECTED
+19
+20</manifest>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvStatsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="NETWORK STATISTICS"
+        android:textColor="#00FF41"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvChartLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="monospace"
+        android:text="1 MONTH ACTIVITY"
+        android:textColor="#FF00FF"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStatsTitle" />
+
+    <!-- Simple custom view for a stylized chart -->
+    <View
+        android:id="@+id/chartView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp"
+        android:background="#1100FF41"
+        app:layout_constraintTop_toBottomOf="@id/tvChartLabel" />
+
+    <ScrollView
+        android:id="@+id/statsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/chartView"
+        app:layout_constraintBottom_toTopOf="@id/btnCloseStats">
+
+        <LinearLayout
+            android:id="@+id/statsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvVulnCounter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#22FF0000"
+                android:fontFamily="monospace"
+                android:padding="8dp"
+                android:text="VULNERABILITIES DETECTED: 12"
+                android:textColor="#FF0000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Detailed Stats Grid Simulation -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="monospace"
+                android:text="DEVICE SURVEILLANCE:"
+                android:textColor="#00FF41"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTotalDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="monospace"
+                android:text="TOTAL UNIQUE MAPPED: 2,419"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAppleDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="APPLE ECOSYSTEM: 412"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAirTagCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="AIRTAG BEACONS: 42"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAndroidDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="ANDROID ECOSYSTEM: 389"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvCarCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="VEHICLE SYSTEMS: 18"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvOtherDevices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="UNKNOWN/OTHER: 1,618"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="monospace"
+                android:text="SIGNAL DENSITY:"
+                android:textColor="#00FF41"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWifi24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="WIFI 2.4GHz: 321"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvWifi5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="WIFI 5GHz: 121"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvBleCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="BLE BEACONS: 1,562"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAeroCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="AIRCRAFT TRACKED: 84"
+                android:textColor="#00FFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="monospace"
+                android:text="SECURITY AUDIT:"
+                android:textColor="#00FF41"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWepCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="WEP VULNERABLE: 4"
+                android:textColor="#FF00FF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvOpenWifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="OPEN HOTSPOTS: 28"
+                android:textColor="#FF00FF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvWhisperCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="WHISPER PAIRS: 6"
+                android:textColor="#FF00FF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="monospace"
+                android:text="SYSTEM STATE:"
+                android:textColor="#00FF41"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvUptime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="UPTIME: 31D 12H 44M"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDataUsage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="METADATA LOGGED: 142.4 MB"
+                android:textColor="#00FF41"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnCloseStats"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/status_box_bg_pink"
+        android:fontFamily="monospace"
+        android:minWidth="80dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="CLOSE"
+        android:textColor="#FF00FF"
+        android:textSize="12sp"
+        style="?attr/borderlessButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

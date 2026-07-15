@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pagerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
+
+    <!-- Header / User ID -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/tvIdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID:"
+            android:textColor="#00FF41"
+            android:textStyle="bold"
+            android:fontFamily="monospace" />
+
+        <EditText
+            android:id="@+id/etUserId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@null"
+            android:hint="ENTER_CALLSIGN"
+            android:textColor="#00FF41"
+            android:textColorHint="#4400FF41"
+            android:fontFamily="monospace"
+            android:maxLength="12"
+            android:inputType="textCapCharacters" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[ OFFLINE ]"
+            android:textColor="#FF00FF"
+            android:textSize="10sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#00FF41"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Device List / Discovery -->
+    <TextView
+        android:id="@+id/tvDiscoveryLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DISCOVERED_UNITS"
+        android:textColor="#00FF41"
+        android:textSize="12sp"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Chat History View -->
+    <LinearLayout
+        android:id="@+id/layoutChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvChatWith"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CHAT_WITH: UNKNOWN"
+            android:textColor="#00FF41"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:background="#1A00FF41"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatHistory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:isScrollContainer="true" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDevices"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        android:isScrollContainer="true" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="BACK"
+        android:fontFamily="monospace"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:backgroundTint="#00FF41"
+        android:layout_marginBottom="8dp"
+        style="@style/Widget.MaterialComponents.Button" />
+
+    <!-- Message Input (Footer) -->
+    <LinearLayout
+        android:id="@+id/layoutMessageInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/status_box_bg"
+            android:padding="8dp"
+            android:hint="MSG_DATA..."
+            android:textColor="#00FF41"
+            android:textColorHint="#4400FF41"
+            android:fontFamily="monospace"
+            android:imeOptions="actionSend"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnAttach"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/status_box_bg"
+            android:text="📎"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnRecord"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/status_box_bg"
+            android:text="🎤"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SEND"
+            android:background="@drawable/status_box_bg_green"
+            android:textColor="#000000"
+            android:fontFamily="monospace"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/eslRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/headerEsl"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical"
+        android:background="#0F0F0F">
+
+        <ImageView
+            android:id="@+id/ivLogoEsl"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:src="@drawable/blesp_logo"
+            android:scaleType="fitStart"
+            android:contentDescription="BLESP Logo" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnScanBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="[ SCANNER ]"
+            android:fontFamily="monospace"
+            android:textColor="#00FF41"
+            android:textSize="12sp"
+            android:background="@drawable/status_box_bg_green"
+            android:layout_marginEnd="8dp"
+            style="?attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnEslBack"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:minWidth="60dp"
+            android:text="BACK"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textColor="#FF00FF"
+            android:textSize="12sp"
+            android:background="@drawable/status_box_bg_pink"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            style="?attr/borderlessButtonStyle" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/webViewEsl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Overlay for native scanner if needed -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/scannerOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AA000000"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvScannerHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="100dp"
+            android:text="ALIGN BARCODE"
+            android:textColor="#00FF41"
+            android:fontFamily="monospace"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</LinearLayout>

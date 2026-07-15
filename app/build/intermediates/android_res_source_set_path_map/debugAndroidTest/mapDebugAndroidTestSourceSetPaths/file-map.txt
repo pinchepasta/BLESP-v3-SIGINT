@@ -1,0 +1,5 @@
+com.radar.blewifi.test.app-androidTest-0 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/generated/res/resValues/androidTest/debug
+com.radar.blewifi.test.app-updated_navigation_xml-1 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/generated/updated_navigation_xml/debugAndroidTest
+com.radar.blewifi.test.app-mergeDebugAndroidTestResources-2 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+com.radar.blewifi.test.app-mergeDebugAndroidTestResources-3 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+com.radar.blewifi.test.app-debugAndroidTest-4 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

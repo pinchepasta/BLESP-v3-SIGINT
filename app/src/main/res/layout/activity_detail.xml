@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:text="TARGET ACQUIRED"
+                android:textColor="#00FF41"
+                android:textSize="20sp"
+                android:fontFamily="monospace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvType"
+            android:text="▸ TYPE    : ---"
+            android:textColor="#00FF41"
+            android:textSize="16sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:text="▸ NAME    : ---"
+            android:textColor="#00FF41"
+            android:textSize="16sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#003B0F"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:text="▸ ADDRESS : ---"
+            android:textColor="#00AA2A"
+            android:textSize="15sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/tvRssi"
+            android:text="▸ RSSI    : ---"
+            android:textColor="#00AA2A"
+            android:textSize="15sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/tvDist"
+            android:text="▸ DIST    : ---"
+            android:textColor="#00AA2A"
+            android:textSize="22sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="[ ENABLE ALARM ]"
+            android:fontFamily="monospace"
+            android:textColor="#00FF41"
+            android:textSize="14sp"
+            android:background="@drawable/btn_bg_dim"
+            android:layout_marginBottom="8dp"
+            style="?attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnSound"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="[ SOUND: ON ]"
+            android:fontFamily="monospace"
+            android:textColor="#00FF41"
+            android:textSize="14sp"
+            android:background="@drawable/btn_bg_dim"
+            android:layout_marginBottom="8dp"
+            style="?attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnBeepAirTag"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="[ TRIGGER AIRTAG BEEP ]"
+            android:fontFamily="monospace"
+            android:textColor="#FF00FF"
+            android:textSize="14sp"
+            android:background="@drawable/btn_bg_dim"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            style="?attr/borderlessButtonStyle" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#003B0F"
+            android:layout_marginBottom="12dp"/>
+
+
+        <TextView
+            android:id="@+id/tvExtra1"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvExtra2"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvExtra3"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvExtra4"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvFastPair"
+            android:text="▸ FAST PAIR: NO"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvSelectExploitLabel"
+            android:text="▸ SELECT EXPLOIT:"
+            android:textColor="#00FF41"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spExploits"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_bg_dim"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tvExploitDesc"
+            android:text="Select an exploit to view technical details..."
+            android:textColor="#888888"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:padding="8dp"
+            android:background="#1AFFFFFF" />
+
+        <TextView
+            android:id="@+id/tvExtra5"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tvExtra6"
+            android:text="▸ ---"
+            android:textColor="#00AA2A"
+            android:textSize="14sp"
+            android:fontFamily="monospace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="OK"
+            android:fontFamily="monospace"
+            android:textColor="#FF00FF"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="@drawable/btn_bg"
+            style="?attr/borderlessButtonStyle" />
+
+    </LinearLayout>
+</ScrollView>

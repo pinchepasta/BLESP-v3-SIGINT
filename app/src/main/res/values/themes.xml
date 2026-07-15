@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.BLEWifiRadar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">#000000</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" ifTarget="p">shortEdges</item>
+        <item name="colorPrimary">#00FF41</item>
+        <item name="colorPrimaryVariant">#003B0F</item>
+        <item name="colorOnPrimary">#000000</item>
+    </style>
+
+    <style name="Theme.BLEWifiRadar.Fullscreen" parent="Theme.BLEWifiRadar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="CalculatorButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:background">@drawable/btn_bg_dim</item>
+        <item name="android:textColor">#00FF41</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@null</item>
+        <item name="rippleColor">#3300FF41</item>
+    </style>
+
+    <style name="CalculatorButton.Pink">
+        <item name="android:background">@drawable/btn_bg_pink_dim</item>
+        <item name="android:textColor">#FF00FF</item>
+        <item name="rippleColor">#33FF00FF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
