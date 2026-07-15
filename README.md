@@ -1,4 +1,11 @@
-# BLESP v3
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/blesplogo.png" alt="BLESP v3 Logo" width="25%" height="25%">
+
+Advanced signal surveillance platform.
+
+Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem, for example from everyday personal devices to complex infrastructure systems, all in one device.
+
+<b>What I'm working on:</b> <a href="https://github.com/pinchepasta/Flipper-Zero-Firmware-on-Cardputer-ADV">mostly-a-Flipper</a>  integration and an iOS version of the app.
+
 
 ---
 
