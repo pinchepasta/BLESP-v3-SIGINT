@@ -15,6 +15,9 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 
 The app disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
 
+After entering the right code, you can spot "change password" for a brief moment, use this to change the password.
+
+<h2>The password in this built is: 123456 ! ! ! </h2>
 
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/7.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/8.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/9.jpg" alt="BLESP v3" width="25%" height="25%">
@@ -22,6 +25,8 @@ The app disguises as a calculator, and it only unlocks and forwards to the app i
 
 The app connects to several devices like Bruce, MULTiPASS, mostly-a-Flipper, Flipper Zero, CYD, Raspberry Pi and many more.
 It always shows you possible attack vectors in detail view, and then you can decide if you want to outsource a job to an external device in your pocket.
+
+The app also makes use of other hacks and vulnerabilities, like the esl tag part for example.
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/14.jpg" alt="BLESP v3" width="25%" height="25%">
 
