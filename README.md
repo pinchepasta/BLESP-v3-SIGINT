@@ -12,7 +12,7 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/2.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/3.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
-<b>ALL NEW COLORS:</b>
+<b>ALL NEW COLORS in v3.1.2:</b>
 <br>
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/nc.jpg" alt="BLESP v3" width="80%" height="80%">
 
