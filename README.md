@@ -35,7 +35,7 @@ It always shows you possible attack vectors in detail view, and then you can dec
 
 The app also makes use of other hacks and vulnerabilities, like the esl tag part for example.
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/14.jpg" alt="BLESP v3" width="25%" height="25%">
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/screenshitesltagtools.jpg" alt="BLESP v3" width="25%" height="25%">
 
 ---
 
