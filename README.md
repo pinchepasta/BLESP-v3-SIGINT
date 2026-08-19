@@ -37,6 +37,9 @@ The app also makes use of other hacks and vulnerabilities, like the esl tag part
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/screenshitesltagtools.jpg" alt="BLESP v3" width="25%" height="25%">
 
+In BLESP v3 click the ESL Tag Tools icon to switch to ESL Tag Tools app, and inside this app, push the "B" icon to go back to BLESP v3.
+
+
 ---
 
 ## Features
