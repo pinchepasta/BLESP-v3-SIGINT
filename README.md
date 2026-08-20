@@ -35,6 +35,9 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 The app is a signal surveillance system and it disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
 It does Realtime BLE scanning and discovers all nearby Bluetooth Low Energy devices, Cars, Headphones, Hacking devices, Smartphones, CCTV and Surveillance cameras, and it also detects planes, ships and military equipment, it also discovers all 2.4GHz / 5GHz access points Live distance estimation, RSSI-based path-loss model, updates every second Tap a blip -> opens detail screen (name, MAC, RSSI, distance, security, UUIDs…)
 
+<br>
+
+<b>Hint:</b>
 After entering the right code, you can spot "change password" for a brief moment, use this to change the password.
 
 
