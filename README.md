@@ -77,6 +77,11 @@ The app also makes use of other hacks and vulnerabilities, like the esl tag part
 
 In BLESP v3 click the ESL Tag Tools icon to switch to ESL Tag Tools app, and inside this app, push the "B" icon to go back to BLESP v3.
 
+To connect your Bruce/MULTiPASS click [ ext ] and enter the webui credentials.
+This way BLESP can interact with your Cardputer/Flipper/T-Embed and so on, and make it send .ir and .sub files for infrared and subghz attacks, or deploy the payload you created with ESL Tag Tools.
+
+If you want to connect or use a linux pc/Raspberry pi, click [ ssh ] and enter target ip and credentials, it opens an ssh connection into the target system.
+For example: you can trigger actions with RPITX and send subghz, pocsag and sstv commands/files with just your phone and a Raspberry Pi.
 
 ---
 
