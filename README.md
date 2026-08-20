@@ -85,13 +85,12 @@ For example: you can trigger actions with RPITX and send subghz, pocsag and sstv
 
 ---
  <br>
- <h1>Can it hack Bluetooth/BLE Headphones?</h1>
+ <h1>Can it be used for Bluetooth/BLE Headphones?</h1>
 
 <br>
 
-YES it can! I'm almost done building, and integrating a Whisperpair exploit to takeover headphones/headsets and listen to their microphone. It's based on a google fastpair vulnerability.
+YES it can! Thanks to the awesome work of https://github.com/zalexdev/wpair-app I was able to build something that works and integrates well into the UI
 
-<b>Edit: BLESP v3.1.7b is ready and the feature is live now</b>
 
 <br>
 <h1>And now the fun part...</h1>
