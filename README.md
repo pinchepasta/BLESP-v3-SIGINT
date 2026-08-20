@@ -110,7 +110,7 @@ Gradle  8.0
    - Plug in your S10 via USB  
    - Allow USB debugging on the phone  
    - In Android Studio: press: Run  
-   - Select your S10 from the device list  
+   - Select your device from the device list  
    - App installs and launches automatically
 
 ---
