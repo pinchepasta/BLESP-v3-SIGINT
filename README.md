@@ -32,7 +32,8 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 
 <br>
 
-The app disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
+The app is a signal surveillance system and it disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
+It does Realtime BLE scanning and discovers all nearby Bluetooth Low Energy devices, Cars, Headphones, Hacking devices, Smartphones, CCTV and Surveillance cameras, and it also detects planes, ships and military equipment, it also discovers all 2.4GHz / 5GHz access points Live distance estimation, RSSI-based path-loss model, updates every second Tap a blip -> opens detail screen (name, MAC, RSSI, distance, security, UUIDs…)
 
 After entering the right code, you can spot "change password" for a brief moment, use this to change the password.
 
@@ -62,15 +63,6 @@ The app also makes use of other hacks and vulnerabilities, like the esl tag part
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/screenshitesltagtools.jpg" alt="BLESP v3" width="25%" height="25%">
 
 In BLESP v3 click the ESL Tag Tools icon to switch to ESL Tag Tools app, and inside this app, push the "B" icon to go back to BLESP v3.
-
-
----
-
-## Features
-Realtime BLE scanning — discovers all nearby Bluetooth Low Energy devices
-Realtime WiFi scanning— discovers all 2.4GHz / 5GHz access points
-Live distance estimation — RSSI-based path-loss model, updates every second
-Tap a blip - opens detail screen (name, MAC, RSSI, distance, security, UUIDs…)
 
 
 ---
