@@ -85,7 +85,7 @@ For example: you can trigger actions with RPITX and send subghz, pocsag and sstv
 
 ---
  <br>
- <h1>Can it hack bluetooth/ble headphones?</h1>
+ <h1>Can it hack Bluetooth/BLE Headphones?</h1>
 
 <br>
 
@@ -93,7 +93,6 @@ YES it can! I'm almost done building, and integrating a Whisperpair exploit to t
 
 <br>
 
-___
 
 ## Build Instructions (Android Studio)
 
