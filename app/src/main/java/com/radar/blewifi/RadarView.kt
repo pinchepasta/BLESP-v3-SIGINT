@@ -189,6 +189,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.BLACK
                 vulnPaint.color = Color.BLACK
                 targetPink = Color.BLACK
+                cameraColor = Color.BLACK
             }
             Theme.RED_NIGHT -> {
                 green = Color.RED
@@ -225,6 +226,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.RED
                 vulnPaint.color = Color.RED
                 targetPink = Color.RED
+                cameraColor = Color.RED
             }
             Theme.DEFAULT -> {
                 green = "#00FF41".toColorInt()
@@ -261,6 +263,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#FF00FF")
                 vulnPaint.color = green
                 targetPink = Color.parseColor("#FF00FF")
+                cameraColor = Color.RED
             }
             Theme.PINK -> {
                 green = Color.parseColor("#FF00FF")
@@ -297,6 +300,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#FF00FF")
                 vulnPaint.color = Color.parseColor("#FF00FF")
                 targetPink = Color.parseColor("#FF00FF")
+                cameraColor = Color.parseColor("#FF00FF")
             }
             Theme.NEON -> {
                 green = Color.parseColor("#E6FB04")
@@ -333,6 +337,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#E6FB04")
                 vulnPaint.color = Color.parseColor("#E6FB04")
                 targetPink = Color.parseColor("#E6FB04")
+                cameraColor = Color.parseColor("#E6FB04")
             }
             Theme.NARANJA -> {
                 green = Color.parseColor("#FF8C00")
@@ -369,6 +374,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#FF8C00")
                 vulnPaint.color = Color.parseColor("#FF8C00")
                 targetPink = Color.parseColor("#FF8C00")
+                cameraColor = Color.parseColor("#FF8C00")
             }
             Theme.BUBBLEGUM -> {
                 green = Color.parseColor("#FF00FF") // Neon Magenta
@@ -405,6 +411,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#FF00FF")
                 vulnPaint.color = Color.parseColor("#00FDFF")
                 targetPink = Color.parseColor("#FF00FF")
+                cameraColor = Color.parseColor("#FF00FF")
             }
             Theme.SUMMERTIME -> {
                 green = Color.parseColor("#ff9f6b")
@@ -441,6 +448,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#ff9f6b")
                 vulnPaint.color = Color.parseColor("#6befff")
                 targetPink = Color.parseColor("#ff9f6b")
+                cameraColor = Color.parseColor("#ff9f6b")
             }
             Theme.MORIO -> {
                 green = Color.parseColor("#c3ac3a")
@@ -477,6 +485,7 @@ class RadarView @JvmOverloads constructor(
                 whisperPaint.color = Color.parseColor("#c3ac3a")
                 vulnPaint.color = Color.parseColor("#c8f29e")
                 targetPink = Color.parseColor("#c8f29e")
+                cameraColor = Color.parseColor("#c3ac3a")
             }
         }
         buildSweepShader(width / 2f, height / 2f)
@@ -862,6 +871,8 @@ class RadarView @JvmOverloads constructor(
         val grouped = sortedDevices.groupBy { it.type }
         
         grouped.forEach { (type, deviceList) ->
+            if (type == DeviceType.CAMERA) return@forEach // Cameras rendered with full detail below
+
             val color = when (type) {
                 DeviceType.WIFI -> green
                 DeviceType.BLE -> pink
@@ -891,10 +902,17 @@ class RadarView @JvmOverloads constructor(
                 canvas.drawPoints(blipPointsBuffer, 0, pointIdx, blipPaint)
             }
         }
+
+        // Render cameras with full visual protocol even in high density
+        sortedDevices.filter { it.type == DeviceType.CAMERA }.forEach { camera ->
+            if (shouldShow(camera.type)) {
+                renderSingleBlip(canvas, camera, camera.id == selectedId, theme == Theme.HIGH_CONTRAST, true)
+            }
+        }
         
         // Always render selected device on top with full detail
         selectedId?.let { id ->
-            devices.find { it.id == id }?.let { renderSingleBlip(canvas, it, true, theme == Theme.HIGH_CONTRAST) }
+            devices.find { it.id == id && it.type != DeviceType.CAMERA }?.let { renderSingleBlip(canvas, it, true, theme == Theme.HIGH_CONTRAST) }
         }
     }
 
@@ -933,7 +951,7 @@ class RadarView @JvmOverloads constructor(
             else -> targetPink
         }
 
-        if (isHighDensity && !isSelected) {
+        if (isHighDensity && !isSelected && device.type != DeviceType.CAMERA) {
             val lastPos = lastRenderedBlips[device.id]
             if (lastPos != null && abs(pos.x - lastPos.x) < 0.5f && abs(pos.y - lastPos.y) < 0.5f) {
                 blipPaint.color = ColorUtils.setAlphaComponent(blipColor, 120)
@@ -1005,15 +1023,33 @@ class RadarView @JvmOverloads constructor(
                 Theme.HIGH_CONTRAST -> Color.BLACK
                 else -> Color.WHITE
             }
+            device.type == DeviceType.CAMERA -> when(theme) {
+                Theme.RED_NIGHT -> Color.WHITE
+                Theme.HIGH_CONTRAST -> Color.WHITE
+                Theme.BUBBLEGUM -> cyan
+                Theme.SUMMERTIME -> cyan
+                Theme.MORIO -> greenMid
+                else -> Color.YELLOW
+            }
             else -> blipColor
         }
         
-        if (blinkColor != blipColor) {
+        if (device.type == DeviceType.CAMERA) {
+            // CCTV Visual Protocol: Static main color dot + blinking accent ring
+            blipPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
+            blipRingPaint.color = ColorUtils.setAlphaComponent(blinkColor, (blinkAlpha * (alpha / 255f)).toInt())
+        } else if (blinkColor != blipColor) {
             blipPaint.color = ColorUtils.blendARGB(blipColor, blinkColor, blinkAlpha / 255f)
         }
         
         canvas.drawCircle(pos.x, pos.y, blipR, blipPaint)
-        if (!isHighDensity || isSelected) {
+        
+        if (device.type == DeviceType.CAMERA) {
+            val oldStroke = blipRingPaint.strokeWidth
+            blipRingPaint.strokeWidth = 3f
+            canvas.drawCircle(pos.x, pos.y, blipR + 2f, blipRingPaint)
+            blipRingPaint.strokeWidth = oldStroke
+        } else if (!isHighDensity || isSelected) {
             canvas.drawCircle(pos.x, pos.y, blipR, blipRingPaint)
         }
     }

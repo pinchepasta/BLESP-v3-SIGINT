@@ -4,12 +4,12 @@
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/terminal_overlay.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_calculator.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_calculator.xml"
+        "merged": "com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_about.xml",
+        "source": "com.radar.blewifi.app-main-47:/layout/activity_about.xml"
     },
     {
-        "merged": "com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_main.xml",
-        "source": "com.radar.blewifi.app-main-47:/layout/activity_main.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_calculator.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_calculator.xml"
     },
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_archive.xml",

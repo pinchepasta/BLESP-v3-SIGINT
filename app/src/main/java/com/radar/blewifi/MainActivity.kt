@@ -996,7 +996,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 secondaryColor = Color.parseColor("#FF00FF") // Magenta
                 bgColor = Color.BLACK
                 inputTextColor = Color.parseColor("#FF00FF")
-                statusBoxRes = R.drawable.btn_bg_bubblegum
+                statusBoxRes = R.drawable.status_box_bg_bubblegum
                 buttonBgRes = R.drawable.btn_bg_bubblegum
                 buttonTextColor = Color.BLACK
             }
@@ -1318,7 +1318,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 hintColor = Color.parseColor("#330033")
                 buttonBgRes = R.drawable.btn_bg_bubblegum
                 buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.btn_bg_bubblegum
+                statusBoxRes = R.drawable.status_box_bg_bubblegum
             }
             RadarView.Theme.SUMMERTIME -> {
                 primaryColor = Color.parseColor("#ff9f6b")
@@ -1744,11 +1744,34 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun showChangePinDialog() {
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
+        val theme = currentTheme
+        val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
+        val isRedNight = theme == RadarView.Theme.RED_NIGHT
+        val isPink = theme == RadarView.Theme.PINK
+        val isNeon = theme == RadarView.Theme.NEON
+        val isNaranja = theme == RadarView.Theme.NARANJA
+        val isBubblegum = theme == RadarView.Theme.BUBBLEGUM
+        val isSummertime = theme == RadarView.Theme.SUMMERTIME
+        val isMorio = theme == RadarView.Theme.MORIO
+        
+        val primaryColor = when {
+            isHighContrast -> Color.BLACK
+            isRedNight -> Color.RED
+            isPink -> Color.parseColor("#FF00FF")
+            isNeon -> Color.parseColor("#E6FB04")
+            isNaranja -> Color.parseColor("#FF8C00")
+            isBubblegum -> Color.parseColor("#00FDFF")
+            isSummertime -> Color.parseColor("#ff9f6b")
+            isMorio -> Color.parseColor("#c3ac3a")
+            else -> Color.parseColor("#FF00FF")
+        }
+
+        val accentColor = when {
+            isBubblegum -> Color.parseColor("#FF00FF")
+            isSummertime -> Color.parseColor("#6befff")
+            isMorio -> Color.parseColor("#c8f29e")
+            else -> primaryColor
+        }
         
         val dialog = android.app.Dialog(this, if (isHighContrast) android.R.style.Theme_Light_NoTitleBar else android.R.style.Theme_Black_NoTitleBar)
         dialog.setOnDismissListener { setupImmersiveMode() }
@@ -1762,14 +1785,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         val title = android.widget.TextView(this).apply {
             text = " ACCESS CONTROL // PIN "
-            setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                else -> Color.parseColor("#FF00FF")
-            })
+            setTextColor(primaryColor)
             textSize = 20f
             typeface = android.graphics.Typeface.MONOSPACE
             gravity = android.view.Gravity.CENTER
@@ -1786,22 +1802,18 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
             )
             setText(currentPin)
-            setTextColor(if (isHighContrast) Color.BLACK else Color.WHITE)
-            setBackgroundColor(when {
-                isHighContrast -> Color.WHITE
-                isRedNight -> Color.parseColor("#1A0000")
-                isPink -> Color.parseColor("#1A001A")
-                isNeon -> Color.parseColor("#1A1A00")
-                isNaranja -> Color.parseColor("#1A0F00")
-                else -> Color.parseColor("#111111")
+            setTextColor(if (isHighContrast) Color.BLACK else if (isBubblegum) Color.parseColor("#FF00FF") else Color.WHITE)
+            setBackgroundResource(when {
+                isHighContrast -> R.drawable.status_box_bg_white
+                isRedNight -> R.drawable.status_box_bg_red
+                isPink -> R.drawable.status_box_bg_pink
+                isNeon -> R.drawable.status_box_bg_neon
+                isNaranja -> R.drawable.status_box_bg_naranja
+                isBubblegum -> R.drawable.status_box_bg_bubblegum
+                isSummertime -> R.drawable.status_box_bg_summertime
+                isMorio -> R.drawable.status_box_bg_morio
+                else -> R.drawable.status_box_bg
             })
-            when {
-                isHighContrast -> setBackgroundResource(R.drawable.status_box_bg_white)
-                isRedNight -> setBackgroundResource(R.drawable.status_box_bg_red)
-                isPink -> setBackgroundResource(R.drawable.status_box_bg_pink)
-                isNeon -> setBackgroundResource(R.drawable.status_box_bg_neon)
-                isNaranja -> setBackgroundResource(R.drawable.status_box_bg_naranja)
-            }
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 24f
             setPadding(20, 20, 20, 20)
@@ -1814,14 +1826,18 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val saveBtn = android.widget.Button(this).apply {
             text = "UPDATE ACCESS CODE"
             setTextColor(if (isHighContrast) Color.WHITE else Color.BLACK)
-            setBackgroundColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                else -> Color.parseColor("#00FF41")
+            setBackgroundResource(when {
+                isHighContrast -> R.drawable.btn_bg_black
+                isRedNight -> R.drawable.btn_bg_red
+                isPink -> R.drawable.status_box_bg_pink
+                isNeon -> R.drawable.btn_bg_neon
+                isNaranja -> R.drawable.btn_bg_naranja
+                isBubblegum -> R.drawable.btn_bg_bubblegum
+                isSummertime -> R.drawable.btn_bg_summertime
+                isMorio -> R.drawable.btn_bg_morio
+                else -> R.drawable.status_box_bg_green
             })
+            backgroundTintList = android.content.res.ColorStateList.valueOf(accentColor)
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 14f
             setPadding(40, 30, 40, 30)
@@ -1896,7 +1912,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
                 RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
                 RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
                 RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+                RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
                 else -> Color.parseColor("#FF00FF")
             }
             spannable.setSpan(
@@ -1914,7 +1932,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
             RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
             RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
             RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            RadarView.Theme.MORIO -> Color.parseColor("#c3ac3a")
             else -> Color.parseColor("#FF00FF")
         }
         spannableTitle.setSpan(
@@ -1935,6 +1955,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val isPink = currentTheme == RadarView.Theme.PINK
         val isNeon = currentTheme == RadarView.Theme.NEON
         val isNaranja = currentTheme == RadarView.Theme.NARANJA
+        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
+        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
+        val isMorio = currentTheme == RadarView.Theme.MORIO
 
         // Background styling
         val bg = android.graphics.drawable.GradientDrawable()
@@ -1959,6 +1982,18 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 bg.setColor(android.graphics.Color.BLACK)
                 bg.setStroke(2, android.graphics.Color.parseColor("#FF8C00"))
             }
+            isBubblegum -> {
+                bg.setColor(android.graphics.Color.BLACK)
+                bg.setStroke(2, android.graphics.Color.parseColor("#00FDFF"))
+            }
+            isSummertime -> {
+                bg.setColor(android.graphics.Color.BLACK)
+                bg.setStroke(2, android.graphics.Color.parseColor("#6befff"))
+            }
+            isMorio -> {
+                bg.setColor(android.graphics.Color.BLACK)
+                bg.setStroke(2, android.graphics.Color.parseColor("#c8f29e"))
+            }
             else -> {
                 bg.setColor(android.graphics.Color.parseColor("#99002200")) // Translucent dark green
                 bg.setStroke(2, android.graphics.Color.parseColor("#00FF41")) // Neon border
@@ -1979,6 +2014,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 isPink -> Color.parseColor("#FF00FF")
                 isNeon -> Color.parseColor("#E6FB04")
                 isNaranja -> Color.parseColor("#FF8C00")
+                isBubblegum -> Color.parseColor("#00FDFF")
+                isSummertime -> Color.parseColor("#6befff")
+                isMorio -> Color.parseColor("#c8f29e")
                 else -> Color.parseColor("#00FF41")
             }
 
@@ -2003,6 +2041,18 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                     it.setTextColor(android.graphics.Color.parseColor("#FF8C00"))
                     it.setLinkTextColor(android.graphics.Color.parseColor("#FF8C00"))
                 }
+                isBubblegum -> {
+                    it.setTextColor(android.graphics.Color.parseColor("#FF00FF"))
+                    it.setLinkTextColor(android.graphics.Color.parseColor("#00FDFF"))
+                }
+                isSummertime -> {
+                    it.setTextColor(android.graphics.Color.parseColor("#ff9f6b"))
+                    it.setLinkTextColor(android.graphics.Color.parseColor("#6befff"))
+                }
+                isMorio -> {
+                    it.setTextColor(android.graphics.Color.parseColor("#c3ac3a"))
+                    it.setLinkTextColor(android.graphics.Color.parseColor("#c8f29e"))
+                }
                 else -> {
                     it.setTextColor(android.graphics.Color.parseColor("#00FF41"))
                     it.setLinkTextColor(android.graphics.Color.parseColor("#00FF41"))
@@ -2018,6 +2068,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 isPink -> android.graphics.Color.parseColor("#FF00FF")
                 isNeon -> android.graphics.Color.parseColor("#E6FB04")
                 isNaranja -> android.graphics.Color.parseColor("#FF8C00")
+                isBubblegum -> android.graphics.Color.parseColor("#00FDFF")
+                isSummertime -> android.graphics.Color.parseColor("#6befff")
+                isMorio -> android.graphics.Color.parseColor("#c8f29e")
                 else -> android.graphics.Color.parseColor("#FF00FF")
             })
             it.setTypeface(null, android.graphics.Typeface.BOLD)

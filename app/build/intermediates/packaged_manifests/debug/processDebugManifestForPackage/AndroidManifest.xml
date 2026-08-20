@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.radar.blewifi"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="3.1.4" >
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -41,6 +41,7 @@
 
     <!-- Background scanning -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -163,6 +164,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <service
+            android:name="com.radar.blewifi.AudioRecordService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
 
         <!--
         Service for holding metadata. Cannot be instantiated.

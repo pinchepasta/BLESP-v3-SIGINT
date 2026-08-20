@@ -3186,6 +3186,7 @@ drawable sharp_add_black_36
 drawable sharp_remove_black_36
 drawable status_box_bg
 drawable status_box_bg_black
+drawable status_box_bg_bubblegum
 drawable status_box_bg_green
 drawable status_box_bg_morio
 drawable status_box_bg_naranja
@@ -3546,6 +3547,7 @@ id labeled
 id layout
 id layoutChat
 id layoutMessageInput
+id layoutSecretAudio
 id left
 id leftToRight
 id legacy
@@ -3876,6 +3878,9 @@ id tvOtherDevices
 id tvOverlayNetworkName
 id tvRssi
 id tvScannerHint
+id tvSecretAudioCommands
+id tvSecretAudioLabel
+id tvSecretAudioPath
 id tvSelectExploitLabel
 id tvSettingsTitle
 id tvSplashSubTitle
@@ -4167,10 +4172,13 @@ string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string about
+string about_description
 string about_message
+string about_title
 string androidx_startup
 string app_name
 string appbar_scrolling_view_behavior
+string author_name
 string base
 string base_nl
 string bing
@@ -4180,6 +4188,7 @@ string bottomsheet_action_expand
 string bottomsheet_action_expand_halfway
 string bottomsheet_drag_handle_clicked
 string bottomsheet_drag_handle_content_description
+string btn_back
 string cacheManagerCancelBody
 string cacheManagerCancelTitle
 string cacheManagerCleanFailed
@@ -4220,7 +4229,9 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string compass
+string core_version
 string cyclemap
+string dev_url
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
@@ -4243,6 +4254,9 @@ string hide_bottom_view_on_scroll_behavior
 string hills
 string icon_content_description
 string item_view_role_description
+string label_author
+string label_core_version
+string label_development
 string m3_exceed_max_badge_text_suffix
 string m3_ref_typeface_brand_medium
 string m3_ref_typeface_brand_regular

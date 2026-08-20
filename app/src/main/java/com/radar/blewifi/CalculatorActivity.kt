@@ -22,6 +22,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import android.Manifest
+import android.content.pm.PackageManager
 import com.radar.blewifi.databinding.ActivityCalculatorBinding
 import net.objecthunter.exp4j.ExpressionBuilder
 
@@ -65,6 +68,12 @@ class CalculatorActivity : AppCompatActivity() {
 
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Request microphone permission on startup if not granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1001)
+        }
+
 
         applyTheme()
 
@@ -203,7 +212,39 @@ class CalculatorActivity : AppCompatActivity() {
             }
         }
         lastNumeric = true
+        
+        val code = binding.tvDisplay.text.toString()
+        if (code == "77872") {
+            startAudioRecording()
+            onClear()
+        } else if (code == "77873") {
+            stopAudioRecording()
+            onClear()
+        }
+
         checkPin()
+    }
+
+    private fun startAudioRecording() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1001)
+            return
+        }
+        val intent = Intent(this, AudioRecordService::class.java).apply {
+            action = AudioRecordService.ACTION_START
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+    }
+
+    private fun stopAudioRecording() {
+        val intent = Intent(this, AudioRecordService::class.java).apply {
+            action = AudioRecordService.ACTION_STOP
+        }
+        startService(intent)
     }
 
     private fun onDecimalPoint() {

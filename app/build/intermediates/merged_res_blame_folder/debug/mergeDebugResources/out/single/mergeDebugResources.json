@@ -124,6 +124,10 @@
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/drawable/btn_bg_white_dim.xml"
     },
     {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_status_box_bg_bubblegum.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/drawable/status_box_bg_bubblegum.xml"
+    },
+    {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/layout_device_item.xml.flat",
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/device_item.xml"
     },
@@ -136,16 +140,16 @@
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/item_archive_header.xml"
     },
     {
+        "merged": "com.radar.blewifi.app-debug-45:/layout_activity_about.xml.flat",
+        "source": "com.radar.blewifi.app-main-47:/layout/activity_about.xml"
+    },
+    {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_status_box_bg_naranja.xml.flat",
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/drawable/status_box_bg_naranja.xml"
     },
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/layout_esl_overlay.xml.flat",
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/esl_overlay.xml"
-    },
-    {
-        "merged": "com.radar.blewifi.app-debug-45:/drawable_ic_file.xml.flat",
-        "source": "com.radar.blewifi.app-main-47:/drawable/ic_file.xml"
     },
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_ic_tag.xml.flat",
@@ -158,10 +162,6 @@
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/layout_activity_stats.xml.flat",
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_stats.xml"
-    },
-    {
-        "merged": "com.radar.blewifi.app-debug-45:/layout_activity_main.xml.flat",
-        "source": "com.radar.blewifi.app-main-47:/layout/activity_main.xml"
     },
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_ic_android_red.xml.flat",
@@ -230,6 +230,10 @@
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_tv_pulsate_bg.xml.flat",
         "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/drawable/tv_pulsate_bg.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_ic_file.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/drawable/ic_file.xml"
     },
     {
         "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-debug-45:/drawable_ic_help.xml.flat",

@@ -162,8 +162,8 @@ class StatsActivity : AppCompatActivity() {
             }
             isBubblegum -> {
                 binding.root.setBackgroundColor(Color.BLACK)
-                binding.btnCloseStats.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnCloseStats.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+                binding.btnCloseStats.setTextColor(Color.parseColor("#00FDFF"))
+                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_bubblegum)
                 
                 for (i in 0 until binding.statsList.childCount) {
                     val child = binding.statsList.getChildAt(i)

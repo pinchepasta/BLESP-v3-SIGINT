@@ -139,12 +139,12 @@ class ArchiveActivity : AppCompatActivity() {
             isBubblegum -> {
                 binding.root.setBackgroundColor(Color.BLACK)
                 binding.headerArchive.setBackgroundColor(Color.parseColor("#1A001A"))
-                binding.etSearch.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_bubblegum)
                 binding.etSearch.setTextColor(Color.parseColor("#FF00FF"))
                 binding.etSearch.setHintTextColor(Color.parseColor("#660066"))
                 binding.tvEmpty.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBack.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBack.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+                binding.btnBack.setTextColor(Color.parseColor("#00FDFF"))
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_bubblegum)
             }
             isSummertime -> {
                 binding.root.setBackgroundColor(Color.parseColor("#1A1A1A"))

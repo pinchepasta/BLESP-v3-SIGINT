@@ -44,10 +44,11 @@ class AboutActivity : AppCompatActivity() {
         val isNaranja = currentTheme == RadarView.Theme.NARANJA
         val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
         val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
+        val isMorio = currentTheme == RadarView.Theme.MORIO
 
         val bgColor = when {
             isHighContrast -> Color.WHITE
-            isRedNight || isPink || isNeon || isNaranja || isBubblegum || isSummertime -> Color.parseColor("#0A0A0A")
+            isRedNight || isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> Color.parseColor("#0A0A0A")
             else -> Color.BLACK
         }
 
@@ -59,6 +60,7 @@ class AboutActivity : AppCompatActivity() {
             isNaranja -> Color.parseColor("#331E00")
             isBubblegum -> Color.parseColor("#0F0F0F")
             isSummertime -> Color.parseColor("#2A1F1A")
+            isMorio -> Color.parseColor("#0D1A18")
             else -> Color.parseColor("#0F0F0F")
         }
 
@@ -70,12 +72,14 @@ class AboutActivity : AppCompatActivity() {
             isNaranja -> Color.parseColor("#FF8C00")
             isBubblegum -> Color.parseColor("#FF00FF")
             isSummertime -> Color.parseColor("#ff9f6b")
+            isMorio -> Color.parseColor("#c3ac3a")
             else -> Color.parseColor("#00FF41")
         }
 
         val accentColor = when {
             isSummertime -> Color.parseColor("#6befff")
             isBubblegum -> Color.parseColor("#00FDFF")
+            isMorio -> Color.parseColor("#c8f29e")
             else -> textColor
         }
 
@@ -92,15 +96,16 @@ class AboutActivity : AppCompatActivity() {
         binding.tvAboutDescription.setTextColor(textColor)
         binding.tvAboutDescription.alpha = 0.7f
 
-        binding.btnAboutBack.setTextColor(if (isPink || isBubblegum) Color.parseColor("#FF00FF") else if(isSummertime) accentColor else textColor)
+        binding.btnAboutBack.setTextColor(if (isBubblegum) accentColor else if (isPink) Color.parseColor("#FF00FF") else if(isSummertime || isMorio) accentColor else textColor)
         binding.btnAboutBack.setBackgroundResource(when {
             isHighContrast -> R.drawable.status_box_bg_white
             isRedNight -> R.drawable.status_box_bg_red
             isPink -> R.drawable.status_box_bg_pink
             isNeon -> R.drawable.status_box_bg_neon
             isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
+            isBubblegum -> R.drawable.status_box_bg_bubblegum
             isSummertime -> R.drawable.status_box_bg_summertime
+            isMorio -> R.drawable.status_box_bg_morio
             else -> R.drawable.status_box_bg
         })
     }

@@ -2,7 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.radar.blewifi"
 4    android:versionCode="1"
-5    android:versionName="1.0" >
+5    android:versionName="3.1.4" >
 6
 7    <uses-sdk
 7-->INJECTED
@@ -85,422 +85,436 @@
 43    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 43-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:27:5-77
 43-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:27:22-74
-44    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
-44-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:28:5-94
-44-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:28:22-91
-45    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-45-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:29:5-77
-45-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:29:22-74
-46    <uses-permission android:name="android.permission.INTERNET" />
-46-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:30:5-67
-46-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:30:22-64
-47    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-47-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:31:5-79
-47-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:31:22-76
-48    <uses-permission android:name="android.permission.CAMERA" />
-48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:32:5-65
-48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:32:22-62
-49
-50    <queries>
-50-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:34:5-36:15
-51        <package android:name="com.mostlyawesome.tagtinker" />
-51-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:35:9-63
-51-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:35:18-60
-52    </queries>
-53
-54    <uses-feature
-54-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:38:5-85
-55        android:name="android.hardware.camera"
-55-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:38:19-57
-56        android:required="false" />
-56-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:38:58-82
-57    <uses-feature
-57-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:5-95
-58        android:name="android.hardware.camera.autofocus"
-58-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:19-67
-59        android:required="false" />
-59-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:68-92
-60    <uses-feature
-60-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:5-91
-61        android:name="android.hardware.bluetooth_le"
-61-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:19-63
-62        android:required="false" />
-62-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:64-88
-63    <uses-feature
-63-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:5-83
-64        android:name="android.hardware.wifi"
-64-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:19-55
-65        android:required="false" />
-65-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:56-80
-66
-67    <permission
-67-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-68        android:name="com.radar.blewifi.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-68-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-69        android:protectionLevel="signature" />
-69-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-70
-71    <uses-permission android:name="com.radar.blewifi.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-71-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-71-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
-72
-73    <supports-screens
-73-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:9:5-12:40
-74        android:anyDensity="true"
-74-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:10:9-34
-75        android:largeScreens="true"
-75-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:11:9-36
-76        android:normalScreens="true" />
-76-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:12:9-37
-77
-78    <uses-feature
-78-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:14:5-16:36
-79        android:name="android.hardware.location.network"
-79-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:15:9-57
-80        android:required="false" />
-80-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:16:9-33
-81    <uses-feature
-81-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:17:5-19:36
-82        android:name="android.hardware.location.gps"
-82-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:18:9-53
-83        android:required="false" />
-83-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:19:9-33
-84    <uses-feature
-84-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:20:5-22:36
-85        android:name="android.hardware.telephony"
-85-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:21:9-50
-86        android:required="false" />
-86-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:22:9-33
-87
-88    <application
-88-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:43:5-130:19
-89        android:name="com.radar.blewifi.RadarApplication"
-89-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:44:9-41
-90        android:allowBackup="true"
-90-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:45:9-35
-91        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-91-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
-92        android:debuggable="true"
-93        android:extractNativeLibs="false"
-93-->INJECTED
-94        android:icon="@drawable/logo3"
-94-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:46:9-39
-95        android:label="@string/app_name"
-95-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:47:9-41
-96        android:roundIcon="@drawable/logo3"
-96-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:48:9-44
-97        android:supportsRtl="true"
-97-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:49:9-35
-98        android:theme="@style/Theme.BLEWifiRadar"
-98-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:50:9-50
-99        android:usesCleartextTraffic="true" >
-99-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:51:9-44
-100        <meta-data
-100-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:53:9-55:49
-101            android:name="com.google.android.geo.API_KEY"
-101-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:54:13-58
-102            android:value="YOUR_API_KEY_HERE" />
-102-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:55:13-46
-103
-104        <activity
-104-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:57:9-66:20
-105            android:name="com.radar.blewifi.CalculatorActivity"
-105-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:58:13-47
-106            android:exported="true"
-106-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:59:13-36
-107            android:screenOrientation="portrait"
-107-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:60:13-49
-108            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" >
-108-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:61:13-65
-109            <intent-filter>
-109-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:62:13-65:29
-110                <action android:name="android.intent.action.MAIN" />
-110-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:63:17-69
-110-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:63:25-66
-111
-112                <category android:name="android.intent.category.LAUNCHER" />
-112-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:64:17-77
-112-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:64:27-74
-113            </intent-filter>
-114        </activity>
-115        <activity
-115-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:68:9-73:20
-116            android:name="com.radar.blewifi.SplashActivity"
-116-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:69:13-43
-117            android:exported="true"
-117-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:70:13-36
-118            android:screenOrientation="portrait"
-118-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:71:13-49
-119            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" >
-119-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:72:13-65
-120        </activity>
-121        <activity
-121-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:75:9-79:68
-122            android:name="com.radar.blewifi.AboutActivity"
-122-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:76:13-42
-123            android:exported="false"
-123-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:77:13-37
-124            android:screenOrientation="portrait"
-124-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:78:13-49
-125            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" />
-125-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:79:13-65
-126        <activity
-126-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:81:9-85:58
-127            android:name="com.radar.blewifi.MainActivity"
-127-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:82:13-41
-128            android:exported="true"
-128-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:83:13-36
-129            android:screenOrientation="portrait"
-129-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:84:13-49
-130            android:windowSoftInputMode="adjustResize" />
-130-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:85:13-55
-131        <activity
-131-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:87:9-90:52
-132            android:name="com.radar.blewifi.DetailActivity"
-132-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:88:13-43
-133            android:exported="false"
-133-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:89:13-37
-134            android:screenOrientation="portrait" />
-134-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:90:13-49
-135        <activity
-135-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:92:9-95:52
-136            android:name="com.radar.blewifi.StatsActivity"
-136-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:93:13-42
-137            android:exported="false"
-137-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:94:13-37
-138            android:screenOrientation="portrait" />
-138-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:95:13-49
-139        <activity
-139-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:97:9-100:52
-140            android:name="com.radar.blewifi.EslActivity"
-140-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:98:13-40
-141            android:exported="false"
-141-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:99:13-37
-142            android:screenOrientation="portrait" />
-142-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:100:13-49
-143        <activity
-143-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:102:9-105:52
-144            android:name="com.radar.blewifi.ArchiveActivity"
-144-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:103:13-44
-145            android:exported="false"
-145-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:104:13-37
-146            android:screenOrientation="portrait" />
-146-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:105:13-49
-147        <activity
-147-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:107:9-110:52
-148            android:name="com.radar.blewifi.SettingsActivity"
-148-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:108:13-45
-149            android:exported="false"
-149-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:109:13-37
-150            android:screenOrientation="portrait" />
-150-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:110:13-49
-151        <activity
-151-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:112:9-116:58
-152            android:name="com.radar.blewifi.PagerActivity"
-152-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:113:13-42
-153            android:exported="false"
-153-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:114:13-37
-154            android:screenOrientation="portrait"
-154-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:115:13-49
-155            android:windowSoftInputMode="adjustResize" />
-155-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:116:13-55
-156
-157        <provider
-157-->INJECTED
-158            android:name="androidx.core.content.FileProvider"
-158-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:121:13-62
-159            android:authorities="com.radar.blewifi.fileprovider"
-159-->INJECTED
-160            android:exported="false"
-160-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:123:13-37
-161            android:grantUriPermissions="true" >
-161-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:124:13-47
-162            <meta-data
-162-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:125:13-127:54
-163                android:name="android.support.FILE_PROVIDER_PATHS"
-163-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:126:17-67
-164                android:resource="@xml/file_paths" />
-164-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:127:17-51
-165        </provider>
-166
-167        <!--
-168        Service for holding metadata. Cannot be instantiated.
-169        Metadata will be merged from other manifests.
-170        -->
-171        <service
-171-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:29:9-33:78
-172            android:name="androidx.camera.core.impl.MetadataHolderService"
-172-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:30:13-75
-173            android:enabled="false"
-173-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:31:13-36
-174            android:exported="false" >
-174-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:32:13-37
-175            <meta-data
-175-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:30:13-32:89
-176                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
-176-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:31:17-103
-177                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
-177-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:32:17-86
-178        </service>
-179        <service
-179-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:9:9-15:19
-180            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
-180-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:10:13-91
-181            android:directBootAware="true"
-181-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:17:13-43
-182            android:exported="false" >
-182-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:11:13-37
-183            <meta-data
-183-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:12:13-14:85
-184                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
-184-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:13:17-120
-185                android:value="com.google.firebase.components.ComponentRegistrar" />
-185-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:14:17-82
-186            <meta-data
-186-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:12:13-14:85
-187                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
-187-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:13:17-124
-188                android:value="com.google.firebase.components.ComponentRegistrar" />
-188-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:14:17-82
-189            <meta-data
-189-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:20:13-22:85
-190                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
-190-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:21:17-120
-191                android:value="com.google.firebase.components.ComponentRegistrar" />
-191-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:22:17-82
-192        </service>
-193
-194        <provider
-194-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:9:9-13:38
-195            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
-195-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:10:13-78
-196            android:authorities="com.radar.blewifi.mlkitinitprovider"
-196-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:11:13-69
-197            android:exported="false"
-197-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:12:13-37
-198            android:initOrder="99" />
-198-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:13:13-35
-199
-200        <service
-200-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:10:9-13:105
-201            android:name="com.google.android.gms.nearby.exposurenotification.WakeUpService"
-201-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:11:13-92
-202            android:exported="true"
-202-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:12:13-36
-203            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK" />
-203-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:13:13-102
-204
-205        <activity
-205-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:9-173
-206            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-206-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:19-85
-207            android:exported="false"
-207-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:146-170
-208            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-208-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:86-145
-209
-210        <meta-data
-210-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
-211            android:name="com.google.android.gms.version"
-211-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
-212            android:value="@integer/google_play_services_version" />
-212-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
-213
-214        <provider
-214-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-215            android:name="androidx.startup.InitializationProvider"
-215-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-216            android:authorities="com.radar.blewifi.androidx-startup"
-216-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-217            android:exported="false" >
-217-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-218            <meta-data
-218-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-219                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-219-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-220                android:value="androidx.startup" />
-220-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-221            <meta-data
-221-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-222                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-222-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-223                android:value="androidx.startup" />
-223-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-224            <meta-data
-224-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-225                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-225-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-226                android:value="androidx.startup" />
-226-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-227        </provider>
-228
-229        <receiver
-229-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-230            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-230-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-231            android:directBootAware="false"
-231-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-232            android:enabled="true"
-232-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-233            android:exported="true"
-233-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-234            android:permission="android.permission.DUMP" >
-234-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-235            <intent-filter>
-235-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-236                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-236-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-236-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-237            </intent-filter>
-238            <intent-filter>
-238-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-239                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-240            </intent-filter>
-241            <intent-filter>
-241-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-242                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-243            </intent-filter>
-244            <intent-filter>
-244-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-245                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-246            </intent-filter>
-247        </receiver>
-248
-249        <service
-249-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:29:9-35:19
-250            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-250-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:30:13-103
-251            android:exported="false" >
-251-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:31:13-37
-252            <meta-data
-252-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:32:13-34:39
-253                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-253-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:33:17-94
-254                android:value="cct" />
-254-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:34:17-36
-255        </service>
+44    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+44-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:28:5-88
+44-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:28:22-85
+45    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+45-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:29:5-94
+45-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:29:22-91
+46    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+46-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:30:5-77
+46-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:30:22-74
+47    <uses-permission android:name="android.permission.INTERNET" />
+47-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:31:5-67
+47-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:31:22-64
+48    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:32:5-79
+48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:32:22-76
+49    <uses-permission android:name="android.permission.CAMERA" />
+49-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:33:5-65
+49-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:33:22-62
+50
+51    <queries>
+51-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:35:5-37:15
+52        <package android:name="com.mostlyawesome.tagtinker" />
+52-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:36:9-63
+52-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:36:18-60
+53    </queries>
+54
+55    <uses-feature
+55-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:5-85
+56        android:name="android.hardware.camera"
+56-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:19-57
+57        android:required="false" />
+57-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:39:58-82
+58    <uses-feature
+58-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:5-95
+59        android:name="android.hardware.camera.autofocus"
+59-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:19-67
+60        android:required="false" />
+60-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:40:68-92
+61    <uses-feature
+61-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:5-91
+62        android:name="android.hardware.bluetooth_le"
+62-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:19-63
+63        android:required="false" />
+63-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:41:64-88
+64    <uses-feature
+64-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:42:5-83
+65        android:name="android.hardware.wifi"
+65-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:42:19-55
+66        android:required="false" />
+66-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:42:56-80
+67
+68    <permission
+68-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+69        android:name="com.radar.blewifi.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+69-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+70        android:protectionLevel="signature" />
+70-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+71
+72    <uses-permission android:name="com.radar.blewifi.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+72-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+72-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+73
+74    <supports-screens
+74-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:9:5-12:40
+75        android:anyDensity="true"
+75-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:10:9-34
+76        android:largeScreens="true"
+76-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:11:9-36
+77        android:normalScreens="true" />
+77-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:12:9-37
+78
+79    <uses-feature
+79-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:14:5-16:36
+80        android:name="android.hardware.location.network"
+80-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:15:9-57
+81        android:required="false" />
+81-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:16:9-33
+82    <uses-feature
+82-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:17:5-19:36
+83        android:name="android.hardware.location.gps"
+83-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:18:9-53
+84        android:required="false" />
+84-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:19:9-33
+85    <uses-feature
+85-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:20:5-22:36
+86        android:name="android.hardware.telephony"
+86-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:21:9-50
+87        android:required="false" />
+87-->[org.osmdroid:osmdroid-android:6.1.20] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/fd11b4dc93260e2c3967b6dbe19d13e0/transformed/jetified-osmdroid-android-6.1.20/AndroidManifest.xml:22:9-33
+88
+89    <application
+89-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:44:5-137:19
+90        android:name="com.radar.blewifi.RadarApplication"
+90-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:45:9-41
+91        android:allowBackup="true"
+91-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:46:9-35
+92        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+92-->[androidx.core:core:1.12.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/c21dd50e8387bc5dde8e6288d2d0eac9/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+93        android:debuggable="true"
+94        android:extractNativeLibs="false"
+94-->INJECTED
+95        android:icon="@drawable/logo3"
+95-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:47:9-39
+96        android:label="@string/app_name"
+96-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:48:9-41
+97        android:roundIcon="@drawable/logo3"
+97-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:49:9-44
+98        android:supportsRtl="true"
+98-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:50:9-35
+99        android:theme="@style/Theme.BLEWifiRadar"
+99-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:51:9-50
+100        android:usesCleartextTraffic="true" >
+100-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:52:9-44
+101        <meta-data
+101-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:54:9-56:49
+102            android:name="com.google.android.geo.API_KEY"
+102-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:55:13-58
+103            android:value="YOUR_API_KEY_HERE" />
+103-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:56:13-46
+104
+105        <activity
+105-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:58:9-67:20
+106            android:name="com.radar.blewifi.CalculatorActivity"
+106-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:59:13-47
+107            android:exported="true"
+107-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:60:13-36
+108            android:screenOrientation="portrait"
+108-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:61:13-49
+109            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" >
+109-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:62:13-65
+110            <intent-filter>
+110-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:63:13-66:29
+111                <action android:name="android.intent.action.MAIN" />
+111-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:64:17-69
+111-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:64:25-66
+112
+113                <category android:name="android.intent.category.LAUNCHER" />
+113-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:65:17-77
+113-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:65:27-74
+114            </intent-filter>
+115        </activity>
+116        <activity
+116-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:69:9-74:20
+117            android:name="com.radar.blewifi.SplashActivity"
+117-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:70:13-43
+118            android:exported="true"
+118-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:71:13-36
+119            android:screenOrientation="portrait"
+119-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:72:13-49
+120            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" >
+120-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:73:13-65
+121        </activity>
+122        <activity
+122-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:76:9-80:68
+123            android:name="com.radar.blewifi.AboutActivity"
+123-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:77:13-42
+124            android:exported="false"
+124-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:78:13-37
+125            android:screenOrientation="portrait"
+125-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:79:13-49
+126            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" />
+126-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:80:13-65
+127        <activity
+127-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:82:9-86:58
+128            android:name="com.radar.blewifi.MainActivity"
+128-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:83:13-41
+129            android:exported="true"
+129-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:84:13-36
+130            android:screenOrientation="portrait"
+130-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:85:13-49
+131            android:windowSoftInputMode="adjustResize" />
+131-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:86:13-55
+132        <activity
+132-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:88:9-91:52
+133            android:name="com.radar.blewifi.DetailActivity"
+133-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:89:13-43
+134            android:exported="false"
+134-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:90:13-37
+135            android:screenOrientation="portrait" />
+135-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:91:13-49
+136        <activity
+136-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:93:9-96:52
+137            android:name="com.radar.blewifi.StatsActivity"
+137-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:94:13-42
+138            android:exported="false"
+138-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:95:13-37
+139            android:screenOrientation="portrait" />
+139-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:96:13-49
+140        <activity
+140-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:98:9-101:52
+141            android:name="com.radar.blewifi.EslActivity"
+141-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:99:13-40
+142            android:exported="false"
+142-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:100:13-37
+143            android:screenOrientation="portrait" />
+143-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:101:13-49
+144        <activity
+144-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:103:9-106:52
+145            android:name="com.radar.blewifi.ArchiveActivity"
+145-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:104:13-44
+146            android:exported="false"
+146-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:105:13-37
+147            android:screenOrientation="portrait" />
+147-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:106:13-49
+148        <activity
+148-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:108:9-111:52
+149            android:name="com.radar.blewifi.SettingsActivity"
+149-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:109:13-45
+150            android:exported="false"
+150-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:110:13-37
+151            android:screenOrientation="portrait" />
+151-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:111:13-49
+152        <activity
+152-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:113:9-117:58
+153            android:name="com.radar.blewifi.PagerActivity"
+153-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:114:13-42
+154            android:exported="false"
+154-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:115:13-37
+155            android:screenOrientation="portrait"
+155-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:116:13-49
+156            android:windowSoftInputMode="adjustResize" />
+156-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:117:13-55
+157
+158        <provider
+158-->INJECTED
+159            android:name="androidx.core.content.FileProvider"
+159-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:122:13-62
+160            android:authorities="com.radar.blewifi.fileprovider"
+160-->INJECTED
+161            android:exported="false"
+161-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:124:13-37
+162            android:grantUriPermissions="true" >
+162-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:125:13-47
+163            <meta-data
+163-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:126:13-128:54
+164                android:name="android.support.FILE_PROVIDER_PATHS"
+164-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:127:17-67
+165                android:resource="@xml/file_paths" />
+165-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:128:17-51
+166        </provider>
+167
+168        <service
+168-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:131:9-135:58
+169            android:name="com.radar.blewifi.AudioRecordService"
+169-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:132:13-47
+170            android:enabled="true"
+170-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:133:13-35
+171            android:exported="false"
+171-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:134:13-37
+172            android:foregroundServiceType="microphone" />
+172-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/AndroidManifest.xml:135:13-55
+173
+174        <!--
+175        Service for holding metadata. Cannot be instantiated.
+176        Metadata will be merged from other manifests.
+177        -->
+178        <service
+178-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:29:9-33:78
+179            android:name="androidx.camera.core.impl.MetadataHolderService"
+179-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:30:13-75
+180            android:enabled="false"
+180-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:31:13-36
+181            android:exported="false" >
+181-->[androidx.camera:camera-core:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/5824d74423163cca80d9cf01ce0f5586/transformed/jetified-camera-core-1.3.1/AndroidManifest.xml:32:13-37
+182            <meta-data
+182-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:30:13-32:89
+183                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+183-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:31:17-103
+184                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+184-->[androidx.camera:camera-camera2:1.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/854810a6e11dc403c8b36dd51cff02c2/transformed/jetified-camera-camera2-1.3.1/AndroidManifest.xml:32:17-86
+185        </service>
+186        <service
+186-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:9:9-15:19
+187            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+187-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:10:13-91
+188            android:directBootAware="true"
+188-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:17:13-43
+189            android:exported="false" >
+189-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:11:13-37
+190            <meta-data
+190-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:12:13-14:85
+191                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
+191-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:13:17-120
+192                android:value="com.google.firebase.components.ComponentRegistrar" />
+192-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/125abbc8dc88f643df4e3f8f87ae8419/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.1/AndroidManifest.xml:14:17-82
+193            <meta-data
+193-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:12:13-14:85
+194                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+194-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:13:17-124
+195                android:value="com.google.firebase.components.ComponentRegistrar" />
+195-->[com.google.mlkit:vision-common:17.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/74ed16e20d0c062b3d493819c9283237/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:14:17-82
+196            <meta-data
+196-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:20:13-22:85
+197                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+197-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:21:17-120
+198                android:value="com.google.firebase.components.ComponentRegistrar" />
+198-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:22:17-82
+199        </service>
+200
+201        <provider
+201-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:9:9-13:38
+202            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+202-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:10:13-78
+203            android:authorities="com.radar.blewifi.mlkitinitprovider"
+203-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:11:13-69
+204            android:exported="false"
+204-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:12:13-37
+205            android:initOrder="99" />
+205-->[com.google.mlkit:common:18.11.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/1a95ad5de060a7460b6d996186f7e898/transformed/jetified-common-18.11.0/AndroidManifest.xml:13:13-35
+206
+207        <service
+207-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:10:9-13:105
+208            android:name="com.google.android.gms.nearby.exposurenotification.WakeUpService"
+208-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:11:13-92
+209            android:exported="true"
+209-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:12:13-36
+210            android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK" />
+210-->[com.google.android.gms:play-services-nearby:19.0.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/3e776b1e099da7dd4b4561f45b3bd724/transformed/jetified-play-services-nearby-19.0.0/AndroidManifest.xml:13:13-102
+211
+212        <activity
+212-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:9-173
+213            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+213-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:19-85
+214            android:exported="false"
+214-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:146-170
+215            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+215-->[com.google.android.gms:play-services-base:18.5.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/98dcef779c21377f5ac763c99f7e5fd5/transformed/jetified-play-services-base-18.5.0/AndroidManifest.xml:5:86-145
+216
+217        <meta-data
+217-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:9-122
+218            android:name="com.google.android.gms.version"
+218-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:20-65
+219            android:value="@integer/google_play_services_version" />
+219-->[com.google.android.gms:play-services-basement:18.4.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/7d9348702bc17c438c104ac01c991f7f/transformed/jetified-play-services-basement-18.4.0/AndroidManifest.xml:6:66-119
+220
+221        <provider
+221-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+222            android:name="androidx.startup.InitializationProvider"
+222-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+223            android:authorities="com.radar.blewifi.androidx-startup"
+223-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+224            android:exported="false" >
+224-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+225            <meta-data
+225-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+226                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+226-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+227                android:value="androidx.startup" />
+227-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/49a4c8d56ae961a3b14b4f7e606d742d/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+228            <meta-data
+228-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+229                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+229-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+230                android:value="androidx.startup" />
+230-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/2a11e4d6f01e68fe84a702fc75d73350/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+231            <meta-data
+231-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+232                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+232-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+233                android:value="androidx.startup" />
+233-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+234        </provider>
+235
+236        <receiver
+236-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+237            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+237-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+238            android:directBootAware="false"
+238-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+239            android:enabled="true"
+239-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+240            android:exported="true"
+240-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+241            android:permission="android.permission.DUMP" >
+241-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+242            <intent-filter>
+242-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+243                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+243-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+243-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+244            </intent-filter>
+245            <intent-filter>
+245-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+246                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+246-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+246-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+247            </intent-filter>
+248            <intent-filter>
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+249                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+249-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+249-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+250            </intent-filter>
+251            <intent-filter>
+251-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+252                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+252-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+252-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/22f06b46719a28df4bc004ed011d90fb/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+253            </intent-filter>
+254        </receiver>
+255
 256        <service
-256-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:26:9-30:19
-257            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-257-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:27:13-117
-258            android:exported="false"
-258-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:28:13-37
-259            android:permission="android.permission.BIND_JOB_SERVICE" >
-259-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:29:13-69
-260        </service>
-261
-262        <receiver
-262-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:32:9-34:40
-263            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-263-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:33:13-132
-264            android:exported="false" />
-264-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:34:13-37
-265    </application>
-266
-267</manifest>
+256-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:29:9-35:19
+257            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+257-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:30:13-103
+258            android:exported="false" >
+258-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:31:13-37
+259            <meta-data
+259-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:32:13-34:39
+260                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+260-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:33:17-94
+261                android:value="cct" />
+261-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/a76c2ef41f3f1ea8775d078cdfc620d4/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:34:17-36
+262        </service>
+263        <service
+263-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:26:9-30:19
+264            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+264-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:27:13-117
+265            android:exported="false"
+265-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:28:13-37
+266            android:permission="android.permission.BIND_JOB_SERVICE" >
+266-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:29:13-69
+267        </service>
+268
+269        <receiver
+269-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:32:9-34:40
+270            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+270-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:33:13-132
+271            android:exported="false" />
+271-->[com.google.android.datatransport:transport-runtime:2.2.6] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/10b200142fb12b0859f5a91089f1a3b5/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:34:13-37
+272    </application>
+273
+274</manifest>

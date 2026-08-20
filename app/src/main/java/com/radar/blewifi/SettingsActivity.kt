@@ -208,11 +208,29 @@ class SettingsActivity : AppCompatActivity() {
             isPink -> R.drawable.status_box_bg_pink
             isNeon -> R.drawable.status_box_bg_neon
             isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
+            isBubblegum -> R.drawable.status_box_bg_bubblegum
             isSummertime -> R.drawable.status_box_bg_summertime
             isMorio -> R.drawable.status_box_bg_morio
             else -> R.drawable.status_box_bg
         })
+        binding.btnSettingsBack.setTextColor(if (isBubblegum) Color.parseColor("#00FDFF") else Color.WHITE)
+        
+        // Update Secret Audio box theme
+        binding.layoutSecretAudio.setBackgroundResource(when {
+            isHighContrast -> R.drawable.status_box_bg_white
+            isRedNight -> R.drawable.status_box_bg_red
+            isPink -> R.drawable.status_box_bg_pink
+            isNeon -> R.drawable.status_box_bg_neon
+            isNaranja -> R.drawable.status_box_bg_naranja
+            isBubblegum -> R.drawable.status_box_bg_bubblegum
+            isSummertime -> R.drawable.status_box_bg_summertime
+            isMorio -> R.drawable.status_box_bg_morio
+            else -> R.drawable.status_box_bg
+        })
+        binding.tvSecretAudioLabel.setTextColor(textColor)
+        binding.tvSecretAudioCommands.setTextColor(textColor)
+        binding.tvSecretAudioPath.setTextColor(textColor)
+        binding.tvSecretAudioPath.alpha = 0.4f
         
         // Update spinner background
         binding.spTheme.setBackgroundResource(when {
@@ -221,7 +239,7 @@ class SettingsActivity : AppCompatActivity() {
             isPink -> R.drawable.status_box_bg_pink
             isNeon -> R.drawable.status_box_bg_neon
             isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
+            isBubblegum -> R.drawable.status_box_bg_bubblegum
             isSummertime -> R.drawable.status_box_bg_summertime
             isMorio -> R.drawable.status_box_bg_morio
             else -> R.drawable.status_box_bg

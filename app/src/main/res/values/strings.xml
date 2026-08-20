@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">[ BLESP v3 ]</string>
+    <string name="about_title">WHAT DOES THE APP DO?</string>
+    <string name="label_core_version">CORE VERSION</string>
+    <string name="core_version">3.1.5</string>
+    <string name="label_author">AUTHOR</string>
+    <string name="author_name">Chris Edgar</string>
+    <string name="label_development">DEVELOPMENT</string>
+    <string name="dev_url">www.mostlyawesome.de</string>
+    <string name="about_description">Designed for passive and active signal intelligence and mapping operations.\n\nAll signals processed locally. No data transmitted to cloud services without explicit user command.</string>
+    <string name="btn_back">BACK</string>
 </resources>

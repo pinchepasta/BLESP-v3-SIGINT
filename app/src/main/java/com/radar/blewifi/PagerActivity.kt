@@ -297,11 +297,11 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
             RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
             RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
-            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.BUBBLEGUM -> R.drawable.status_box_bg_bubblegum
             RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
             else -> R.drawable.status_box_bg
         })
-        binding.btnBack.setTextColor(if (isHighContrastMode) Color.BLACK else Color.WHITE)
+        binding.btnBack.setTextColor(if (currentTheme == RadarView.Theme.BUBBLEGUM) Color.parseColor("#00FDFF") else if (isHighContrastMode) Color.BLACK else Color.WHITE)
 
         binding.etMessage.setBackgroundResource(when(currentTheme) {
             RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
@@ -309,7 +309,7 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
             RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
             RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
-            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.BUBBLEGUM -> R.drawable.status_box_bg_bubblegum
             RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
             else -> R.drawable.status_box_bg
         })
@@ -322,11 +322,11 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
             RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
             RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
-            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.BUBBLEGUM -> R.drawable.status_box_bg_bubblegum
             RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
             else -> R.drawable.status_box_bg
         })
-        binding.btnSend.setTextColor(primaryColor)
+        binding.btnSend.setTextColor(if (currentTheme == RadarView.Theme.BUBBLEGUM) Color.parseColor("#00FDFF") else primaryColor)
 
         binding.btnAttach.setTextColor(primaryColor)
         binding.btnRecord.setTextColor(primaryColor)
@@ -1091,8 +1091,8 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
                     holder.avatarText.setTextColor(Color.BLACK)
                 }
                 RadarView.Theme.BUBBLEGUM -> {
-                    holder.avatarBg.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                    holder.avatarText.setTextColor(Color.BLACK)
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_bubblegum)
+                    holder.avatarText.setTextColor(Color.parseColor("#00FDFF"))
                 }
                 RadarView.Theme.SUMMERTIME -> {
                     holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_naranja)

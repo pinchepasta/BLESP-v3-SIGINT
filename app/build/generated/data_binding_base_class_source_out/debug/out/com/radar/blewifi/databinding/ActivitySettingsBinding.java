@@ -30,6 +30,9 @@ public final class ActivitySettingsBinding implements ViewBinding {
   public final LinearLayout headerSettings;
 
   @NonNull
+  public final LinearLayout layoutSecretAudio;
+
+  @NonNull
   public final ConstraintLayout settingsRoot;
 
   @NonNull
@@ -48,22 +51,37 @@ public final class ActivitySettingsBinding implements ViewBinding {
   public final TextView tvLabelTheme;
 
   @NonNull
+  public final TextView tvSecretAudioCommands;
+
+  @NonNull
+  public final TextView tvSecretAudioLabel;
+
+  @NonNull
+  public final TextView tvSecretAudioPath;
+
+  @NonNull
   public final TextView tvSettingsTitle;
 
   private ActivitySettingsBinding(@NonNull ConstraintLayout rootView,
       @NonNull Button btnSettingsBack, @NonNull LinearLayout headerSettings,
-      @NonNull ConstraintLayout settingsRoot, @NonNull Spinner spTheme, @NonNull Switch swImmersive,
-      @NonNull TextView tvImmersiveText, @NonNull TextView tvLabelHud,
-      @NonNull TextView tvLabelTheme, @NonNull TextView tvSettingsTitle) {
+      @NonNull LinearLayout layoutSecretAudio, @NonNull ConstraintLayout settingsRoot,
+      @NonNull Spinner spTheme, @NonNull Switch swImmersive, @NonNull TextView tvImmersiveText,
+      @NonNull TextView tvLabelHud, @NonNull TextView tvLabelTheme,
+      @NonNull TextView tvSecretAudioCommands, @NonNull TextView tvSecretAudioLabel,
+      @NonNull TextView tvSecretAudioPath, @NonNull TextView tvSettingsTitle) {
     this.rootView = rootView;
     this.btnSettingsBack = btnSettingsBack;
     this.headerSettings = headerSettings;
+    this.layoutSecretAudio = layoutSecretAudio;
     this.settingsRoot = settingsRoot;
     this.spTheme = spTheme;
     this.swImmersive = swImmersive;
     this.tvImmersiveText = tvImmersiveText;
     this.tvLabelHud = tvLabelHud;
     this.tvLabelTheme = tvLabelTheme;
+    this.tvSecretAudioCommands = tvSecretAudioCommands;
+    this.tvSecretAudioLabel = tvSecretAudioLabel;
+    this.tvSecretAudioPath = tvSecretAudioPath;
     this.tvSettingsTitle = tvSettingsTitle;
   }
 
@@ -106,6 +124,12 @@ public final class ActivitySettingsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.layoutSecretAudio;
+      LinearLayout layoutSecretAudio = ViewBindings.findChildViewById(rootView, id);
+      if (layoutSecretAudio == null) {
+        break missingId;
+      }
+
       ConstraintLayout settingsRoot = (ConstraintLayout) rootView;
 
       id = R.id.spTheme;
@@ -138,6 +162,24 @@ public final class ActivitySettingsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvSecretAudioCommands;
+      TextView tvSecretAudioCommands = ViewBindings.findChildViewById(rootView, id);
+      if (tvSecretAudioCommands == null) {
+        break missingId;
+      }
+
+      id = R.id.tvSecretAudioLabel;
+      TextView tvSecretAudioLabel = ViewBindings.findChildViewById(rootView, id);
+      if (tvSecretAudioLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.tvSecretAudioPath;
+      TextView tvSecretAudioPath = ViewBindings.findChildViewById(rootView, id);
+      if (tvSecretAudioPath == null) {
+        break missingId;
+      }
+
       id = R.id.tvSettingsTitle;
       TextView tvSettingsTitle = ViewBindings.findChildViewById(rootView, id);
       if (tvSettingsTitle == null) {
@@ -145,8 +187,9 @@ public final class ActivitySettingsBinding implements ViewBinding {
       }
 
       return new ActivitySettingsBinding((ConstraintLayout) rootView, btnSettingsBack,
-          headerSettings, settingsRoot, spTheme, swImmersive, tvImmersiveText, tvLabelHud,
-          tvLabelTheme, tvSettingsTitle);
+          headerSettings, layoutSecretAudio, settingsRoot, spTheme, swImmersive, tvImmersiveText,
+          tvLabelHud, tvLabelTheme, tvSecretAudioCommands, tvSecretAudioLabel, tvSecretAudioPath,
+          tvSettingsTitle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

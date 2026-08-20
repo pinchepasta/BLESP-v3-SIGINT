@@ -113,6 +113,50 @@
                 android:textSize="10sp"
                 android:fontFamily="monospace" />
 
+            <LinearLayout
+                android:id="@+id/layoutSecretAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/status_box_bg">
+
+                <TextView
+                    android:id="@+id/tvSecretAudioLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SECRET AUDIO"
+                    android:fontFamily="monospace"
+                    android:textColor="#00FF41"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:alpha="0.8" />
+
+                <TextView
+                    android:id="@+id/tvSecretAudioCommands"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="START CODE: 77872\nSTOP  CODE: 77873"
+                    android:textColor="#00FF41"
+                    android:fontFamily="monospace"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvSecretAudioPath"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PATH: /Download/BLESP"
+                    android:textColor="#4400FF41"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

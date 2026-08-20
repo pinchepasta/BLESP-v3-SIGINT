@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bubblegum Tactical Box: Pink background with Cyan (Accent) border -->
+    <item>
+        <shape>
+            <solid android:color="#1AFF00FF" />
+            <stroke android:width="1dp" android:color="#8000FDFF" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+</layer-list>
