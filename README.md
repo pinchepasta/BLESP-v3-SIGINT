@@ -2,13 +2,17 @@
 
 Advanced signal surveillance platform.
 
-Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem, for example from everyday personal devices to complex infrastructure systems, all in one device.
+Imagine having all your hacking and pentesting devices combined and controlled through your phone, all on a live radar map.
+That's BLESP v3.
 
-<b>What I'm working on:</b> <a href="https://github.com/pinchepasta/Flipper-Zero-Firmware-on-Cardputer-ADV">mostly-a-Flipper</a>  integration and an iOS version of the app.
+Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, all in your hand, with BLESP v3 you got it all.
+
+By the way: The whole app was developed and used as a movie prop, but it was too good to keep it locked away.
+<br>
 
 
 ---
-## Screenshots
+<h1>Screenshots</h1>
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/2.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/3.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
