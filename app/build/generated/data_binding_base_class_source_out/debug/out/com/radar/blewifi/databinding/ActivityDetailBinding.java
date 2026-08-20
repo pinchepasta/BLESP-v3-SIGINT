@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.radar.blewifi.R;
@@ -19,7 +19,7 @@ import java.lang.String;
 
 public final class ActivityDetailBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final ConstraintLayout rootView;
 
   @NonNull
   public final Button btnAlarm;
@@ -31,7 +31,13 @@ public final class ActivityDetailBinding implements ViewBinding {
   public final Button btnBeepAirTag;
 
   @NonNull
+  public final Button btnEsl;
+
+  @NonNull
   public final Button btnSound;
+
+  @NonNull
+  public final Button idEmpty;
 
   @NonNull
   public final Spinner spExploits;
@@ -81,19 +87,21 @@ public final class ActivityDetailBinding implements ViewBinding {
   @NonNull
   public final TextView tvType;
 
-  private ActivityDetailBinding(@NonNull ScrollView rootView, @NonNull Button btnAlarm,
-      @NonNull Button btnBack, @NonNull Button btnBeepAirTag, @NonNull Button btnSound,
-      @NonNull Spinner spExploits, @NonNull TextView tvAddress, @NonNull TextView tvDist,
-      @NonNull TextView tvExploitDesc, @NonNull TextView tvExtra1, @NonNull TextView tvExtra2,
-      @NonNull TextView tvExtra3, @NonNull TextView tvExtra4, @NonNull TextView tvExtra5,
-      @NonNull TextView tvExtra6, @NonNull TextView tvFastPair, @NonNull TextView tvName,
-      @NonNull TextView tvRssi, @NonNull TextView tvSelectExploitLabel, @NonNull TextView tvTitle,
-      @NonNull TextView tvType) {
+  private ActivityDetailBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnAlarm,
+      @NonNull Button btnBack, @NonNull Button btnBeepAirTag, @NonNull Button btnEsl,
+      @NonNull Button btnSound, @NonNull Button idEmpty, @NonNull Spinner spExploits,
+      @NonNull TextView tvAddress, @NonNull TextView tvDist, @NonNull TextView tvExploitDesc,
+      @NonNull TextView tvExtra1, @NonNull TextView tvExtra2, @NonNull TextView tvExtra3,
+      @NonNull TextView tvExtra4, @NonNull TextView tvExtra5, @NonNull TextView tvExtra6,
+      @NonNull TextView tvFastPair, @NonNull TextView tvName, @NonNull TextView tvRssi,
+      @NonNull TextView tvSelectExploitLabel, @NonNull TextView tvTitle, @NonNull TextView tvType) {
     this.rootView = rootView;
     this.btnAlarm = btnAlarm;
     this.btnBack = btnBack;
     this.btnBeepAirTag = btnBeepAirTag;
+    this.btnEsl = btnEsl;
     this.btnSound = btnSound;
+    this.idEmpty = idEmpty;
     this.spExploits = spExploits;
     this.tvAddress = tvAddress;
     this.tvDist = tvDist;
@@ -114,7 +122,7 @@ public final class ActivityDetailBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public ConstraintLayout getRoot() {
     return rootView;
   }
 
@@ -157,9 +165,21 @@ public final class ActivityDetailBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnEsl;
+      Button btnEsl = ViewBindings.findChildViewById(rootView, id);
+      if (btnEsl == null) {
+        break missingId;
+      }
+
       id = R.id.btnSound;
       Button btnSound = ViewBindings.findChildViewById(rootView, id);
       if (btnSound == null) {
+        break missingId;
+      }
+
+      id = R.id.id_empty;
+      Button idEmpty = ViewBindings.findChildViewById(rootView, id);
+      if (idEmpty == null) {
         break missingId;
       }
 
@@ -259,10 +279,10 @@ public final class ActivityDetailBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityDetailBinding((ScrollView) rootView, btnAlarm, btnBack, btnBeepAirTag,
-          btnSound, spExploits, tvAddress, tvDist, tvExploitDesc, tvExtra1, tvExtra2, tvExtra3,
-          tvExtra4, tvExtra5, tvExtra6, tvFastPair, tvName, tvRssi, tvSelectExploitLabel, tvTitle,
-          tvType);
+      return new ActivityDetailBinding((ConstraintLayout) rootView, btnAlarm, btnBack,
+          btnBeepAirTag, btnEsl, btnSound, idEmpty, spExploits, tvAddress, tvDist, tvExploitDesc,
+          tvExtra1, tvExtra2, tvExtra3, tvExtra4, tvExtra5, tvExtra6, tvFastPair, tvName, tvRssi,
+          tvSelectExploitLabel, tvTitle, tvType);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

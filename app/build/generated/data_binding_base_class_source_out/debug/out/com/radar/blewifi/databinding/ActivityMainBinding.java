@@ -50,6 +50,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ImageView btnGlobeListTop;
 
   @NonNull
+  public final ImageView btnInfo;
+
+  @NonNull
   public final ImageView btnKillswitch;
 
   @NonNull
@@ -80,7 +83,7 @@ public final class ActivityMainBinding implements ViewBinding {
   public final CheckBox cbBle;
 
   @NonNull
-  public final CheckBox cbLte;
+  public final CheckBox cbCams;
 
   @NonNull
   public final CheckBox cbMap;
@@ -130,15 +133,16 @@ public final class ActivityMainBinding implements ViewBinding {
   private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull LinearLayout bottomBar,
       @NonNull ImageView btnArchive, @NonNull Button btnBeep, @NonNull Button btnClear,
       @NonNull ImageView btnEsl, @NonNull Button btnExt, @NonNull ImageView btnGlobeListTop,
-      @NonNull ImageView btnKillswitch, @NonNull ImageView btnPager, @NonNull Button btnScan,
-      @NonNull ImageView btnStats, @NonNull Button btnTerminal, @NonNull ImageView btnThemeToggle,
-      @NonNull CheckBox cb24, @NonNull CheckBox cb5, @NonNull CheckBox cbAero,
-      @NonNull CheckBox cbBle, @NonNull CheckBox cbLte, @NonNull CheckBox cbMap,
-      @NonNull LinearLayout headerBar, @NonNull LinearLayout headerContainer,
-      @NonNull LinearLayout infoContainer, @NonNull ImageView ivLogo,
-      @NonNull RecyclerView listView, @NonNull MapView mapView, @NonNull MiniGraphView miniGraph,
-      @NonNull MiniGraphView netGraph, @NonNull FrameLayout radarContainer,
-      @NonNull RadarView radarView, @NonNull TextView statusText, @NonNull TextView tvCoordinates,
+      @NonNull ImageView btnInfo, @NonNull ImageView btnKillswitch, @NonNull ImageView btnPager,
+      @NonNull Button btnScan, @NonNull ImageView btnStats, @NonNull Button btnTerminal,
+      @NonNull ImageView btnThemeToggle, @NonNull CheckBox cb24, @NonNull CheckBox cb5,
+      @NonNull CheckBox cbAero, @NonNull CheckBox cbBle, @NonNull CheckBox cbCams,
+      @NonNull CheckBox cbMap, @NonNull LinearLayout headerBar,
+      @NonNull LinearLayout headerContainer, @NonNull LinearLayout infoContainer,
+      @NonNull ImageView ivLogo, @NonNull RecyclerView listView, @NonNull MapView mapView,
+      @NonNull MiniGraphView miniGraph, @NonNull MiniGraphView netGraph,
+      @NonNull FrameLayout radarContainer, @NonNull RadarView radarView,
+      @NonNull TextView statusText, @NonNull TextView tvCoordinates,
       @NonNull TextView tvOverlayNetworkName, @NonNull TextView tvTimecode) {
     this.rootView = rootView;
     this.bottomBar = bottomBar;
@@ -148,6 +152,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnEsl = btnEsl;
     this.btnExt = btnExt;
     this.btnGlobeListTop = btnGlobeListTop;
+    this.btnInfo = btnInfo;
     this.btnKillswitch = btnKillswitch;
     this.btnPager = btnPager;
     this.btnScan = btnScan;
@@ -158,7 +163,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.cb5 = cb5;
     this.cbAero = cbAero;
     this.cbBle = cbBle;
-    this.cbLte = cbLte;
+    this.cbCams = cbCams;
     this.cbMap = cbMap;
     this.headerBar = headerBar;
     this.headerContainer = headerContainer;
@@ -245,6 +250,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnInfo;
+      ImageView btnInfo = ViewBindings.findChildViewById(rootView, id);
+      if (btnInfo == null) {
+        break missingId;
+      }
+
       id = R.id.btnKillswitch;
       ImageView btnKillswitch = ViewBindings.findChildViewById(rootView, id);
       if (btnKillswitch == null) {
@@ -305,9 +316,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.cbLte;
-      CheckBox cbLte = ViewBindings.findChildViewById(rootView, id);
-      if (cbLte == null) {
+      id = R.id.cbCams;
+      CheckBox cbCams = ViewBindings.findChildViewById(rootView, id);
+      if (cbCams == null) {
         break missingId;
       }
 
@@ -402,8 +413,8 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((ConstraintLayout) rootView, bottomBar, btnArchive, btnBeep,
-          btnClear, btnEsl, btnExt, btnGlobeListTop, btnKillswitch, btnPager, btnScan, btnStats,
-          btnTerminal, btnThemeToggle, cb24, cb5, cbAero, cbBle, cbLte, cbMap, headerBar,
+          btnClear, btnEsl, btnExt, btnGlobeListTop, btnInfo, btnKillswitch, btnPager, btnScan,
+          btnStats, btnTerminal, btnThemeToggle, cb24, cb5, cbAero, cbBle, cbCams, cbMap, headerBar,
           headerContainer, infoContainer, ivLogo, listView, mapView, miniGraph, netGraph,
           radarContainer, radarView, statusText, tvCoordinates, tvOverlayNetworkName, tvTimecode);
     }

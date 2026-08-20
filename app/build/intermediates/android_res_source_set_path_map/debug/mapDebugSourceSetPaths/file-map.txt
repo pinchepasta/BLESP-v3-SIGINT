@@ -1,8 +1,8 @@
-com.radar.blewifi.app-pngs-0 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/generated/res/pngs/debug
-com.radar.blewifi.app-resValues-1 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/generated/res/resValues/debug
-com.radar.blewifi.app-updated_navigation_xml-2 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/generated/updated_navigation_xml/debug
-com.radar.blewifi.app-mergeDebugResources-3 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
-com.radar.blewifi.app-mergeDebugResources-4 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
-com.radar.blewifi.app-debug-5 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/build/intermediates/merged_res/debug/mergeDebugResources
-com.radar.blewifi.app-debug-6 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/src/debug/res
-com.radar.blewifi.app-main-7 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1/app/src/main/res
+com.radar.blewifi.app-pngs-0 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/generated/res/pngs/debug
+com.radar.blewifi.app-resValues-1 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/generated/res/resValues/debug
+com.radar.blewifi.app-updated_navigation_xml-2 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/generated/updated_navigation_xml/debug
+com.radar.blewifi.app-mergeDebugResources-3 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.radar.blewifi.app-mergeDebugResources-4 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.radar.blewifi.app-debug-5 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.radar.blewifi.app-debug-6 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/debug/res
+com.radar.blewifi.app-main-7 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/res

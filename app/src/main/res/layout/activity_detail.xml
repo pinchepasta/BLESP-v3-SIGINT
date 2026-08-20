@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnBack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,10 +92,16 @@
             android:layout_marginBottom="12dp" />
 
         <Button
+            android:id="@+id/id_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/btnAlarm"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="[ ENABLE ALARM ]"
+            android:text="► 01 ALARM: OFF"
             android:fontFamily="monospace"
             android:textColor="#00FF41"
             android:textSize="14sp"
@@ -100,7 +113,7 @@
             android:id="@+id/btnSound"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="[ SOUND: ON ]"
+            android:text="► 02 SOUND: ON"
             android:fontFamily="monospace"
             android:textColor="#00FF41"
             android:textSize="14sp"
@@ -112,9 +125,22 @@
             android:id="@+id/btnBeepAirTag"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="[ TRIGGER AIRTAG BEEP ]"
+            android:text="► 03 TRIGGER BEEP"
             android:fontFamily="monospace"
             android:textColor="#FF00FF"
+            android:textSize="14sp"
+            android:background="@drawable/btn_bg_dim"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            style="?attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnEsl"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="► 04 ESL TAG TOOLS"
+            android:fontFamily="monospace"
+            android:textColor="#40E0D0"
             android:textSize="14sp"
             android:background="@drawable/btn_bg_dim"
             android:layout_marginBottom="12dp"
@@ -228,17 +254,27 @@
             android:layout_marginBottom="6dp"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="OK"
-            android:fontFamily="monospace"
-            android:textColor="#FF00FF"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:background="@drawable/btn_bg"
-            style="?attr/borderlessButtonStyle" />
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-</ScrollView>
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/status_box_bg_pink"
+        android:fontFamily="monospace"
+        android:minWidth="80dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="CLOSE"
+        android:textColor="#FF00FF"
+        android:textSize="12sp"
+        style="?attr/borderlessButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

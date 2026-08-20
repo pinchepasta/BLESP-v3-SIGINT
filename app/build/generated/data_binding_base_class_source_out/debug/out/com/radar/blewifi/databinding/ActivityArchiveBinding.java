@@ -4,6 +4,7 @@ package com.radar.blewifi.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +25,7 @@ public final class ActivityArchiveBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final ImageView btnBack;
+  public final Button btnBack;
 
   @NonNull
   public final ImageView btnClear;
@@ -42,12 +43,15 @@ public final class ActivityArchiveBinding implements ViewBinding {
   public final RecyclerView rvArchive;
 
   @NonNull
+  public final TextView tvArchiveTitle;
+
+  @NonNull
   public final TextView tvEmpty;
 
-  private ActivityArchiveBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView btnBack,
+  private ActivityArchiveBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnBack,
       @NonNull ImageView btnClear, @NonNull ImageView btnExport, @NonNull EditText etSearch,
       @NonNull LinearLayout headerArchive, @NonNull RecyclerView rvArchive,
-      @NonNull TextView tvEmpty) {
+      @NonNull TextView tvArchiveTitle, @NonNull TextView tvEmpty) {
     this.rootView = rootView;
     this.btnBack = btnBack;
     this.btnClear = btnClear;
@@ -55,6 +59,7 @@ public final class ActivityArchiveBinding implements ViewBinding {
     this.etSearch = etSearch;
     this.headerArchive = headerArchive;
     this.rvArchive = rvArchive;
+    this.tvArchiveTitle = tvArchiveTitle;
     this.tvEmpty = tvEmpty;
   }
 
@@ -86,7 +91,7 @@ public final class ActivityArchiveBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.btnBack;
-      ImageView btnBack = ViewBindings.findChildViewById(rootView, id);
+      Button btnBack = ViewBindings.findChildViewById(rootView, id);
       if (btnBack == null) {
         break missingId;
       }
@@ -121,6 +126,12 @@ public final class ActivityArchiveBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvArchiveTitle;
+      TextView tvArchiveTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvArchiveTitle == null) {
+        break missingId;
+      }
+
       id = R.id.tvEmpty;
       TextView tvEmpty = ViewBindings.findChildViewById(rootView, id);
       if (tvEmpty == null) {
@@ -128,7 +139,7 @@ public final class ActivityArchiveBinding implements ViewBinding {
       }
 
       return new ActivityArchiveBinding((ConstraintLayout) rootView, btnBack, btnClear, btnExport,
-          etSearch, headerArchive, rvArchive, tvEmpty);
+          etSearch, headerArchive, rvArchive, tvArchiveTitle, tvEmpty);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

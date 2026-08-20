@@ -19,6 +19,12 @@ import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import android.location.Location
+import android.location.LocationListener
+import android.os.Bundle
 
 class ScannerManager(private val context: Context) {
 
@@ -79,82 +85,74 @@ class ScannerManager(private val context: Context) {
         if (enabled) alarmIds.add(deviceId) else alarmIds.remove(deviceId)
     }
 
-    fun isAlarmEnabled(deviceId: String) = alarmIds.contains(deviceId)
+    fun isAlarmEnabled(deviceId: String): Boolean = alarmIds.contains(deviceId)
 
-    fun getDevices() = deviceMap.values.toList()
-    val deviceMap = java.util.concurrent.ConcurrentHashMap<String, ScanDevice>()
-    private val archiveMap = java.util.concurrent.ConcurrentHashMap<String, ScanDevice>()
-    private val handler   = Handler(Looper.getMainLooper())
-    private val ioExecutor = java.util.concurrent.Executors.newSingleThreadExecutor()
+    fun getDevices(): List<ScanDevice> = deviceMap.values.toList()
+
+    val deviceMap = ConcurrentHashMap<String, ScanDevice>()
+    val archiveMap = ConcurrentHashMap<String, ScanDevice>()
+    private val handler = Handler(Looper.getMainLooper())
+    private var ioExecutor: ExecutorService? = null
     private var bleScanner: BluetoothLeScanner? = null
     private var wifiManager: WifiManager? = null
     private var telephonyManager: TelephonyManager? = null
     private var locationManager: android.location.LocationManager? = null
     private var scanning = false
     private var isBackgroundMode = false
-    var lastLocation: android.location.Location? = null
+    var lastLocation: Location? = null
     private val okHttpClient = OkHttpClient()
     private val gson = Gson()
 
     init {
+        wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bleScanner = bluetoothManager.adapter.bluetoothLeScanner
+        telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as android.location.LocationManager
         loadArchive()
     }
 
     private fun loadArchive() {
         try {
-            val prefs = context.getSharedPreferences("scan_archive", Context.MODE_PRIVATE)
-            val json = prefs.getString("archived_devices", null)
-            if (json != null) {
-                val type = object : TypeToken<Map<String, ScanDevice>>() {}.type
-                val archived: Map<String, ScanDevice> = gson.fromJson(json, type)
-                archiveMap.putAll(archived)
-            }
+            val prefs = context.getSharedPreferences("radar_archive", Context.MODE_PRIVATE)
+            val json = prefs.getString("devices", null) ?: return
+            val type = object : TypeToken<Map<String, ScanDevice>>() {}.type
+            val loaded: Map<String, ScanDevice> = gson.fromJson(json, type)
+            archiveMap.putAll(loaded)
         } catch (e: Exception) {
-            android.util.Log.e("ScannerManager", "Failed to load archive", e)
+            e.printStackTrace()
         }
     }
 
     private var lastArchiveSaveTime = 0L
-
     private fun saveArchive() {
         val now = System.currentTimeMillis()
-        // Throttle saves to once every 15 seconds
-        if (now - lastArchiveSaveTime < 15000) return
+        if (now - lastArchiveSaveTime < 60000) return
+        forceSaveArchive()
         lastArchiveSaveTime = now
-
-        val archiveSnapshot = java.util.HashMap(archiveMap)
-        ioExecutor.execute {
-            try {
-                val prefs = context.getSharedPreferences("scan_archive", Context.MODE_PRIVATE)
-                val json = gson.toJson(archiveSnapshot)
-                prefs.edit().putString("archived_devices", json).apply()
-                android.util.Log.d("ScannerManager", "Archive saved (${archiveSnapshot.size} entries) on background thread")
-            } catch (e: Exception) {
-                android.util.Log.e("ScannerManager", "Failed to save archive", e)
-            }
-        }
     }
 
     fun forceSaveArchive() {
-        lastArchiveSaveTime = 0L
-        saveArchive()
+        val prefs = context.getSharedPreferences("radar_archive", Context.MODE_PRIVATE)
+        val json = gson.toJson(archiveMap)
+        prefs.edit().putString("devices", json).apply()
     }
 
-    fun getArchivedDevices(): List<ScanDevice> = archiveMap.values.toList().sortedByDescending { it.lastSeen }
+    fun getArchivedDevices(): List<ScanDevice> = archiveMap.values.toList()
 
     private val locationListener = object : android.location.LocationListener {
-        override fun onLocationChanged(location: android.location.Location) {
+        override fun onLocationChanged(location: Location) {
             lastLocation = location
             notifyLocationUpdated(location.latitude, location.longitude)
         }
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
-        override fun onStatusChanged(provider: String?, status: Int, extras: android.os.Bundle?) {}
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
     }
 
     private val wifiReceiver = object : BroadcastReceiver() {
-        override fun onReceive(ctx: Context, intent: Intent) {
-            if (intent.action == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (WifiManager.SCAN_RESULTS_AVAILABLE_ACTION == intent.action) {
                 processWifiResults()
             }
         }
@@ -168,21 +166,23 @@ class ScannerManager(private val context: Context) {
             results.forEach { processBleResult(it) }
         }
         override fun onScanFailed(errorCode: Int) {
-            notifyError("BLE scan failed: error $errorCode")
+            notifyError("BLE Scan Failed: $errorCode")
         }
     }
 
-    fun startScanning(isBackground: Boolean = false) {
+    fun startScanning(background: Boolean = false) {
         if (scanning) return
         scanning = true
-        isBackgroundMode = isBackground
-        notifyScanStatusChanged(true)
+        isBackgroundMode = background
+        ioExecutor = Executors.newFixedThreadPool(4)
+        
         startBleScanning()
         startWifiScanning()
         startCellScanning()
         startAircraftScanning()
         startLocationUpdates()
         schedulePeriodicUpdate()
+        notifyScanStatusChanged(true)
     }
 
     private fun startAircraftScanning() {
@@ -190,10 +190,105 @@ class ScannerManager(private val context: Context) {
             override fun run() {
                 if (!scanning) return
                 fetchAircraftData()
+                fetchCameraData()
                 val interval = if (isBackgroundMode) 30000L else 5000L
                 handler.postDelayed(this, interval)
             }
         })
+    }
+
+    private fun fetchCameraData() {
+        val loc = lastLocation ?: return
+        
+        val radius = 1000 // 1km
+        val query = """
+            [out:json][timeout:25];
+            (
+              node["man_made"="surveillance"](around:$radius,${loc.latitude},${loc.longitude});
+              way["man_made"="surveillance"](around:$radius,${loc.latitude},${loc.longitude});
+              node["camera:type"](around:$radius,${loc.latitude},${loc.longitude});
+            );
+            out body;
+            >;
+            out skel qt;
+        """.trimIndent()
+
+        val url = "https://sunders.uber.space/cameras.php?lat=${loc.latitude}&lon=${loc.longitude}&radius=$radius"
+
+        val request = Request.Builder()
+            .url(url)
+            .header("User-Agent", "BLEWifiRadar/1.0")
+            .build()
+
+        okHttpClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                android.util.Log.e("ScannerManager", "Camera fetch failed", e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!it.isSuccessful) return
+                    val body = it.body?.string() ?: return
+                    processCameraJson(body)
+                }
+            }
+        })
+    }
+
+    private fun processCameraJson(json: String) {
+        try {
+            val root = JSONObject(json)
+            val elements = root.optJSONArray("elements") ?: return
+            
+            val now = System.currentTimeMillis()
+            val userLoc = lastLocation ?: return
+
+            for (i in 0 until elements.length()) {
+                val element = elements.getJSONObject(i)
+                val type = element.optString("type")
+                if (type != "node") continue
+
+                val camId = element.optLong("id")
+                val deviceId = "CAM_$camId"
+                val lat = element.optDouble("lat", Double.NaN)
+                val lon = element.optDouble("lon", Double.NaN)
+                if (lat.isNaN() || lon.isNaN()) continue
+
+                val tags = element.optJSONObject("tags")
+                val camType = tags?.optString("camera:type", "fixed") ?: "fixed"
+                val operator = tags?.optString("operator", "Unknown")
+                val name = tags?.optString("name", "CCTV ($camType)") ?: "CCTV ($camType)"
+
+                val results = FloatArray(3)
+                Location.distanceBetween(userLoc.latitude, userLoc.longitude, lat, lon, results)
+                val distance = results[0].toDouble()
+                val bearing = results[1].toDouble()
+
+                val existing = deviceMap[deviceId]
+                if (existing != null) {
+                    existing.lastSeen = now
+                    existing.distance = distance
+                    existing.angle = bearing
+                } else {
+                    deviceMap[deviceId] = ScanDevice(
+                        id = deviceId,
+                        name = name,
+                        type = DeviceType.CAMERA,
+                        rssi = -70,
+                        address = "OSM:$camId",
+                        lat = lat,
+                        lon = lon,
+                        cameraType = camType,
+                        manufacturer = operator ?: "",
+                        angle = bearing,
+                        distance = distance,
+                        lastSeen = now
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun fetchAircraftData() {
@@ -213,7 +308,6 @@ class ScannerManager(private val context: Context) {
         okHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 android.util.Log.e("ScannerManager", "Aircraft fetch failed", e)
-                // Silently fail or log
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -254,14 +348,10 @@ class ScannerManager(private val context: Context) {
                 val squawk = ac.optString("squawk", "")
                 val origin = ac.optString("origin", "UNKNOWN")
                 val dest = ac.optString("dest", "UNKNOWN")
-                
-                // Get Country from API if available (usually 'ownOp' or 'r' fields in some ADS-B APIs, 
-                // but let's look for common ones or derive from registration)
-                val country = ac.optString("r", "UNKNOWN") // 'r' is often registration which starts with country prefix
+                val country = ac.optString("r", "UNKNOWN")
 
-                // Calculate distance and bearing from user
                 val results = FloatArray(3)
-                android.location.Location.distanceBetween(userLoc.latitude, userLoc.longitude, lat, lon, results)
+                Location.distanceBetween(userLoc.latitude, userLoc.longitude, lat, lon, results)
                 val distance = results[0].toDouble()
                 val bearing = results[1].toDouble()
 
@@ -286,7 +376,7 @@ class ScannerManager(private val context: Context) {
                         id = id,
                         name = flight,
                         type = DeviceType.AIRCRAFT,
-                        rssi = -50, // Dummy
+                        rssi = -50,
                         address = hex,
                         lat = lat,
                         lon = lon,
@@ -309,746 +399,293 @@ class ScannerManager(private val context: Context) {
     }
 
     private fun startCellScanning() {
-        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
-            !hasPermission(Manifest.permission.READ_PHONE_STATE)) {
-            return
-        }
-        telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-        triggerCellScan()
+        handler.post(object : Runnable {
+            override fun run() {
+                if (!scanning) return
+                triggerCellScan()
+                handler.postDelayed(this, 10000)
+            }
+        })
     }
 
     private fun triggerCellScan() {
-        if (!scanning) return
-        processCellResults()
-        // Cell scanning is relatively low power, 10s is fine
-        handler.postDelayed({ triggerCellScan() }, 10000)
+        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) return
+        ioExecutor?.execute {
+            processCellResults()
+        }
     }
 
     private fun processCellResults() {
         if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) return
-        
-        val tm = telephonyManager ?: context.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-        if (tm == null) return
-
-        val allCellInfo = try {
-            tm.allCellInfo
-        } catch (e: Exception) {
-            null
-        } ?: return
-
-        for (info in allCellInfo) {
-            if (info == null) continue
-            try {
-                var id: String? = null
-                var type: DeviceType? = null
-                var dbm = Int.MAX_VALUE
-                var name = ""
-                
+        try {
+            val allInfo = telephonyManager?.allCellInfo ?: return
+            val now = System.currentTimeMillis()
+            
+            for (info in allInfo) {
+                val id: String
+                val type: DeviceType
+                var rssi = -100
                 var mcc: String? = null
                 var mnc: String? = null
                 var lac: Int? = null
                 var cid: Long? = null
                 var pci: Int? = null
                 var arfcn: Int? = null
-                var band: String? = null
-
+                
                 when (info) {
                     is CellInfoLte -> {
-                        val identity = info.cellIdentity
-                        val lteCi = identity.ci
-                        id = "LTE_${if (lteCi != Int.MAX_VALUE && lteCi != 0) lteCi else "PCI_${identity.pci}"}"
+                        val cellId = info.cellIdentity
+                        val signal = info.cellSignalStrength
+                        id = "LTE_${cellId.ci}_${cellId.pci}"
                         type = DeviceType.LTE
-                        dbm = info.cellSignalStrength.dbm
-                        name = "LTE Tower"
-                        
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                            mcc = identity.mccString
-                            mnc = identity.mncString
-                        } else {
-                            @Suppress("DEPRECATION")
-                            mcc = if (identity.mcc != Int.MAX_VALUE) identity.mcc.toString() else null
-                            @Suppress("DEPRECATION")
-                            mnc = if (identity.mnc != Int.MAX_VALUE) identity.mnc.toString() else null
-                        }
-                        lac = identity.tac // Tracking Area Code
-                        cid = if (lteCi != Int.MAX_VALUE) lteCi.toLong() else null
-                        pci = if (identity.pci != Int.MAX_VALUE) identity.pci else null
-                        arfcn = if (identity.earfcn != Int.MAX_VALUE) identity.earfcn else null
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                            band = identity.bands.joinToString(",")
-                        }
-                    }
-                    is CellInfoWcdma -> {
-                        val identity = info.cellIdentity
-                        id = "3G_${identity.cid}"
-                        type = DeviceType.LTE
-                        dbm = info.cellSignalStrength.dbm
-                        name = "3G Tower"
-                        
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                            mcc = identity.mccString
-                            mnc = identity.mncString
-                        } else {
-                            @Suppress("DEPRECATION")
-                            mcc = if (identity.mcc != Int.MAX_VALUE) identity.mcc.toString() else null
-                            @Suppress("DEPRECATION")
-                            mnc = if (identity.mnc != Int.MAX_VALUE) identity.mnc.toString() else null
-                        }
-                        lac = if (identity.lac != Int.MAX_VALUE) identity.lac else null
-                        cid = if (identity.cid != Int.MAX_VALUE) identity.cid.toLong() else null
-                        arfcn = if (identity.uarfcn != Int.MAX_VALUE) identity.uarfcn else null
+                        rssi = signal.dbm
+                        mcc = cellId.mccString
+                        mnc = cellId.mncString
+                        lac = cellId.tac
+                        cid = cellId.ci.toLong()
+                        pci = cellId.pci
+                        arfcn = cellId.earfcn
                     }
                     is CellInfoGsm -> {
-                        val identity = info.cellIdentity
-                        id = "2G_${identity.cid}"
+                        val cellId = info.cellIdentity
+                        val signal = info.cellSignalStrength
+                        id = "GSM_${cellId.cid}"
                         type = DeviceType.LTE
-                        dbm = info.cellSignalStrength.dbm
-                        name = "2G Tower"
-                        
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                            mcc = identity.mccString
-                            mnc = identity.mncString
-                        } else {
-                            @Suppress("DEPRECATION")
-                            mcc = if (identity.mcc != Int.MAX_VALUE) identity.mcc.toString() else null
-                            @Suppress("DEPRECATION")
-                            mnc = if (identity.mnc != Int.MAX_VALUE) identity.mnc.toString() else null
-                        }
-                        lac = if (identity.lac != Int.MAX_VALUE) identity.lac else null
-                        cid = if (identity.cid != Int.MAX_VALUE) identity.cid.toLong() else null
-                        arfcn = if (identity.arfcn != Int.MAX_VALUE) identity.arfcn else null
+                        rssi = signal.dbm
+                        mcc = cellId.mccString
+                        mnc = cellId.mncString
+                        lac = cellId.lac
+                        cid = cellId.cid.toLong()
+                        arfcn = cellId.arfcn
                     }
+                    is CellInfoWcdma -> {
+                        val cellId = info.cellIdentity
+                        val signal = info.cellSignalStrength
+                        id = "WCDMA_${cellId.cid}"
+                        type = DeviceType.LTE
+                        rssi = signal.dbm
+                        mcc = cellId.mccString
+                        mnc = cellId.mncString
+                        lac = cellId.lac
+                        cid = cellId.cid.toLong()
+                        pci = cellId.psc
+                        arfcn = cellId.uarfcn
+                    }
+                    else -> continue
                 }
 
-                // API 29+ for 5G
-                if (id == null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q && info is CellInfoNr) {
-                    val identity = info.cellIdentity as? CellIdentityNr
-                    if (identity != null) {
-                        val nci = identity.nci
-                        id = "5G_${if (nci != Long.MAX_VALUE && nci != 0L) nci else "PCI_${identity.pci}"}"
-                        type = DeviceType.FIVE_G
-                        dbm = info.cellSignalStrength.dbm
-                        name = "5G Tower"
-                        
-                        mcc = identity.mccString
-                        mnc = identity.mncString
-                        lac = if (identity.tac != Int.MAX_VALUE) identity.tac else null
-                        cid = if (nci != Long.MAX_VALUE) nci else null
-                        pci = if (identity.pci != Int.MAX_VALUE) identity.pci else null
-                        arfcn = if (identity.nrarfcn != Int.MAX_VALUE) identity.nrarfcn else null
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                            band = identity.bands.joinToString(",")
-                        }
-                    }
+                val existing = deviceMap[id]
+                if (existing != null) {
+                    existing.lastSeen = now
+                    existing.rssi = rssi
+                } else {
+                    deviceMap[id] = ScanDevice(
+                        id = id,
+                        name = "Cell Tower",
+                        type = type,
+                        rssi = rssi,
+                        address = id,
+                        mcc = mcc,
+                        mnc = mnc,
+                        lac = lac,
+                        cid = cid,
+                        pci = pci,
+                        arfcn = arfcn,
+                        lastSeen = now
+                    )
                 }
-
-                if (id != null && type != null && dbm != Int.MAX_VALUE && dbm != 0) {
-                    val finalId = id
-                    val finalType = type
-                    val existing = deviceMap[finalId]
-                    if (existing != null) {
-                        existing.rssi = dbm
-                        existing.lastSeen = System.currentTimeMillis()
-                        existing.mcc = mcc
-                        existing.mnc = mnc
-                        existing.lac = lac
-                        existing.cid = cid
-                        existing.pci = pci
-                        existing.arfcn = arfcn
-                        existing.band = band
-                    } else {
-                        deviceMap[finalId] = ScanDevice(
-                            id = finalId,
-                            name = name,
-                            type = finalType,
-                            rssi = dbm,
-                            address = finalId,
-                            angle = ((finalId.hashCode() and 0x7FFFFFFF) % 360).toDouble(),
-                            mcc = mcc,
-                            mnc = mnc,
-                            lac = lac,
-                            cid = cid,
-                            pci = pci,
-                            arfcn = arfcn,
-                            band = band
-                        )
-                    }
-                }
-            } catch (e: Exception) {
-                // Skip individual cell failures
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     fun stopScanning() {
         scanning = false
+        stopBleScanning()
+        context.unregisterReceiver(wifiReceiver)
+        locationManager?.removeUpdates(locationListener)
+        ioExecutor?.shutdown()
         notifyScanStatusChanged(false)
-        handler.removeCallbacksAndMessages(null)
-        try { bleScanner?.stopScan(bleScanCallback) } catch (_: Exception) {}
-        try { context.unregisterReceiver(wifiReceiver) } catch (_: Exception) {}
-        try { locationManager?.removeUpdates(locationListener) } catch (_: Exception) {}
     }
 
     private fun startLocationUpdates() {
         if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) return
-        locationManager = context.getSystemService(Context.LOCATION_SERVICE) as? android.location.LocationManager
-        
-        // Initialize lastLocation with last known location to avoid delay in aircraft fetching
-        try {
-            val lastGps = locationManager?.getLastKnownLocation(android.location.LocationManager.GPS_PROVIDER)
-            val lastNet = locationManager?.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER)
-            lastLocation = lastGps ?: lastNet
-        } catch (e: SecurityException) {}
-
         try {
             locationManager?.requestLocationUpdates(
                 android.location.LocationManager.GPS_PROVIDER,
-                1000L,
-                0.5f,
-                locationListener
+                2000L, 5f, locationListener
             )
             locationManager?.requestLocationUpdates(
                 android.location.LocationManager.NETWORK_PROVIDER,
-                1000L,
-                0.5f,
-                locationListener
+                5000L, 10f, locationListener
             )
         } catch (e: SecurityException) {
-            notifyError("Location permission error")
+            e.printStackTrace()
         }
     }
 
     private fun startBleScanning() {
-        if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN) &&
-            !hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            notifyError("Missing BLE permissions")
-            return
-        }
-        val btManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as? BluetoothManager
-        val adapter   = btManager?.adapter
-        if (adapter == null || !adapter.isEnabled) {
-            notifyError("Bluetooth not available or disabled")
-            return
-        }
-        bleScanner = adapter.bluetoothLeScanner
-        
-        // Phase 1: Initial burst (Skip or shorten in background)
-        val initialBurstMode = if (isBackgroundMode) ScanSettings.SCAN_MODE_BALANCED else ScanSettings.SCAN_MODE_LOW_LATENCY
-        val burstDuration = if (isBackgroundMode) 2000L else 5000L
-        
-        performBleScan(initialBurstMode)
-        
-        handler.postDelayed({
-            if (scanning) {
-                stopBleScanning()
-                // Phase 2: Switch to periodic short scans to save CPU/Battery
-                scheduleNextBleScanCycle()
-            }
-        }, burstDuration)
+        if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) return
+        performBleScan(ScanSettings.SCAN_MODE_LOW_LATENCY)
     }
 
     private fun performBleScan(mode: Int) {
-        if (!scanning) return
-        val settings = ScanSettings.Builder()
-            .setScanMode(mode)
-            .setReportDelay(0)
-            .build()
+        if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) return
+        val settings = ScanSettings.Builder().setScanMode(mode).build()
         try {
             bleScanner?.startScan(null, settings, bleScanCallback)
         } catch (e: Exception) {
-            notifyError("BLE scan error: ${e.message}")
+            e.printStackTrace()
         }
     }
 
     private fun stopBleScanning() {
+        if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) return
         try {
             bleScanner?.stopScan(bleScanCallback)
         } catch (e: Exception) {
-            // Ignore stop errors
+            e.printStackTrace()
         }
     }
 
     private fun scheduleNextBleScanCycle() {
-        if (!scanning) return
-        
-        // Increase delay between scans in background, but keep it snappy in foreground
-        val waitInterval = if (isBackgroundMode) 3000L else 500L
-        val scanDuration = if (isBackgroundMode) 3000L else 4000L
-        val scanMode = if (isBackgroundMode) ScanSettings.SCAN_MODE_BALANCED else ScanSettings.SCAN_MODE_LOW_LATENCY
-
-        handler.postDelayed({
-            if (scanning) {
-                performBleScan(scanMode)
-                
-                handler.postDelayed({
-                    stopBleScanning()
-                    scheduleNextBleScanCycle()
-                }, scanDuration)
-            }
-        }, waitInterval)
+        // Not used in this simplified version
     }
 
     private fun startWifiScanning() {
-        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            notifyError("Missing WiFi location permission")
-            return
-        }
-        wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
         val filter = IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(wifiReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            @Suppress("UnspecifiedRegisterReceiverFlag")
-            context.registerReceiver(wifiReceiver, filter)
-        }
-        triggerWifiScan()
+        context.registerReceiver(wifiReceiver, filter)
+        
+        handler.post(object : Runnable {
+            override fun run() {
+                if (!scanning) return
+                triggerWifiScan()
+                // Android throttles WiFi scans to 4 per 2 minutes for foreground apps.
+                // 30 seconds ensures we stay within this limit.
+                val interval = if (isBackgroundMode) 600000L else 30000L
+                handler.postDelayed(this, interval)
+            }
+        })
     }
 
     private fun triggerWifiScan() {
-        if (!scanning) return
-        try {
-            wifiManager?.startScan()
-        } catch (_: Exception) {}
-        
-        // Significantly reduce WiFi scan frequency in background (Android has strict limits anyway)
-        val nextScan = if (isBackgroundMode) 60000L else 5000L
-        handler.postDelayed({ triggerWifiScan() }, nextScan)
+        wifiManager?.startScan()
     }
 
     private fun schedulePeriodicUpdate() {
-        handler.postDelayed(object : Runnable {
+        handler.post(object : Runnable {
             override fun run() {
                 if (!scanning) return
-                
-                // Track scan time persistently
-                val prefs = context.getSharedPreferences("scan_stats", Context.MODE_PRIVATE)
-                val totalTime = prefs.getLong("total_scan_time_ms", 0)
-                val tick = if (isBackgroundMode) 5000L else 1000L
-                prefs.edit().putLong("total_scan_time_ms", totalTime + tick).apply()
-
                 pruneStaleDevices()
                 notifyDevicesUpdated(deviceMap.values.toList())
-                handler.postDelayed(this, tick)
+                saveArchive()
+                handler.postDelayed(this, 2000)
             }
-        }, 1000)
+        })
     }
 
-    private fun processBleResult(result: android.bluetooth.le.ScanResult) {
-        val addr = result.device.address ?: return
-        
-        // Pager check - do this for both new and existing devices to get live messages
-        val isPager = (result.scanRecord?.serviceUuids?.any { 
-            it.uuid.toString().uppercase().startsWith("0000B1E5") 
-        } ?: false) || (result.scanRecord?.serviceData?.keys?.any {
-            it.uuid.toString().uppercase().startsWith("0000B1E5")
-        } ?: false)
-
-        var pagerMsg: String? = null
-        if (isPager) {
-            val pUuid = android.os.ParcelUuid.fromString("0000B1E5-0000-1000-8000-00805F9B34FB")
-            result.scanRecord?.getServiceData(pUuid)?.let { data ->
-                pagerMsg = String(data, Charsets.UTF_8)
-            }
-        }
-
-        val existing = deviceMap[addr]
-        if (existing != null) {
-            val oldRssi = existing.rssi
-            existing.rssi = result.rssi
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                val tx = result.txPower
-                if (tx != 127) existing.txPower = tx
-            }
-            existing.lastSeen = System.currentTimeMillis()
-            existing.seenCount++
-            
-            // Update pager message if new one arrived
-            if (isPager && pagerMsg != null) {
-                // If it's a pager, we prioritize the name in the scan record
-                val scanName = result.scanRecord?.deviceName
-                if (!scanName.isNullOrEmpty()) {
-                    existing.name = scanName
-                }
-
-                val isNewContent = pagerMsg != existing.lastMessage
-                val isOldEnough = (System.currentTimeMillis() - existing.lastMessageTime) > 3000 // Reduced from 5s for better responsiveness
-                
-                if (isNewContent || isOldEnough) {
-                    existing.lastMessage = pagerMsg
-                    existing.lastMessageTime = System.currentTimeMillis()
-                    // Notify immediately for pager messages to ensure realtime feel
-                    notifyDevicesUpdated(deviceMap.values.toList())
-                }
-            }
-
-            if (alarmIds.contains(addr) && Math.abs(oldRssi - result.rssi) > 8) {
-                notifyMovementDetected(existing)
-            }
-            
-            // Update name if it was previously unknown
-            if (existing.name.isEmpty() && !result.device.name.isNullOrEmpty()) {
-                existing.name = result.device.name!!
-            }
-            return
-        }
-
-        // Only do heavy parsing for NEW devices to save CPU
+    private fun processBleResult(result: ScanResult) {
+        val now = System.currentTimeMillis()
         val device = result.device
-        val name   = device.name ?: ""
-        val rssi   = result.rssi
-        val mfr    = result.scanRecord?.manufacturerSpecificData?.let { data ->
-            if (data.size() > 0) "0x%04X".format(data.keyAt(0)) else ""
-        } ?: ""
-        val uuids  = result.scanRecord?.serviceUuids?.joinToString(", ") { it.uuid.toString().take(8) } ?: ""
-        val isWhisperPair = result.scanRecord?.serviceUuids?.any { 
-            it.uuid.toString().uppercase().contains("0000FE2C") 
-        } ?: false
+        val scanRecord = result.scanRecord
+        val address = device.address ?: return
         
-        val isBlueWhisper = result.scanRecord?.advertiseFlags == 0x01
-        val isLegacy = result.device.type == android.bluetooth.BluetoothDevice.DEVICE_TYPE_CLASSIC
-        val isConnectable = result.isConnectable
+        var name = result.device.name ?: scanRecord?.deviceName ?: ""
+        val rssi = result.rssi
         
-        val sData = result.scanRecord?.getServiceData(android.os.ParcelUuid.fromString("0000FE2C-0000-1000-8000-00805F9B34FB"))
-        val isFastPair = sData != null
-
-        val isVulnerableCVE = (mfr == "0x004C" && isLegacy) || (mfr == "0x0059" && !isConnectable)
-
-        val txPower = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            result.txPower.takeIf { it != 127 } ?: -59
-        } else {
-            -59
+        // Check for specific device types based on scan record
+        var type = DeviceType.BLE
+        var isAirTag = false
+        var isSkimmer = false
+        
+        scanRecord?.let { record ->
+            val bytes = record.bytes
+            // AirTag pattern: Manufacturer data starting with 0x4C 0x00 0x12 0x19
+            record.getManufacturerSpecificData(0x004c)?.let { data ->
+                if (data.size >= 2 && data[0].toInt() == 0x12 && data[1].toInt() == 0x19) {
+                    isAirTag = true
+                    name = "Apple AirTag"
+                }
+            }
         }
 
-        val mData = result.scanRecord?.getManufacturerSpecificData(0x004C)
-        val isAirTag = mData != null && mData.size >= 2 && mData[0] == 0x12.toByte() && mData[1] == 0x19.toByte()
-
-        val isSkimmer = name.uppercase().contains("HC-05") || 
-                        name.uppercase().contains("HC-06") ||
-                        uuids.uppercase().contains("00001101")
-
-        val isCar = name.uppercase().contains("CAR") || 
-                    name.uppercase().contains("AUTO") || 
-                    name.uppercase().contains("TESLA") ||
-                    name.uppercase().contains("BMW") ||
-                    name.uppercase().contains("AUDI") ||
-                    name.uppercase().contains("SYNC") || // Ford
-                    name.uppercase().contains("MY MINI") ||
-                    name.uppercase().contains("VOLVO") ||
-                    name.uppercase().contains("MERCEDES") ||
-                    name.uppercase().contains("TOYOTA") ||
-                    name.uppercase().contains("MAZDA") ||
-                    name.uppercase().contains("CHEVROLET") ||
-                    name.uppercase().contains("UCONNECT") || // Jeep/Chrysler
-                    name.uppercase().contains("INFOTAINMENT") ||
-                    name.uppercase().contains("BT_CAR") ||
-                    name.uppercase().contains("KIA") ||
-                    name.uppercase().contains("HYUNDAI") ||
-                    name.uppercase().contains("HONDA") ||
-                    name.uppercase().contains("NISSAN") ||
-                    name.uppercase().contains("SUBARU") ||
-                    name.uppercase().contains("VW") ||
-                    name.uppercase().contains("VOLKSWAGEN") ||
-                    name.uppercase().contains("PORSCHE") ||
-                    name.uppercase().contains("LEXUS") ||
-                    name.uppercase().contains("RIVIAN") ||
-                    name.uppercase().contains("LUCID") ||
-                    name.uppercase().contains("CARPLAY") ||
-                    name.uppercase().contains("HANDS-FREE") ||
-                    name.uppercase().contains("HFP") ||
-                    name.uppercase().contains("MY_CAR") ||
-                    name.uppercase().contains("MB BLUETOOTH") ||
-                    name.uppercase().contains("BT-CAR") ||
-                    name.uppercase().contains("CAR-BT") ||
-                    name.uppercase().contains("MYCAR")
-
-        val isDrone = name.uppercase().contains("DJI") ||
-                      name.uppercase().contains("MAVIC") ||
-                      name.uppercase().contains("PHANTOM") ||
-                      name.uppercase().contains("AVATA") ||
-                      name.uppercase().contains("DRONE") ||
-                      name.uppercase().contains("PARROT") ||
-                      name.uppercase().contains("ANAFI") ||
-                      name.uppercase().contains("AUTEL") ||
-                      name.uppercase().contains("SKYDIO") ||
-                      name.uppercase().contains("TELLO") ||
-                      name.uppercase().contains("FIMI") ||
-                      name.uppercase().contains("HUBSAN") ||
-                      name.uppercase().contains("PIXHAWK") ||
-                      name.uppercase().contains("ARDUPILOT") ||
-                      name.uppercase().contains("MAVLINK")
-
-        val isEscooter = name.uppercase().contains("SCOOTER") || 
-                         name.uppercase().contains("XIAOMI") || 
-                         name.uppercase().contains("NINEBOT") ||
-                         name.uppercase().contains("SEGWAY") ||
-                         name.uppercase().contains("M365") ||
-                         name.uppercase().contains("LIME") ||
-                         name.uppercase().contains("BIRD") ||
-                         name.uppercase().contains("TIER") ||
-                         name.uppercase().contains("VOI") ||
-                         name.uppercase().contains("DOTT") ||
-                         name.uppercase().contains("BEAM") ||
-                         name.uppercase().contains("CIRC") ||
-                         name.uppercase().contains("FLASH") ||
-                         name.uppercase().contains("WIND")
-
-        val isTV = name.uppercase().contains("TV") || 
-                   name.uppercase().contains("BRAVIA") || 
-                   name.uppercase().contains("VIZIO") || 
-                   name.uppercase().contains("SAMSUNG") || 
-                   name.uppercase().contains("LG") || 
-                   name.uppercase().contains("ROKU") || 
-                   name.uppercase().contains("FIRETV")
-
-        val isComputer = name.uppercase().contains("LAPTOP") || 
-                         name.uppercase().contains("DESKTOP") || 
-                         name.uppercase().contains("MACBOOK") || 
-                         name.uppercase().contains("WINDOWS") || 
-                         name.uppercase().contains("LINUX") || 
-                         name.uppercase().contains("SURFACE")
-
-        val isSmartphone = name.uppercase().contains("PHONE") || 
-                           name.uppercase().contains("IPHONE") || 
-                           name.uppercase().contains("ANDROID") || 
-                           name.uppercase().contains("GALAXY") || 
-                           name.uppercase().contains("PIXEL")
-
-        val newDevice = ScanDevice(
-            id           = addr,
-            name         = if (isPager) name.ifEmpty { "PAGER_UNIT" } else if (isAirTag && name.isEmpty()) "AirTag" else name,
-            type         = when {
-                isPager -> DeviceType.PAGER
-                isDrone -> DeviceType.DRONE
-                isCar -> DeviceType.CAR
-                isEscooter -> DeviceType.ESCOOTER
-                isTV -> DeviceType.TV
-                isComputer -> DeviceType.COMPUTER
-                isSmartphone -> DeviceType.SMARTPHONE
-                else -> DeviceType.BLE
-            },
-            rssi         = rssi,
-            address      = addr,
-            txPower      = txPower,
-            manufacturer = mfr,
-            uuids        = uuids,
-            isVulnerableWhisperPair = isWhisperPair,
-            isVulnerableBlueWhisper = isBlueWhisper,
-            isLegacyBluetooth = isLegacy,
-            isPubliclyConnectable = isConnectable,
-            isAirTag     = isAirTag,
-            isSkimmer    = isSkimmer,
-            isFastPair   = isFastPair,
-            isVulnerableCVE202536911 = isVulnerableCVE,
-            isCar        = isCar,
-            isEscooter   = isEscooter,
-            angle        = ((addr.hashCode() and 0x7FFFFFFF) % 360).toDouble(),
-            lastMessage  = pagerMsg,
-            lastMessageTime = if (pagerMsg != null) System.currentTimeMillis() else 0
-        )
-        deviceMap[addr] = newDevice
+        val existing = deviceMap[address]
+        if (existing != null) {
+            existing.lastSeen = now
+            existing.rssi = rssi
+            if (name.isNotEmpty()) existing.name = name
+            existing.seenCount++
+        } else {
+            deviceMap[address] = ScanDevice(
+                id = address,
+                name = if (name.isEmpty()) "BLE Device" else name,
+                type = type,
+                rssi = rssi,
+                address = address,
+                isAirTag = isAirTag,
+                lastSeen = now
+            )
+        }
     }
 
     private fun processWifiResults() {
-        val results = try { wifiManager?.scanResults } catch (_: Exception) { null } ?: return
-        results.forEach { r: android.net.wifi.ScanResult ->
-            val bssid = r.BSSID ?: return@forEach
-            val ssid  = r.SSID.ifBlank { "Hidden Network" }
-            val freq  = r.frequency
-            val ch    = frequencyToChannel(freq)
-            val caps  = r.capabilities ?: ""
+        if (!hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)) return
+        val results = wifiManager?.scanResults ?: return
+        val now = System.currentTimeMillis()
 
-            // Detection of WiFi Pagers (ID encoded in SSID: PGR_[NAME]_[MSG])
-            val isWifiPager = ssid.startsWith("PGR_")
-            var wifiPagerName = ""
-            var wifiPagerMsg: String? = null
-            
-            if (isWifiPager) {
-                val parts = ssid.split("_")
-                if (parts.size >= 2) wifiPagerName = parts[1]
-                if (parts.size >= 3) wifiPagerMsg = parts.drop(2).joinToString("_")
-            }
-
-            val isCar = !isWifiPager && (ssid.uppercase().contains("CAR") || 
-                        ssid.uppercase().contains("AUTO") || 
-                        ssid.uppercase().contains("TESLA") ||
-                        ssid.uppercase().contains("BMW") ||
-                        ssid.uppercase().contains("AUDI") ||
-                        ssid.uppercase().contains("SYNC") ||
-                        ssid.uppercase().contains("UCONNECT") ||
-                        ssid.uppercase().contains("INFOTAINMENT") ||
-                        ssid.uppercase().contains("FORD") ||
-                        ssid.uppercase().contains("TOYOTA") ||
-                        ssid.uppercase().contains("HYUNDAI") ||
-                        ssid.uppercase().contains("VW_") ||
-                        ssid.uppercase().contains("HONDA") ||
-                        ssid.uppercase().contains("MYCAR") ||
-                        ssid.uppercase().contains("CAR_WIFI") ||
-                        ssid.uppercase().contains("VOLVO"))
-
-            val isDrone = ssid.uppercase().contains("DJI") ||
-                          ssid.uppercase().contains("MAVIC") ||
-                          ssid.uppercase().contains("PHANTOM") ||
-                          ssid.uppercase().contains("SPARK") ||
-                          ssid.uppercase().contains("TELLO") ||
-                          ssid.uppercase().contains("DRONE") ||
-                          ssid.uppercase().contains("PARROT") ||
-                          ssid.uppercase().contains("BEBOP") ||
-                          ssid.uppercase().contains("ANAFI") ||
-                          ssid.uppercase().contains("AUTEL") ||
-                          ssid.uppercase().contains("SKY-HERO")
-
-            val isEscooter = ssid.uppercase().contains("SCOOTER") || 
-                             ssid.uppercase().contains("LIME") || 
-                             ssid.uppercase().contains("BIRD")
-
-            val isTV = ssid.uppercase().contains("TV") || 
-                       ssid.uppercase().contains("BRAVIA") || 
-                       ssid.uppercase().contains("VIZIO") || 
-                       ssid.uppercase().contains("SAMSUNG") || 
-                       ssid.uppercase().contains("LG") || 
-                       ssid.uppercase().contains("ROKU") || 
-                       ssid.uppercase().contains("FIRETV")
-
-            val isComputer = ssid.uppercase().contains("LAPTOP") || 
-                             ssid.uppercase().contains("DESKTOP") || 
-                             ssid.uppercase().contains("MACBOOK") || 
-                             ssid.uppercase().contains("WINDOWS") || 
-                             ssid.uppercase().contains("LINUX") || 
-                             ssid.uppercase().contains("SURFACE")
-
-            val isSmartphone = ssid.uppercase().contains("PHONE") || 
-                               ssid.uppercase().contains("IPHONE") || 
-                               ssid.uppercase().contains("ANDROID") || 
-                               ssid.uppercase().contains("GALAXY") || 
-                               ssid.uppercase().contains("PIXEL")
-
-            val existing = deviceMap[bssid]
+        for (res in results) {
+            val id = res.BSSID
+            val existing = deviceMap[id]
             if (existing != null) {
-                val oldRssi = existing.rssi
-                existing.rssi    = r.level
-                existing.lastSeen = System.currentTimeMillis()
-                existing.seenCount++
-
-                if (isWifiPager) {
-                    existing.name = wifiPagerName
-                    if (wifiPagerMsg != null && wifiPagerMsg != existing.lastMessage) {
-                        existing.lastMessage = wifiPagerMsg
-                        existing.lastMessageTime = System.currentTimeMillis()
-                        notifyDevicesUpdated(deviceMap.values.toList())
-                    }
-                }
-                
-                if (alarmIds.contains(bssid) && Math.abs(oldRssi - r.level) > 8) {
-                    notifyMovementDetected(existing)
-                }
+                existing.lastSeen = now
+                existing.rssi = res.level
             } else {
-                deviceMap[bssid] = ScanDevice(
-                    id           = bssid,
-                    name         = if (isWifiPager) wifiPagerName else ssid,
-                    type         = when {
-                        isWifiPager -> DeviceType.PAGER
-                        isDrone -> DeviceType.DRONE
-                        isCar -> DeviceType.CAR
-                        isEscooter -> DeviceType.ESCOOTER
-                        isTV -> DeviceType.TV
-                        isComputer -> DeviceType.COMPUTER
-                        isSmartphone -> DeviceType.SMARTPHONE
-                        else -> DeviceType.WIFI
-                    },
-                    rssi         = r.level,
-                    address      = bssid,
-                    ssid         = ssid,
-                    capabilities = caps,
-                    frequency    = freq,
-                    channel      = ch,
-                    isCar        = isCar,
-                    isEscooter   = isEscooter,
-                    angle        = ((bssid.hashCode() and 0x7FFFFFFF) % 360).toDouble(),
-                    lastMessage  = wifiPagerMsg,
-                    lastMessageTime = if (wifiPagerMsg != null) System.currentTimeMillis() else 0
+                deviceMap[id] = ScanDevice(
+                    id = id,
+                    name = res.SSID,
+                    type = DeviceType.WIFI,
+                    rssi = res.level,
+                    address = id,
+                    ssid = res.SSID,
+                    capabilities = res.capabilities,
+                    frequency = res.frequency,
+                    channel = frequencyToChannel(res.frequency),
+                    lastSeen = now
                 )
             }
         }
     }
 
     private fun pruneStaleDevices() {
-        val now  = System.currentTimeMillis()
-        val iter = deviceMap.entries.iterator()
-        
-        // Persistently track total unique devices discovered
-        val prefs = context.getSharedPreferences("scan_stats", Context.MODE_PRIVATE)
-        val discoveredDeviceIds = prefs.getStringSet("discovered_device_ids", mutableSetOf()) ?: mutableSetOf()
-        val currentIds = discoveredDeviceIds.toMutableSet()
-        var changed = false
-        var archiveChanged = false
-
-        while (iter.hasNext()) {
-            val entry = iter.next()
+        val now = System.currentTimeMillis()
+        val timeout = if (isBackgroundMode) 600000L else 30000L
+        val it = deviceMap.entries.iterator()
+        while (it.hasNext()) {
+            val entry = it.next()
             val device = entry.value
             
-            // Add or Update in archive
-            val archived = archiveMap[device.id]
-            if (archived == null) {
-                archiveMap[device.id] = device.copy()
-                archiveChanged = true
-            } else {
-                // Update fields in archive
-                archived.lastSeen = device.lastSeen
-                archived.rssi = device.rssi
-                if (device.name.isNotEmpty() && archived.name.isEmpty()) {
-                    archived.name = device.name
-                    archiveChanged = true
+            // Sticky mode for tracked devices (alarms)
+            if (isAlarmEnabled(device.id)) {
+                if (now - device.lastSeen > 600000L) { // Keep tracked devices for 10 mins
+                    archiveMap[entry.key] = device
+                    it.remove()
                 }
-                // Always mark changed if it's a new "session" or just periodic update
-                // We'll let the throttled save handle the frequency
-                archiveChanged = true
+                continue
             }
 
-            if (!currentIds.contains(device.id)) {
-                currentIds.add(device.id)
-                changed = true
-                
-                // Track category-specific totals
-                when (device.type) {
-                    DeviceType.BLE -> incrementStat(prefs, "total_ble")
-                    DeviceType.WIFI -> incrementStat(prefs, "total_wifi")
-                    DeviceType.AIRCRAFT -> incrementStat(prefs, "total_aircraft")
-                    DeviceType.CAR -> incrementStat(prefs, "total_car")
-                    DeviceType.DRONE -> incrementStat(prefs, "total_drone")
-                    DeviceType.TV -> incrementStat(prefs, "total_tv")
-                    DeviceType.COMPUTER -> incrementStat(prefs, "total_computer")
-                    DeviceType.SMARTPHONE -> incrementStat(prefs, "total_smartphone")
-                    DeviceType.PAGER -> incrementStat(prefs, "total_pager")
-                    else -> {}
-                }
-                
-                if (device.isAirTag) incrementStat(prefs, "total_airtag")
-                if (device.isVulnerableWhisperPair) incrementStat(prefs, "total_whisper")
-                if (device.type == DeviceType.WIFI) {
-                    if (device.capabilities.contains("WEP")) incrementStat(prefs, "total_wep")
-                    if (device.capabilities.isEmpty() || (device.capabilities.contains("[ESS]") && !device.capabilities.contains("WPA"))) incrementStat(prefs, "total_open")
-                }
+            // Don't prune Cameras or Aircraft as quickly if they are from static data/API
+            val deviceTimeout = when(device.type) {
+                DeviceType.CAMERA -> 3600000L // 1 hour
+                DeviceType.AIRCRAFT -> 60000L
+                DeviceType.WIFI -> if (isBackgroundMode) 600000L else 65000L // WiFi scans are throttled
+                else -> timeout
             }
-
-            val timeout = if (device.type == DeviceType.PAGER) 120_000L else 15_000L
-            if (now - device.lastSeen > timeout) iter.remove()
-        }
-        
-        // Cap archiveMap to 2000 entries to prevent OOM, keeping most recent
-        if (archiveMap.size > 2000) {
-            val sortedEntries = archiveMap.entries.toList().sortedBy { it.value.lastSeen }
-            val toRemove = archiveMap.size - 2000
-            for (i in 0 until toRemove) {
-                archiveMap.remove(sortedEntries[i].key)
+            
+            if (now - device.lastSeen > deviceTimeout) {
+                archiveMap[entry.key] = device
+                it.remove()
             }
-            archiveChanged = true
-        }
-
-        if (changed) {
-            prefs.edit().putStringSet("discovered_device_ids", currentIds).apply()
-        }
-        if (archiveChanged) {
-            saveArchive()
         }
     }
 
@@ -1057,12 +694,16 @@ class ScannerManager(private val context: Context) {
         prefs.edit().putInt(key, current + 1).apply()
     }
 
-    private fun hasPermission(perm: String) =
-        ContextCompat.checkSelfPermission(context, perm) == PackageManager.PERMISSION_GRANTED
+    private fun hasPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
 
-    private fun frequencyToChannel(freq: Int): Int = when {
-        freq in 2412..2484 -> (freq - 2412) / 5 + 1
-        freq in 5180..5825 -> (freq - 5180) / 5 + 36
-        else               -> 0
+    private fun frequencyToChannel(freq: Int): Int {
+        return when {
+            freq == 2484 -> 14
+            freq in 2412..2472 -> (freq - 2412) / 5 + 1
+            freq in 5170..5825 -> (freq - 5170) / 5 + 34
+            else -> 0
+        }
     }
 }

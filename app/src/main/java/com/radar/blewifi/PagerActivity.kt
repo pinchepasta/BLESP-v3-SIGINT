@@ -116,7 +116,9 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         // Reset unread status when entering Pager
         getSharedPreferences("pager_history", MODE_PRIVATE).edit().putBoolean("has_unread", false).apply()
 
-        isHighContrastMode = getSharedPreferences("settings", MODE_PRIVATE).getBoolean("high_contrast", false)
+        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", "DEFAULT")
+        val theme = RadarView.Theme.valueOf(themeName ?: "DEFAULT")
+        isHighContrastMode = theme == RadarView.Theme.HIGH_CONTRAST
 
         setupImmersiveMode()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -253,28 +255,83 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun setupUI() {
-        if (isHighContrastMode) {
-            binding.root.setBackgroundColor(Color.WHITE)
-            binding.tvIdLabel.setTextColor(Color.BLACK)
-            binding.etUserId.setTextColor(Color.BLACK)
-            binding.etUserId.setHintTextColor(Color.GRAY)
-            binding.tvStatus.setTextColor(Color.BLACK)
-            binding.separator.setBackgroundColor(Color.BLACK)
-            binding.tvDiscoveryLabel.setTextColor(Color.BLACK)
+        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", "DEFAULT")
+        val currentTheme = RadarView.Theme.valueOf(themeName ?: "DEFAULT")
+        isHighContrastMode = currentTheme == RadarView.Theme.HIGH_CONTRAST
 
-            binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_white)
-            binding.btnBack.setTextColor(Color.BLACK)
-
-            binding.etMessage.setBackgroundResource(R.drawable.status_box_bg_white)
-            binding.etMessage.setTextColor(Color.BLACK)
-            binding.etMessage.setHintTextColor(Color.GRAY)
-            binding.btnSend.setBackgroundResource(R.drawable.status_box_bg_white)
-            binding.btnSend.setTextColor(Color.parseColor("#00FF41"))
-        } else {
-            binding.btnSend.setTextColor(Color.parseColor("#00FF41"))
+        val primaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            else -> Color.parseColor("#00FF41")
         }
 
-        adapter = PagerDeviceAdapter(deviceList, isHighContrastMode, { device ->
+        val dimColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.GRAY
+            RadarView.Theme.RED_NIGHT -> Color.parseColor("#660000")
+            RadarView.Theme.PINK -> Color.parseColor("#990099")
+            RadarView.Theme.NEON -> Color.parseColor("#B3C403")
+            RadarView.Theme.NARANJA -> Color.parseColor("#995400")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#660066")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#663f2b")
+            else -> Color.GRAY
+        }
+
+        binding.root.setBackgroundColor(if (isHighContrastMode) Color.WHITE else Color.BLACK)
+        
+        binding.tvIdLabel.setTextColor(primaryColor)
+        binding.etUserId.setTextColor(primaryColor)
+        binding.etUserId.setHintTextColor(dimColor)
+        binding.tvStatus.setTextColor(primaryColor)
+        binding.separator.setBackgroundColor(primaryColor)
+        binding.tvDiscoveryLabel.setTextColor(primaryColor)
+        binding.tvChatWith.setTextColor(primaryColor)
+
+        binding.btnBack.setBackgroundResource(when(currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
+            else -> R.drawable.status_box_bg
+        })
+        binding.btnBack.setTextColor(if (isHighContrastMode) Color.BLACK else Color.WHITE)
+
+        binding.etMessage.setBackgroundResource(when(currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
+            else -> R.drawable.status_box_bg
+        })
+        binding.etMessage.setTextColor(if (isHighContrastMode) Color.BLACK else Color.WHITE)
+        binding.etMessage.setHintTextColor(dimColor)
+
+        binding.btnSend.setBackgroundResource(when(currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_naranja
+            else -> R.drawable.status_box_bg
+        })
+        binding.btnSend.setTextColor(primaryColor)
+
+        binding.btnAttach.setTextColor(primaryColor)
+        binding.btnRecord.setTextColor(primaryColor)
+
+        adapter = PagerDeviceAdapter(deviceList, currentTheme, { device ->
             openChat(device)
         }, { device ->
             confirmDeleteChat(device.displayName)
@@ -285,7 +342,7 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.rvDevices.layoutManager = LinearLayoutManager(this)
         binding.rvDevices.adapter = adapter
 
-        chatAdapter = ChatHistoryAdapter(chatMessages, isHighContrastMode, { msg ->
+        chatAdapter = ChatHistoryAdapter(chatMessages, currentTheme, { msg ->
             val isAudio = msg.audioPath != null || msg.audioPayloadId != null
             if (isAudio) {
                 playAudio(msg)
@@ -592,12 +649,37 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
 
     private fun updateStatus() {
+        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", "DEFAULT")
+        val currentTheme = RadarView.Theme.valueOf(themeName ?: "DEFAULT")
+        
+        val primaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            else -> Color.parseColor("#00FF41")
+        }
+
+        val discoveryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
+            else -> Color.parseColor("#FF00FF") // Default discovery color was pinkish
+        }
+
         if (activeChatId != null) {
             binding.tvStatus.text = "[ ACTIVE_CHAT ]"
-            binding.tvStatus.setTextColor(Color.parseColor("#00FF41"))
+            binding.tvStatus.setTextColor(primaryColor)
         } else {
             binding.tvStatus.text = "[ DISCOVERY ]"
-            binding.tvStatus.setTextColor(Color.parseColor("#FF00FF"))
+            binding.tvStatus.setTextColor(discoveryColor)
         }
     }
 
@@ -652,8 +734,21 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun triggerGlitchEffect() {
+        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", "DEFAULT")
+        val currentTheme = RadarView.Theme.valueOf(themeName ?: "DEFAULT")
+        
+        val primaryColorStr = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> "#000000"
+            RadarView.Theme.RED_NIGHT -> "#FF0000"
+            RadarView.Theme.PINK -> "#FF00FF"
+            RadarView.Theme.NEON -> "#E6FB04"
+            RadarView.Theme.NARANJA -> "#FF8C00"
+            RadarView.Theme.BUBBLEGUM -> "#FF00FF"
+            else -> "#00FF41"
+        }
+
         val overlay = View(this)
-        overlay.setBackgroundColor(Color.parseColor("#00FF41"))
+        overlay.setBackgroundColor(Color.parseColor(primaryColorStr))
         overlay.alpha = 0.4f
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         (window.decorView as ViewGroup).addView(overlay, params)
@@ -662,15 +757,15 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         var frames = 0
         val glitchAction = object : Runnable {
             override fun run() {
-                if (frames > 2) { // Flash once: Green then Pink
+                if (frames > 2) {
                     (window.decorView as ViewGroup).removeView(overlay)
                     window.decorView.translationX = 0f
                     window.decorView.translationY = 0f
                     return
                 }
 
-                val isGreen = frames % 2 == 0
-                overlay.setBackgroundColor(if (isGreen) Color.parseColor("#00FF41") else Color.parseColor("#FF00FF"))
+                val isPrimary = frames % 2 == 0
+                overlay.setBackgroundColor(if (isPrimary) Color.parseColor(primaryColorStr) else Color.WHITE)
                 overlay.alpha = 0.5f
                 
                 window.decorView.translationX = ((-15..15).random()).toFloat()
@@ -735,7 +830,6 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         super.onStop()
         scanner.removeListener(this)
         handler.removeCallbacks(refreshChatRunnable)
-        nearbyManager.stop()
     }
 
     override fun onDestroy() {
@@ -752,9 +846,9 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
     }
 
-    class ChatHistoryAdapter(
+    inner class ChatHistoryAdapter(
         private var messages: List<ChatMessage>,
-        private val isHighContrastMode: Boolean,
+        private val currentTheme: RadarView.Theme,
         private val onItemClick: (ChatMessage) -> Unit
     ) : RecyclerView.Adapter<ChatHistoryAdapter.ViewHolder>() {
 
@@ -841,9 +935,32 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 params.endToEnd = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.UNSET
                 params.horizontalBias = 0.0f
                 holder.container.setBackgroundResource(R.drawable.chat_bubble_received)
-                holder.text.setTextColor(Color.parseColor("#00FF41"))
-                holder.audioIcon.setTextColor(Color.parseColor("#00FF41"))
-                holder.info.setTextColor(Color.parseColor("#4400FF41"))
+                
+                val receivedColor = when(currentTheme) {
+                    RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+                    RadarView.Theme.RED_NIGHT -> Color.RED
+                    RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+                    RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+                    RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+                    RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+                    RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+                    else -> Color.parseColor("#00FF41")
+                }
+                
+                holder.text.setTextColor(receivedColor)
+                holder.audioIcon.setTextColor(receivedColor)
+                
+                val infoColor = when(currentTheme) {
+                    RadarView.Theme.HIGH_CONTRAST -> Color.GRAY
+                    RadarView.Theme.RED_NIGHT -> Color.parseColor("#66FF0000")
+                    RadarView.Theme.PINK -> Color.parseColor("#66FF00FF")
+                    RadarView.Theme.NEON -> Color.parseColor("#66E6FB04")
+                    RadarView.Theme.NARANJA -> Color.parseColor("#66FF8C00")
+                    RadarView.Theme.BUBBLEGUM -> Color.parseColor("#66FF00FF")
+                    RadarView.Theme.SUMMERTIME -> Color.parseColor("#66ff9f6b")
+                    else -> Color.parseColor("#6600FF41")
+                }
+                holder.info.setTextColor(infoColor)
             }
             holder.container.layoutParams = params
             
@@ -857,7 +974,7 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     inner class PagerDeviceAdapter(
         private var devices: List<ScanDevice>,
-        private val isHighContrastMode: Boolean,
+        private val currentTheme: RadarView.Theme,
         private val onClick: (ScanDevice) -> Unit,
         private val onLongClick: (ScanDevice) -> Unit,
         private val onDeleteClick: (ScanDevice) -> Unit
@@ -904,7 +1021,18 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val isOnline = device.rssi > -127
             
             holder.name.text = device.displayName
-            holder.name.setTextColor(if (isHighContrastMode) Color.BLACK else Color.parseColor("#00FF41"))
+            
+            val themeColor = when(currentTheme) {
+                RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+                RadarView.Theme.RED_NIGHT -> Color.RED
+                RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+                RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+                RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+                RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+                else -> Color.parseColor("#00FF41")
+            }
+            holder.name.setTextColor(themeColor)
             
             // Thumbnail check
             val history = allMessages[device.displayName]
@@ -916,7 +1044,18 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             } else {
                 holder.lastMessage.text = device.lastMessage ?: "No messages"
             }
-            holder.lastMessage.setTextColor(if (isHighContrastMode) Color.DKGRAY else Color.parseColor("#8800FF41"))
+            
+            val lastMsgColor = when(currentTheme) {
+                RadarView.Theme.HIGH_CONTRAST -> Color.DKGRAY
+                RadarView.Theme.RED_NIGHT -> Color.parseColor("#88FF0000")
+                RadarView.Theme.PINK -> Color.parseColor("#88FF00FF")
+                RadarView.Theme.NEON -> Color.parseColor("#88E6FB04")
+                RadarView.Theme.NARANJA -> Color.parseColor("#88FF8C00")
+                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#88FF00FF")
+                RadarView.Theme.SUMMERTIME -> Color.parseColor("#88ff9f6b")
+                else -> Color.parseColor("#8800FF41")
+            }
+            holder.lastMessage.setTextColor(lastMsgColor)
             
             if (device.lastMessageTime > 0) {
                 val sdf = java.text.SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -930,12 +1069,39 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val firstChar = device.displayName.firstOrNull()?.toString() ?: "P"
             holder.avatarText.text = firstChar
             
-            if (isHighContrastMode) {
-                holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_white)
-                holder.avatarText.setTextColor(Color.BLACK)
-            } else {
-                holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_black)
-                holder.avatarText.setTextColor(Color.parseColor("#00FF41"))
+            when(currentTheme) {
+                RadarView.Theme.HIGH_CONTRAST -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_white)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.RED_NIGHT -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_red)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.PINK -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_pink)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.NEON -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_neon)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.NARANJA -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_naranja)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.BUBBLEGUM -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                RadarView.Theme.SUMMERTIME -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_naranja)
+                    holder.avatarText.setTextColor(Color.BLACK)
+                }
+                else -> {
+                    holder.avatarBg.setBackgroundResource(R.drawable.status_box_bg_black)
+                    holder.avatarText.setTextColor(Color.parseColor("#00FF41"))
+                }
             }
 
             holder.statusIndicator.visibility = View.VISIBLE

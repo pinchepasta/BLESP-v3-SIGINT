@@ -25,12 +25,23 @@ class RadarView @JvmOverloads constructor(
 
     var onDeviceClickListener: OnDeviceClickListener? = null
 
-    var isHighContrastMode = false
+    enum class Theme {
+        DEFAULT, HIGH_CONTRAST, RED_NIGHT, PINK, NEON, NARANJA, BUBBLEGUM, SUMMERTIME, MORIO
+    }
+
+    var theme = Theme.DEFAULT
         set(value) {
             field = value
             updateColors()
             cachedBg = null
             invalidate()
+        }
+
+    @Deprecated("Use theme property instead", ReplaceWith("theme = if (value) Theme.HIGH_CONTRAST else Theme.DEFAULT"))
+    var isHighContrastMode: Boolean
+        get() = theme == Theme.HIGH_CONTRAST
+        set(value) {
+            theme = if (value) Theme.HIGH_CONTRAST else Theme.DEFAULT
         }
 
     private var green       = "#00FF41".toColorInt()
@@ -43,6 +54,7 @@ class RadarView @JvmOverloads constructor(
     private var lteColor    = "#FFB300".toColorInt()
     private var fiveGColor  = Color.parseColor("#4B0082") // Indigo/Dark Purple
     private var pagerColor  = Color.parseColor("#00FF41") // Green for Pager
+    private var cameraColor = Color.RED
     private var pink        = Color.parseColor("#0066FF") // Blue
     private var targetPink  = Color.parseColor("#FF00FF") // Added for consistency
 
@@ -135,92 +147,371 @@ class RadarView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
-    private fun updateColors() {
-        if (isHighContrastMode) {
-            green = Color.BLACK
-            greenDim = Color.LTGRAY
-            greenMid = Color.BLACK
-            radarBg = Color.WHITE
-            amber = Color.BLACK
-            cyan = Color.BLACK
-            aircraftColor = Color.BLACK
-            lteColor = Color.BLACK
-            fiveGColor = Color.BLACK
-            pagerColor = Color.BLACK
-            pink = Color.BLACK
-            
-            bgPaint.color = radarBg
-            ringPaint.color = greenDim
-            crossPaint.color = greenDim
-            blipPaint.color = green
-            blipRingPaint.color = green
-            labelSmallPaint.color = greenMid
-            selectedPaint.color = Color.BLACK
-            centerPaint.color = Color.BLACK
-            centerGlowPaint.color = Color.LTGRAY
-            tickPaint.color = greenMid
-            compassPaint.color = greenMid
-            sweepLinePaint.color = Color.BLACK
-            distPaint.color = Color.BLACK
-            statusPaint.color = Color.BLACK
-            cyanStatusPaint.color = Color.BLACK
-            airTagPaint.color = Color.BLACK
-            staticPaint.color = Color.LTGRAY
-            glitchPaint.color = Color.LTGRAY
-            alarmPaint.color = Color.BLACK
-            whisperPaint.color = Color.BLACK
-            vulnPaint.color = Color.BLACK
-            targetPink = Color.BLACK
-            
-            buildSweepShader(width / 2f, height / 2f)
-        } else {
-            green = "#00FF41".toColorInt()
-            greenDim = "#003B0F".toColorInt()
-            greenMid = "#00AA2A".toColorInt()
-            radarBg = Color.BLACK
-            amber = "#FFB300".toColorInt()
-            cyan = "#00FFFF".toColorInt()
-            aircraftColor = "#00FFFF".toColorInt()
-            lteColor = "#FFB300".toColorInt()
-            fiveGColor = Color.parseColor("#4B0082")
-            pagerColor = Color.parseColor("#00FF41")
-            pink = Color.parseColor("#0066FF")
 
-            bgPaint.color = radarBg
-            ringPaint.color = greenDim
-            crossPaint.color = greenDim
-            blipPaint.color = green
-            blipRingPaint.color = green
-            labelSmallPaint.color = greenMid
-            selectedPaint.color = amber
-            centerPaint.color = Color.parseColor("#FF00FF")
-            centerGlowPaint.color = Color.parseColor("#FF00FF")
-            tickPaint.color = greenMid
-            compassPaint.color = greenMid
-            sweepLinePaint.color = ColorUtils.setAlphaComponent(green, 200)
-            distPaint.color = greenMid
-            statusPaint.color = greenMid
-            cyanStatusPaint.color = cyan
-            airTagPaint.color = Color.WHITE
-            staticPaint.color = Color.parseColor("#FF00FF")
-            glitchPaint.color = green
-            alarmPaint.color = Color.RED
-            whisperPaint.color = Color.parseColor("#FF00FF")
-            vulnPaint.color = green
-            targetPink = Color.parseColor("#FF00FF")
-            
-            buildSweepShader(width / 2f, height / 2f)
+    init {
+        updateColors()
+    }
+
+    private fun updateColors() {
+        when (theme) {
+            Theme.HIGH_CONTRAST -> {
+                green = Color.BLACK
+                greenDim = Color.LTGRAY
+                greenMid = Color.BLACK
+                radarBg = Color.WHITE
+                amber = Color.BLACK
+                cyan = Color.BLACK
+                aircraftColor = Color.BLACK
+                lteColor = Color.BLACK
+                fiveGColor = Color.BLACK
+                pagerColor = Color.BLACK
+                pink = Color.BLACK
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.BLACK
+                centerPaint.color = Color.BLACK
+                centerGlowPaint.color = Color.LTGRAY
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.BLACK
+                distPaint.color = Color.BLACK
+                statusPaint.color = Color.BLACK
+                cyanStatusPaint.color = Color.BLACK
+                airTagPaint.color = Color.BLACK
+                staticPaint.color = Color.LTGRAY
+                glitchPaint.color = Color.LTGRAY
+                alarmPaint.color = Color.BLACK
+                whisperPaint.color = Color.BLACK
+                vulnPaint.color = Color.BLACK
+                targetPink = Color.BLACK
+            }
+            Theme.RED_NIGHT -> {
+                green = Color.RED
+                greenDim = Color.parseColor("#330000")
+                greenMid = Color.parseColor("#990000")
+                radarBg = Color.BLACK
+                amber = Color.RED
+                cyan = Color.RED
+                aircraftColor = Color.RED
+                lteColor = Color.RED
+                fiveGColor = Color.RED
+                pagerColor = Color.RED
+                pink = Color.RED
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.RED
+                centerPaint.color = Color.RED
+                centerGlowPaint.color = Color.RED
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.RED
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.RED
+                airTagPaint.color = Color.RED
+                staticPaint.color = Color.RED
+                glitchPaint.color = Color.RED
+                alarmPaint.color = Color.RED
+                whisperPaint.color = Color.RED
+                vulnPaint.color = Color.RED
+                targetPink = Color.RED
+            }
+            Theme.DEFAULT -> {
+                green = "#00FF41".toColorInt()
+                greenDim = "#003B0F".toColorInt()
+                greenMid = "#00AA2A".toColorInt()
+                radarBg = Color.BLACK
+                amber = "#FFB300".toColorInt()
+                cyan = "#00FFFF".toColorInt()
+                aircraftColor = "#00FFFF".toColorInt()
+                lteColor = "#FFB300".toColorInt()
+                fiveGColor = Color.parseColor("#4B0082")
+                pagerColor = Color.parseColor("#00FF41")
+                pink = Color.parseColor("#0066FF")
+
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = amber
+                centerPaint.color = Color.parseColor("#FF00FF")
+                centerGlowPaint.color = Color.parseColor("#FF00FF")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = ColorUtils.setAlphaComponent(green, 200)
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = cyan
+                airTagPaint.color = Color.WHITE
+                staticPaint.color = Color.parseColor("#FF00FF")
+                glitchPaint.color = green
+                alarmPaint.color = Color.RED
+                whisperPaint.color = Color.parseColor("#FF00FF")
+                vulnPaint.color = green
+                targetPink = Color.parseColor("#FF00FF")
+            }
+            Theme.PINK -> {
+                green = Color.parseColor("#FF00FF")
+                greenDim = Color.parseColor("#330033")
+                greenMid = Color.parseColor("#990099")
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#FF69B4")
+                cyan = Color.parseColor("#FF1493")
+                aircraftColor = Color.parseColor("#FF00FF")
+                lteColor = Color.parseColor("#FF00FF")
+                fiveGColor = Color.parseColor("#FF00FF")
+                pagerColor = Color.parseColor("#FF00FF")
+                pink = Color.parseColor("#FF00FF")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#FF00FF")
+                centerGlowPaint.color = Color.parseColor("#FF00FF")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#FF00FF")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#FF00FF")
+                airTagPaint.color = Color.parseColor("#FF00FF")
+                staticPaint.color = Color.parseColor("#FF00FF")
+                glitchPaint.color = Color.parseColor("#FF00FF")
+                alarmPaint.color = Color.parseColor("#FF00FF")
+                whisperPaint.color = Color.parseColor("#FF00FF")
+                vulnPaint.color = Color.parseColor("#FF00FF")
+                targetPink = Color.parseColor("#FF00FF")
+            }
+            Theme.NEON -> {
+                green = Color.parseColor("#E6FB04")
+                greenDim = Color.parseColor("#333801")
+                greenMid = Color.parseColor("#B3C403")
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#FFFF00")
+                cyan = Color.parseColor("#E6FB04")
+                aircraftColor = Color.parseColor("#E6FB04")
+                lteColor = Color.parseColor("#E6FB04")
+                fiveGColor = Color.parseColor("#E6FB04")
+                pagerColor = Color.parseColor("#E6FB04")
+                pink = Color.parseColor("#E6FB04")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#E6FB04")
+                centerGlowPaint.color = Color.parseColor("#E6FB04")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#E6FB04")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#E6FB04")
+                airTagPaint.color = Color.parseColor("#E6FB04")
+                staticPaint.color = Color.parseColor("#E6FB04")
+                glitchPaint.color = Color.parseColor("#E6FB04")
+                alarmPaint.color = Color.parseColor("#E6FB04")
+                whisperPaint.color = Color.parseColor("#E6FB04")
+                vulnPaint.color = Color.parseColor("#E6FB04")
+                targetPink = Color.parseColor("#E6FB04")
+            }
+            Theme.NARANJA -> {
+                green = Color.parseColor("#FF8C00")
+                greenDim = Color.parseColor("#331C00")
+                greenMid = Color.parseColor("#995400")
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#FFA500")
+                cyan = Color.parseColor("#FF8C00")
+                aircraftColor = Color.parseColor("#FF8C00")
+                lteColor = Color.parseColor("#FF8C00")
+                fiveGColor = Color.parseColor("#FF8C00")
+                pagerColor = Color.parseColor("#FF8C00")
+                pink = Color.parseColor("#FF8C00")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#FF8C00")
+                centerGlowPaint.color = Color.parseColor("#FF8C00")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#FF8C00")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#FF8C00")
+                airTagPaint.color = Color.parseColor("#FF8C00")
+                staticPaint.color = Color.parseColor("#FF8C00")
+                glitchPaint.color = Color.parseColor("#FF8C00")
+                alarmPaint.color = Color.parseColor("#FF8C00")
+                whisperPaint.color = Color.parseColor("#FF8C00")
+                vulnPaint.color = Color.parseColor("#FF8C00")
+                targetPink = Color.parseColor("#FF8C00")
+            }
+            Theme.BUBBLEGUM -> {
+                green = Color.parseColor("#FF00FF") // Neon Magenta
+                greenDim = Color.parseColor("#330033")
+                greenMid = Color.parseColor("#00FDFF") // Turquoise
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#00FDFF") // Turquoise accent
+                cyan = Color.parseColor("#00FDFF")
+                aircraftColor = Color.parseColor("#00FDFF")
+                lteColor = Color.parseColor("#FF00FF")
+                fiveGColor = Color.parseColor("#FF00FF")
+                pagerColor = Color.parseColor("#FF00FF")
+                pink = Color.parseColor("#FF00FF")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#FF00FF")
+                centerGlowPaint.color = Color.parseColor("#FF00FF")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#FF00FF")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#00FDFF")
+                airTagPaint.color = Color.WHITE
+                staticPaint.color = Color.parseColor("#FF00FF")
+                glitchPaint.color = Color.parseColor("#00FDFF")
+                alarmPaint.color = Color.parseColor("#FF00FF")
+                whisperPaint.color = Color.parseColor("#FF00FF")
+                vulnPaint.color = Color.parseColor("#00FDFF")
+                targetPink = Color.parseColor("#FF00FF")
+            }
+            Theme.SUMMERTIME -> {
+                green = Color.parseColor("#ff9f6b")
+                greenDim = Color.parseColor("#331f15")
+                greenMid = Color.parseColor("#cc7f56")
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#6befff")
+                cyan = Color.parseColor("#6befff")
+                aircraftColor = Color.parseColor("#6befff")
+                lteColor = Color.parseColor("#ff9f6b")
+                fiveGColor = Color.parseColor("#ff9f6b")
+                pagerColor = Color.parseColor("#ff9f6b")
+                pink = Color.parseColor("#ff9f6b")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#ff9f6b")
+                centerGlowPaint.color = Color.parseColor("#ff9f6b")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#ff9f6b")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#6befff")
+                airTagPaint.color = Color.WHITE
+                staticPaint.color = Color.parseColor("#ff9f6b")
+                glitchPaint.color = Color.parseColor("#6befff")
+                alarmPaint.color = Color.parseColor("#ff9f6b")
+                whisperPaint.color = Color.parseColor("#ff9f6b")
+                vulnPaint.color = Color.parseColor("#6befff")
+                targetPink = Color.parseColor("#ff9f6b")
+            }
+            Theme.MORIO -> {
+                green = Color.parseColor("#c3ac3a")
+                greenDim = Color.parseColor("#244f48")
+                greenMid = Color.parseColor("#c8f29e")
+                radarBg = Color.BLACK
+                amber = Color.parseColor("#c8f29e")
+                cyan = Color.parseColor("#c8f29e")
+                aircraftColor = Color.parseColor("#c8f29e")
+                lteColor = Color.parseColor("#c3ac3a")
+                fiveGColor = Color.parseColor("#c3ac3a")
+                pagerColor = Color.parseColor("#c3ac3a")
+                pink = Color.parseColor("#c8f29e")
+                
+                bgPaint.color = radarBg
+                ringPaint.color = greenDim
+                crossPaint.color = greenDim
+                blipPaint.color = green
+                blipRingPaint.color = green
+                labelSmallPaint.color = greenMid
+                selectedPaint.color = Color.WHITE
+                centerPaint.color = Color.parseColor("#c3ac3a")
+                centerGlowPaint.color = Color.parseColor("#c3ac3a")
+                tickPaint.color = greenMid
+                compassPaint.color = greenMid
+                sweepLinePaint.color = Color.parseColor("#c3ac3a")
+                distPaint.color = greenMid
+                statusPaint.color = greenMid
+                cyanStatusPaint.color = Color.parseColor("#c8f29e")
+                airTagPaint.color = Color.WHITE
+                staticPaint.color = Color.parseColor("#c3ac3a")
+                glitchPaint.color = Color.parseColor("#c8f29e")
+                alarmPaint.color = Color.parseColor("#c8f29e")
+                whisperPaint.color = Color.parseColor("#c3ac3a")
+                vulnPaint.color = Color.parseColor("#c8f29e")
+                targetPink = Color.parseColor("#c8f29e")
+            }
         }
+        buildSweepShader(width / 2f, height / 2f)
     }
 
     private fun buildSweepShader(cx: Float, cy: Float) {
-        val sweepColor = if (isHighContrastMode) Color.BLACK else green
+        val sweepColor = when (theme) {
+            Theme.HIGH_CONTRAST -> Color.BLACK
+            Theme.RED_NIGHT -> Color.RED
+            Theme.PINK -> Color.parseColor("#FF00FF")
+            Theme.NEON -> Color.parseColor("#E6FB04")
+            Theme.NARANJA -> Color.parseColor("#FF8C00")
+            Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            Theme.MORIO -> Color.parseColor("#c3ac3a")
+            Theme.DEFAULT -> green
+        }
+        val maxAlpha = when (theme) {
+            Theme.HIGH_CONTRAST -> 30
+            Theme.RED_NIGHT -> 40
+            Theme.PINK -> 60
+            Theme.NEON -> 50
+            Theme.NARANJA -> 50
+            Theme.BUBBLEGUM -> 60
+            Theme.SUMMERTIME -> 50
+            Theme.MORIO -> 50
+            Theme.DEFAULT -> 50
+        }
+        
         sweepPaint.shader = SweepGradient(cx, cy, intArrayOf(
             Color.TRANSPARENT,
             Color.TRANSPARENT,
             ColorUtils.setAlphaComponent(sweepColor, 0),
-            ColorUtils.setAlphaComponent(sweepColor, if (isHighContrastMode) 15 else 25),
-            ColorUtils.setAlphaComponent(sweepColor, if (isHighContrastMode) 30 else 50),
+            ColorUtils.setAlphaComponent(sweepColor, maxAlpha / 2),
+            ColorUtils.setAlphaComponent(sweepColor, maxAlpha),
             ColorUtils.setAlphaComponent(sweepColor, 0)
         ), floatArrayOf(0f, 0.5f, 0.7f, 0.85f, 1.0f, 1.0f))
     }
@@ -285,6 +576,12 @@ class RadarView @JvmOverloads constructor(
     private val devicePositions = mutableMapOf<String, PointF>()
     var selectedId: String? = null
 
+    private var bleCountCache = 0
+    private var wifiCountCache = 0
+    
+    private val currentIds = HashSet<String>()
+    private var blipPointsBuffer = FloatArray(2000) // Support up to 1000 points per batch
+
     var showBle = true
         set(value) { field = value; invalidate() }
     var showWifi = true
@@ -294,6 +591,8 @@ class RadarView @JvmOverloads constructor(
     var showLte = true
         set(value) { field = value; invalidate() }
     var showAero = true
+        set(value) { field = value; invalidate() }
+    var showCams = true
         set(value) { field = value; invalidate() }
     var showMap = false
         set(value) { 
@@ -337,6 +636,16 @@ class RadarView @JvmOverloads constructor(
     fun setDevices(list: List<ScanDevice>) {
         devices.clear()
         devices.addAll(list)
+        
+        var bc = 0
+        var wc = 0
+        list.forEach { d ->
+            if (d.type == DeviceType.BLE || d.type == DeviceType.PAGER) bc++
+            else if (d.type == DeviceType.WIFI) wc++
+        }
+        bleCountCache = bc
+        wifiCountCache = wc
+
         sortedDevices.clear()
         sortedDevices.addAll(list.sortedBy { it.id })
         assignPositions()
@@ -344,14 +653,35 @@ class RadarView @JvmOverloads constructor(
     }
 
     private fun assignPositions() {
+        if (width <= 0 || height <= 0) return
+        
         val cx = width / 2f
         val cy = height / 2f
         val r  = min(cx, cy) * 0.97f
-        devices.forEach { d ->
-            val existing = devicePositions[d.id]
-            if (existing == null && d.type != DeviceType.AIRCRAFT) {
+        
+        val deviceCount = devices.size
+        
+        // Throttling position updates for non-selected devices in high density
+        val skipModulo = when {
+            deviceCount > 500 -> 10
+            deviceCount > 200 -> 5
+            else -> 1
+        }
+        
+        // Optimize: Use a pre-sized HashSet to avoid repeated allocations if possible
+        val currentIds = HashSet<String>(devices.size)
+        devices.forEach { currentIds.add(it.id) }
+        
+        devices.forEachIndexed { index, d ->
+            val isSelected = d.id == selectedId
+            if (!isSelected && skipModulo > 1 && (index + drawCount) % skipModulo != 0) {
+                return@forEachIndexed
+            }
+            
+            var pos = devicePositions[d.id]
+            
+            if (pos == null && d.type != DeviceType.AIRCRAFT && d.type != DeviceType.CAMERA) {
                 // First time: assign stable angle from id hash
-                // Use a different seed for different device types to spread them out
                 val seed = when(d.type) {
                     DeviceType.WIFI -> 0xABC
                     DeviceType.BLE -> 0xDEF
@@ -363,29 +693,37 @@ class RadarView @JvmOverloads constructor(
                     DeviceType.COMPUTER -> 0x135
                     DeviceType.SMARTPHONE -> 0x579
                     DeviceType.PAGER -> 0xAAA
+                    DeviceType.CAMERA -> 0xBBB
                     DeviceType.AIRCRAFT, DeviceType.DRONE -> 0x000
                 }
-                val hashAngle = (((d.id.hashCode() xor seed) and 0x7FFFFFFF) % 360).toDouble()
-                d.angle = hashAngle
+                d.angle = (((d.id.hashCode() xor seed) and 0x7FFFFFFF) % 360).toDouble()
             }
 
-            // For aircraft, distance scaling is different (0 to 50km)
             val currentMaxDist = if (d.type == DeviceType.AIRCRAFT) 50000.0 else maxDistance
-            
-            // Dynamic distance scaling based on maxDistance
             val dist = d.distanceMeters.coerceIn(0.1, currentMaxDist)
-            // Use a square root (pow 0.5) to pull things away from the edge more aggressively
             val normDist = (dist / currentMaxDist).pow(0.55).coerceIn(0.05, 0.95)
-            
             val rad = Math.toRadians(d.angle - 90.0)
-            devicePositions[d.id] = PointF(
-                cx + (r * normDist * cos(rad)).toFloat(),
-                cy + (r * normDist * sin(rad)).toFloat()
-            )
+            
+            val newX = cx + (r * normDist * cos(rad)).toFloat()
+            val newY = cy + (r * normDist * sin(rad)).toFloat()
+            
+            if (pos == null) {
+                pos = PointF(newX, newY)
+                devicePositions[d.id] = pos
+            } else {
+                pos.set(newX, newY)
+            }
         }
-        // Remove stale
-        val ids = devices.map { it.id }.toSet()
-        devicePositions.keys.retainAll(ids)
+        
+        // Remove stale using the set
+        if (devicePositions.size > currentIds.size) {
+            val iterator = devicePositions.entries.iterator()
+            while (iterator.hasNext()) {
+                if (!currentIds.contains(iterator.next().key)) {
+                    iterator.remove()
+                }
+            }
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -441,14 +779,25 @@ class RadarView @JvmOverloads constructor(
     private val pointPool = PointF()
 
     override fun onDraw(canvas: Canvas) {
+        // Ensure black background for Summertime and Morio themes
+        if (theme == Theme.SUMMERTIME || theme == Theme.MORIO) {
+            canvas.drawColor(Color.BLACK)
+        }
         super.onDraw(canvas)
         
         val deviceCount = devices.size
         
-        // Performance optimization: Skip frames if device count is very high (> 150)
-        if (deviceCount > 150) {
+        // Dynamic frame skipping based on device count
+        val skipThreshold = when {
+            deviceCount > 500 -> 4 // Draw every 4th frame
+            deviceCount > 300 -> 3 // Draw every 3rd frame
+            deviceCount > 150 -> 2 // Draw every 2nd frame
+            else -> 1
+        }
+        
+        if (skipThreshold > 1) {
             drawCount++
-            if (drawCount % DRAW_SKIP_THRESHOLD != 0) return
+            if (drawCount % skipThreshold != 0) return
         }
 
         if (cachedBg == null || cachedBg?.width != width || cachedBg?.height != height) {
@@ -460,13 +809,8 @@ class RadarView @JvmOverloads constructor(
         val r  = min(cx, cy) * 0.97f
 
         canvas.save()
-        canvas.rotate(rotationDegrees, cx, cy)
+        canvas.rotate(rotationDegrees + 180f, cx, cy)
 
-        // Only draw full background if we don't have a dirty rect or if device count is low
-        // For ultra-high density (> 300), we could potentially use dirty rects, 
-        // but since the sweep and rotation are constant, a full redraw is usually cleaner.
-        // However, we can optimize by only redrawing blips that moved significantly.
-        
         cachedBg?.let { canvas.drawBitmap(it, 0f, 0f, null) }
 
         // Sweep
@@ -481,123 +825,197 @@ class RadarView @JvmOverloads constructor(
         // Center dot with submarine radar pulsate effect
         val time = System.currentTimeMillis()
         val cycle = time % 1500
-        val pulseScale = if (cycle < 500) cycle / 500f else 1f // Fast 500ms pulse, then 1s pause
+        val pulseScale = if (cycle < 500) cycle / 500f else 1f 
         
-        // Expanding ring (the ping)
-        if (cycle < 500) {
+        if (cycle < 500 && deviceCount < 300) { // Only show ping ripple if density is low
             val pingRadius = 6f + (pulseScale * 40f)
-            val pingAlpha = (255 * (1f - pulseScale)).toInt()
+            val pingAlpha = (180 * (1f - pulseScale)).toInt()
             centerGlowPaint.color = targetPink
             centerGlowPaint.alpha = pingAlpha
             canvas.drawCircle(cx, cy, pingRadius, centerGlowPaint)
         }
         
-        // Steady core dot
-        val centerColor = if (isHighContrastMode) {
+        val isHighContrast = theme == Theme.HIGH_CONTRAST
+        centerPaint.color = if (isHighContrast) {
             ColorUtils.blendARGB(Color.parseColor("#FF00FF"), Color.WHITE, centerBlinkAlpha / 255f)
         } else {
             targetPink
         }
-        centerPaint.color = centerColor
         canvas.drawCircle(cx, cy, 6f, centerPaint)
 
         // Blips
-        val maxBlipsToDraw = if (deviceCount > 300) 300 else sortedDevices.size
+        val isHighDensity = deviceCount > 250
+
+        if (deviceCount > 500) {
+            renderHighDensityBlips(canvas)
+        } else {
+            renderStandardBlips(canvas, isHighDensity, isHighContrast)
+        }
         
-        for (i in 0 until sortedDevices.size) {
-            if (i >= maxBlipsToDraw) break
-            val device = sortedDevices[i]
-            
-            if (device.type == DeviceType.BLE && !showBle) continue
-            if (device.type == DeviceType.PAGER && !showBle) continue
-            if (device.type == DeviceType.WIFI && !showWifi) continue
-            if (device.type == DeviceType.FIVE_G && !show5g) continue
-            if (device.type == DeviceType.LTE && !showLte) continue
-            if ((device.type == DeviceType.AIRCRAFT || device.type == DeviceType.DRONE) && !showAero) continue
+        canvas.restore()
+        drawOverlays(canvas)
+        drawStatusBar(canvas)
+    }
 
-            val pos = devicePositions[device.id] ?: continue
-            
-            // Optimization: If > 300 devices, skip those that haven't moved much to reduce draw calls
-            if (deviceCount > 300) {
-                val lastPos = lastRenderedBlips[device.id]
-                if (lastPos != null && hypot(pos.x - lastPos.x, pos.y - lastPos.y) < 2f) {
-                   // Still draw it, but maybe we can skip complex effects? 
-                   // For now, let's just draw the core dot for non-selected
-                   if (device.id != selectedId) {
-                       blipPaint.color = ColorUtils.setAlphaComponent(green, 180)
-                       canvas.drawCircle(pos.x, pos.y, 5f, blipPaint)
-                       continue
-                   }
-                }
-            }
-            // Reuse PointF object or avoid allocation if possible
-            val savedPos = lastRenderedBlips[device.id]
-            if (savedPos != null) {
-                savedPos.set(pos.x, pos.y)
-            } else {
-                lastRenderedBlips[device.id] = PointF(pos.x, pos.y)
-            }
-
-            val isSelected = device.id == selectedId
-            val blipColor = when (device.type) {
+    private fun renderHighDensityBlips(canvas: Canvas) {
+        // Group by type to minimize paint changes
+        val grouped = sortedDevices.groupBy { it.type }
+        
+        grouped.forEach { (type, deviceList) ->
+            val color = when (type) {
                 DeviceType.WIFI -> green
                 DeviceType.BLE -> pink
                 DeviceType.LTE -> lteColor
                 DeviceType.FIVE_G -> fiveGColor
                 DeviceType.PAGER -> pagerColor
                 DeviceType.AIRCRAFT, DeviceType.DRONE -> aircraftColor
-                DeviceType.CAR, DeviceType.ESCOOTER, DeviceType.TV, DeviceType.COMPUTER, DeviceType.SMARTPHONE -> targetPink
+                else -> targetPink
             }
-            val alpha = if (isSelected) 255 else 210
-
-            blipPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
-            blipRingPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
-
-            val blipR = if (isSelected) 10f else 7f
-
-            // Pulse ring for selected
-            if (isSelected) {
-                val pr = blipR + 6f + pulseRadius * 20f
-                val pa = (255 * (1f - pulseRadius)).toInt()
-                val selectionColor = if (isHighContrastMode) Color.BLACK else Color.parseColor("#FF00FF") // Pink instead of Amber
-                selectedPaint.color = ColorUtils.setAlphaComponent(selectionColor, pa)
-                canvas.drawCircle(pos.x, pos.y, pr, selectedPaint)
-                selectedPaint.color = selectionColor
-                canvas.drawCircle(pos.x, pos.y, blipR + 4f, selectedPaint)
+            
+            blipPaint.color = ColorUtils.setAlphaComponent(color, 180)
+            blipPaint.strokeWidth = 4f
+            
+            var pointIdx = 0
+            if (blipPointsBuffer.size < deviceList.size * 2) {
+                blipPointsBuffer = FloatArray(deviceList.size * 2)
             }
+            
+            deviceList.forEach { device ->
+                if (!shouldShow(device.type)) return@forEach
+                val pos = devicePositions[device.id] ?: return@forEach
+                blipPointsBuffer[pointIdx++] = pos.x
+                blipPointsBuffer[pointIdx++] = pos.y
+            }
+            
+            if (pointIdx > 0) {
+                canvas.drawPoints(blipPointsBuffer, 0, pointIdx, blipPaint)
+            }
+        }
+        
+        // Always render selected device on top with full detail
+        selectedId?.let { id ->
+            devices.find { it.id == id }?.let { renderSingleBlip(canvas, it, true, theme == Theme.HIGH_CONTRAST) }
+        }
+    }
 
-            // Glow halo
+    private fun renderStandardBlips(canvas: Canvas, isHighDensity: Boolean, isHighContrast: Boolean) {
+        for (i in 0 until sortedDevices.size) {
+            val device = sortedDevices[i]
+            if (!shouldShow(device.type)) continue
+            val isSelected = device.id == selectedId
+            renderSingleBlip(canvas, device, isSelected, isHighContrast, isHighDensity)
+        }
+    }
+
+    private fun shouldShow(type: DeviceType): Boolean {
+        return when (type) {
+            DeviceType.BLE, DeviceType.PAGER -> showBle
+            DeviceType.WIFI -> showWifi
+            DeviceType.FIVE_G -> show5g
+            DeviceType.LTE -> showLte
+            DeviceType.AIRCRAFT, DeviceType.DRONE -> showAero
+            DeviceType.CAMERA -> showCams
+            else -> true
+        }
+    }
+
+    private fun renderSingleBlip(canvas: Canvas, device: ScanDevice, isSelected: Boolean, isHighContrast: Boolean, isHighDensity: Boolean = false) {
+        val pos = devicePositions[device.id] ?: return
+        
+        val blipColor = when (device.type) {
+            DeviceType.WIFI -> green
+            DeviceType.BLE -> pink
+            DeviceType.LTE -> lteColor
+            DeviceType.FIVE_G -> fiveGColor
+            DeviceType.PAGER -> pagerColor
+            DeviceType.AIRCRAFT, DeviceType.DRONE -> aircraftColor
+            DeviceType.CAMERA -> cameraColor
+            else -> targetPink
+        }
+
+        if (isHighDensity && !isSelected) {
+            val lastPos = lastRenderedBlips[device.id]
+            if (lastPos != null && abs(pos.x - lastPos.x) < 0.5f && abs(pos.y - lastPos.y) < 0.5f) {
+                blipPaint.color = ColorUtils.setAlphaComponent(blipColor, 120)
+                canvas.drawPoint(pos.x, pos.y, blipPaint)
+                return
+            }
+        }
+        
+        val savedPos = lastRenderedBlips[device.id]
+        if (savedPos != null) {
+            savedPos.set(pos.x, pos.y)
+        } else {
+            lastRenderedBlips[device.id] = PointF(pos.x, pos.y)
+        }
+
+        val alpha = if (isSelected) 255 else 210
+        blipPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
+        blipRingPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
+        val blipR = if (isSelected) 10f else 7f
+
+        if (isSelected) {
+            val pr = blipR + 6f + pulseRadius * 20f
+            val pa = (255 * (1f - pulseRadius)).toInt()
+            val selectionColor = when (theme) {
+                Theme.RED_NIGHT -> Color.RED
+                Theme.HIGH_CONTRAST -> Color.BLACK
+                Theme.PINK -> Color.parseColor("#FF00FF")
+                Theme.NEON -> Color.parseColor("#E6FB04")
+                Theme.NARANJA -> Color.parseColor("#FF8C00")
+                Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
+                Theme.SUMMERTIME -> cyan
+                else -> targetPink
+            }
+            selectedPaint.color = ColorUtils.setAlphaComponent(selectionColor, pa)
+            canvas.drawCircle(pos.x, pos.y, pr, selectedPaint)
+            selectedPaint.color = selectionColor
+            canvas.drawCircle(pos.x, pos.y, blipR + 4f, selectedPaint)
+
+            // Draw SSID/MAC label for selected device in theme color
+            val label = device.displayName
+            val oldColor = distPaint.color
+            distPaint.color = selectionColor
+            canvas.drawText(label, pos.x + blipR + 10f, pos.y + 8f, shadowPaintSmall)
+            canvas.drawText(label, pos.x + blipR + 10f, pos.y + 8f, distPaint)
+            distPaint.color = oldColor
+        }
+
+        if (!isHighDensity || isSelected) {
             glowPaint.color = ColorUtils.setAlphaComponent(blipColor, 40)
             glowPaint.style = Paint.Style.FILL
             canvas.drawCircle(pos.x, pos.y, blipR * 3f, glowPaint)
+        }
 
-            // Blip dot
-            val blinkColor = when {
-                device.isCar -> if (isHighContrastMode) Color.BLACK else Color.parseColor("#FF00FF") // Pink for Cars
-                device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP") -> if (isHighContrastMode) Color.BLACK else Color.parseColor("#FF00FF")
-                device.isAirTag -> if (isHighContrastMode) Color.BLACK else Color.WHITE
-                else -> blipColor
+        val blinkColor = when {
+            device.isCar -> when(theme) {
+                Theme.RED_NIGHT -> Color.RED
+                Theme.HIGH_CONTRAST -> Color.BLACK
+                Theme.SUMMERTIME -> cyan
+                else -> targetPink
             }
-            
-            if (blinkColor != blipColor) {
-                blipPaint.color = ColorUtils.blendARGB(blipColor, blinkColor, blinkAlpha / 255f)
-            } else {
-                blipPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
+            device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP") -> when(theme) {
+                Theme.RED_NIGHT -> Color.RED
+                Theme.HIGH_CONTRAST -> Color.BLACK
+                Theme.SUMMERTIME -> cyan
+                else -> targetPink
             }
-            
-            canvas.drawCircle(pos.x, pos.y, blipR, blipPaint)
-            canvas.drawCircle(pos.x, pos.y, blipR, blipRingPaint)
-
-            // Label - REMOVED (Only large pink overlay in MainActivity is shown)
+            device.isAirTag -> when(theme) {
+                Theme.RED_NIGHT -> Color.BLACK
+                Theme.HIGH_CONTRAST -> Color.BLACK
+                else -> Color.WHITE
+            }
+            else -> blipColor
         }
         
-        canvas.restore()
-
-        // Status overlay (top) removed as it contained green/cyan text
-        // drawStatusBar(canvas)
-
-        // Subtle overlays: Grain, Scanlines, Glitches
-        drawOverlays(canvas)
+        if (blinkColor != blipColor) {
+            blipPaint.color = ColorUtils.blendARGB(blipColor, blinkColor, blinkAlpha / 255f)
+        }
+        
+        canvas.drawCircle(pos.x, pos.y, blipR, blipPaint)
+        if (!isHighDensity || isSelected) {
+            canvas.drawCircle(pos.x, pos.y, blipR, blipRingPaint)
+        }
     }
 
     private fun drawOverlays(canvas: Canvas) {
@@ -643,16 +1061,16 @@ class RadarView @JvmOverloads constructor(
     }
 
     private fun drawStatusBar(canvas: Canvas) {
-        val bleCount  = devices.count { it.type == DeviceType.BLE }
-        val wifiCount = devices.count { it.type == DeviceType.WIFI }
-        canvas.drawText("BLE: $bleCount", 20f, 36f, statusPaint)
-        canvas.drawText("WiFi: $wifiCount", 130f, 36f, cyanStatusPaint)
+        // BLE Wifi text removed as per user request
         
         if (showMap && userLat != null) {
+            val color1 = if (theme == Theme.RED_NIGHT) Color.RED else statusPaint.color
+            statusPaint.color = color1
             canvas.drawText("GPS: %.5f, %.5f".format(userLat, userLon), 260f, 36f, statusPaint)
         }
         
-        canvas.drawText("SCANNING", width - 160f, 36f, statusPaint)
+        val color1 = if (theme == Theme.RED_NIGHT) Color.RED else statusPaint.color
+        statusPaint.color = color1
     }
 
     private fun drawMapOverlay(canvas: Canvas, cx: Float, cy: Float, r: Float) {
@@ -690,7 +1108,8 @@ class RadarView @JvmOverloads constructor(
             val cy = height / 2f
 
             // Account for canvas rotation: rotate touch point backwards to match blip coordinate space
-            val angleRad = Math.toRadians((-rotationDegrees).toDouble())
+            // Rotation is rotationDegrees + 180, so we rotate back by -(rotationDegrees + 180)
+            val angleRad = Math.toRadians(-(rotationDegrees + 180f).toDouble())
             val cosA = cos(angleRad).toFloat()
             val sinA = sin(angleRad).toFloat()
 

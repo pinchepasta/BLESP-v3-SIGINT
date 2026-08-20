@@ -1,6 +1,8 @@
 package com.radar.blewifi
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +18,12 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val handler = Handler(Looper.getMainLooper())
     private val random = Random()
+
+    private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
+    private var primaryColor: Int = Color.parseColor("#00FF41")
+    private var accentColor: Int = Color.parseColor("#FF00FF")
+    private var secondaryColor: Int = Color.parseColor("#003B0F")
+    private var bgColor: Int = Color.BLACK
 
     private val statusMessages = arrayOf(
         "LOADING UI COMPONENTS...",
@@ -48,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        applyTheme()
         startGlitchAnimation()
         startLoadingSimulation()
 
@@ -57,6 +66,67 @@ class SplashActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }, 2500)
+    }
+
+    private fun applyTheme() {
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
+        currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+
+        bgColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
+            else -> Color.BLACK
+        }
+
+        primaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            else -> Color.parseColor("#00FF41")
+        }
+
+        accentColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.LTGRAY
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF69B4")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FFA500")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
+            else -> Color.parseColor("#FF00FF")
+        }
+
+        secondaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.parseColor("#EEEEEE")
+            RadarView.Theme.RED_NIGHT -> Color.parseColor("#330000")
+            RadarView.Theme.PINK -> Color.parseColor("#330033")
+            RadarView.Theme.NEON -> Color.parseColor("#333801")
+            RadarView.Theme.NARANJA -> Color.parseColor("#331C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#330033")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#331f15")
+            else -> Color.parseColor("#003B0F")
+        }
+
+        binding.root.setBackgroundColor(bgColor)
+        binding.tvLoadingStatus.setTextColor(primaryColor)
+        binding.tvLoadingPercent.setTextColor(primaryColor)
+        binding.tvSplashSubTitle.setTextColor(primaryColor)
+
+        binding.pbLoading.progressTintList = ColorStateList.valueOf(primaryColor)
+        binding.pbLoading.progressBackgroundTintList = ColorStateList.valueOf(secondaryColor)
+
+        binding.ivGlitchCyan.imageTintList = ColorStateList.valueOf(primaryColor)
+        binding.ivGlitchPink.imageTintList = ColorStateList.valueOf(accentColor)
+
+        if (currentTheme == RadarView.Theme.HIGH_CONTRAST) {
+            binding.ivSplashLogo.imageTintList = ColorStateList.valueOf(Color.BLACK)
+        } else {
+            binding.ivSplashLogo.imageTintList = null
+        }
     }
 
     private fun startLoadingSimulation() {
@@ -135,8 +205,8 @@ class SplashActivity : AppCompatActivity() {
             private val paint = android.graphics.Paint()
             override fun onDraw(canvas: android.graphics.Canvas) {
                 for (i in 0..500) {
-                    val colorStr = if (random.nextBoolean()) "#FFFFFF" else "#FF00FF"
-                    paint.color = android.graphics.Color.parseColor(colorStr)
+                    val color = if (random.nextBoolean()) primaryColor else accentColor
+                    paint.color = color
                     paint.alpha = random.nextInt(50) + 20
                     val x = random.nextFloat() * width
                     val y = random.nextFloat() * height

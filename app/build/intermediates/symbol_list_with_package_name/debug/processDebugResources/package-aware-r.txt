@@ -2991,9 +2991,18 @@ drawable blesp_logo
 drawable bonuspack_bubble
 drawable btn_bg
 drawable btn_bg_black
+drawable btn_bg_bubblegum
 drawable btn_bg_dim
+drawable btn_bg_morio
+drawable btn_bg_morio_dim
+drawable btn_bg_naranja
+drawable btn_bg_neon
+drawable btn_bg_pink
 drawable btn_bg_pink_dim
+drawable btn_bg_rainbow
 drawable btn_bg_red
+drawable btn_bg_summertime
+drawable btn_bg_summertime_dim
 drawable btn_bg_white
 drawable btn_bg_white_dim
 drawable btn_bg_white_red
@@ -3040,10 +3049,13 @@ drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_android
 drawable ic_android_black
+drawable ic_android_red
 drawable ic_apple
 drawable ic_apple_black
+drawable ic_apple_red
 drawable ic_archive
 drawable ic_archive_light
+drawable ic_archive_red
 drawable ic_arrow_back_black_24
 drawable ic_back
 drawable ic_call_answer
@@ -3055,7 +3067,9 @@ drawable ic_call_decline_low
 drawable ic_chart
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
+drawable ic_file
 drawable ic_globe
+drawable ic_help
 drawable ic_keyboard_black_24dp
 drawable ic_launcher
 drawable ic_lock
@@ -3078,7 +3092,9 @@ drawable ic_speaker
 drawable ic_tag
 drawable ic_theme_toggle
 drawable ic_theme_toggle_light
+drawable ic_theme_toggle_red
 drawable item_bg_cyber
+drawable logo3
 drawable logo_blesp
 drawable logo_v3
 drawable m3_avd_hide_password
@@ -3171,7 +3187,12 @@ drawable sharp_remove_black_36
 drawable status_box_bg
 drawable status_box_bg_black
 drawable status_box_bg_green
+drawable status_box_bg_morio
+drawable status_box_bg_naranja
+drawable status_box_bg_neon
 drawable status_box_bg_pink
+drawable status_box_bg_red
+drawable status_box_bg_summertime
 drawable status_box_bg_white
 drawable status_box_bg_white_pink
 drawable test_level_drawable
@@ -3195,6 +3216,7 @@ id SHOW_PROGRESS
 id SYM
 id TOP_END
 id TOP_START
+id aboutRoot
 id accelerate
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
@@ -3294,6 +3316,7 @@ id btn7
 id btn8
 id btn9
 id btnAC
+id btnAboutBack
 id btnAlarm
 id btnArchive
 id btnAttach
@@ -3316,6 +3339,7 @@ id btnEslBack
 id btnExport
 id btnExt
 id btnGlobeListTop
+id btnInfo
 id btnKillswitch
 id btnLeft
 id btnMinus
@@ -3328,6 +3352,7 @@ id btnRight
 id btnScan
 id btnScanBarcode
 id btnSend
+id btnSettingsBack
 id btnSound
 id btnSshLoginBack
 id btnSshTerminalBack
@@ -3351,7 +3376,7 @@ id cb24
 id cb5
 id cbAero
 id cbBle
-id cbLte
+id cbCams
 id cbMap
 id center
 id centerCrop
@@ -3474,10 +3499,12 @@ id gridLayout
 id group_divider
 id grouping
 id groups
+id headerAbout
 id headerArchive
 id headerBar
 id headerContainer
 id headerEsl
+id headerSettings
 id headerSshLogin
 id headerSshTerminal
 id header_title
@@ -3490,6 +3517,7 @@ id horizontal_only
 id icon
 id icon_group
 id icon_only
+id id_empty
 id ifRoom
 id ignore
 id ignoreRequest
@@ -3641,7 +3669,6 @@ id parent_matrix
 id password_toggle
 id path
 id pathRelative
-id path_sun_moon
 id pbLoading
 id peekHeight
 id percent
@@ -3693,6 +3720,7 @@ id select_dialog_listview
 id selected
 id selection_type
 id separator
+id settingsRoot
 id sharedValueSet
 id sharedValueUnset
 id shortcut
@@ -3709,6 +3737,7 @@ id snap
 id snapMargins
 id south
 id spExploits
+id spTheme
 id spacer
 id special_effects_controller_view_tag
 id spline
@@ -3739,6 +3768,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id svTerminal
+id swImmersive
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -3788,6 +3818,8 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvAboutDescription
+id tvAboutTitle
 id tvAddress
 id tvAeroCount
 id tvAeroIcon
@@ -3796,7 +3828,9 @@ id tvAirTagCount
 id tvAlarm
 id tvAndroidDevices
 id tvAppleDevices
+id tvArchiveTitle
 id tvAudioIcon
+id tvAuthorValue
 id tvAvatarText
 id tvBleCount
 id tvCarCount
@@ -3808,6 +3842,7 @@ id tvChartLabel
 id tvChatWith
 id tvCoordinates
 id tvDataUsage
+id tvDevValue
 id tvDeviceAddr
 id tvDeviceDist
 id tvDeviceName
@@ -3825,6 +3860,12 @@ id tvExtra6
 id tvFastPair
 id tvHijackIcon
 id tvIdLabel
+id tvImmersiveText
+id tvLabelAuthor
+id tvLabelDev
+id tvLabelHud
+id tvLabelTheme
+id tvLabelVersion
 id tvLastMessage
 id tvLoadingPercent
 id tvLoadingStatus
@@ -3836,6 +3877,7 @@ id tvOverlayNetworkName
 id tvRssi
 id tvScannerHint
 id tvSelectExploitLabel
+id tvSettingsTitle
 id tvSplashSubTitle
 id tvSshLoginTitle
 id tvStatsTitle
@@ -3847,6 +3889,7 @@ id tvTitle
 id tvTotalDevices
 id tvType
 id tvUptime
+id tvVersionValue
 id tvVulnCounter
 id tvVulnerability
 id tvWepCount
@@ -3998,11 +4041,14 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_about
 layout activity_archive
 layout activity_calculator
 layout activity_detail
+layout activity_esl
 layout activity_main
 layout activity_pager
+layout activity_settings
 layout activity_splash
 layout activity_stats
 layout bonuspack_bubble

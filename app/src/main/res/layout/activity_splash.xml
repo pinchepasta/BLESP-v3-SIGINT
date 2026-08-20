@@ -19,8 +19,8 @@
         <!-- Glitch Layers -->
         <ImageView
             android:id="@+id/ivGlitchCyan"
-            android:layout_width="240dp"
-            android:layout_height="80dp"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
             android:src="@drawable/blesp_logo"
             app:tint="#00FFFF"
             android:visibility="invisible"
@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/ivGlitchPink"
-            android:layout_width="240dp"
-            android:layout_height="80dp"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
             android:src="@drawable/blesp_logo"
             app:tint="#FF00FF"
             android:visibility="invisible"
@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/ivSplashLogo"
-            android:layout_width="240dp"
-            android:layout_height="80dp"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
             android:src="@drawable/blesp_logo"
             android:layout_gravity="center" />
     </FrameLayout>

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlin.math.pow
 
-enum class DeviceType { BLE, WIFI, LTE, FIVE_G, AIRCRAFT, CAR, DRONE, ESCOOTER, TV, COMPUTER, SMARTPHONE, PAGER }
+enum class DeviceType { BLE, WIFI, LTE, FIVE_G, AIRCRAFT, CAR, DRONE, ESCOOTER, TV, COMPUTER, SMARTPHONE, PAGER, CAMERA }
 
 @Parcelize
 data class ScanDevice(
@@ -52,6 +52,10 @@ data class ScanDevice(
     var origin: String? = null,
     var country: String? = null,
     var destination: String? = null,
+    // Camera specific
+    var cameraType: String? = null,
+    var cameraAngle: Int? = null,
+    var cameraHeight: Double? = null,
     // Cell specific
     var mcc: String? = null,
     var mnc: String? = null,
@@ -106,6 +110,7 @@ data class ScanDevice(
         DeviceType.COMPUTER -> "Computer"
         DeviceType.SMARTPHONE -> "Smartphone"
         DeviceType.PAGER -> "Pager"
+        DeviceType.CAMERA -> "CCTV"
         else -> "Cell"
     }
 

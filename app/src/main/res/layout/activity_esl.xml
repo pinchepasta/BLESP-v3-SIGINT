@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/eslRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <LinearLayout
+        android:id="@+id/headerEsl"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical"
+        android:background="#0F0F0F">
+
+        <Button
+            android:id="@+id/btnScanBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="SCANNER"
+            android:fontFamily="monospace"
+            android:textColor="#00FF41"
+            android:textSize="12sp"
+            android:background="@drawable/status_box_bg_green"
+            android:layout_marginEnd="8dp"
+            style="?attr/borderlessButtonStyle" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnEslBack"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:minWidth="80dp"
+            android:text="CLOSE"
+            android:fontFamily="monospace"
+            android:textColor="#FF00FF"
+            android:textSize="12sp"
+            android:background="@drawable/status_box_bg_pink"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            style="?attr/borderlessButtonStyle" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/webViewEsl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Overlay for native scanner if needed -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/scannerOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AA000000"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvScannerHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="100dp"
+            android:text="ALIGN BARCODE"
+            android:textColor="#00FF41"
+            android:fontFamily="monospace"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</LinearLayout>

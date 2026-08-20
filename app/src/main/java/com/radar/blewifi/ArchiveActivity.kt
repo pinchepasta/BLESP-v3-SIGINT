@@ -24,7 +24,7 @@ class ArchiveActivity : AppCompatActivity() {
     private lateinit var adapter: GroupedArchiveAdapter
     private lateinit var scanner: ScannerManager
     private var allDevices: List<ScanDevice> = emptyList()
-    private var isHighContrast = false
+    private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,9 @@ class ArchiveActivity : AppCompatActivity() {
         binding = ActivityArchiveBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        isHighContrast = getSharedPreferences("settings", MODE_PRIVATE).getBoolean("high_contrast", false)
+        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", RadarView.Theme.DEFAULT.name)
+        currentTheme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
+        
         scanner = ScannerManager(this)
 
         setupUI()
@@ -64,32 +66,140 @@ class ArchiveActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        if (isHighContrast) {
-            binding.root.setBackgroundColor(Color.WHITE)
-            binding.headerArchive.setBackgroundColor(Color.parseColor("#F0F0F0"))
-            binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_white)
-            binding.etSearch.setTextColor(Color.BLACK)
-            binding.etSearch.setHintTextColor(Color.GRAY)
-            binding.tvEmpty.setTextColor(Color.GRAY)
-            binding.btnBack.setColorFilter(Color.WHITE)
-        } else {
-            binding.btnBack.setColorFilter(Color.parseColor("#FF00FF"))
+        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
+        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
+        val isPink = currentTheme == RadarView.Theme.PINK
+        val isNeon = currentTheme == RadarView.Theme.NEON
+        val isNaranja = currentTheme == RadarView.Theme.NARANJA
+        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
+        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
+
+        val primaryColor = when {
+            isHighContrast -> Color.BLACK
+            isRedNight -> Color.RED
+            isPink -> Color.parseColor("#FF00FF")
+            isNeon -> Color.parseColor("#E6FB04")
+            isNaranja -> Color.parseColor("#FF8C00")
+            isBubblegum -> Color.parseColor("#FF00FF")
+            isSummertime -> Color.parseColor("#ff9f6b")
+            else -> Color.parseColor("#00FF41")
         }
 
-        binding.btnExport.setColorFilter(if (isHighContrast) Color.WHITE else Color.parseColor("#00FF41"))
+        when {
+            isHighContrast -> {
+                binding.root.setBackgroundColor(Color.WHITE)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#F0F0F0"))
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_white)
+                binding.etSearch.setTextColor(Color.BLACK)
+                binding.etSearch.setHintTextColor(Color.GRAY)
+                binding.tvEmpty.setTextColor(Color.GRAY)
+                binding.btnBack.setTextColor(Color.BLACK)
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_white_pink)
+            }
+            isRedNight -> {
+                binding.root.setBackgroundColor(Color.BLACK)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#0A0000"))
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_red)
+                binding.etSearch.setTextColor(Color.RED)
+                binding.etSearch.setHintTextColor(Color.parseColor("#660000"))
+                binding.tvEmpty.setTextColor(Color.RED)
+                binding.btnBack.setTextColor(Color.RED)
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_red)
+            }
+            isPink -> {
+                binding.root.setBackgroundColor(Color.BLACK)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#2A002A"))
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_pink)
+                binding.etSearch.setTextColor(Color.parseColor("#FF00FF"))
+                binding.etSearch.setHintTextColor(Color.parseColor("#660066"))
+                binding.tvEmpty.setTextColor(Color.parseColor("#FF00FF"))
+                binding.btnBack.setTextColor(Color.parseColor("#FF00FF"))
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_pink)
+            }
+            isNeon -> {
+                binding.root.setBackgroundColor(Color.BLACK)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#1A1A00"))
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_neon)
+                binding.etSearch.setTextColor(Color.parseColor("#E6FB04"))
+                binding.etSearch.setHintTextColor(Color.parseColor("#666600"))
+                binding.tvEmpty.setTextColor(Color.parseColor("#E6FB04"))
+                binding.btnBack.setTextColor(Color.parseColor("#E6FB04"))
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_neon)
+            }
+            isNaranja -> {
+                binding.root.setBackgroundColor(Color.BLACK)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#1A0F00"))
+                binding.etSearch.setBackgroundResource(R.drawable.status_box_bg_naranja)
+                binding.etSearch.setTextColor(Color.parseColor("#FF8C00"))
+                binding.etSearch.setHintTextColor(Color.parseColor("#663B00"))
+                binding.tvEmpty.setTextColor(Color.parseColor("#FF8C00"))
+                binding.btnBack.setTextColor(Color.parseColor("#FF8C00"))
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_naranja)
+            }
+            isBubblegum -> {
+                binding.root.setBackgroundColor(Color.BLACK)
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#1A001A"))
+                binding.etSearch.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+                binding.etSearch.setTextColor(Color.parseColor("#FF00FF"))
+                binding.etSearch.setHintTextColor(Color.parseColor("#660066"))
+                binding.tvEmpty.setTextColor(Color.parseColor("#FF00FF"))
+                binding.btnBack.setTextColor(Color.parseColor("#FF00FF"))
+                binding.btnBack.setBackgroundResource(R.drawable.btn_bg_bubblegum)
+            }
+            isSummertime -> {
+                binding.root.setBackgroundColor(Color.parseColor("#1A1A1A"))
+                binding.headerArchive.setBackgroundColor(Color.parseColor("#2A1F1A"))
+                binding.etSearch.setBackgroundResource(R.drawable.btn_bg_summertime)
+                binding.etSearch.setTextColor(Color.parseColor("#ff9f6b"))
+                binding.etSearch.setHintTextColor(Color.parseColor("#66ff9f6b"))
+                binding.tvEmpty.setTextColor(Color.parseColor("#ff9f6b"))
+                binding.btnBack.setTextColor(Color.parseColor("#ff9f6b"))
+                binding.btnBack.setBackgroundResource(R.drawable.btn_bg_summertime)
+            }
+            else -> {
+                binding.btnBack.setTextColor(Color.parseColor("#FF00FF"))
+                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_pink)
+            }
+        }
+
+        binding.tvArchiveTitle.setTextColor(primaryColor)
+        binding.tvArchiveTitle.text = setCyberText("ARCHIVE")
+
+        binding.btnExport.setColorFilter(when {
+            isHighContrast -> Color.WHITE
+            isRedNight -> Color.RED
+            isPink -> Color.parseColor("#FF00FF")
+            isNeon -> Color.parseColor("#E6FB04")
+            isNaranja -> Color.parseColor("#FF8C00")
+            isBubblegum -> Color.parseColor("#00FDFF")
+            isSummertime -> Color.parseColor("#6befff")
+            else -> Color.parseColor("#00FF41")
+        })
         binding.btnExport.setOnClickListener { exportArchive() }
 
-        binding.btnClear.setColorFilter(if (isHighContrast) Color.WHITE else Color.parseColor("#FF0000"))
+        binding.btnClear.setColorFilter(when {
+            isHighContrast -> Color.WHITE
+            isRedNight -> Color.RED
+            isPink -> Color.parseColor("#FF00FF")
+            isNeon -> Color.parseColor("#E6FB04")
+            isNaranja -> Color.parseColor("#FF8C00")
+            isBubblegum -> Color.parseColor("#00FDFF")
+            isSummertime -> Color.parseColor("#ff9f6b")
+            else -> Color.parseColor("#FF0000")
+        })
         binding.btnClear.setOnClickListener { showClearConfirmation() }
 
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener {
+            finish()
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
 
         adapter = GroupedArchiveAdapter { device ->
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_DEVICE, device)
             startActivity(intent)
         }
-        adapter.isHighContrastMode = isHighContrast
+        adapter.theme = currentTheme
         binding.rvArchive.layoutManager = LinearLayoutManager(this)
         binding.rvArchive.adapter = adapter
 
@@ -99,8 +209,12 @@ class ArchiveActivity : AppCompatActivity() {
     }
 
     private fun showClearConfirmation() {
+        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
+        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
+        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
+
         val title = android.text.SpannableString("CLEAR ARCHIVE").apply {
-            setSpan(android.text.style.ForegroundColorSpan(if (isHighContrast) Color.BLACK else Color.RED), 0, length, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            setSpan(android.text.style.ForegroundColorSpan(if (isHighContrast) Color.BLACK else if (isSummertime) Color.parseColor("#ff9f6b") else Color.RED), 0, length, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         
         val dialog = androidx.appcompat.app.AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
@@ -119,23 +233,34 @@ class ArchiveActivity : AppCompatActivity() {
         dialog.setOnDismissListener { setupImmersiveMode() }
 
         val bg = android.graphics.drawable.GradientDrawable()
-        if (isHighContrast) {
-            bg.setColor(Color.WHITE)
-            bg.setStroke(4, Color.BLACK)
-        } else {
-            bg.setColor(Color.parseColor("#99220000")) // Translucent dark red
-            bg.setStroke(2, Color.RED)
+        when {
+            isHighContrast -> {
+                bg.setColor(Color.WHITE)
+                bg.setStroke(4, Color.BLACK)
+            }
+            isRedNight -> {
+                bg.setColor(Color.BLACK)
+                bg.setStroke(2, Color.RED)
+            }
+            isSummertime -> {
+                bg.setColor(Color.parseColor("#1A1A1A"))
+                bg.setStroke(2, Color.parseColor("#ff9f6b"))
+            }
+            else -> {
+                bg.setColor(Color.parseColor("#99220000")) // Translucent dark red
+                bg.setStroke(2, Color.RED)
+            }
         }
         bg.cornerRadius = 30f
         dialog.window?.setBackgroundDrawable(bg)
 
         dialog.findViewById<android.widget.TextView>(android.R.id.message)?.apply {
-            setTextColor(if (isHighContrast) Color.BLACK else Color.WHITE)
+            setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else if (isSummertime) Color.parseColor("#ff9f6b") else Color.WHITE)
             typeface = android.graphics.Typeface.MONOSPACE
         }
 
-        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(if (isHighContrast) Color.BLACK else Color.RED)
-        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)?.setTextColor(if (isHighContrast) Color.BLACK else Color.GRAY)
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(if (isHighContrast) Color.BLACK else if (isSummertime) Color.parseColor("#ff9f6b") else Color.RED)
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)?.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else if (isSummertime) Color.parseColor("#6befff") else Color.GRAY)
     }
 
     private fun loadData() {
@@ -159,6 +284,7 @@ class ArchiveActivity : AppCompatActivity() {
         DeviceType.COMPUTER -> "Computer"
         DeviceType.SMARTPHONE -> "Smartphone"
         DeviceType.PAGER -> "Pager"
+        DeviceType.CAMERA -> "CCTV"
         DeviceType.LTE, DeviceType.FIVE_G -> "Cell"
     }
 
@@ -260,5 +386,11 @@ class ArchiveActivity : AppCompatActivity() {
 
     private fun updateEmptyState() {
         binding.tvEmpty.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+    }
+
+    private fun setCyberText(text: String): android.text.SpannableString {
+        val fullText = text
+        val spannable = android.text.SpannableString(fullText)
+        return spannable
     }
 }

@@ -33,7 +33,12 @@ class CalculatorActivity : AppCompatActivity() {
     private var lastDot: Boolean = false
     private var pinEntered: Boolean = false
     private var isChangingPin: Boolean = false
-    private var isHighContrastMode: Boolean = false
+    private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
+    private var primaryColor: Int = Color.parseColor("#00FF41")
+    private var accentColor: Int = Color.parseColor("#FF00FF")
+    private var secondaryColor: Int = Color.parseColor("#990000")
+    private var neutralColor: Int = Color.WHITE
+    private var bgColor: Int = Color.BLACK
     private var pulsateAnimator: android.animation.ValueAnimator? = null
     private val handler = Handler(Looper.getMainLooper())
     private val proceedRunnable = Runnable {
@@ -61,13 +66,69 @@ class CalculatorActivity : AppCompatActivity() {
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Force Calculator to Dark Mode (Stealth Mode) regardless of system/app settings
-        binding.root.setBackgroundColor(Color.BLACK)
-        binding.tvDisplay.setTextColor(Color.parseColor("#FF00FF"))
-        binding.tvChangePin.setTextColor(Color.parseColor("#FF00FF"))
-        binding.tvChangePin.setBackgroundResource(R.drawable.tv_pulsate_bg)
+        applyTheme()
 
         setupButtons()
+    }
+
+    private fun applyTheme() {
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
+        currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+
+        bgColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
+            else -> Color.BLACK
+        }
+        
+        primaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
+            RadarView.Theme.MORIO -> Color.parseColor("#c3ac3a")
+            else -> Color.parseColor("#00FF41")
+        }
+
+        accentColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
+            RadarView.Theme.RED_NIGHT -> Color.RED
+            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
+            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
+            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
+            RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
+            else -> Color.parseColor("#FF00FF")
+        }
+
+        secondaryColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.LTGRAY
+            RadarView.Theme.RED_NIGHT -> Color.parseColor("#990000")
+            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
+            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
+            RadarView.Theme.MORIO -> Color.parseColor("#244f48")
+            else -> primaryColor
+        }
+
+        neutralColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.DKGRAY
+            else -> accentColor
+        }
+
+        binding.root.setBackgroundColor(bgColor)
+        binding.tvDisplay.setTextColor(accentColor)
+        binding.tvChangePin.setTextColor(accentColor)
+
+        // Update display box border color based on theme
+        val displayBox = binding.tvDisplay.background as? android.graphics.drawable.GradientDrawable
+        displayBox?.let {
+            it.setStroke(4, primaryColor)
+            it.setColor(Color.argb(20, Color.red(primaryColor), Color.green(primaryColor), Color.blue(primaryColor)))
+        }
     }
 
     private fun setupButtons() {
@@ -76,7 +137,7 @@ class CalculatorActivity : AppCompatActivity() {
             binding.btn5, binding.btn6, binding.btn7, binding.btn8, binding.btn9
         )
         for (button in numericButtons) {
-            setCyberText(button, button.text.toString(), Color.parseColor("#00FF41"))
+            setCyberText(button, button.text.toString(), primaryColor)
             button.setOnClickListener { onDigit((it as Button).text.toString()) }
         }
 
@@ -84,29 +145,46 @@ class CalculatorActivity : AppCompatActivity() {
             binding.btnPlus, binding.btnMinus, binding.btnMultiply, binding.btnDivide, binding.btnPercent
         )
         for (button in operatorButtons) {
-            setCyberText(button, button.text.toString(), Color.parseColor("#00FF41"))
+            setCyberText(button, button.text.toString(), primaryColor)
             button.setOnClickListener { onOperator((it as Button).text.toString()) }
         }
 
-        setCyberText(binding.btnDot, ".", Color.parseColor("#00FF41"))
+        setCyberText(binding.btnDot, ".", primaryColor)
         binding.btnDot.setOnClickListener { onDecimalPoint() }
 
-        setCyberText(binding.btnAC, "AC", Color.parseColor("#FF00FF"))
+        setCyberText(binding.btnAC, "AC", accentColor)
         binding.btnAC.setOnClickListener { onClear() }
 
-        setCyberText(binding.btnDelete, "DEL", Color.parseColor("#00FF41"))
+        setCyberText(binding.btnDelete, "DEL", primaryColor)
         binding.btnDelete.setOnClickListener { onDelete() }
 
-        setCyberText(binding.btnEqual, "=", Color.parseColor("#FF00FF"))
+        setCyberText(binding.btnEqual, "=", accentColor)
         binding.btnEqual.setOnClickListener { onEqual() }
     }
 
     private fun setCyberText(button: Button, text: String, contentColor: Int) {
+        // Apply background tint based on color
+        val tint = if (contentColor == accentColor) {
+            Color.argb(40, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor))
+        } else {
+            Color.argb(25, Color.red(primaryColor), Color.green(primaryColor), Color.blue(primaryColor))
+        }
+        button.backgroundTintList = android.content.res.ColorStateList.valueOf(tint)
+        
+        // Add a subtle border if possible (MaterialButton)
+        if (button is com.google.android.material.button.MaterialButton) {
+            button.strokeColor = android.content.res.ColorStateList.valueOf(contentColor)
+            button.strokeWidth = 2
+        }
+
         val spannable = SpannableString(text)
-        val pink = Color.parseColor("#FF00FF")
         
         spannable.setSpan(ForegroundColorSpan(contentColor), 0, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        if (contentColor == pink) {
+        
+        // Bold if it's the accent color and it's different from primary
+        val isAccent = contentColor == accentColor && accentColor != primaryColor
+        
+        if (isAccent) {
             spannable.setSpan(StyleSpan(Typeface.BOLD), 0, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         button.text = spannable
@@ -245,10 +323,12 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun flashAndVibrateWithGlitch() {
-        // Flash screen green
-        binding.root.setBackgroundColor(Color.parseColor("#00FF41"))
+        val flashColor = if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.LTGRAY else primaryColor
+
+        // Flash screen
+        binding.root.setBackgroundColor(flashColor)
         handler.postDelayed({
-            binding.root.setBackgroundColor(Color.BLACK)
+            binding.root.setBackgroundColor(bgColor)
         }, 150)
 
         // Vibrate once
@@ -289,9 +369,9 @@ class CalculatorActivity : AppCompatActivity() {
 
                     // Add digital block slices to the overlay
                     val sliceColor = when(random.nextInt(3)) {
-                        0 -> Color.parseColor("#00FF41") // Neon Green
-                        1 -> Color.parseColor("#FF00FF") // Cyber Pink
-                        else -> Color.WHITE
+                        0 -> primaryColor
+                        1 -> secondaryColor
+                        else -> neutralColor
                     }
                     
                     val slice = android.graphics.drawable.ColorDrawable(sliceColor)
@@ -304,7 +384,8 @@ class CalculatorActivity : AppCompatActivity() {
                     root.overlay.add(slice)
                     
                     // Add random "pixel block" artifacts
-                    val pixelBlock = android.graphics.drawable.ColorDrawable(if (random.nextBoolean()) Color.WHITE else sliceColor)
+                    val pixelBlockColor = if (random.nextBoolean()) accentColor else sliceColor
+                    val pixelBlock = android.graphics.drawable.ColorDrawable(pixelBlockColor)
                     val bw = random.nextInt(300) + 50
                     val bh = random.nextInt(150) + 30
                     val bx = random.nextInt(root.width.coerceAtLeast(1))
@@ -336,14 +417,14 @@ class CalculatorActivity : AppCompatActivity() {
         
         val root = android.widget.LinearLayout(this).apply {
             orientation = android.widget.LinearLayout.VERTICAL
-            setBackgroundColor(Color.BLACK)
+            setBackgroundColor(bgColor)
             setPadding(60, 60, 60, 60)
             gravity = android.view.Gravity.CENTER
         }
 
         val title = android.widget.TextView(this).apply {
             text = " ACCESS CONTROL // PIN "
-            setTextColor(Color.parseColor("#FF00FF"))
+            setTextColor(accentColor)
             textSize = 20f
             typeface = android.graphics.Typeface.MONOSPACE
             gravity = android.view.Gravity.CENTER
@@ -360,8 +441,8 @@ class CalculatorActivity : AppCompatActivity() {
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
             )
             setText(currentPin)
-            setTextColor(Color.WHITE)
-            setBackgroundColor(Color.parseColor("#111111"))
+            setTextColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.BLACK else neutralColor)
+            setBackgroundColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.parseColor("#EEEEEE") else Color.parseColor("#111111"))
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 24f
             setPadding(20, 20, 20, 20)
@@ -373,8 +454,8 @@ class CalculatorActivity : AppCompatActivity() {
 
         val saveBtn = android.widget.Button(this).apply {
             text = "UPDATE ACCESS CODE"
-            setTextColor(Color.BLACK)
-            setBackgroundColor(Color.parseColor("#00FF41"))
+            setTextColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.WHITE else Color.BLACK)
+            setBackgroundColor(primaryColor)
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 14f
             setPadding(40, 30, 40, 30)
