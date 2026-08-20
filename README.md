@@ -89,7 +89,7 @@ For example: you can trigger actions with RPITX and send subghz, pocsag and sstv
 
 <br>
 
-YES it can! Thanks to the awesome work of https://github.com/zalexdev/wpair-app I was able to build something that works and integrates well into the UI
+YES it can! Thanks to the awesome work of <a href="https://github.com/zalexdev/wpair-app">this git</a> I was able to build something that works and integrates well into the UI. It's in v3.1.7 NOW.
 
 
 <br>
