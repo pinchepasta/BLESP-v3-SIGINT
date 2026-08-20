@@ -14,8 +14,10 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 
 <b>EVEN MORE COLORS in v3.1.3:</b>
 <br>
+<br>
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/newcolors.jpg" alt="BLESP v3" width="60%" height="60%">
 
+<br>
 <br>
 
 <b>ALL NEW COLORS in v3.1.2:</b>
