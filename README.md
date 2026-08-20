@@ -7,7 +7,7 @@ That's BLESP v3.
 
 Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, all in your hand, with BLESP v3 you got it all.
 
-<b>What I'm working on:</b> <a href="https://github.com/pinchepasta/Flipper-Zero-Firmware-on-Cardputer-ADV">mostly-a-Flipper</a>  integration and an iOS version of the app.
+<br>
 
 
 ---
