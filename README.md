@@ -58,6 +58,12 @@ After entering the right code, you can spot "change password" for a brief moment
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/7.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/8.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/9.jpg" alt="BLESP v3" width="25%" height="25%">
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/10.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/11.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/12.jpg" alt="BLESP v3" width="25%" height="25%">
 
+<br>
+
+<h1>Can I connect external hardware?</h1>
+<br>
+
+Of course you can!
 The app connects to several devices like Bruce, MULTiPASS, mostly-a-Flipper, Flipper Zero, CYD, Raspberry Pi and many more.
 It always shows you possible attack vectors in detail view, and then you can decide if you want to outsource a job to an external device in your pocket.
 
