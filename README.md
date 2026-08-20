@@ -84,6 +84,16 @@ If you want to connect or use a linux pc/Raspberry pi, click [ ssh ] and enter t
 For example: you can trigger actions with RPITX and send subghz, pocsag and sstv commands/files with just your phone and a Raspberry Pi.
 
 ---
+ <br>
+ <h1>Can it hack bluetooth/ble headphones?</h1>
+
+<br>
+
+YES it can! I'm almost done building, and integrating a Whisperpair exploit to takeover headphones/headsets and listen to their microphone. It's based on a google fastpair vulnerability.
+
+<br>
+
+___
 
 ## Build Instructions (Android Studio)
 
