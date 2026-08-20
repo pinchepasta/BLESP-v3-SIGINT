@@ -95,7 +95,7 @@ YES it can! I'm almost done building, and integrating a Whisperpair exploit to t
 <h1>And now the fun part...</h1>
 
 <br>
-Compiler and Installation
+Installation instructions and info regarding Android Studio are below this line:
 
 <br>
 
