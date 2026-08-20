@@ -92,7 +92,9 @@ For example: you can trigger actions with RPITX and send subghz, pocsag and sstv
 YES it can! I'm almost done building, and integrating a Whisperpair exploit to takeover headphones/headsets and listen to their microphone. It's based on a google fastpair vulnerability.
 
 <br>
+___
 
+<br>
 
 ## Build Instructions (Android Studio)
 
