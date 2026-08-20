@@ -7,6 +7,7 @@ That's BLESP v3.
 
 Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, all in your hand, with BLESP v3 you got it all.
 
+By the way: The whole app was developed and used as a movie prop, but it was too good to keep it locked away.
 <br>
 
 
