@@ -25,6 +25,12 @@ Rather than listing anonymous signals, BLESP v3 interprets patterns and protocol
 <br>
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/nc.jpg" alt="BLESP v3" width="80%" height="80%">
 
+<br>
+<br>
+
+<h1>What does the app do?</h1>
+
+<br>
 
 The app disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
 
