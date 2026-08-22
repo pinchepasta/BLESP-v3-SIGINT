@@ -11,38 +11,13 @@ By the way: The whole app was developed and used as a movie prop, but it was too
 <br>
 
 
----
-<h1>Screenshots</h1>
+<h2>How does it work?</h2>
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/2.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/3.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
-<b>EVEN MORE COLORS in v3.1.4:</b>
-<br>
-<br>
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/newcolors.jpg" alt="BLESP v3" width="60%" height="60%">
+The app disguises as a calculator, like an actual spy app, and it only lets you in if you enter the right code, which can also consist of any math operation you like, 36+45/8 for example.
 
 <br>
-<br>
-
-<b>ALL NEW COLORS in v3.1.2:</b>
-<br>
-<br>
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/nc.jpg" alt="BLESP v3" width="80%" height="80%">
-
-<br>
-<br>
-
-<h1>What does the app do?</h1>
-
-<br>
-
-The app is a signal surveillance system and it disguises as a calculator, and it only unlocks and forwards to the app if the right code is entered. It can consist of any math operation you like, 36+45/8 for example. And you can switch back to calc mode at any time, to make sure your pentest keeps secret until you present the results.
-It does Realtime BLE scanning and discovers all nearby Bluetooth Low Energy devices, Cars, Headphones, Hacking devices, Smartphones, CCTV and Surveillance cameras, and it also detects planes, ships and military equipment, it also discovers all 2.4GHz / 5GHz access points Live distance estimation, RSSI-based path-loss model, updates every second Tap a blip -> opens detail screen (name, MAC, RSSI, distance, security, UUIDs…)
-
-<br>
-
-<b>Hint:</b>
-After entering the right code, you can spot "change password" for a brief moment, use this to change the password.
 
 
 <h2>What's the PIN / Password?</h2>
@@ -51,61 +26,84 @@ After entering the right code, you can spot "change password" for a brief moment
 
 <b>123456</b>
 
-<br>
-<br>
+(After entering the right pin code, you can spot "change password" for a brief moment, use this to change the password)
+
+___
 
 
-<h1>More screenshots:</h1>
-
-<br>
-
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/7.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/8.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/9.jpg" alt="BLESP v3" width="25%" height="25%">
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/10.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/11.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/12.jpg" alt="BLESP v3" width="25%" height="25%">
-
-<br>
-
-<h1>Can I connect external hardware?</h1>
-<br>
-
-Of course you can!
-The app connects to several devices like Bruce, MULTiPASS, mostly-a-Flipper, Flipper Zero, CYD, Raspberry Pi and many more.
-It always shows you possible attack vectors in detail view, and then you can decide if you want to outsource a job to an external device in your pocket.
-
-The app also makes use of other hacks and vulnerabilities, like the esl tag part for example.
-
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/13.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/screenshitesltagtools.jpg" alt="BLESP v3" width="25%" height="25%">
-
-In BLESP v3 click the ESL Tag Tools icon to switch to ESL Tag Tools app, and inside this app, push the "B" icon to go back to BLESP v3.
-
-To connect your Bruce/MULTiPASS click [ ext ] and enter the webui credentials.
-This way BLESP can interact with your Cardputer/Flipper/T-Embed and so on, and make it send .ir and .sub files for infrared and subghz attacks, or deploy the payload you created with ESL Tag Tools.
-
-If you want to connect or use a linux pc/Raspberry pi, click [ ssh ] and enter target ip and credentials, it opens an ssh connection into the target system.
-For example: you can trigger actions with RPITX and send subghz, pocsag and sstv commands/files with just your phone and a Raspberry Pi.
-
----
- <br>
- <h1>Can it be used for Bluetooth/BLE Headphones?</h1>
-
-<br>
-
-YES it can! Thanks to the awesome work of <a href="https://github.com/zalexdev/wpair-app" target="_blank">this git</a> 
-I was able to build something that works and integrates well into the UI.
-It's available in v3.1.7 NOW.
-
-
-<br>
-<h1>And now the fun part...</h1>
-
-<br>
-Installation instructions and info regarding Android Studio are below this line:
-
-<br>
 <br>
 <br>
 
 
-## Build Instructions (Android Studio)
+<h2>The Radar Map:</h2>
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/radar1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/2.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/list.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/detail.jpg" alt="BLESP v3" width="25%" height="25%"> 
+
+Now it shows you a radar map with all the devices around you, it shows differences in protocol and frequency with different colors. 
+The List icon in the top bar opens a detail view of the device you're looking at, you can start a proximity alarm to set off an alarm tone if the subject moves, or you enable the ping tone to give an accoustic hint how close you are to the device. It also shows you all possible ways to hack the target.
+
+If you want to <b>enter the settings</b> you just have to click the little cog icon.
+From there you can choose a different color theme, setup the immersion option, and you can see the values that start an audio or video recording when entered in calculator. The recording even works when the screen is completely off.
+
+<br>
+<br>
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/stat.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/arch.jpg" alt="BLESP v3" width="25%" height="25%"> 
+
+The little icon right next to the settings icon opens the networks statistics screen which summarizes whatever you managed to scan since you got the app. You can search this data, and also export and share it, you just need to click the archive icon right next to network statistics. The share button is at the top of the page.
+
+<br>
+<br>
+
+<h2>Does it allow you to interact with other devices or protocols?</h2>
+
+<br>
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/fastpair.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/esl.jpg" alt="BLESP v3" width="25%" height="25%"> 
+
+<b>BLE Headphones:</b> Yes it does! Just click the bluetooth icon in the top bar to open the fastpair vulnerability scanner and exploitation tool. It gives you the option to pair your device with vulnerable BLE headphones or headsets, and listen to their microphone, and record it.
+
+<b>Electronic shelf tags:</b> Also yes, you can scan the barcode that's on the ESL tag, then you have the option to choose and image, or text, or other payloads like blinking status LEDs, and export the script, to upload it to the tag with a Flipper, or a Bruce device.
+
+
+<br>
+<br>
+
+<h2>Can it connect to external hardware?</h2>
+
+<br>
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ext.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> 
+
+By clicking on the [ext] button, you can initiate a connection to a device like mostly-a-Flipper, Bruce, Flipper Zero, Cardputer ADV and so on, wirelessly. Now you can forward SubGHz or Infrared payloads in .sub and .ir format, for example if you want to flash an ESL Tag via .ir payload.
+
+If you need more power, or a very specific function, just click [ssh], it starts a terminal window and lets you ssh into your favorite hacking devices like a Raspberry Pi or just a plain old Linux computer, for example to jam a radio signal on 433.92MHz via RPITX, or you include openclaw for automated hacking tasks.
+Btw, I'm already working on a deeper integration of agents like hermes or openclaw.
+
+<br>
+<br>
+
+<h2>Does it come in many colors?</h2>
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/default.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/bbgum.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/summertime.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/morio.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/redn.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/pink.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/naranja.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ylw.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/highcontrast.jpg" alt="BLESP v3" width="25%" height="25%"> 
+
+<b>Of course it does!</b>
+
+
+<br>
+<br>
+
+<h2>And now the fun part:</h2>
+
+<br>
+
+<b> Build Instructions (Android Studio)</b>
 
 ### Requirements
 
