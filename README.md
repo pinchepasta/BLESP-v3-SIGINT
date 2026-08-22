@@ -1,6 +1,6 @@
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/blesplogo.png" alt="BLESP v3 Logo" width="25%" height="25%">
 
-Advanced signal surveillance platform.
+BLESP is a hacking multitool!
 
 Imagine having all your hacking and pentesting devices combined and controlled through your phone, all on a live radar map.
 That's BLESP v3.
