@@ -13,7 +13,7 @@ By the way: The whole app was developed and used as a movie prop, but it was too
 
 <h2>How does it work?</h2>
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/2.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/3.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/calc.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/auth.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/rdy.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
 The app disguises as a calculator, like an actual spy app, and it only lets you in if you enter the right code, which can also consist of any math operation you like, 36+45/8 for example.
 
