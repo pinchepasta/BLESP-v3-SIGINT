@@ -68,11 +68,13 @@ The little icon right next to the settings icon opens the networks statistics sc
 
 <br>
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/fastpair.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/esl.jpg" alt="BLESP v3" width="25%" height="25%"> 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/fastpair.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/esl.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/drn2.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
 <b>BLE Headphones:</b> Yes it does! Just click the bluetooth icon in the top bar to open the fastpair vulnerability scanner and exploitation tool. It gives you the option to pair your device with vulnerable BLE headphones or headsets, and listen to their microphone, and record it.
 
 <b>Electronic shelf tags:</b> Also yes, you can scan the barcode that's on the ESL tag, then you have the option to choose and image, or text, or other payloads like blinking status LEDs, and export the script, to upload it to the tag with a Flipper, or a Bruce device.
+
+<b>FPV & War Drones:</b> Click the drone icon in the latest 3.2 update and you'll be able to connect an rtlsdr or hackrf device to your phone to receive the live video feed of many drone models out there. I will add more decoders, but this needs a little more time.
 
 
 <br>
