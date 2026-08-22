@@ -35,6 +35,27 @@ ___
 <br>
 
 
+<h2>What does it detect/manipulate?:</h2>
+
+- 2.4GHz and 5GHz Wifi
+- Bluetooth and BLE
+- ZigBee and Matter
+- Drones
+- RC and Nintendo RC
+- IMSI Catchers
+- ADS-B Planes
+- 433MHz Key fobs
+- CCTV Surveillance cameras
+- Cars
+- Compu
+- ters
+- Smartphones
+- Rockets and Military Drones ( it can display their video feed with additional rtlsdr component
+
+<br>
+<br>
+
+
 <h2>The Radar Map:</h2>
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/radar1.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/2.jpg" alt="BLESP v3" width="25%" height="25%"> 
