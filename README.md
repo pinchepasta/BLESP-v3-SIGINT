@@ -93,7 +93,8 @@ Btw, I'm already working on a deeper integration of agents like hermes or opencl
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ylw.jpg" alt="BLESP v3" width="25%" height="25%"> 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/highcontrast.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
-<b>Of course it does!</b>
+<br>
+<b>Of course it does! And they're all OLED optimized.</b>
 
 
 <br>
