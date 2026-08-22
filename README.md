@@ -96,7 +96,18 @@ Btw, I'm already working on a deeper integration of agents like hermes or opencl
 <br>
 <b>Of course it does! And they're all OLED optimized.</b>
 
+<br>
 
+<h2>And that's what I'm currently working on:</h2>
+
+- Write ESL Shelf Tags via NFC/Bluetooth
+- ADS-B Transmitter integration
+- DeAuth Attack Detector
+- Better Messenger UI
+- LoRa integration
+- Data Transfer through QR
+
+  
 <br>
 <br>
 
