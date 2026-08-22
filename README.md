@@ -40,15 +40,15 @@ ___
 - 2.4GHz and 5GHz Wifi
 - Bluetooth and BLE
 - ZigBee and Matter
+- Cars
 - Drones
 - RC and Nintendo RC
 - IMSI Catchers
 - ADS-B Planes
 - 433MHz Key fobs
-- CCTV Surveillance cameras
-- Cars
-- Compu
-- ters
+- CCTV / Surveillance cameras
+- Computers
+- Headphones
 - Smartphones
 - Rockets and Military Drones ( it can display their video feed with additional rtlsdr component
 
