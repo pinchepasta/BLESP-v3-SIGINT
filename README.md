@@ -100,7 +100,7 @@ Btw, I'm already working on a deeper integration of agents like hermes or opencl
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/qrmen.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/qrs.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/qrr.jpg" alt="BLESP v3" width="25%" height="25%">  
 
-Yes! Imagine you need your teammate have a file but you know you're being watched, and your opponent has access to an sdr, so you cannot emmit any kinda radio emmissions, not even nfc. This is where the qr file sharing system comes in handy. I've read about it a while ago and tried to build my own version and integrate it here.
+Yes! Imagine you need your teammate to have a file but you know you're being watched, and your opponent has access to an sdr, so you cannot emmit any kinda radio emmissions, not even nfc. This is where the qr file sharing system comes in handy. I've read about it a while ago and tried to build my own version and integrate it here.
 
 <br>
 <br>
