@@ -162,13 +162,13 @@ Gradle  8.0
    - Set `sdk.dir` to your Android SDK location  
    - Android Studio usually does this automatically on first open
 
-4. **Enable Developer Mode on your S10**  
+4. **Enable Developer Mode on your device**  
    - Settings → About phone - Software information  
    - Tap **Build number** 7 times  
    - Settings → Developer options → Enable **USB debugging**
 
 5. **Connect & Run**  
-   - Plug in your S10 via USB  
+   - Plug in your device via USB  
    - Allow USB debugging on the phone  
    - In Android Studio: press: Run  
    - Select your device from the device list  
