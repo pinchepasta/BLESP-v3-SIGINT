@@ -1,8 +1,8 @@
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/blesplogo.png" alt="BLESP v3 Logo" width="25%" height="25%">
 
-BLESP is a hacking multitool!
+BLESP is a pentesting multitool!
 
-Imagine having all your hacking and pentesting devices combined and controlled through your phone, all on a live radar map.
+Imagine having all your pentesting devices combined and controlled through your phone, all on a live radar map.
 That's BLESP v3.
 
 Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, all in your hand, with BLESP v3 you got it all.
