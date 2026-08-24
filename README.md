@@ -49,7 +49,7 @@ ___
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/list.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/detail.jpg" alt="BLESP v3" width="25%" height="25%"> 
 
 Now it shows you a radar map with all the devices around you, it shows differences in protocol and frequency with different colors. 
-The List icon in the top bar opens a detail view of the device you're looking at, you can start a proximity alarm to set off an alarm tone if the subject moves, or you enable the ping tone to give an accoustic hint how close you are to the device. It also shows you all possible ways to hack the target.
+The List icon in the top bar opens a detail view of the device you're looking at, you can start a proximity alarm to set off an alarm tone if the subject moves, or you enable the ping tone to give an accoustic hint how close you are to the device. It also shows you all possible ways to interact with the target.
 
 If you want to <b>enter the settings</b> you just have to click the little cog icon.
 From there you can choose a different color theme, setup the immersion option, and you can see the values that start an audio or video recording when entered in calculator. The recording even works when the screen is completely off.
