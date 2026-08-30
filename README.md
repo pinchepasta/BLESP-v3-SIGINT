@@ -7,7 +7,7 @@ BLESP is a pentesting multitool!  (<i>Breach Locator for Embedded Signals & Prot
 Imagine having all your pentesting devices combined and controlled through your phone, all on a live radar map.
 That's BLESP v3.
 
-Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, gates, garages, cars, heck even rockets - all in your hand, and in one single app.
+Rather than listing anonymous signals, BLESP v3 interprets patterns and protocols, to give you a structured overview of the wireless ecosystem surrounding you, and it helps you to find a way into those systems, and puts together a strategy. From everyday personal devices like smartphones to complex infrastructure systems or IOT devices, gates, garages, cars, heck even planes & ships  - all in your hand, and in one single app.
 
 By the way: The whole app was developed and used as a movie prop, but it was too good to keep it locked away.
 <br>
