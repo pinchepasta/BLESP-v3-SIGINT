@@ -1,6 +1,8 @@
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/blesplogo.png" alt="BLESP v3 Logo" width="25%" height="25%">
 
-BLESP is a pentesting multitool!
+BLESP is a pentesting multitool!  (<i>Breach Locator for Embedded Signals & Protocols, Version 3</i>)
+
+
 
 Imagine having all your pentesting devices combined and controlled through your phone, all on a live radar map.
 That's BLESP v3.
