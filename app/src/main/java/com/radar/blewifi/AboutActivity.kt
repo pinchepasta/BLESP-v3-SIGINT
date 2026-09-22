@@ -36,52 +36,12 @@ class AboutActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         val currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
 
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-        val isMorio = currentTheme == RadarView.Theme.MORIO
-
-        val bgColor = when {
-            isHighContrast -> Color.WHITE
-            isRedNight || isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> Color.parseColor("#0A0A0A")
-            else -> Color.BLACK
-        }
-
-        val headerColor = when {
-            isHighContrast -> Color.parseColor("#EEEEEE")
-            isRedNight -> Color.parseColor("#1A0000")
-            isPink -> Color.parseColor("#2A002A")
-            isNeon -> Color.parseColor("#333300")
-            isNaranja -> Color.parseColor("#331E00")
-            isBubblegum -> Color.parseColor("#0F0F0F")
-            isSummertime -> Color.parseColor("#2A1F1A")
-            isMorio -> Color.parseColor("#0D1A18")
-            else -> Color.parseColor("#0F0F0F")
-        }
-
-        val textColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-
-        val accentColor = when {
-            isSummertime -> Color.parseColor("#6befff")
-            isBubblegum -> Color.parseColor("#00FDFF")
-            isMorio -> Color.parseColor("#c8f29e")
-            else -> textColor
-        }
+        val bgColor = colors.background
+        val headerColor = colors.header
+        val textColor = colors.primary
+        val accentColor = colors.accent
 
         binding.aboutRoot.setBackgroundColor(bgColor)
         binding.headerAbout.setBackgroundColor(headerColor)
@@ -96,18 +56,8 @@ class AboutActivity : AppCompatActivity() {
         binding.tvAboutDescription.setTextColor(textColor)
         binding.tvAboutDescription.alpha = 0.7f
 
-        binding.btnAboutBack.setTextColor(if (isBubblegum) accentColor else if (isPink) Color.parseColor("#FF00FF") else if(isSummertime || isMorio) accentColor else textColor)
-        binding.btnAboutBack.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.status_box_bg_bubblegum
-            isSummertime -> R.drawable.status_box_bg_summertime
-            isMorio -> R.drawable.status_box_bg_morio
-            else -> R.drawable.status_box_bg
-        })
+        binding.btnAboutBack.setTextColor(accentColor)
+        binding.btnAboutBack.setBackgroundResource(colors.statusBoxRes)
     }
 
     private fun setupImmersiveMode() {
@@ -134,5 +84,10 @@ class AboutActivity : AppCompatActivity() {
         if (hasFocus) {
             setupImmersiveMode()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

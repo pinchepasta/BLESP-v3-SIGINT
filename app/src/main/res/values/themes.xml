@@ -35,4 +35,69 @@
         <item name="rippleColor">#33FF00FF</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- UAV / DRONEMODULE Tactical Themes -->
+    <style name="Theme.RFVideoReceiver" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00E5FF</item>
+        <item name="colorPrimaryVariant">#0097A7</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#00897B</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:windowBackground">#0D0D1A</item>
+        <item name="android:statusBarColor">#0D0D1A</item>
+        <item name="android:navigationBarColor">#0D0D1A</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Theme.RFVideoReceiver.Cyberpunk" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00FF00</item>
+        <item name="colorPrimaryVariant">#00AA00</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#00FF00</item>
+        <item name="colorOnSecondary">#000000</item>
+        <item name="android:windowBackground">#000000</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Circle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Node8 Tactical UI Styles -->
+    <style name="Node8.Label" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#888888</item>
+    </style>
+
+    <style name="Node8.Hint" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#666666</item>
+    </style>
+
+    <style name="Node8.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Node8.Button.Outline" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
 </resources>

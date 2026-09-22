@@ -20,8 +20,8 @@ class SplashActivity : AppCompatActivity() {
     private val random = Random()
 
     private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
-    private var primaryColor: Int = Color.parseColor("#00FF41")
-    private var accentColor: Int = Color.parseColor("#FF00FF")
+    private var primaryColor: Int = Color.parseColor(ThemeUtils.LEGACY_GREEN)
+    private var accentColor: Int = Color.parseColor(ThemeUtils.LEGACY_PINK)
     private var secondaryColor: Int = Color.parseColor("#003B0F")
     private var bgColor: Int = Color.BLACK
 
@@ -73,43 +73,11 @@ class SplashActivity : AppCompatActivity() {
         val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
 
-        bgColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
-            else -> Color.BLACK
-        }
-
-        primaryColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-            else -> Color.parseColor("#00FF41")
-        }
-
-        accentColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.LTGRAY
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF69B4")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FFA500")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-            else -> Color.parseColor("#FF00FF")
-        }
-
-        secondaryColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.parseColor("#EEEEEE")
-            RadarView.Theme.RED_NIGHT -> Color.parseColor("#330000")
-            RadarView.Theme.PINK -> Color.parseColor("#330033")
-            RadarView.Theme.NEON -> Color.parseColor("#333801")
-            RadarView.Theme.NARANJA -> Color.parseColor("#331C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#330033")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#331f15")
-            else -> Color.parseColor("#003B0F")
-        }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        primaryColor = colors.primary
+        accentColor = colors.accent
+        bgColor = colors.background
+        secondaryColor = colors.headerBar
 
         binding.root.setBackgroundColor(bgColor)
         binding.tvLoadingStatus.setTextColor(primaryColor)
@@ -119,13 +87,14 @@ class SplashActivity : AppCompatActivity() {
         binding.pbLoading.progressTintList = ColorStateList.valueOf(primaryColor)
         binding.pbLoading.progressBackgroundTintList = ColorStateList.valueOf(secondaryColor)
 
-        binding.ivGlitchCyan.imageTintList = ColorStateList.valueOf(primaryColor)
-        binding.ivGlitchPink.imageTintList = ColorStateList.valueOf(accentColor)
-
-        if (currentTheme == RadarView.Theme.HIGH_CONTRAST) {
-            binding.ivSplashLogo.imageTintList = ColorStateList.valueOf(Color.BLACK)
+        // Logo tinting based on theme
+        binding.ivSplashLogo.imageTintList = null // Keep original logo colors
+        if (currentTheme != RadarView.Theme.HIGH_CONTRAST && currentTheme != RadarView.Theme.DEFAULT) {
+            binding.ivGlitchCyan.imageTintList = ColorStateList.valueOf(accentColor)
+            binding.ivGlitchPink.imageTintList = ColorStateList.valueOf(primaryColor)
         } else {
-            binding.ivSplashLogo.imageTintList = null
+            binding.ivGlitchCyan.imageTintList = ColorStateList.valueOf(Color.CYAN)
+            binding.ivGlitchPink.imageTintList = ColorStateList.valueOf(Color.MAGENTA)
         }
     }
 
@@ -160,39 +129,25 @@ class SplashActivity : AppCompatActivity() {
     private fun startGlitchAnimation() {
         val glitchRunnable = object : Runnable {
             override fun run() {
-                // Randomly show/hide glitch layers and offset them
-                val glitchType = random.nextInt(20)
-                
-                when {
-                    glitchType > 17 -> { // Heavy glitch
-                        binding.ivGlitchCyan.visibility = View.VISIBLE
-                        binding.ivGlitchPink.visibility = View.VISIBLE
-                        binding.ivGlitchCyan.translationX = (random.nextInt(40) - 20).toFloat()
-                        binding.ivGlitchPink.translationX = (random.nextInt(40) - 20).toFloat()
-                        binding.ivSplashLogo.scaleX = 1.1f
-                        binding.ivSplashLogo.alpha = 0.5f
-                    }
-                    glitchType > 14 -> { // Soft glitch
-                        binding.ivGlitchCyan.visibility = View.VISIBLE
-                        binding.ivGlitchPink.visibility = View.INVISIBLE
-                        binding.ivGlitchCyan.translationX = (random.nextInt(10) - 5).toFloat()
-                        binding.ivSplashLogo.scaleX = 1.0f
-                        binding.ivSplashLogo.alpha = 0.9f
-                    }
-                    else -> {
-                        binding.ivGlitchCyan.visibility = View.INVISIBLE
-                        binding.ivGlitchPink.visibility = View.INVISIBLE
-                        binding.ivSplashLogo.translationX = 0f
-                        binding.ivSplashLogo.translationY = 0f
-                        binding.ivSplashLogo.scaleX = 1.0f
-                        binding.ivSplashLogo.alpha = 1.0f
-                    }
-                }
-                
                 // Static effect
                 updateStatic()
-                
-                val nextDelay = if (glitchType > 17) 40L else (random.nextInt(400) + 50).toLong()
+
+                // Logo Glitch Logic
+                val isCritical = random.nextInt(10) > 7
+                if (isCritical) {
+                    binding.ivGlitchCyan.visibility = View.VISIBLE
+                    binding.ivGlitchPink.visibility = View.VISIBLE
+                    
+                    binding.ivGlitchCyan.translationX = (random.nextInt(20) - 10).toFloat()
+                    binding.ivGlitchPink.translationX = (random.nextInt(20) - 10).toFloat()
+                    
+                    handler.postDelayed({
+                        binding.ivGlitchCyan.visibility = View.INVISIBLE
+                        binding.ivGlitchPink.visibility = View.INVISIBLE
+                    }, (random.nextInt(50) + 20).toLong())
+                }
+
+                val nextDelay = (random.nextInt(400) + 50).toLong()
                 handler.postDelayed(this, nextDelay)
             }
         }
@@ -215,5 +170,10 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         binding.staticContainer.addView(staticView)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

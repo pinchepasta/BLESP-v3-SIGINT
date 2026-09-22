@@ -1,0 +1,998 @@
+ninja: Entering directory `/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/4t3q39h4/arm64-v8a'
+[1/28] Building C object CMakeFiles/libusb.dir/libusb/hotplug.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/hotplug.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/hotplug.c.o -MF CMakeFiles/libusb.dir/libusb/hotplug.c.o.d -o CMakeFiles/libusb.dir/libusb/hotplug.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:277:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  277 |                 usbi_err(ctx, "error allocating hotplug message");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:334:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  334 |                         usbi_dbg(ctx, "freeing hotplug cb %p with handle %d",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:344:5: error: expected identifier or '('
+  344 | int API_EXPORTED libusb_hotplug_register_callback(libusb_context *ctx,
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:429:6: error: expected identifier or '('
+  429 | void API_EXPORTED libusb_hotplug_deregister_callback(libusb_context *ctx,
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:466:1: error: expected identifier or '('
+  466 | DEFAULT_VISIBILITY
+      | ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+7 errors generated.
+[2/28] Building C object CMakeFiles/libusb.dir/libusb/strerror.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/strerror.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/strerror.c.o -MF CMakeFiles/libusb.dir/libusb/strerror.c.o.d -o CMakeFiles/libusb.dir/libusb/strerror.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:23:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:181:5: error: expected identifier or '('
+  181 | int API_EXPORTED libusb_setlocale(const char *locale)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:216:1: error: expected identifier or '('
+  216 | DEFAULT_VISIBILITY const char * LIBUSB_CALL libusb_strerror(int errcode)
+      | ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+4 errors generated.
+[3/28] Building C object CMakeFiles/libusb.dir/libusb/io.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/io.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/io.c.o -MF CMakeFiles/libusb.dir/libusb/io.c.o.d -o CMakeFiles/libusb.dir/libusb/io.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1290:1: error: expected identifier or '('
+ 1290 | DEFAULT_VISIBILITY
+      | ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1332:6: error: expected identifier or '('
+ 1332 | void API_EXPORTED libusb_free_transfer(struct libusb_transfer *transfer)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1491:5: error: expected identifier or '('
+ 1491 | int API_EXPORTED libusb_submit_transfer(struct libusb_transfer *transfer)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1611:5: error: expected identifier or '('
+ 1611 | int API_EXPORTED libusb_cancel_transfer(struct libusb_transfer *transfer)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1655:6: error: expected identifier or '('
+ 1655 | void API_EXPORTED libusb_transfer_set_stream_id(
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1672:10: error: expected identifier or '('
+ 1672 | uint32_t API_EXPORTED libusb_transfer_get_stream_id(
+      |          ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1702:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+ 1702 |                 usbi_err(ctx, "failed to set timer for next timeout");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1754:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+ 1754 |                 usbi_dbg(ctx, "detected timeout cancellation");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1802:5: error: expected identifier or '('
+ 1802 | int API_EXPORTED libusb_try_lock_events(libusb_context *ctx)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1845:6: error: expected identifier or '('
+ 1845 | void API_EXPORTED libusb_lock_events(libusb_context *ctx)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1860:6: error: expected identifier or '('
+ 1860 | void API_EXPORTED libusb_unlock_events(libusb_context *ctx)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1895:5: error: expected identifier or '('
+ 1895 | int API_EXPORTED libusb_event_handling_ok(libusb_context *ctx)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1924:5: error: expected identifier or '('
+ 1924 | int API_EXPORTED libusb_event_handler_active(libusb_context *ctx)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1953:6: error: expected identifier or '('
+ 1953 | void API_EXPORTED libusb_interrupt_event_handler(libusb_context *ctx)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:1989:6: error: expected identifier or '('
+ 1989 | void API_EXPORTED libusb_lock_event_waiters(libusb_context *ctx)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:2000:6: error: expected identifier or '('
+ 2000 | void API_EXPORTED libusb_unlock_event_waiters(libusb_context *ctx)
+      |      ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:2032:5: error: expected identifier or '('
+ 2032 | int API_EXPORTED libusb_wait_for_event(libusb_context *ctx, struct timeval *tv)
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[4/28] Building C object CMakeFiles/libusb.dir/libusb/sync.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/sync.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/sync.c.o -MF CMakeFiles/libusb.dir/libusb/sync.c.o.d -o CMakeFiles/libusb.dir/libusb/sync.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:40:2: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   40 |         usbi_dbg(TRANSFER_CTX(transfer), "actual_length=%d", transfer->actual_length);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:61:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   61 |                         usbi_err(ctx, "libusb_handle_events failed: %s, cancelling transfer and retrying",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:105:5: error: expected identifier or '('
+  105 | int API_EXPORTED libusb_control_transfer(libusb_device_handle *dev_handle,
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:230:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  230 |                 usbi_warn(HANDLE_CTX(dev_handle),
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:284:5: error: expected identifier or '('
+  284 | int API_EXPORTED libusb_bulk_transfer(libusb_device_handle *dev_handle,
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:338:5: error: expected identifier or '('
+  338 | int API_EXPORTED libusb_interrupt_transfer(libusb_device_handle *dev_handle,
+      |     ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:145:34: note: expanded from macro 'API_EXPORTED'
+  145 | #define API_EXPORTED LIBUSB_CALL DEFAULT_VISIBILITY
+      |                                  ^
+<command line>:1:28: note: expanded from macro 'DEFAULT_VISIBILITY'
+    1 | #define DEFAULT_VISIBILITY ""
+      |                            ^
+8 errors generated.
+[5/28] Building C object CMakeFiles/libusb.dir/libusb/core.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/core.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/core.c.o -MF CMakeFiles/libusb.dir/libusb/core.c.o.d -o CMakeFiles/libusb.dir/libusb/core.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c:41:10: fatal error: 'version_describe.h' file not found
+   41 | #include "version_describe.h"
+      |          ^~~~~~~~~~~~~~~~~~~~
+3 errors generated.
+[6/28] Building C object CMakeFiles/libusb.dir/libusb/os/events_posix.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/events_posix.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/events_posix.c.o -MF CMakeFiles/libusb.dir/libusb/os/events_posix.c.o.d -o CMakeFiles/libusb.dir/libusb/os/events_posix.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:93:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   93 |                 usbi_err(NULL, "failed to create pipe, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:100:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  100 |                 usbi_err(NULL, "failed to get pipe fd flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:105:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  105 |                 usbi_err(NULL, "failed to set pipe fd flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:111:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  111 |                 usbi_err(NULL, "failed to get pipe fd flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:116:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  116 |                 usbi_err(NULL, "failed to set pipe fd flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:123:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  123 |                 usbi_err(NULL, "failed to get pipe fd status flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:128:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  128 |                 usbi_err(NULL, "failed to set pipe fd status flags, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:148:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  148 |                 usbi_warn(NULL, "failed to close pipe write end, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:161:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  161 |                 usbi_warn(NULL, "event write failed");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:175:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  175 |                 usbi_warn(NULL, "event read failed");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:263:2: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  263 |         usbi_dbg(ctx, "poll() %u fds with timeout in %dms", (unsigned int)nfds, timeout_ms);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+13 errors generated.
+[7/28] Building C object CMakeFiles/libusb.dir/libusb/descriptor.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/descriptor.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/descriptor.c.o -MF CMakeFiles/libusb.dir/libusb/descriptor.c.o.d -o CMakeFiles/libusb.dir/libusb/descriptor.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:63:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   63 |                 usbi_err(ctx, "short endpoint descriptor read %d/%d",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:70:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   70 |                 usbi_err(ctx, "unexpected descriptor 0x%x (expected 0x%x)",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:74:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   74 |                 usbi_err(ctx, "invalid endpoint bLength (%u)", header->bLength);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:77:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   77 |                 usbi_warn(ctx, "short endpoint descriptor read %d/%u",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:103:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  103 |                         usbi_err(ctx, "invalid extra ep desc len (%u)",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:107:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  107 |                         usbi_warn(ctx, "short extra ep desc read %d/%u",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:119:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  119 |                 usbi_dbg(ctx, "skipping descriptor 0x%x", header->bDescriptorType);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:205:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  205 |                         usbi_err(ctx, "unexpected descriptor 0x%x (expected 0x%x)",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:209:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  209 |                         usbi_err(ctx, "invalid interface bLength (%u)",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:214:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  214 |                         usbi_warn(ctx, "short intf descriptor read %d/%u",
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:218:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  218 |                         usbi_err(ctx, "too many endpoints (%u)", ifp->bNumEndpoints);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:242:5: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  242 |                                 usbi_err(ctx,
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:248:5: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  248 |                                 usbi_warn(ctx,
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:352:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  352 |                 usbi_err(ctx, "short config descriptor read %d/%d",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:366:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  366 |                 usbi_err(ctx, "unexpected descriptor 0x%x (expected 0x%x)",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:370:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  370 |                 usbi_err(ctx, "invalid config bLength (%u)", config->bLength);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:373:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  373 |                 usbi_err(ctx, "short config descriptor read %d/%u",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[8/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:67:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   67 |                         usbi_err(NULL, "failed to get netlink fd flags, errno=%d", errno);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:72:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   72 |                         usbi_err(NULL, "failed to set netlink fd flags, errno=%d", errno);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:82:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   82 |                         usbi_err(NULL, "failed to get netlink fd status flags, errno=%d", errno);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:87:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   87 |                         usbi_err(NULL, "failed to set netlink fd status flags, errno=%d", errno);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:104:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  104 |                 usbi_dbg(NULL, "failed to create netlink socket of type %d, attempting SOCK_RAW", socktype);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:110:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  110 |                 usbi_err(NULL, "failed to create netlink socket, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:120:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  120 |                 usbi_err(NULL, "failed to bind netlink socket, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:126:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  126 |                 usbi_err(NULL, "failed to set netlink socket SO_PASSCRED option, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:132:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  132 |                 usbi_err(NULL, "failed to create netlink control event");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:138:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  138 |                 usbi_err(NULL, "failed to create netlink event thread (%d)", ret);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:165:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  165 |                 usbi_warn(NULL, "failed to join netlink event thread (%d)", ret);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:209:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  209 |                 usbi_dbg(NULL, "unknown device action %s", tmp);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:306:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  306 |                         usbi_err(NULL, "error receiving message from netlink, errno=%d", errno);
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:311:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  311 |                 usbi_err(NULL, "invalid netlink message length");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:316:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  316 |                 usbi_dbg(NULL, "ignoring netlink message from unknown group/PID (%u/%u)",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:323:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  323 |                 usbi_dbg(NULL, "ignoring netlink message with no sender credentials");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:329:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  329 |                 usbi_dbg(NULL, "ignoring netlink message with non-zero sender UID %u", (unsigned int)cred->uid);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[9/28] Building C object CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o -MF CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o.d -o CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/threads_posix.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/threads_posix.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+2 errors generated.
+[10/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DHAVE_SYSLOG -DLIBUSB_DESCRIBE=\"\" -DOS_LINUX -DPLATFORM_POSIX -DTHREADS_POSIX -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:27:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:214:5: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  214 |                                 usbi_err(ctx, "File doesn't exist, wait %ld ms and try again", delay_ms);
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:228:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  228 |                 usbi_err(ctx, "libusb couldn't open USB device %s, errno=%d", path, errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:249:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  249 |                 usbi_dbg(NULL, "invalid usbdev format '%s'", name);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:253:2: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  253 |         usbi_dbg(NULL, "found: %s", name);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:316:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  316 |                 usbi_err(ctx, "uname failed, errno=%d", errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:322:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  322 |                 usbi_err(ctx, "failed to parse uname release '%s'", uts.release);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:329:2: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  329 |         usbi_dbg(ctx, "reported kernel version is %s", uts.release);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:366:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  366 |                 usbi_err(ctx, "kernel version is too old (reported as %d.%d.%d)",
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:379:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  379 |                 usbi_dbg(ctx, "could not find usbfs, defaulting to %s", usbfs_path);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:381:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  381 |                 usbi_dbg(ctx, "found usbfs at %s", usbfs_path);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:393:2: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  393 |         usbi_dbg(ctx, "max iso packet length is (likely) %u bytes", max_iso_packet_len);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:452:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  452 |                 usbi_dbg(ctx, "no device discovery will be performed");
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:336:34: note: expanded from macro 'usbi_dbg'
+  336 | #define usbi_dbg(ctx ,...)              _usbi_log(ctx, LIBUSB_LOG_LEVEL_DEBUG, __VA_ARGS__)
+      |                                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:488:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  488 |                 usbi_err(ctx, "attribute %s read failed, errno=%zd", attr, r);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:536:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  536 |                 usbi_err(ctx, "open %s failed, errno=%d", filename, errno);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:562:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  562 |                 usbi_err(ctx, "attribute %s read failed, errno=%zd", attr, r);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:577:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  577 |                 usbi_err(ctx, "attribute %s doesn't have numeric value?", attr);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:580:3: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  580 |                 usbi_warn(ctx, "attribute %s doesn't end with newline?", attr);
+      |                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:334:29: note: expanded from macro 'usbi_warn'
+  334 | #define usbi_warn(ctx, ...)     _usbi_log(ctx, LIBUSB_LOG_LEVEL_WARNING, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ninja: build stopped: subcommand failed.

@@ -28,13 +28,13 @@
 
             <ImageView
                 android:id="@+id/ivLogo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/blesp_logo"
-                android:scaleType="centerInside"
-                android:contentDescription="BLESP Logo" />
+                android:layout_width="134dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:contentDescription="BLESP Logo"
+                android:scaleType="fitStart"
+                android:src="@drawable/blesp_logo" />
 
             <Space
                 android:layout_width="0dp"
@@ -42,17 +42,32 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/btnInfo"
+                android:id="@+id/btnDrone"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="-2dp"
-                android:src="@drawable/ic_help"
-                android:contentDescription="About App"
+                android:src="@drawable/ic_uav_foreground"
+                android:contentDescription="@string/drone_app_name"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="2dp" />
+                android:padding="2dp"
+                app:tint="#00FF41" />
+
+            <ImageView
+                android:id="@+id/btnWspr"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="-2dp"
+                android:src="@drawable/ic_bluetooth"
+                android:contentDescription="@string/bluetooth"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="2dp"
+                app:tint="#00FF41" />
 
             <ImageView
                 android:id="@+id/btnGlobeListTop"
@@ -65,13 +80,14 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="2dp" />
+                android:padding="2dp"
+                app:tint="#00FF41" />
 
             <ImageView
                 android:id="@+id/btnKillswitch"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:layout_marginEnd="61dp"
+                android:layout_marginEnd="31dp"
                 android:layout_marginTop="-2dp"
                 android:src="@drawable/ic_lock"
                 android:contentDescription="Killswitch"
@@ -79,7 +95,10 @@
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="2dp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                app:tint="#00FF41" />
+
+
         </LinearLayout>
 
         <TextView
@@ -253,6 +272,18 @@
                 android:layout_marginEnd="16dp" />
 
             <ImageView
+                android:id="@+id/btnEsl"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_tag"
+                android:contentDescription="@string/esl_tag_tools"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
+
+            <ImageView
                 android:id="@+id/btnPager"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -265,16 +296,17 @@
                 android:layout_marginEnd="16dp" />
 
             <ImageView
-                android:id="@+id/btnEsl"
+                android:id="@+id/btnQr"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_tag"
-                android:contentDescription="ESL Tools"
+                android:src="@drawable/ic_qr"
+                android:contentDescription="@string/qr_tools"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="4dp"
-                android:tint="#00FF41" />
+                android:layout_marginEnd="16dp" />
+
         </LinearLayout>
 
         <Button
@@ -377,19 +409,6 @@
 
 
             <CheckBox
-                android:id="@+id/cbAero"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:minHeight="44dp"
-                android:text="AERO"
-                android:textColor="#00FF41"
-                android:checked="true"
-                android:fontFamily="monospace"
-                android:textSize="10sp"
-                android:buttonTint="@android:color/transparent" />
-
-            <CheckBox
                 android:id="@+id/cbCams"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -398,6 +417,19 @@
                 android:text="CCTV"
                 android:textColor="#00FF41"
                 android:checked="true"
+                android:fontFamily="monospace"
+                android:textSize="10sp"
+                android:buttonTint="@android:color/transparent" />
+
+            <CheckBox
+                android:id="@+id/cbAero"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:minHeight="44dp"
+                android:text="AERO"
+                android:textColor="#00FF41"
+                android:checked="false"
                 android:fontFamily="monospace"
                 android:textSize="10sp"
                 android:buttonTint="@android:color/transparent" />
@@ -461,6 +493,21 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
                 android:text="[ SSH ]"
+                android:fontFamily="monospace"
+                android:textColor="#00FF41"
+                android:textSize="11sp"
+                android:background="@drawable/btn_bg_dim"
+                android:padding="0dp"
+                style="?attr/borderlessButtonStyle" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:text="[ SAVE ]"
                 android:fontFamily="monospace"
                 android:textColor="#00FF41"
                 android:textSize="11sp"

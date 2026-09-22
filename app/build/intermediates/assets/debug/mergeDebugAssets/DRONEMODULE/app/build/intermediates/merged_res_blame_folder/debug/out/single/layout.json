@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.tempestsdr.app-mergeDebugResources-31:/layout/activity_main.xml",
+        "source": "com.tempestsdr.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.tempestsdr.app-mergeDebugResources-31:/layout/dialog_settings.xml",
+        "source": "com.tempestsdr.app-main-34:/layout/dialog_settings.xml"
+    }
+]

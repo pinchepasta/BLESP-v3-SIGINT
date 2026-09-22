@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#030304</color>
+    <color name="panel">#0A0F0C</color>
+    <color name="panel_strong">#0F1712</color>
+    <color name="line">#14351F</color>
+    <color name="line_bright">#1FAE5C</color>
+    <color name="text">#E8FFF1</color>
+    <color name="text_dim">#A9F5C9</color>
+    <color name="muted">#4FAE7C</color>
+    <color name="accent">#39FF14</color>
+    <color name="accent_hi">#9DFF7A</color>
+    <color name="accent_ink">#011006</color>
+    <color name="pink">#FF2BD6</color>
+    <color name="white">#FFFFFF</color>
+</resources>

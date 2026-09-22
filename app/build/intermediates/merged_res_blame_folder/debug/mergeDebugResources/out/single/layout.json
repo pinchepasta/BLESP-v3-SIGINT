@@ -1,70 +1,102 @@
 [
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/terminal_overlay.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/terminal_overlay.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/qr_fragment_send.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/qr_fragment_send.xml"
     },
     {
-        "merged": "com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_about.xml",
-        "source": "com.radar.blewifi.app-main-47:/layout/activity_about.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_splash.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_splash.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_calculator.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_calculator.xml"
+        "merged": "com.radar.blewifi.app-mergeDebugResources-68:/layout/drone_dialog_settings.xml",
+        "source": "com.radar.blewifi.app-main-71:/layout/drone_dialog_settings.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_archive.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_archive.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/drone_activity_main.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/drone_activity_main.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_settings.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_settings.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_archive_map.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_archive_map.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/device_item.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/device_item.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/esl_overlay.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/esl_overlay.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/item_pager_device.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/item_pager_device.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_detail.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_detail.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_esl.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_esl.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/terminal_overlay.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/terminal_overlay.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_main.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_main.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/device_item.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/device_item.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_detail.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_detail.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/item_chat_message.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/item_chat_message.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_about.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_about.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_main.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_splash.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_splash.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_esl.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_esl.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/item_archive_header.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/item_archive_header.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/qr_fragment_receive.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/qr_fragment_receive.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_pager.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_pager.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_archive.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_archive.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/activity_stats.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/activity_stats.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/item_archive_header.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/item_archive_header.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/esl_overlay.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/esl_overlay.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/item_pager_device.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/item_pager_device.xml"
     },
     {
-        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-44:/layout/item_chat_message.xml",
-        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-47:/layout/item_chat_message.xml"
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/drone_dialog_settings.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/drone_dialog_settings.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_settings.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/drone_simple_spinner_item.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/drone_simple_spinner_item.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_calculator.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_calculator.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/qr_activity_main.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/qr_activity_main.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_about.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_about.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_pager.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_pager.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/activity_stats.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/activity_stats.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-mergeDebugResources-68:/layout/drone_simple_spinner_dropdown_item.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.radar.blewifi.app-main-71:/layout/drone_simple_spinner_dropdown_item.xml"
     }
 ]

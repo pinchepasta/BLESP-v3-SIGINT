@@ -1,0 +1,45 @@
+{
+  "buildFiles": [
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "tempestsdr_jni::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_jni",
+      "abi": "x86_64",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/59918702/obj/x86_64/libtempestsdr_jni.so",
+      "runtimeFiles": []
+    },
+    "libusb::@6890427a1f51a3e7e1df": {
+      "artifactName": "libusb",
+      "abi": "x86_64",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/x86_64/liblibusb.a",
+      "runtimeFiles": []
+    },
+    "rtlsdr::@6890427a1f51a3e7e1df": {
+      "artifactName": "rtlsdr",
+      "abi": "x86_64",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/x86_64/librtlsdr.a",
+      "runtimeFiles": []
+    },
+    "tempestsdr_core::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_core",
+      "abi": "x86_64",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/x86_64/libtempestsdr_core.a",
+      "runtimeFiles": []
+    }
+  }
+}

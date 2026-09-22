@@ -1,0 +1,30 @@
+# ninja log v5
+54	147	1790066061649861042	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/cxx/Debug/356g3lr4/obj/armeabi-v7a/libtempestsdr_jni.so	fa9a192d29716f06
+288	342	1790064806588124000	liblibusb.a	8febeca12f8bf3a0
+2	288	1790064806532356111	CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o	cf5b376128f17f54
+137	204	1790064806448723778	CMakeFiles/tempestsdr_core.dir/tsdr/circbuff.c.o	482d2f8aad6905b2
+3	253	1790064806497118347	CMakeFiles/rtlsdr.dir/rtlsdr/rtl-sdr.c.o	79b839503c0400e5
+204	264	1790064806510237000	libtempestsdr_core.a	61523bf5c672935d
+722	849	1789650795814738809	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_r82xx.c.o	e446ce867b0dc787
+139	180	1790064806423423907	CMakeFiles/tempestsdr_core.dir/tsdr/threading.c.o	25b4f95bf80dd946
+5	156	1790064806388838883	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	8bbace08319ee0d1
+342	388	1790064806634903000	librtlsdr.a	5ccbda7e3ab8ba82
+134	199	1790064806442528913	CMakeFiles/tempestsdr_core.dir/tsdr/syncdetector.c.o	aaa93e60e6b72335
+117	183	1790064806426602234	CMakeFiles/tempestsdr_core.dir/tsdr/dsp.c.o	7db82d865a727c0b
+4	732	1789650795700727724	CMakeFiles/libusb.dir/libusb/io.c.o	12223a3dc51341e6
+1	54	1790066061565006122	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	b57843307853dd7d
+135	182	1790064806427709468	CMakeFiles/tempestsdr_core.dir/tsdr/superbandwidth.c.o	9822977799eff9ac
+2	153	1790064806396153732	CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o	7efc1b0347771cd5
+2	135	1790064806375675621	CMakeFiles/libusb.dir/libusb/os/events_posix.c.o	e64310f6aa9800f6
+2	112	1790064806355519423	CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o	221bddba803bf99a
+3	139	1790064806383080219	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_e4k.c.o	bbd9b633e96ca29
+0	22	0	clean	df68615146c2b6f
+4	137	1790064806374043896	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc0013.c.o	8b2a33a4b458c17
+7	712	1789650795679664062	CMakeFiles/libusb.dir/libusb/sync.c.o	cbee6f3c60457a08
+2	799	1789650795754709274	CMakeFiles/libusb.dir/libusb/core.c.o	b3ce9b4d32d69255
+1	224	1790064806468765312	CMakeFiles/libusb.dir/libusb/descriptor.c.o	888edf737e8d21ec
+715	767	1789650795735939908	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc2580.c.o	5534f0c774b911d7
+712	772	1789650795738173747	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc0012.c.o	a6d3daf40d8a720e
+14	706	1789650795672603384	CMakeFiles/libusb.dir/libusb/strerror.c.o	c339c870d12330d9
+2	134	1790064806373630694	CMakeFiles/libusb.dir/libusb/hotplug.c.o	7a2dcb5dd351e874
+153	211	1790064806454289903	CMakeFiles/tempestsdr_jni.dir/jni_bridge.c.o	eba1749fce761544

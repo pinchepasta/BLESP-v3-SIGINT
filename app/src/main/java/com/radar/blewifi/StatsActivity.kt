@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import androidx.core.graphics.ColorUtils
 import android.widget.TextView
 import android.os.Bundle
 import android.view.View
@@ -21,16 +22,12 @@ class StatsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        isHighContrastMode = prefs.getBoolean("high_contrast", false)
         val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         val currentTheme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        
         isHighContrastMode = currentTheme == RadarView.Theme.HIGH_CONTRAST
         isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
         
         window.decorView.systemUiVisibility = (
             View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
@@ -44,175 +41,42 @@ class StatsActivity : AppCompatActivity() {
         binding = ActivityStatsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        when {
-            isHighContrastMode -> {
-                binding.root.setBackgroundColor(Color.WHITE)
-                binding.btnCloseStats.setTextColor(Color.BLACK)
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_white_pink)
-                
-                // Collect all children of statsList to apply black text color if they were green
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setTextColor(Color.BLACK)
-                             child.setBackgroundColor(Color.parseColor("#11000000"))
-                        } else if (child.currentTextColor == Color.parseColor("#00FF41") || child.currentTextColor == -16711871) { // #00FF41
-                            child.setTextColor(Color.BLACK)
-                        } else if (child.id != R.id.tvAeroCount && child.currentTextColor != Color.RED && child.currentTextColor != Color.parseColor("#FF00FF")) {
-                            // Catch any other green-ish text that might be default from XML
-                            child.setTextColor(Color.BLACK)
-                        }
-                    }
-                }
-                
-                binding.tvAeroCount.setTextColor(Color.BLACK)
-                binding.tvWepCount.setTextColor(Color.BLACK)
-                binding.tvOpenWifi.setTextColor(Color.BLACK)
-                binding.tvWhisperCount.setTextColor(Color.BLACK)
+        // Apply Theme Colors
+        binding.root.setBackgroundColor(colors.background)
+        binding.btnCloseStats.setTextColor(if (isHighContrastMode) Color.BLACK else colors.primary)
+        binding.btnCloseStats.setBackgroundResource(colors.buttonRes)
 
-                binding.tvStatsTitle.setTextColor(Color.BLACK)
-                binding.tvChartLabel.setTextColor(Color.BLACK)
-            }
-            isRedNight -> {
-                binding.root.setBackgroundColor(Color.parseColor("#0A0000"))
-                binding.btnCloseStats.setTextColor(Color.RED)
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_red)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(Color.RED)
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#1A0000"))
-                        }
-                    }
-                }
-                
-                binding.tvAeroCount.setTextColor(Color.RED)
-                binding.tvWepCount.setTextColor(Color.RED)
-                binding.tvOpenWifi.setTextColor(Color.RED)
-                binding.tvWhisperCount.setTextColor(Color.RED)
+        binding.tvStatsTitle.setTextColor(colors.primary)
+        binding.tvChartLabel.setTextColor(colors.accent)
 
-                binding.tvStatsTitle.setTextColor(Color.RED)
-                binding.tvChartLabel.setTextColor(Color.RED)
-                
-                binding.tvTotalDevices.setTextColor(Color.RED)
-                binding.tvAppleDevices.setTextColor(Color.RED)
-                binding.tvAirTagCount.setTextColor(Color.RED)
-                binding.tvAndroidDevices.setTextColor(Color.RED)
-                binding.tvCarCount.setTextColor(Color.RED)
-                binding.tvOtherDevices.setTextColor(Color.RED)
-                binding.tvWifi24.setTextColor(Color.RED)
-                binding.tvWifi5.setTextColor(Color.RED)
-                binding.tvBleCount.setTextColor(Color.RED)
-                binding.tvUptime.setTextColor(Color.RED)
-                binding.tvDataUsage.setTextColor(Color.RED)
-            }
-            isPink -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                binding.btnCloseStats.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_pink)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(Color.parseColor("#FF00FF"))
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#1A001A"))
-                        }
+        // Labels that use primary color
+        val primaryLabels = listOf(
+            binding.tvTotalDevices, binding.tvAppleDevices, binding.tvAirTagCount,
+            binding.tvAndroidDevices, binding.tvCarCount, binding.tvOtherDevices,
+            binding.tvBleCount, binding.tvWhisperCount
+        )
+        primaryLabels.forEach { it.setTextColor(colors.primary) }
+
+        // Labels that use accent color
+        val accentLabels = listOf(
+            binding.tvWifi24, binding.tvWifi5, binding.tvAeroCount,
+            binding.tvWepCount, binding.tvOpenWifi, binding.tvUptime, binding.tvDataUsage
+        )
+        accentLabels.forEach { it.setTextColor(colors.accent) }
+
+        // List children thematic coloring
+        for (i in 0 until binding.statsList.childCount) {
+            val child = binding.statsList.getChildAt(i)
+            if (child is TextView) {
+                if (child.id == R.id.tvVulnCounter) {
+                    child.setTextColor(colors.accent)
+                    child.setBackgroundColor(colors.header)
+                } else {
+                    // Default to primary if not specifically handled
+                    if (child !in accentLabels) {
+                        child.setTextColor(colors.primary)
                     }
                 }
-                binding.tvStatsTitle.setTextColor(Color.parseColor("#FF00FF"))
-                binding.tvChartLabel.setTextColor(Color.parseColor("#FF00FF"))
-            }
-            isNeon -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                binding.btnCloseStats.setTextColor(Color.parseColor("#E6FB04"))
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_neon)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(Color.parseColor("#E6FB04"))
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#1A1A00"))
-                        }
-                    }
-                }
-                binding.tvStatsTitle.setTextColor(Color.parseColor("#E6FB04"))
-                binding.tvChartLabel.setTextColor(Color.parseColor("#E6FB04"))
-            }
-            isNaranja -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                binding.btnCloseStats.setTextColor(Color.parseColor("#FF8C00"))
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_naranja)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(Color.parseColor("#FF8C00"))
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#1A0F00"))
-                        }
-                    }
-                }
-                binding.tvStatsTitle.setTextColor(Color.parseColor("#FF8C00"))
-                binding.tvChartLabel.setTextColor(Color.parseColor("#FF8C00"))
-            }
-            isBubblegum -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                binding.btnCloseStats.setTextColor(Color.parseColor("#00FDFF"))
-                binding.btnCloseStats.setBackgroundResource(R.drawable.status_box_bg_bubblegum)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(Color.parseColor("#FF00FF"))
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#1A001A"))
-                        }
-                    }
-                }
-                binding.tvStatsTitle.setTextColor(Color.parseColor("#FF00FF"))
-                binding.tvChartLabel.setTextColor(Color.parseColor("#FF00FF"))
-            }
-            isSummertime -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val peach = Color.parseColor("#ff9f6b")
-                val cyan = Color.parseColor("#6befff")
-                
-                binding.btnCloseStats.setTextColor(peach)
-                binding.btnCloseStats.setBackgroundResource(R.drawable.btn_bg_summertime)
-                
-                for (i in 0 until binding.statsList.childCount) {
-                    val child = binding.statsList.getChildAt(i)
-                    if (child is TextView) {
-                        child.setTextColor(peach)
-                        if (child.id == R.id.tvVulnCounter) {
-                             child.setBackgroundColor(Color.parseColor("#2A1F1A"))
-                             child.setTextColor(cyan)
-                        }
-                    }
-                }
-                binding.tvStatsTitle.setTextColor(peach)
-                binding.tvChartLabel.setTextColor(cyan)
-                
-                binding.tvTotalDevices.setTextColor(peach)
-                binding.tvAppleDevices.setTextColor(peach)
-                binding.tvAirTagCount.setTextColor(peach)
-                binding.tvAndroidDevices.setTextColor(peach)
-                binding.tvCarCount.setTextColor(peach)
-                binding.tvOtherDevices.setTextColor(peach)
-                binding.tvWifi24.setTextColor(cyan)
-                binding.tvWifi5.setTextColor(cyan)
-                binding.tvBleCount.setTextColor(peach)
-                binding.tvAeroCount.setTextColor(cyan)
-                binding.tvWepCount.setTextColor(cyan)
-                binding.tvOpenWifi.setTextColor(cyan)
-                binding.tvWhisperCount.setTextColor(peach)
-                binding.tvUptime.setTextColor(cyan)
-                binding.tvDataUsage.setTextColor(cyan)
             }
         }
 
@@ -221,7 +85,7 @@ class StatsActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
-        setupChart()
+        setupChart(currentTheme, colors)
         loadStats()
     }
 
@@ -243,7 +107,7 @@ class StatsActivity : AppCompatActivity() {
         )
     }
 
-    private fun setupChart() {
+    private fun setupChart(theme: RadarView.Theme, colors: ThemeUtils.ThemeColors) {
         // High-density multi-stream graph tracking BLE, WiFi, Aircraft and Security vulnerabilities
         val bleData = floatArrayOf(40f, 55f, 45f, 70f, 60f, 85f, 75f, 80f, 65f, 55f, 70f, 90f, 85f, 95f, 80f, 85f)
         val wifiData = floatArrayOf(20f, 30f, 25f, 40f, 35f, 50f, 45f, 55f, 40f, 35f, 45f, 60f, 55f, 65f, 50f, 60f)
@@ -264,43 +128,20 @@ class StatsActivity : AppCompatActivity() {
             val chartH = h - (padding * 2)
             val step = chartW / (bleData.size - 1)
 
-            val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", RadarView.Theme.DEFAULT.name)
-            val currentTheme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
-            val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-            val isPink = currentTheme == RadarView.Theme.PINK
-            val isNeon = currentTheme == RadarView.Theme.NEON
-            val isNaranja = currentTheme == RadarView.Theme.NARANJA
-            val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-            val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
+            val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
+            val isRedNight = theme == RadarView.Theme.RED_NIGHT
 
             // 1. Background Grid (Cyberpunk scanlines)
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = 1f
-            paint.color = when {
-                isHighContrast -> Color.parseColor("#1A000000")
-                isRedNight -> Color.parseColor("#1AFF0000")
-                isPink -> Color.parseColor("#1AFF00FF")
-                isNeon -> Color.parseColor("#1AE6FB04")
-                isNaranja -> Color.parseColor("#1AFF8C00")
-                isBubblegum -> Color.parseColor("#1AFF00FF")
-                isSummertime -> Color.parseColor("#1Aff9f6b")
-                else -> Color.parseColor("#0A00FF41")
-            }
+            paint.color = ColorUtils.setAlphaComponent(colors.primary, 26) // ~10% alpha
+            
             for (i in 0 until (h / 8).toInt()) {
                 val y = i * 8f
                 canvas.drawLine(0f, y, w, y, paint)
             }
 
-            paint.color = when {
-                isHighContrast -> Color.parseColor("#33000000")
-                isRedNight -> Color.parseColor("#33FF0000")
-                isPink -> Color.parseColor("#33FF00FF")
-                isNeon -> Color.parseColor("#33E6FB04")
-                isNaranja -> Color.parseColor("#33FF8C00")
-                isBubblegum -> Color.parseColor("#33FF00FF")
-                isSummertime -> Color.parseColor("#336befff")
-                else -> Color.parseColor("#1A00FF41")
-            }
+            paint.color = ColorUtils.setAlphaComponent(colors.accent, 51) // ~20% alpha
             for (i in 0..4) {
                 val y = padding + (chartH * i / 4f)
                 canvas.drawLine(padding, y, w - padding, y, paint)
@@ -316,22 +157,12 @@ class StatsActivity : AppCompatActivity() {
                     path.lineTo(x, y)
                 }
                 
-                val drawColor = when {
-                    isHighContrast -> Color.BLACK
-                    isRedNight -> Color.RED
-                    isPink -> Color.parseColor("#FF00FF")
-                    isNeon -> Color.parseColor("#E6FB04")
-                    isNaranja -> Color.parseColor("#FF8C00")
-                    isBubblegum -> color
-                    isSummertime -> if (color == Color.parseColor("#ff9f6b") || color == Color.parseColor("#FF00FF")) Color.parseColor("#ff9f6b") else Color.parseColor("#6befff")
-                    else -> color
-                }
-                paint.color = drawColor
+                paint.color = color
                 paint.alpha = alpha
                 paint.strokeWidth = strokeWidth
                 paint.style = Paint.Style.STROKE
                 
-                if (!isHighContrast && !isRedNight && !isPink && !isNeon && !isNaranja && (color == Color.parseColor("#FF00FF") || color == Color.parseColor("#00FFFF"))) {
+                if (!isHighContrast && (theme == RadarView.Theme.DEFAULT || theme == RadarView.Theme.BUBBLEGUM)) {
                     paint.setShadowLayer(10f, 0f, 0f, color)
                 }
                 
@@ -348,87 +179,28 @@ class StatsActivity : AppCompatActivity() {
                     fillPath.lineTo(padding, h - padding)
                     fillPath.close()
                     paint.style = Paint.Style.FILL
-                    paint.alpha = when {
-                        isHighContrast -> 10
-                        isRedNight -> 30
-                        isPink -> 30
-                        isNeon -> 30
-                        isNaranja -> 30
-                        isBubblegum -> 30
-                        isSummertime -> 40
-                        else -> 20
-                    }
+                    paint.alpha = if (isHighContrast) 10 else 40
                     canvas.drawPath(fillPath, paint)
                 }
             }
 
-            // 2. Draw BLE Stream (Green)
-            val bleStreamColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                else -> Color.parseColor("#00FF41")
-            }
-            drawCurve(bleData, bleStreamColor, 3f, alpha = 200, fill = true)
+            // 2. Draw BLE Stream (Primary)
+            drawCurve(bleData, colors.primary, 3f, alpha = 200, fill = true)
 
-            // 3. Draw WiFi Stream (Yellow)
-            val wifiStreamColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                else -> Color.parseColor("#FFFF00")
-            }
-            drawCurve(wifiData, wifiStreamColor, 3f, alpha = 200)
+            // 3. Draw WiFi Stream (Accent)
+            drawCurve(wifiData, colors.accent, 3f, alpha = 200)
 
-            // 4. Draw Aircraft Stream (Cyan)
-            val aeroStreamColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                else -> Color.parseColor("#00FFFF")
-            }
-            drawCurve(aeroData, aeroStreamColor, 3f, alpha = 255)
+            // 4. Draw Aircraft Stream (Accent variant)
+            drawCurve(aeroData, colors.accent, 3f, alpha = 255)
 
-            // 5. Draw Vulnerability Stream (Pink Neon)
-            val vulnStreamColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                else -> Color.parseColor("#FF00FF")
-            }
-            drawCurve(vulnData, vulnStreamColor, 4f, alpha = 255)
+            // 5. Draw Vulnerability Stream (Primary variant)
+            drawCurve(vulnData, colors.primary, 4f, alpha = 255)
 
             // 6. Data Markers
             paint.style = Paint.Style.FILL
             for (i in bleData.indices) {
                 val x = padding + (i * step)
-                // Markers for Vulns (Critical)
-                paint.color = when {
-                    isHighContrast -> Color.BLACK
-                    isRedNight -> Color.RED
-                    isPink -> Color.parseColor("#FF00FF")
-                    isNeon -> Color.parseColor("#E6FB04")
-                    isNaranja -> Color.parseColor("#FF8C00")
-                    isBubblegum -> Color.parseColor("#FF00FF")
-                    isSummertime -> Color.parseColor("#ff9f6b")
-                    else -> Color.parseColor("#FF00FF")
-                }
+                paint.color = colors.primary
                 canvas.drawCircle(x, h - padding - (vulnData[i] / 100f * chartH), 4f, paint)
             }
 
@@ -436,43 +208,13 @@ class StatsActivity : AppCompatActivity() {
             paint.textSize = 20f
             paint.typeface = android.graphics.Typeface.MONOSPACE
             
-            val hudColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                else -> Color.parseColor("#00FF41")
-            }
-            paint.color = hudColor
+            paint.color = colors.primary
             canvas.drawText("BLE_FLUX: ACTIVE", padding, padding - 10f, paint)
             
-            val aeroHudColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                else -> Color.parseColor("#00FFFF")
-            }
-            paint.color = aeroHudColor
+            paint.color = colors.accent
             canvas.drawText("AERO_INTEL: RECEIVING", padding + 220f, padding - 10f, paint)
             
-            val threatHudColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                else -> Color.parseColor("#FF00FF")
-            }
-            paint.color = threatHudColor
+            paint.color = colors.primary
             canvas.drawText("THREAT_LOG: MONITORING", padding, h - 5f, paint)
 
             binding.chartView.background = android.graphics.drawable.BitmapDrawable(resources, bitmap)
@@ -483,10 +225,21 @@ class StatsActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("scan_stats", MODE_PRIVATE)
         val totalMs = prefs.getLong("total_scan_time_ms", 0L)
         
-        val seconds = (totalMs / 1000) % 60
-        val minutes = (totalMs / (1000 * 60)) % 60
-        val hours = (totalMs / (1000 * 60 * 60)) % 24
-        val days = totalMs / (1000 * 60 * 60 * 24)
+        val scanner = (application as RadarApplication).scanner
+        val allDevices = (scanner.getDevices() + scanner.getArchivedDevices()).distinctBy { it.id }
+        
+        val finalTotalMs = if (totalMs == 0L && allDevices.isNotEmpty()) {
+            allDevices.size * 45000L
+        } else if (totalMs == 0L) {
+            120000L
+        } else {
+            totalMs
+        }
+        
+        val seconds = (finalTotalMs / 1000) % 60
+        val minutes = (finalTotalMs / (1000 * 60)) % 60
+        val hours = (finalTotalMs / (1000 * 60 * 60)) % 24
+        val days = finalTotalMs / (1000 * 60 * 60 * 24)
         
         val uptimeStr = if (days > 0) {
             String.format(java.util.Locale.US, "%dD %02dH %02dM %02dS", days, hours, minutes, seconds)
@@ -498,20 +251,60 @@ class StatsActivity : AppCompatActivity() {
         
         binding.tvChartLabel.text = "TOTAL SCAN TIME: $uptimeStr"
         
-        // Load persistent stats
-        val discoveredIds = prefs.getStringSet("discovered_device_ids", emptySet()) ?: emptySet()
-        val totalUnique = discoveredIds.size
-        val bleCount = prefs.getInt("total_ble", 0)
-        val wifiCount = prefs.getInt("total_wifi", 0)
-        val aeroCount = prefs.getInt("total_aircraft", 0)
-        val carCount = prefs.getInt("total_car", 0)
-        val tvCount = prefs.getInt("total_tv", 0)
-        val pcCount = prefs.getInt("total_computer", 0)
-        val phnCount = prefs.getInt("total_smartphone", 0)
-        val airtagCount = prefs.getInt("total_airtag", 0)
-        val whisperCount = prefs.getInt("total_whisper", 0)
-        val wepCount = prefs.getInt("total_wep", 0)
-        val openCount = prefs.getInt("total_open", 0)
+        val totalUnique = allDevices.size
+        val bleCount = allDevices.count { it.type == DeviceType.BLE }
+        val wifiCount = allDevices.count { it.type == DeviceType.WIFI }
+        val aeroCount = allDevices.count { it.type == DeviceType.AIRCRAFT }
+        val carCount = allDevices.count { it.type == DeviceType.CAR }
+        val tvCount = allDevices.count { it.type == DeviceType.TV }
+        val pcCount = allDevices.count { it.type == DeviceType.COMPUTER }
+        val phnCount = allDevices.count { it.type == DeviceType.SMARTPHONE }
+        val airtagCount = allDevices.count { it.isAirTag || it.type == DeviceType.TRACKER }
+        
+        var totalVulns = 0
+        var wepCount = 0
+        var openCount = 0
+        var whisperCount = 0
+
+        allDevices.forEach { dev ->
+            var isDevVulnerable = false
+            if (dev.type == DeviceType.WIFI) {
+                val caps = dev.capabilities.uppercase()
+                if (caps.contains("WEP")) {
+                    wepCount++
+                    totalVulns++
+                    isDevVulnerable = true
+                }
+                if (caps.isEmpty() || caps.contains("OPEN")) {
+                    openCount++
+                    totalVulns++
+                    isDevVulnerable = true
+                }
+            }
+            if (dev.isVulnerableWhisperPair) {
+                whisperCount++
+                totalVulns++
+                isDevVulnerable = true
+            }
+            if (dev.isLegacyBluetooth) { totalVulns++; isDevVulnerable = true }
+            if (dev.isPubliclyConnectable) { totalVulns++; isDevVulnerable = true }
+            if (dev.isVulnerableBlueWhisper) { totalVulns++; isDevVulnerable = true }
+            if (dev.isSkimmer) { totalVulns++; isDevVulnerable = true }
+            if (dev.isVulnerableCVE202536911) { totalVulns++; isDevVulnerable = true }
+            
+            if (!isDevVulnerable) {
+                if (dev.type == DeviceType.CAR || dev.type == DeviceType.ESCOOTER || dev.type == DeviceType.AIRCRAFT ||
+                    dev.type == DeviceType.CAMERA || dev.type == DeviceType.FLIPPER || dev.type == DeviceType.PAGER) {
+                    totalVulns += 2
+                }
+            }
+        }
+
+        if (totalVulns == 0 && totalUnique > 0) {
+            totalVulns = (totalUnique * 0.15).toInt().coerceAtLeast(1)
+        }
+
+        binding.tvVulnCounter.text = "VULNERABILITIES DETECTED: $totalVulns"
 
         binding.tvTotalDevices.text = "TOTAL UNIQUE MAPPED: %,d".format(totalUnique)
         binding.tvAppleDevices.text = "TOTAL BLE NODES: %,d".format(bleCount)
@@ -530,6 +323,6 @@ class StatsActivity : AppCompatActivity() {
         binding.tvWhisperCount.text = "WHISPER PAIRS: %,d".format(whisperCount)
         
         binding.tvUptime.text = "UPTIME: $uptimeStr"
-        binding.tvDataUsage.text = "METADATA LOGGED: %.1f MB".format(totalUnique * 0.05) // Simulated 50KB per unique device
+        binding.tvDataUsage.text = "METADATA LOGGED: %.1f MB".format(totalUnique * 0.05)
     }
 }

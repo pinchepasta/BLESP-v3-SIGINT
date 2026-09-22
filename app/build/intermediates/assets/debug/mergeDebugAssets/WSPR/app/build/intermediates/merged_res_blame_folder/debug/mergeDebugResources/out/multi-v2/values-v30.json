@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.zalexdev.whisperpair.app-mergeDebugResources-47:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "/Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/da695996734c81cd429dfd493522d71e/transformed/material3-release/res/values-v30/values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

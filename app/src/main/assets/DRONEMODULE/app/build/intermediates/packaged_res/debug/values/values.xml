@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TempestSDR</string>
+    <string name="connect">Connect RTL-SDR</string>
+    <string name="no_device">No RTL-SDR dongle detected. Connect via USB OTG.</string>
+    <string name="permission_denied">USB permission denied.</string>
+    <string name="settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="status_ready">Ready – connect your RTL-SDR dongle</string>
+    <string name="stop">Stop</string>
+    <style name="Theme.TempestSDR" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00E5FF</item>
+        <item name="colorPrimaryVariant">#0097A7</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#00897B</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:windowBackground">#0D0D1A</item>
+        <item name="android:statusBarColor">#0D0D1A</item>
+        <item name="android:navigationBarColor">#0D0D1A</item>
+    </style>
+</resources>

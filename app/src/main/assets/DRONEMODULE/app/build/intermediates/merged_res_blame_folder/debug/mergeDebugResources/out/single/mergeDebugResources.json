@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/xml_usb_device_filter.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/xml/usb_device_filter.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/drawable_ic_uav_foreground.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/drawable/ic_uav_foreground.xml"
+    },
+    {
+        "merged": "com.tempestsdr.app-debug-32:/layout_activity_main.xml.flat",
+        "source": "com.tempestsdr.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/layout_activity_main.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/drawable_ic_settings.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/layout_dialog_settings.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/layout/dialog_settings.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/xml_device_filter.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/xml/device_filter.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-debug-32:/drawable_brandnewmostlyawesomelogo.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.tempestsdr.app-main-34:/drawable/brandnewmostlyawesomelogo.png"
+    }
+]

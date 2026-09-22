@@ -4,13 +4,16 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlin.math.pow
 
-enum class DeviceType { BLE, WIFI, LTE, FIVE_G, AIRCRAFT, CAR, DRONE, ESCOOTER, TV, COMPUTER, SMARTPHONE, PAGER, CAMERA }
+enum class DeviceType {
+    BLE, WIFI, LTE, FIVE_G, AIRCRAFT, CAR, DRONE, ESCOOTER, TV, COMPUTER, SMARTPHONE, PAGER, CAMERA, FLIPPER, HEADPHONES,
+    ROUTER, PRINTER, IOT, WEARABLE, TABLET, TRACKER, GAME_CONSOLE, SUBGHZ
+}
 
 @Parcelize
 data class ScanDevice(
     val id: String,           // MAC address or BSSID
     var name: String,
-    val type: DeviceType,
+    var type: DeviceType,
     var rssi: Int,
     val address: String,
     var txPower: Int = -59, // Default TX power at 1m
@@ -63,8 +66,29 @@ data class ScanDevice(
     var cid: Long? = null, // cell id (ci for LTE, nci for NR)
     var pci: Int? = null,
     var arfcn: Int? = null,
-    var band: String? = null
+    var band: String? = null,
+    // MAC & OS Fingerprinting
+    var vendor: String? = null,
+    var osFingerprint: String? = null,
+    // Captured Location
+    var capturedLat: Double? = null,
+    var capturedLon: Double? = null,
+    var streetName: String? = null,
+    var houseNumber: String? = null,
+    var cityName: String? = null
 ) : Parcelable {
+
+    /** Detects if the MAC address is randomized (locally administered) */
+    val isRandomizedMac: Boolean
+        get() {
+            if (address.isBlank() || !address.contains(":")) return false
+            return try {
+                val firstByte = address.split(":")[0].toInt(16)
+                (firstByte and 0x02) != 0
+            } catch (e: Exception) {
+                false
+            }
+        }
 
     /** Estimated distance in metres using Log-Distance Path Loss Model or Lat/Lon */
     val distanceMeters: Double
@@ -106,11 +130,20 @@ data class ScanDevice(
         DeviceType.CAR -> "Car"
         DeviceType.DRONE -> "Drone"
         DeviceType.ESCOOTER -> "Escooter"
-        DeviceType.TV -> "Smart TV"
+        DeviceType.TV -> "TV"
         DeviceType.COMPUTER -> "Computer"
         DeviceType.SMARTPHONE -> "Smartphone"
         DeviceType.PAGER -> "Pager"
         DeviceType.CAMERA -> "CCTV"
+        DeviceType.FLIPPER -> "Flipper"
+        DeviceType.HEADPHONES -> "Headphones"
+        DeviceType.ROUTER -> "Router"
+        DeviceType.PRINTER -> "Printer"
+        DeviceType.IOT -> "IoT"
+        DeviceType.WEARABLE -> "Wearable"
+        DeviceType.TABLET -> "Tablet"
+        DeviceType.TRACKER -> "Tracker"
+        DeviceType.GAME_CONSOLE -> "Console"
         else -> "Cell"
     }
 

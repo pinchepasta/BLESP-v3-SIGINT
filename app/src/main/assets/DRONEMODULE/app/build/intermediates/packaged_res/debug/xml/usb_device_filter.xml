@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  USB device filter for RTL-SDR dongles.
+  Android uses this to auto-launch the app when a matching device is plugged in.
+  VID 0x0BDA = Realtek; the most common RTL-SDR PIDs are listed below.
+  Add additional VID/PID pairs to cover other RTL-SDR variants.
+-->
+<resources>
+    <!-- RTL2832U generic -->
+    <usb-device vendor-id="3034"  product-id="10290" />  <!-- 0x0BDA / 0x2832 -->
+    <!-- RTL-SDR Blog V3 / V4 (RTL2838) -->
+    <usb-device vendor-id="3034"  product-id="10296" />  <!-- 0x0BDA / 0x2838 -->
+    <!-- RTL2837 -->
+    <usb-device vendor-id="3034"  product-id="10295" />  <!-- 0x0BDA / 0x2837 -->
+    <!-- RTL2840 -->
+    <usb-device vendor-id="3034"  product-id="10304" />  <!-- 0x0BDA / 0x2840 -->
+    <!-- Zaapa / GTek -->
+    <usb-device vendor-id="8013"  product-id="12288" />  <!-- 0x1F4D / 0x3000 -->
+    <usb-device vendor-id="8013"  product-id="43011" />  <!-- 0x1F4D / 0xA803 -->
+    <!-- Dexatek -->
+    <usb-device vendor-id="7040"  product-id="54163" />  <!-- 0x1B80 / 0xD393 -->
+    <usb-device vendor-id="7040"  product-id="54165" />  <!-- 0x1B80 / 0xD395 -->
+</resources>

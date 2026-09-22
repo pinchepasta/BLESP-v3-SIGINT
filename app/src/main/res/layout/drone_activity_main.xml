@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- ── Header with Back Button ── -->
+    <LinearLayout
+        android:id="@+id/drone_header"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8.dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLOSE"
+            android:textColor="?attr/colorPrimary"
+            android:fontFamily="monospace"
+            android:textSize="12sp"
+            app:rippleColor="#3300FF00" />
+    </LinearLayout>
+
+    <!-- ── Video frame display ── -->
+    <ImageView
+        android:id="@+id/iv_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:background="#000000"
+        app:layout_constraintTop_toBottomOf="@id/drone_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_panel" />
+
+    <!-- ── HUD Overlay (Tactical Info) ── -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hud_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="12dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintTop_toTopOf="@id/iv_frame"
+        app:layout_constraintBottom_toBottomOf="@id/iv_frame"
+        app:layout_constraintStart_toStartOf="@id/iv_frame"
+        app:layout_constraintEnd_toEndOf="@id/iv_frame">
+
+        <!-- Top Left: System Status -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drone_hud_sys_op"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_hud_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="MODE: STANDBY"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Top Right: Battery/Time (Placeholder) REMOVED -->
+
+
+        <!-- Center: Crosshair / Grid (Optional visual flair) -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="1dp"
+            android:background="#4400FF00"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:background="#4400FF00"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Bottom Left: Frequency Large -->
+        <TextView
+            android:id="@+id/tv_hud_freq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="---.--- MHz"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="32dp"
+            android:shadowColor="#B0000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Bottom Right: Signal Bars / SNR -->
+        <LinearLayout
+            android:id="@+id/container_hud_telemetry"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <TextView
+                android:id="@+id/tv_hud_snr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="SNR: --.- dB"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:gravity="end" />
+            <TextView
+                android:id="@+id/tv_hud_target"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="TARGET: NO_LOCK"
+                android:textColor="#888888"
+                android:textSize="10sp"
+                android:fontFamily="monospace"
+                android:gravity="end"
+                android:singleLine="true"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ── Centred loading hint REMOVED ── -->
+
+    <!-- ── Bottom control panel ── -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottom_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#0F0F0F"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        android:layout_margin="12dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#4D00FF00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Graphs Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <com.radar.blewifi.drone.ui.AutocorrView
+                    android:id="@+id/autocorr_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp" />
+
+                <com.radar.blewifi.drone.ui.SignalGraphView
+                    android:id="@+id/signal_graph"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <!-- Progress & Status -->
+            <ProgressBar
+                android:id="@+id/pb_scan"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:progressTint="?attr/colorPrimary"
+                android:progressBackgroundTint="#11FFFFFF"
+                android:visibility="gone"
+                android:indeterminate="false" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/drone_status_ready"
+                android:textColor="#AAAAAA"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Fine Tune Slider -->
+            <SeekBar
+                android:id="@+id/sb_fine_tune"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:max="2000"
+                android:progress="1000"
+                android:splitTrack="false"
+                android:thumbTint="?attr/colorPrimary"
+                android:progressTint="?attr/colorPrimary"
+                android:progressBackgroundTint="#22FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Action Buttons Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_scan"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/drone_btn_scan"
+                    android:textColor="#00FF00"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:layout_marginHorizontal="8dp"
+                    app:backgroundTint="#0F0F0F"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_drone_scan"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/drone_btn_drone"
+                    android:textColor="#00FF00"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:layout_marginHorizontal="8dp"
+                    app:backgroundTint="#0F0F0F"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_media_play"
+                    app:tint="?attr/colorOnPrimary"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:fabCustomSize="56dp"
+                    app:elevation="0dp"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_settings"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:padding="0dp"
+                    app:icon="@android:drawable/ic_menu_preferences"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="20dp"
+                    app:iconTint="#00FF00"
+                    app:backgroundTint="#0F0F0F"
+                    app:cornerRadius="12dp"
+                    android:layout_marginHorizontal="8dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

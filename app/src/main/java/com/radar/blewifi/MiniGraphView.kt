@@ -47,44 +47,17 @@ class MiniGraphView @JvmOverloads constructor(
     var theme: RadarView.Theme = RadarView.Theme.DEFAULT
         set(value) {
             field = value
-            val isHighContrast = value == RadarView.Theme.HIGH_CONTRAST
-            val isRedNight = value == RadarView.Theme.RED_NIGHT
-            val isPink = value == RadarView.Theme.PINK
-            val isNeon = value == RadarView.Theme.NEON
-            val isNaranja = value == RadarView.Theme.NARANJA
-            val isBubblegum = value == RadarView.Theme.BUBBLEGUM
-            val isSummertime = value == RadarView.Theme.SUMMERTIME
+            val colors = ThemeUtils.getThemeColors(value)
             
-            cpuPaint.color = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b") // Peach
-                else -> Color.parseColor(primaryColorStr)
+            cpuPaint.color = colors.primary
+            gpuPaint.color = colors.accent
+            borderPaint.color = if (value == RadarView.Theme.DEFAULT) Color.parseColor(ThemeUtils.LEGACY_GREEN) else colors.accent
+            
+            // Adjust opacity for gpuPaint to maintain semi-transparent look if desired
+            if (value != RadarView.Theme.HIGH_CONTRAST) {
+                gpuPaint.alpha = 136 // ~0.54 alpha (88 in hex)
             }
-            gpuPaint.color = when {
-                isHighContrast -> Color.LTGRAY
-                isRedNight -> Color.parseColor("#88FF0000")
-                isPink -> Color.parseColor("#88FF00FF")
-                isNeon -> Color.parseColor("#88E6FB04")
-                isNaranja -> Color.parseColor("#88FF8C00")
-                isBubblegum -> Color.parseColor("#8800FDFF")
-                isSummertime -> Color.parseColor("#886befff") // Cyan (Semi-transparent)
-                else -> Color.parseColor(secondaryColorStr)
-            }
-            borderPaint.color = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#ff9f6b") // Peach
-                else -> Color.parseColor("#00FF41")
-            }
+
             invalidate()
         }
 

@@ -1,259 +1,507 @@
 package com.radar.blewifi
 
-import android.content.Intent
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.view.ViewGroup
-import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
-import com.radar.blewifi.databinding.ActivitySettingsBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import com.radar.blewifi.wspr.ui.theme.WSPRTheme
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import android.widget.Toast
+import java.io.File
 
-class SettingsActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivitySettingsBinding
+class SettingsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setupTheme()
-
-        binding.btnSettingsBack.setOnClickListener {
-            finish()
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        }
-
-        setupThemeSpinner()
+        enableEdgeToEdge()
 
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        binding.swImmersive.isChecked = prefs.getBoolean("immersive_mode", true)
-        binding.swImmersive.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("immersive_mode", isChecked).apply()
-            if (isChecked) {
-                enterImmersiveMode()
-            } else {
-                exitImmersiveMode()
+        if (prefs.getBoolean("immersive_mode", true)) {
+            enterImmersiveMode()
+        }
+
+        setContent {
+            var themeName by remember {
+                mutableStateOf(prefs.getString("theme_name", "DEFAULT") ?: "DEFAULT")
+            }
+            var immersiveMode by remember {
+                mutableStateOf(prefs.getBoolean("immersive_mode", true))
+            }
+
+            WSPRTheme(themeName = themeName) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    SettingsScreen(
+                        themeName = themeName,
+                        immersiveMode = immersiveMode,
+                        onThemeChange = { newTheme ->
+                            themeName = newTheme
+                            prefs.edit().putString("theme_name", newTheme).apply()
+                        },
+                        onImmersiveChange = { enabled ->
+                            immersiveMode = enabled
+                            prefs.edit().putBoolean("immersive_mode", enabled).apply()
+                            if (enabled) enterImmersiveMode() else exitImmersiveMode()
+                        },
+                        onDeleteConfirm = {
+                            try {
+                                // Clear SharedPreferences for archive
+                                val archivePrefs = getSharedPreferences("radar_archive",
+                                    MODE_PRIVATE
+                                )
+                                archivePrefs.edit().clear().apply()
+
+                                // Delete files in cache directory
+                                cacheDir.deleteRecursively()
+
+                                Toast.makeText(this, "DATA PURGED SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                            } catch (e: Exception) {
+                                Toast.makeText(this, "PURGE FAILED: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        onBack = {
+                            finish()
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                    )
+                }
             }
         }
     }
 
     private fun enterImmersiveMode() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            hide(WindowInsetsCompat.Type.systemBars())
+        }
     }
 
     private fun exitImmersiveMode() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-    }
-
-    private fun setThemeMode(theme: RadarView.Theme) {
-        getSharedPreferences("settings", MODE_PRIVATE).edit()
-            .putString("theme_name", theme.name)
-            .apply()
-        setupTheme()
-        // Re-setup spinner to update colors if needed, but avoid infinite loop
-        // setupThemeSpinner() 
-    }
-
-    private fun setupThemeSpinner() {
-        val themes = RadarView.Theme.values()
-        val themeNames = themes.map { it.name.replace("_", " ") }
-        
-        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, themeNames) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val v = super.getView(position, convertView, parent) as TextView
-                v.typeface = Typeface.MONOSPACE
-                v.setTextColor(getCurrentThemeTextColor())
-                v.textSize = 14f
-                return v
-            }
-
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val v = super.getDropDownView(position, convertView, parent) as TextView
-                v.typeface = Typeface.MONOSPACE
-                v.setTextColor(getCurrentThemeTextColor())
-                v.setBackgroundColor(getCurrentThemeBgColor())
-                v.setPadding(32, 32, 32, 32)
-                return v
-            }
-        }
-        
-        binding.spTheme.adapter = adapter
-        
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val currentThemeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
-        val currentTheme = RadarView.Theme.valueOf(currentThemeName ?: RadarView.Theme.DEFAULT.name)
-        binding.spTheme.setSelection(themes.indexOf(currentTheme))
-
-        binding.spTheme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedTheme = themes[position]
-                if (selectedTheme != currentTheme) {
-                    setThemeMode(selectedTheme)
-                }
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
-
-    private fun getCurrentThemeTextColor(): Int {
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
-        val theme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
-        return when (theme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-            RadarView.Theme.MORIO -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-    }
-
-    private fun getCurrentThemeBgColor(): Int {
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
-        val theme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
-        return when (theme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
-            RadarView.Theme.RED_NIGHT -> Color.parseColor("#0A0000")
-            RadarView.Theme.PINK -> Color.parseColor("#1A001A")
-            RadarView.Theme.NEON -> Color.parseColor("#1A1A00")
-            RadarView.Theme.NARANJA -> Color.parseColor("#1A0F00")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#1A1A1A")
-            RadarView.Theme.MORIO -> Color.parseColor("#0A0A0A")
-            else -> Color.BLACK
-        }
-    }
-
-    private fun setupTheme() {
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
-        val currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
-
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-        val isMorio = currentTheme == RadarView.Theme.MORIO
-
-        val bgColor = when {
-            isHighContrast -> Color.WHITE
-            isRedNight || isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> Color.parseColor("#0A0A0A")
-            else -> Color.BLACK
-        }
-
-        val headerColor = when {
-            isHighContrast -> Color.parseColor("#EEEEEE")
-            isRedNight -> Color.parseColor("#1A0000")
-            isPink -> Color.parseColor("#2A002A")
-            isNeon -> Color.parseColor("#333300")
-            isNaranja -> Color.parseColor("#331E00")
-            isBubblegum -> Color.parseColor("#0F0F0F")
-            isSummertime -> Color.parseColor("#2A1F1A")
-            isMorio -> Color.parseColor("#0D1A18")
-            else -> Color.parseColor("#0F0F0F")
-        }
-
-        val textColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-
-        val accentColor = when {
-            isSummertime -> Color.parseColor("#6befff")
-            isMorio -> Color.parseColor("#c8f29e")
-            else -> textColor
-        }
-
-        binding.settingsRoot.setBackgroundColor(bgColor)
-        binding.headerSettings.setBackgroundColor(headerColor)
-
-        binding.tvSettingsTitle.setTextColor(textColor)
-        binding.tvLabelTheme.setTextColor(textColor)
-        binding.tvLabelHud.setTextColor(textColor)
-        binding.tvImmersiveText.setTextColor(textColor)
-        
-        binding.swImmersive.thumbTintList = android.content.res.ColorStateList.valueOf(accentColor)
-        binding.swImmersive.trackTintList = android.content.res.ColorStateList.valueOf(accentColor).withAlpha(80)
-
-        binding.btnSettingsBack.setTextColor(if (isPink || isBubblegum) Color.parseColor("#FF00FF") else if(isSummertime || isMorio) accentColor else textColor)
-        binding.btnSettingsBack.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.status_box_bg_bubblegum
-            isSummertime -> R.drawable.status_box_bg_summertime
-            isMorio -> R.drawable.status_box_bg_morio
-            else -> R.drawable.status_box_bg
-        })
-        binding.btnSettingsBack.setTextColor(if (isBubblegum) Color.parseColor("#00FDFF") else Color.WHITE)
-        
-        // Update Secret Audio box theme
-        binding.layoutSecretAudio.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.status_box_bg_bubblegum
-            isSummertime -> R.drawable.status_box_bg_summertime
-            isMorio -> R.drawable.status_box_bg_morio
-            else -> R.drawable.status_box_bg
-        })
-        binding.tvSecretAudioLabel.setTextColor(textColor)
-        binding.tvSecretAudioCommands.setTextColor(textColor)
-        binding.tvSecretAudioPath.setTextColor(textColor)
-        binding.tvSecretAudioPath.alpha = 0.4f
-        
-        // Update spinner background
-        binding.spTheme.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.status_box_bg_bubblegum
-            isSummertime -> R.drawable.status_box_bg_summertime
-            isMorio -> R.drawable.status_box_bg_morio
-            else -> R.drawable.status_box_bg
-        })
-    }
-    
-    private fun Int.withAlpha(alpha: Int): Int {
-        return (this and 0x00FFFFFF) or (alpha shl 24)
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus && getSharedPreferences("settings", MODE_PRIVATE).getBoolean("immersive_mode", true)) {
-            enterImmersiveMode()
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            show(WindowInsetsCompat.Type.systemBars())
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    themeName: String,
+    immersiveMode: Boolean,
+    onThemeChange: (String) -> Unit,
+    onImmersiveChange: (Boolean) -> Unit,
+    onDeleteConfirm: () -> Unit,
+    onBack: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        "CONFIGURATION",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    titleContentColor = MaterialTheme.colorScheme.primary
+                )
+            )
+        },
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                TextButton(
+                    onClick = onBack,
+                    modifier = Modifier
+                        .height(32.dp)
+                ) {
+                    Text(
+                        "CLOSE",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 12.sp
+                    )
+                }
+            }
+        },
+        containerColor = MaterialTheme.colorScheme.background
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = 24.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Spacer(Modifier.height(8.dp))
+
+            SectionLabel("COLOR THEME")
+            
+            ThemeSelector(
+                currentTheme = themeName,
+                onThemeSelected = onThemeChange
+            )
+
+            Spacer(Modifier.height(32.dp))
+            Divider(color = Color(0xFF222222), thickness = 1.dp)
+            Spacer(Modifier.height(32.dp))
+
+            SectionLabel("HUD PARAMETERS")
+
+            SettingsToggle(
+                label = "IMMERSIVE OVERLAY",
+                description = "FORCE FULLSCREEN TACTICAL OVERLAY.",
+                checked = immersiveMode,
+                onCheckedChange = onImmersiveChange
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            SecretInfoBox(
+                title = "SECRET AUDIO",
+                commands = "START CODE: 77872\nSTOP  CODE: 77873",
+                path = "PATH: /Download/BLESP"
+            )
+
+            Spacer(Modifier.height(32.dp))
+
+            SecretInfoBox(
+                title = "SECRET VIDEO",
+                commands = "START CODE: 77874\nSTOP  CODE: 77875",
+                path = "PATH: /Download/BLESP"
+            )
+
+            Spacer(Modifier.height(32.dp))
+            Divider(color = Color(0xFF222222), thickness = 1.dp)
+            Spacer(Modifier.height(32.dp))
+
+            SectionLabel("DATA MANAGEMENT")
+
+            DataManagementSection(onDeleteConfirm = onDeleteConfirm)
+
+            Spacer(Modifier.height(32.dp))
+        }
+    }
+}
+
+@Composable
+fun SectionLabel(text: String) {
+    Text(
+        text = text,
+        fontFamily = FontFamily.Monospace,
+        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+        fontSize = 12.sp,
+        modifier = Modifier.padding(bottom = 16.dp)
+    )
+}
+
+@Composable
+fun ThemeSelector(
+    currentTheme: String,
+    onThemeSelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val themes = RadarView.Theme.entries.map { it.name }
+    
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .border(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+            .clickable { expanded = true }
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Text(
+            text = currentTheme.replace("_", " "),
+            fontFamily = FontFamily.Monospace,
+            color = MaterialTheme.colorScheme.primary,
+            fontSize = 14.sp
+        )
+        
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxWidth(0.8f)
+        ) {
+            themes.forEach { theme ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            theme.replace("_", " "),
+                            fontFamily = FontFamily.Monospace,
+                            color = if (theme == currentTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+                    onClick = {
+                        onThemeSelected(theme)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SettingsToggle(
+    label: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .border(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = label,
+                color = MaterialTheme.colorScheme.primary,
+                fontFamily = FontFamily.Monospace,
+                fontSize = 13.sp
+            )
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                    checkedTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    uncheckedThumbColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            )
+        }
+        Text(
+            text = description,
+            modifier = Modifier.padding(top = 8.dp),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            fontSize = 10.sp,
+            fontFamily = FontFamily.Monospace
+        )
+    }
+}
+
+@Composable
+fun SecretInfoBox(
+    title: String,
+    commands: String,
+    path: String
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .border(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+            .padding(20.dp)
+    ) {
+        Text(
+            text = title,
+            fontFamily = FontFamily.Monospace,
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Text(
+            text = commands,
+            color = MaterialTheme.colorScheme.primary,
+            fontFamily = FontFamily.Monospace,
+            fontSize = 15.sp,
+            lineHeight = 22.sp,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Text(
+            text = path,
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+            fontSize = 11.sp,
+            fontFamily = FontFamily.Monospace,
+            letterSpacing = 0.05.sp
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun DataManagementSection(onDeleteConfirm: () -> Unit) {
+    var showDialog by remember { mutableStateOf(false) }
+    var randomCode by remember { mutableStateOf("") }
+    var inputCode by remember { mutableStateOf("") }
+
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .border(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+                .combinedClickable(
+                    onClick = {
+                        // Regular tap does nothing but guide the user
+                    },
+                    onLongClick = {
+                        // Generate a random 4-digit code
+                        val code = (1000..9999).random().toString()
+                        randomCode = code
+                        inputCode = ""
+                        showDialog = true
+                    }
+                )
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "PURGE ALL STORAGE & CACHE",
+                    color = Color.Red,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "PRESS AND HOLD TO INITIATE PURGE.",
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp
+                )
+            }
+        }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    text = "CONFIRM SECURITY CODE",
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color.Red
+                )
+            },
+            text = {
+                Column {
+                    Text(
+                        text = "ENTER THE FOLLOWING CODE TO PROCEED:",
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        text = randomCode,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 28.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        letterSpacing = 4.sp
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = inputCode,
+                        onValueChange = { if (it.length <= 4) inputCode = it },
+                        modifier = Modifier.fillMaxWidth(),
+                        textStyle = LocalTextStyle.current.copy(
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        placeholder = {
+                            Text(
+                                "0000",
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily.Monospace,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDialog = false
+                        onDeleteConfirm()
+                    },
+                    enabled = inputCode == randomCode
+                ) {
+                    Text(
+                        text = "EXECUTE PURGE",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        color = if (inputCode == randomCode) Color.Red else Color.Gray
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text(
+                        text = "ABORT",
+                        fontFamily = FontFamily.Monospace,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    }
+}
+

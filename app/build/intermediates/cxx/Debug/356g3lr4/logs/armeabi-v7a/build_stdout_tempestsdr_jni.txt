@@ -1,0 +1,2 @@
+ninja: Entering directory `/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a'
+ninja: no work to do.

@@ -19,14 +19,14 @@ class RadarView @JvmOverloads constructor(
 ) : View(context, attrs) {
 
     interface OnDeviceClickListener {
-        fun onDeviceClicked(device: ScanDevice)
+        fun onDeviceClicked(device: ScanDevice, isConfirm: Boolean = false)
         fun onNothingSelected()
     }
 
     var onDeviceClickListener: OnDeviceClickListener? = null
 
     enum class Theme {
-        DEFAULT, HIGH_CONTRAST, RED_NIGHT, PINK, NEON, NARANJA, BUBBLEGUM, SUMMERTIME, MORIO
+        DEFAULT, HIGH_CONTRAST, RED_NIGHT, PINK, NEON, NARANJA, BUBBLEGUM, SUMMERTIME, MORIO, FLIPPER
     }
 
     var theme = Theme.DEFAULT
@@ -153,341 +153,47 @@ class RadarView @JvmOverloads constructor(
     }
 
     private fun updateColors() {
-        when (theme) {
-            Theme.HIGH_CONTRAST -> {
-                green = Color.BLACK
-                greenDim = Color.LTGRAY
-                greenMid = Color.BLACK
-                radarBg = Color.WHITE
-                amber = Color.BLACK
-                cyan = Color.BLACK
-                aircraftColor = Color.BLACK
-                lteColor = Color.BLACK
-                fiveGColor = Color.BLACK
-                pagerColor = Color.BLACK
-                pink = Color.BLACK
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.BLACK
-                centerPaint.color = Color.BLACK
-                centerGlowPaint.color = Color.LTGRAY
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.BLACK
-                distPaint.color = Color.BLACK
-                statusPaint.color = Color.BLACK
-                cyanStatusPaint.color = Color.BLACK
-                airTagPaint.color = Color.BLACK
-                staticPaint.color = Color.LTGRAY
-                glitchPaint.color = Color.LTGRAY
-                alarmPaint.color = Color.BLACK
-                whisperPaint.color = Color.BLACK
-                vulnPaint.color = Color.BLACK
-                targetPink = Color.BLACK
-                cameraColor = Color.BLACK
-            }
-            Theme.RED_NIGHT -> {
-                green = Color.RED
-                greenDim = Color.parseColor("#330000")
-                greenMid = Color.parseColor("#990000")
-                radarBg = Color.BLACK
-                amber = Color.RED
-                cyan = Color.RED
-                aircraftColor = Color.RED
-                lteColor = Color.RED
-                fiveGColor = Color.RED
-                pagerColor = Color.RED
-                pink = Color.RED
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.RED
-                centerPaint.color = Color.RED
-                centerGlowPaint.color = Color.RED
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.RED
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.RED
-                airTagPaint.color = Color.RED
-                staticPaint.color = Color.RED
-                glitchPaint.color = Color.RED
-                alarmPaint.color = Color.RED
-                whisperPaint.color = Color.RED
-                vulnPaint.color = Color.RED
-                targetPink = Color.RED
-                cameraColor = Color.RED
-            }
-            Theme.DEFAULT -> {
-                green = "#00FF41".toColorInt()
-                greenDim = "#003B0F".toColorInt()
-                greenMid = "#00AA2A".toColorInt()
-                radarBg = Color.BLACK
-                amber = "#FFB300".toColorInt()
-                cyan = "#00FFFF".toColorInt()
-                aircraftColor = "#00FFFF".toColorInt()
-                lteColor = "#FFB300".toColorInt()
-                fiveGColor = Color.parseColor("#4B0082")
-                pagerColor = Color.parseColor("#00FF41")
-                pink = Color.parseColor("#0066FF")
+        val colors = ThemeUtils.getThemeColors(theme)
+        val isHighContrast = theme == Theme.HIGH_CONTRAST
+        val isRedNight = theme == Theme.RED_NIGHT
 
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = amber
-                centerPaint.color = Color.parseColor("#FF00FF")
-                centerGlowPaint.color = Color.parseColor("#FF00FF")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = ColorUtils.setAlphaComponent(green, 200)
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = cyan
-                airTagPaint.color = Color.WHITE
-                staticPaint.color = Color.parseColor("#FF00FF")
-                glitchPaint.color = green
-                alarmPaint.color = Color.RED
-                whisperPaint.color = Color.parseColor("#FF00FF")
-                vulnPaint.color = green
-                targetPink = Color.parseColor("#FF00FF")
-                cameraColor = Color.RED
-            }
-            Theme.PINK -> {
-                green = Color.parseColor("#FF00FF")
-                greenDim = Color.parseColor("#330033")
-                greenMid = Color.parseColor("#990099")
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#FF69B4")
-                cyan = Color.parseColor("#FF1493")
-                aircraftColor = Color.parseColor("#FF00FF")
-                lteColor = Color.parseColor("#FF00FF")
-                fiveGColor = Color.parseColor("#FF00FF")
-                pagerColor = Color.parseColor("#FF00FF")
-                pink = Color.parseColor("#FF00FF")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#FF00FF")
-                centerGlowPaint.color = Color.parseColor("#FF00FF")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#FF00FF")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#FF00FF")
-                airTagPaint.color = Color.parseColor("#FF00FF")
-                staticPaint.color = Color.parseColor("#FF00FF")
-                glitchPaint.color = Color.parseColor("#FF00FF")
-                alarmPaint.color = Color.parseColor("#FF00FF")
-                whisperPaint.color = Color.parseColor("#FF00FF")
-                vulnPaint.color = Color.parseColor("#FF00FF")
-                targetPink = Color.parseColor("#FF00FF")
-                cameraColor = Color.parseColor("#FF00FF")
-            }
-            Theme.NEON -> {
-                green = Color.parseColor("#E6FB04")
-                greenDim = Color.parseColor("#333801")
-                greenMid = Color.parseColor("#B3C403")
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#FFFF00")
-                cyan = Color.parseColor("#E6FB04")
-                aircraftColor = Color.parseColor("#E6FB04")
-                lteColor = Color.parseColor("#E6FB04")
-                fiveGColor = Color.parseColor("#E6FB04")
-                pagerColor = Color.parseColor("#E6FB04")
-                pink = Color.parseColor("#E6FB04")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#E6FB04")
-                centerGlowPaint.color = Color.parseColor("#E6FB04")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#E6FB04")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#E6FB04")
-                airTagPaint.color = Color.parseColor("#E6FB04")
-                staticPaint.color = Color.parseColor("#E6FB04")
-                glitchPaint.color = Color.parseColor("#E6FB04")
-                alarmPaint.color = Color.parseColor("#E6FB04")
-                whisperPaint.color = Color.parseColor("#E6FB04")
-                vulnPaint.color = Color.parseColor("#E6FB04")
-                targetPink = Color.parseColor("#E6FB04")
-                cameraColor = Color.parseColor("#E6FB04")
-            }
-            Theme.NARANJA -> {
-                green = Color.parseColor("#FF8C00")
-                greenDim = Color.parseColor("#331C00")
-                greenMid = Color.parseColor("#995400")
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#FFA500")
-                cyan = Color.parseColor("#FF8C00")
-                aircraftColor = Color.parseColor("#FF8C00")
-                lteColor = Color.parseColor("#FF8C00")
-                fiveGColor = Color.parseColor("#FF8C00")
-                pagerColor = Color.parseColor("#FF8C00")
-                pink = Color.parseColor("#FF8C00")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#FF8C00")
-                centerGlowPaint.color = Color.parseColor("#FF8C00")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#FF8C00")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#FF8C00")
-                airTagPaint.color = Color.parseColor("#FF8C00")
-                staticPaint.color = Color.parseColor("#FF8C00")
-                glitchPaint.color = Color.parseColor("#FF8C00")
-                alarmPaint.color = Color.parseColor("#FF8C00")
-                whisperPaint.color = Color.parseColor("#FF8C00")
-                vulnPaint.color = Color.parseColor("#FF8C00")
-                targetPink = Color.parseColor("#FF8C00")
-                cameraColor = Color.parseColor("#FF8C00")
-            }
-            Theme.BUBBLEGUM -> {
-                green = Color.parseColor("#FF00FF") // Neon Magenta
-                greenDim = Color.parseColor("#330033")
-                greenMid = Color.parseColor("#00FDFF") // Turquoise
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#00FDFF") // Turquoise accent
-                cyan = Color.parseColor("#00FDFF")
-                aircraftColor = Color.parseColor("#00FDFF")
-                lteColor = Color.parseColor("#FF00FF")
-                fiveGColor = Color.parseColor("#FF00FF")
-                pagerColor = Color.parseColor("#FF00FF")
-                pink = Color.parseColor("#FF00FF")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#FF00FF")
-                centerGlowPaint.color = Color.parseColor("#FF00FF")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#FF00FF")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#00FDFF")
-                airTagPaint.color = Color.WHITE
-                staticPaint.color = Color.parseColor("#FF00FF")
-                glitchPaint.color = Color.parseColor("#00FDFF")
-                alarmPaint.color = Color.parseColor("#FF00FF")
-                whisperPaint.color = Color.parseColor("#FF00FF")
-                vulnPaint.color = Color.parseColor("#00FDFF")
-                targetPink = Color.parseColor("#FF00FF")
-                cameraColor = Color.parseColor("#FF00FF")
-            }
-            Theme.SUMMERTIME -> {
-                green = Color.parseColor("#ff9f6b")
-                greenDim = Color.parseColor("#331f15")
-                greenMid = Color.parseColor("#cc7f56")
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#6befff")
-                cyan = Color.parseColor("#6befff")
-                aircraftColor = Color.parseColor("#6befff")
-                lteColor = Color.parseColor("#ff9f6b")
-                fiveGColor = Color.parseColor("#ff9f6b")
-                pagerColor = Color.parseColor("#ff9f6b")
-                pink = Color.parseColor("#ff9f6b")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#ff9f6b")
-                centerGlowPaint.color = Color.parseColor("#ff9f6b")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#ff9f6b")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#6befff")
-                airTagPaint.color = Color.WHITE
-                staticPaint.color = Color.parseColor("#ff9f6b")
-                glitchPaint.color = Color.parseColor("#6befff")
-                alarmPaint.color = Color.parseColor("#ff9f6b")
-                whisperPaint.color = Color.parseColor("#ff9f6b")
-                vulnPaint.color = Color.parseColor("#6befff")
-                targetPink = Color.parseColor("#ff9f6b")
-                cameraColor = Color.parseColor("#ff9f6b")
-            }
-            Theme.MORIO -> {
-                green = Color.parseColor("#c3ac3a")
-                greenDim = Color.parseColor("#244f48")
-                greenMid = Color.parseColor("#c8f29e")
-                radarBg = Color.BLACK
-                amber = Color.parseColor("#c8f29e")
-                cyan = Color.parseColor("#c8f29e")
-                aircraftColor = Color.parseColor("#c8f29e")
-                lteColor = Color.parseColor("#c3ac3a")
-                fiveGColor = Color.parseColor("#c3ac3a")
-                pagerColor = Color.parseColor("#c3ac3a")
-                pink = Color.parseColor("#c8f29e")
-                
-                bgPaint.color = radarBg
-                ringPaint.color = greenDim
-                crossPaint.color = greenDim
-                blipPaint.color = green
-                blipRingPaint.color = green
-                labelSmallPaint.color = greenMid
-                selectedPaint.color = Color.WHITE
-                centerPaint.color = Color.parseColor("#c3ac3a")
-                centerGlowPaint.color = Color.parseColor("#c3ac3a")
-                tickPaint.color = greenMid
-                compassPaint.color = greenMid
-                sweepLinePaint.color = Color.parseColor("#c3ac3a")
-                distPaint.color = greenMid
-                statusPaint.color = greenMid
-                cyanStatusPaint.color = Color.parseColor("#c8f29e")
-                airTagPaint.color = Color.WHITE
-                staticPaint.color = Color.parseColor("#c3ac3a")
-                glitchPaint.color = Color.parseColor("#c8f29e")
-                alarmPaint.color = Color.parseColor("#c8f29e")
-                whisperPaint.color = Color.parseColor("#c3ac3a")
-                vulnPaint.color = Color.parseColor("#c8f29e")
-                targetPink = Color.parseColor("#c8f29e")
-                cameraColor = Color.parseColor("#c3ac3a")
-            }
-        }
+        green = colors.primary
+        greenMid = if (theme == Theme.DEFAULT) "#00AA2A".toColorInt() else colors.dim
+        greenDim = if (isHighContrast) Color.LTGRAY else colors.header
+        
+        radarBg = colors.background
+        amber = colors.accent
+        cyan = colors.accent
+        aircraftColor = colors.accent
+        lteColor = colors.primary
+        fiveGColor = colors.primary
+        pagerColor = colors.primary
+        pink = colors.accent
+        targetPink = colors.accent
+        cameraColor = if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else Color.RED
+        
+        bgPaint.color = radarBg
+        ringPaint.color = if (isHighContrast) Color.LTGRAY else ColorUtils.setAlphaComponent(colors.primary, 50)
+        crossPaint.color = ringPaint.color
+        blipPaint.color = green
+        blipRingPaint.color = green
+        labelSmallPaint.color = greenMid
+        selectedPaint.color = if (isHighContrast) Color.BLACK else Color.WHITE
+        centerPaint.color = colors.primary
+        centerGlowPaint.color = colors.primary
+        tickPaint.color = greenMid
+        compassPaint.color = greenMid
+        sweepLinePaint.color = colors.primary
+        distPaint.color = greenMid
+        statusPaint.color = greenMid
+        cyanStatusPaint.color = colors.accent
+        airTagPaint.color = if (isHighContrast) Color.BLACK else Color.WHITE
+        staticPaint.color = colors.primary
+        glitchPaint.color = colors.primary
+        alarmPaint.color = colors.primary
+        whisperPaint.color = colors.primary
+        vulnPaint.color = colors.accent
+
         buildSweepShader(width / 2f, height / 2f)
     }
 
@@ -501,6 +207,7 @@ class RadarView @JvmOverloads constructor(
             Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
             Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
             Theme.MORIO -> Color.parseColor("#c3ac3a")
+            Theme.FLIPPER -> Color.parseColor("#FF8C00")
             Theme.DEFAULT -> green
         }
         val maxAlpha = when (theme) {
@@ -512,6 +219,7 @@ class RadarView @JvmOverloads constructor(
             Theme.BUBBLEGUM -> 60
             Theme.SUMMERTIME -> 50
             Theme.MORIO -> 50
+            Theme.FLIPPER -> 50
             Theme.DEFAULT -> 50
         }
         
@@ -704,6 +412,16 @@ class RadarView @JvmOverloads constructor(
                     DeviceType.PAGER -> 0xAAA
                     DeviceType.CAMERA -> 0xBBB
                     DeviceType.AIRCRAFT, DeviceType.DRONE -> 0x000
+                    DeviceType.FLIPPER -> 0xCCC
+                    DeviceType.HEADPHONES -> 0xDDD
+                    DeviceType.ROUTER -> 0xEEE
+                    DeviceType.PRINTER -> 0xFFF
+                    DeviceType.IOT -> 0x111
+                    DeviceType.WEARABLE -> 0x222
+                    DeviceType.TABLET -> 0x333
+                    DeviceType.TRACKER -> 0x444
+                    DeviceType.GAME_CONSOLE -> 0x555
+                    DeviceType.SUBGHZ -> 0x666
                 }
                 d.angle = (((d.id.hashCode() xor seed) and 0x7FFFFFFF) % 360).toDouble()
             }
@@ -796,18 +514,10 @@ class RadarView @JvmOverloads constructor(
         
         val deviceCount = devices.size
         
-        // Dynamic frame skipping based on device count
-        val skipThreshold = when {
-            deviceCount > 500 -> 4 // Draw every 4th frame
-            deviceCount > 300 -> 3 // Draw every 3rd frame
-            deviceCount > 150 -> 2 // Draw every 2nd frame
-            else -> 1
-        }
-        
-        if (skipThreshold > 1) {
-            drawCount++
-            if (drawCount % skipThreshold != 0) return
-        }
+        // Remove aggressive frame-skipping / return early without drawing anything, 
+        // which causes intense screen flickering when there are many wifi dots.
+        // Instead, we always draw every frame completely to avoid flickering.
+
 
         if (cachedBg == null || cachedBg?.width != width || cachedBg?.height != height) {
             buildStaticCache()
@@ -875,10 +585,9 @@ class RadarView @JvmOverloads constructor(
 
             val color = when (type) {
                 DeviceType.WIFI -> green
-                DeviceType.BLE -> pink
+                DeviceType.BLE, DeviceType.PAGER -> targetPink
                 DeviceType.LTE -> lteColor
                 DeviceType.FIVE_G -> fiveGColor
-                DeviceType.PAGER -> pagerColor
                 DeviceType.AIRCRAFT, DeviceType.DRONE -> aircraftColor
                 else -> targetPink
             }
@@ -939,13 +648,13 @@ class RadarView @JvmOverloads constructor(
 
     private fun renderSingleBlip(canvas: Canvas, device: ScanDevice, isSelected: Boolean, isHighContrast: Boolean, isHighDensity: Boolean = false) {
         val pos = devicePositions[device.id] ?: return
+        val colors = ThemeUtils.getThemeColors(theme)
         
         val blipColor = when (device.type) {
             DeviceType.WIFI -> green
-            DeviceType.BLE -> pink
+            DeviceType.BLE, DeviceType.PAGER -> targetPink
             DeviceType.LTE -> lteColor
             DeviceType.FIVE_G -> fiveGColor
-            DeviceType.PAGER -> pagerColor
             DeviceType.AIRCRAFT, DeviceType.DRONE -> aircraftColor
             DeviceType.CAMERA -> cameraColor
             else -> targetPink
@@ -975,16 +684,7 @@ class RadarView @JvmOverloads constructor(
         if (isSelected) {
             val pr = blipR + 6f + pulseRadius * 20f
             val pa = (255 * (1f - pulseRadius)).toInt()
-            val selectionColor = when (theme) {
-                Theme.RED_NIGHT -> Color.RED
-                Theme.HIGH_CONTRAST -> Color.BLACK
-                Theme.PINK -> Color.parseColor("#FF00FF")
-                Theme.NEON -> Color.parseColor("#E6FB04")
-                Theme.NARANJA -> Color.parseColor("#FF8C00")
-                Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-                Theme.SUMMERTIME -> cyan
-                else -> targetPink
-            }
+            val selectionColor = colors.accent
             selectedPaint.color = ColorUtils.setAlphaComponent(selectionColor, pa)
             canvas.drawCircle(pos.x, pos.y, pr, selectedPaint)
             selectedPaint.color = selectionColor
@@ -1006,31 +706,10 @@ class RadarView @JvmOverloads constructor(
         }
 
         val blinkColor = when {
-            device.isCar -> when(theme) {
-                Theme.RED_NIGHT -> Color.RED
-                Theme.HIGH_CONTRAST -> Color.BLACK
-                Theme.SUMMERTIME -> cyan
-                else -> targetPink
-            }
-            device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP") -> when(theme) {
-                Theme.RED_NIGHT -> Color.RED
-                Theme.HIGH_CONTRAST -> Color.BLACK
-                Theme.SUMMERTIME -> cyan
-                else -> targetPink
-            }
-            device.isAirTag -> when(theme) {
-                Theme.RED_NIGHT -> Color.BLACK
-                Theme.HIGH_CONTRAST -> Color.BLACK
-                else -> Color.WHITE
-            }
-            device.type == DeviceType.CAMERA -> when(theme) {
-                Theme.RED_NIGHT -> Color.WHITE
-                Theme.HIGH_CONTRAST -> Color.WHITE
-                Theme.BUBBLEGUM -> cyan
-                Theme.SUMMERTIME -> cyan
-                Theme.MORIO -> greenMid
-                else -> Color.YELLOW
-            }
+            device.isCar -> colors.accent
+            device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP") -> colors.accent
+            device.isAirTag -> if (theme == Theme.RED_NIGHT) Color.BLACK else colors.primary
+            device.type == DeviceType.CAMERA -> if (theme == Theme.DEFAULT) Color.YELLOW else colors.accent
             else -> blipColor
         }
         
@@ -1143,8 +822,7 @@ class RadarView @JvmOverloads constructor(
             val cx = width / 2f
             val cy = height / 2f
 
-            // Account for canvas rotation: rotate touch point backwards to match blip coordinate space
-            // Rotation is rotationDegrees + 180, so we rotate back by -(rotationDegrees + 180)
+            // Rotation is rotationDegrees + 180f, so we rotate back by -(rotationDegrees + 180f)
             val angleRad = Math.toRadians(-(rotationDegrees + 180f).toDouble())
             val cosA = cos(angleRad).toFloat()
             val sinA = sin(angleRad).toFloat()
@@ -1179,9 +857,10 @@ class RadarView @JvmOverloads constructor(
 
             if (best != null) {
                 performClick()
+                val isConfirm = (selectedId == best.id)
                 selectedId = best.id
                 pulseAnimator.start()
-                onDeviceClickListener?.onDeviceClicked(best)
+                onDeviceClickListener?.onDeviceClicked(best, isConfirm)
                 invalidate()
                 return true
             } else {

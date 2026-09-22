@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 90s Hacker Theme Colors -->
+    <color name="dark_background">#000000</color>
+    <color name="dark_surface">#0A0A0A</color>
+    <color name="cyan_primary">#00FF00</color> <!-- Replaced with Neon Green -->
+    <color name="cyan_dark">#003300</color>
+    <color name="vulnerable_red">#FF0000</color>
+    <color name="patched_green">#00FF00</color>
+    <color name="testing_blue">#00FFFF</color>
+    <color name="warning_orange">#FFA500</color>
+    <color name="text_primary">#00FF00</color>
+    <color name="text_secondary">#FF00FF</color> <!-- Replaced with Pink -->
+    <color name="text_tertiary">#008800</color>
+
+    <color name="hacker_pink">#FF00FF</color>
+    <color name="neon_green">#00FF00</color>
+
+    <!-- Legacy colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

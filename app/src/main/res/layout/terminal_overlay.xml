@@ -16,28 +16,6 @@
         android:background="#000000"
         android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/headerSshLogin"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="0dp"
-            android:gravity="center_vertical"
-            android:background="#0F0F0F"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/ivLogoSshLogin"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/blesp_logo"
-                android:scaleType="centerInside"
-                android:contentDescription="BLESP Logo" />
-        </LinearLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,25 +34,25 @@
                     android:id="@+id/tvSshLoginTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SSH LOGIN"
+                    android:text="@string/terminal_title"
                     android:textColor="#00FF41"
                     android:fontFamily="monospace"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
-                    android:paddingBottom="30dp" />
+                    android:paddingBottom="20dp" />
 
                 <AutoCompleteTextView
                     android:id="@+id/etHost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="12dp"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#004400"
-                    android:hint="REMOTE HOST"
+                    android:hint="@string/terminal_host_hint"
                     android:background="#111111"
                     android:fontFamily="monospace"
-                    android:textSize="18sp"
-                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:padding="8dp"
                     android:gravity="center"
                     android:maxLines="1"
                     android:inputType="textUri"
@@ -84,14 +62,14 @@
                     android:id="@+id/etUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="12dp"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#004400"
-                    android:hint="USER"
+                    android:hint="@string/terminal_user_hint"
                     android:background="#111111"
                     android:fontFamily="monospace"
-                    android:textSize="18sp"
-                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:padding="8dp"
                     android:gravity="center"
                     android:maxLines="1"
                     android:inputType="textPersonName"
@@ -101,48 +79,59 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="6dp"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#004400"
-                    android:hint="PASSWORD"
+                    android:hint="@string/terminal_pass_hint"
                     android:background="#111111"
                     android:fontFamily="monospace"
-                    android:textSize="18sp"
-                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:padding="8dp"
                     android:gravity="center"
                     android:maxLines="1"
                     android:inputType="textPassword"
-                    android:imeOptions="actionDone" />
+                    android:imeOptions="actionNext" />
+
+                <Spinner
+                    android:id="@+id/spKeyFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="#111111"
+                    android:padding="8dp"
+                    android:minHeight="40dp" />
 
                 <Button
                     android:id="@+id/btnConnect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:text="INITIATE UPLINK"
+                    android:text="@string/terminal_btn_connect"
                     android:fontFamily="monospace"
                     android:textColor="#000000"
                     android:backgroundTint="#00FF41"
-                    android:textSize="18sp"
-                    android:padding="20dp" />
+                    android:textSize="16sp"
+                    android:padding="12dp" />
 
                 <Button
-                    android:id="@+id/btnSshLoginBack"
+                    android:id="@+id/btnSshLoginClose"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="ABORT"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/btn_close"
                     android:fontFamily="monospace"
                     android:textStyle="bold"
                     android:textColor="#FF00FF"
                     android:background="@android:color/transparent"
-                    android:textSize="16sp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
+                    android:textSize="14sp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:visibility="visible"
                     style="?attr/borderlessButtonStyle" />
+
+
 
             </LinearLayout>
         </ScrollView>
@@ -159,26 +148,47 @@
         <LinearLayout
             android:id="@+id/headerSshTerminal"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="32dp"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:gravity="center_vertical"
-            android:background="#0F0F0F">
+            android:background="#0F0F0F"
+            android:visibility="gone">
 
             <Button
-                android:id="@+id/btnSshTerminalBack"
+                android:id="@+id/btnSshTerminalClose"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:minWidth="60dp"
-                android:text="BACK"
+                android:layout_height="22dp"
+                android:minWidth="40dp"
+                android:minHeight="0dp"
+                android:text="@string/btn_close"
                 android:fontFamily="monospace"
                 android:textStyle="bold"
                 android:textColor="#FF00FF"
-                android:textSize="12sp"
+                android:textSize="9sp"
                 android:background="@drawable/status_box_bg_pink"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                style="?attr/borderlessButtonStyle" />
+
+            <Button
+                android:id="@+id/btnSshLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="8dp"
+                android:minWidth="40dp"
+                android:minHeight="0dp"
+                android:text="@string/terminal_btn_logout"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:textColor="#FF0000"
+                android:textSize="9sp"
+                android:background="@drawable/status_box_bg_red"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 style="?attr/borderlessButtonStyle" />
@@ -195,70 +205,61 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="4dp"
-            android:background="?android:attr/windowBackground">
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:background="#000000">
 
-            <ScrollView
-                android:id="@+id/svTerminal"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/status_box_bg"
-                android:padding="8dp"
-                android:fillViewport="true"
-                android:isScrollContainer="true">
-                <TextView
-                    android:id="@+id/tvTerminalOutput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#00FF41"
-                    android:fontFamily="monospace"
-                    android:textSize="11sp" />
-            </ScrollView>
+                android:layout_height="match_parent"
+                android:background="#000000">
 
-            <LinearLayout
-                android:id="@+id/terminalControlsRoot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="4dp"
-                android:background="#0F0F0F"
-                android:padding="4dp">
-
-                <HorizontalScrollView
+                <ScrollView
+                    android:id="@+id/svTerminal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    android:isScrollContainer="true"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="never">
+                    <TextView
+                        android:id="@+id/tvTerminalOutput"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="4dp">
-                        <Button android:id="@+id/btnCtrl" android:layout_width="42dp" android:layout_height="40dp" android:text="^" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnTab" android:layout_width="48dp" android:layout_height="40dp" android:text="TAB" android:textSize="9sp" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="2dp" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnCtrlC" android:layout_width="42dp" android:layout_height="40dp" android:text="^C" android:textSize="9sp" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="2dp" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnLeft" android:layout_width="42dp" android:layout_height="40dp" android:text="&lt;" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="8dp" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnUp" android:layout_width="42dp" android:layout_height="40dp" android:text="^" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="2dp" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnDown" android:layout_width="42dp" android:layout_height="40dp" android:text="v" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="2dp" style="?attr/borderlessButtonStyle" />
-                        <Button android:id="@+id/btnRight" android:layout_width="42dp" android:layout_height="40dp" android:text="&gt;" android:textColor="#00FF41" android:background="@drawable/btn_bg_dim" android:layout_marginStart="2dp" style="?attr/borderlessButtonStyle" />
-                    </LinearLayout>
-                </HorizontalScrollView>
+                        android:textColor="#00FF41"
+                        android:fontFamily="monospace"
+                        android:typeface="monospace"
+                        android:textSize="8sp"
+                        android:letterSpacing="0"
+                        android:lineSpacingExtra="0dp"
+                        android:lineSpacingMultiplier="1.0"
+                        android:includeFontPadding="false"
+                        android:padding="0dp"
+                        android:background="#000000"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:breakStrategy="simple"
+                        android:hyphenationFrequency="none"
+                        android:ellipsize="none"
+                        android:gravity="top|start" />
+                </ScrollView>
 
+                <!-- Hidden but focused EditText for capturing input - Full surface proxy -->
                 <EditText
                     android:id="@+id/etCommand"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="[ ENTER COMMAND... ]"
-                    android:textColor="#00FF41"
-                    android:textColorHint="#004400"
-                    android:fontFamily="monospace"
-                    android:background="@drawable/btn_bg_dim"
-                    android:paddingStart="12dp"
-                    android:textSize="13sp"
-                    android:imeOptions="actionSend"
-                    android:inputType="textNoSuggestions"
-                    android:layout_marginTop="2dp" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/transparent"
+                    android:cursorVisible="false"
+                    android:inputType="textNoSuggestions|textVisiblePassword"
+                    android:imeOptions="actionNone"
+                    android:importantForAutofill="no"
+                    android:gravity="top|start"
+                    android:padding="0dp" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

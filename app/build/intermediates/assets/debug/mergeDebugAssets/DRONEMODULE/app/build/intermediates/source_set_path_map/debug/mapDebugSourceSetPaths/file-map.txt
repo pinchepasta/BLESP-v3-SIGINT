@@ -1,0 +1,36 @@
+com.tempestsdr.app-jetified-annotation-experimental-1.3.0-0 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/0a67ef7b75595d5d0943b1fa3720ea7e/transformed/jetified-annotation-experimental-1.3.0/res
+com.tempestsdr.app-jetified-startup-runtime-1.1.1-1 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/0c61cc6c7f91398b64f7e19e46fe8a44/transformed/jetified-startup-runtime-1.1.1/res
+com.tempestsdr.app-coordinatorlayout-1.1.0-2 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/1aa9eb19a5eccf9ba496768ed200227b/transformed/coordinatorlayout-1.1.0/res
+com.tempestsdr.app-jetified-emoji2-views-helper-1.2.0-3 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/3de567015c3672ef260c92413246b4f7/transformed/jetified-emoji2-views-helper-1.2.0/res
+com.tempestsdr.app-drawerlayout-1.1.1-4 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/42615e42014da8647437dfc1477fdecb/transformed/drawerlayout-1.1.1/res
+com.tempestsdr.app-jetified-lifecycle-process-2.7.0-5 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/43e6358625e8aa4052c771c53255c09f/transformed/jetified-lifecycle-process-2.7.0/res
+com.tempestsdr.app-jetified-appcompat-resources-1.6.1-6 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/475e27f80764ce411bc046c9f3e2020f/transformed/jetified-appcompat-resources-1.6.1/res
+com.tempestsdr.app-jetified-profileinstaller-1.3.0-7 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/4a01aa022e665244fa49349256e6de83/transformed/jetified-profileinstaller-1.3.0/res
+com.tempestsdr.app-jetified-savedstate-1.2.1-8 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/4afc0993255cd8c8a39a32cb2d83d908/transformed/jetified-savedstate-1.2.1/res
+com.tempestsdr.app-constraintlayout-2.1.4-9 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/4c5f07dd9cf403aa0ddebcb445803edb/transformed/constraintlayout-2.1.4/res
+com.tempestsdr.app-appcompat-1.6.1-10 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/56088aaea044f3ce81ca653bd7dc471a/transformed/appcompat-1.6.1/res
+com.tempestsdr.app-jetified-activity-1.8.0-11 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/622b7f8e45ade94012bc92335e35b3d6/transformed/jetified-activity-1.8.0/res
+com.tempestsdr.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-12 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/6dc6da95995e0e2b7df42bae97b28ed2/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
+com.tempestsdr.app-jetified-viewpager2-1.0.0-13 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/6df3a1d8cc700effd16ff445378ec018/transformed/jetified-viewpager2-1.0.0/res
+com.tempestsdr.app-jetified-core-ktx-1.9.0-14 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/717bb27652ab3296fc8d5205939a8ec9/transformed/jetified-core-ktx-1.9.0/res
+com.tempestsdr.app-lifecycle-livedata-core-2.7.0-15 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/75235747da5a55c3f550fed50d5a4706/transformed/lifecycle-livedata-core-2.7.0/res
+com.tempestsdr.app-cardview-1.0.0-16 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/7b296a60c5ee5507322fcf7267cecd33/transformed/cardview-1.0.0/res
+com.tempestsdr.app-core-1.9.0-17 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/7baac5b79cf9f13738bcd8597ae7915c/transformed/core-1.9.0/res
+com.tempestsdr.app-core-runtime-2.2.0-18 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/7f5ae80ea433a5bde008ab9ee585b875/transformed/core-runtime-2.2.0/res
+com.tempestsdr.app-material-1.11.0-19 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/89cc1ec7a56a093dd95f6ecdf268a0fa/transformed/material-1.11.0/res
+com.tempestsdr.app-transition-1.2.0-20 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/94a15b0dab4fc83ca34e2505c752c259/transformed/transition-1.2.0/res
+com.tempestsdr.app-jetified-emoji2-1.2.0-21 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/9af27556cb27e970a600906604b37d43/transformed/jetified-emoji2-1.2.0/res
+com.tempestsdr.app-fragment-1.3.6-22 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/a2225eca7cb3ec0cbf56994ca673b65b/transformed/fragment-1.3.6/res
+com.tempestsdr.app-recyclerview-1.1.0-23 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/a2b108b98c8ca8fd8b2fd476c15cddb8/transformed/recyclerview-1.1.0/res
+com.tempestsdr.app-lifecycle-viewmodel-2.7.0-24 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/cf0a6f3ba048bb137301ddc8c72ccf91/transformed/lifecycle-viewmodel-2.7.0/res
+com.tempestsdr.app-lifecycle-livedata-2.7.0-25 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/d84a6b71345d72832e5f7d8f43bece9a/transformed/lifecycle-livedata-2.7.0/res
+com.tempestsdr.app-jetified-lifecycle-livedata-core-ktx-2.7.0-26 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/da332d42b2e7d5b8bff4c03c17abfe3e/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
+com.tempestsdr.app-lifecycle-runtime-2.7.0-27 /Users/feinlabsfilms/.gradle/caches/9.0.0/transforms/f094396a3ca36d1c629aa1a5f7a635e4/transformed/lifecycle-runtime-2.7.0/res
+com.tempestsdr.app-pngs-28 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/generated/res/pngs/debug
+com.tempestsdr.app-resValues-29 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/generated/res/resValues/debug
+com.tempestsdr.app-updated_navigation_xml-30 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/generated/updated_navigation_xml/debug
+com.tempestsdr.app-packageDebugResources-31 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.tempestsdr.app-packageDebugResources-32 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.tempestsdr.app-debug-33 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.tempestsdr.app-debug-34 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/debug/res
+com.tempestsdr.app-main-35 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/res

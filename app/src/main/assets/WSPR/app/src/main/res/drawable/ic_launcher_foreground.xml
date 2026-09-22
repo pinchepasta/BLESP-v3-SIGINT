@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Shield shape (centered with safe zone offset) -->
+    <path
+        android:fillColor="#00BCD4"
+        android:pathData="M54,24
+                         L78,32
+                         L78,50
+                         C78,66 68,78 54,84
+                         C40,78 30,66 30,50
+                         L30,32
+                         Z" />
+
+    <!-- Inner shield highlight -->
+    <path
+        android:fillColor="#008BA3"
+        android:pathData="M54,28
+                         L74,35
+                         L74,50
+                         C74,63 66,74 54,79
+                         C42,74 34,63 34,50
+                         L34,35
+                         Z" />
+
+    <!-- Bluetooth symbol -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeWidth="0"
+        android:pathData="M54,40 L54,68
+                         M54,40 L62,48 L54,54
+                         M54,68 L62,60 L54,54
+                         M54,40 L46,48
+                         M54,68 L46,60" />
+
+    <!-- Bluetooth symbol strokes -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M54,40 L62,48 L54,54 L62,60 L54,68" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,40 L54,68" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,48 L46,40" />
+
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,60 L46,68" />
+
+    <!-- Warning dot (vulnerability indicator) -->
+    <path
+        android:fillColor="#FF5252"
+        android:pathData="M68,36 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" />
+</vector>

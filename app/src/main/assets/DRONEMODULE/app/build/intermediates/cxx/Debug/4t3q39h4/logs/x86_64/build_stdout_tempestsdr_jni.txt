@@ -1,0 +1,742 @@
+ninja: Entering directory `/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/4t3q39h4/x86_64'
+[1/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:27:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:27:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[2/28] Building C object CMakeFiles/libusb.dir/libusb/os/events_posix.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/events_posix.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/events_posix.c.o -MF CMakeFiles/libusb.dir/libusb/os/events_posix.c.o.d -o CMakeFiles/libusb.dir/libusb/os/events_posix.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/events_posix.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[3/28] Building C object CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o -MF CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o.d -o CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/threads_posix.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/threads_posix.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/threads_posix.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[4/28] Building C object CMakeFiles/libusb.dir/libusb/hotplug.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/hotplug.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/hotplug.c.o -MF CMakeFiles/libusb.dir/libusb/hotplug.c.o.d -o CMakeFiles/libusb.dir/libusb/hotplug.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[5/28] Building C object CMakeFiles/libusb.dir/libusb/core.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/core.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/core.c.o -MF CMakeFiles/libusb.dir/libusb/core.c.o.d -o CMakeFiles/libusb.dir/libusb/core.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[6/28] Building C object CMakeFiles/libusb.dir/libusb/descriptor.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/descriptor.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/descriptor.c.o -MF CMakeFiles/libusb.dir/libusb/descriptor.c.o.d -o CMakeFiles/libusb.dir/libusb/descriptor.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[7/28] Building C object CMakeFiles/libusb.dir/libusb/strerror.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/strerror.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/strerror.c.o -MF CMakeFiles/libusb.dir/libusb/strerror.c.o.d -o CMakeFiles/libusb.dir/libusb/strerror.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:23:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:23:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[8/28] Building C object CMakeFiles/libusb.dir/libusb/sync.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/sync.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/sync.c.o -MF CMakeFiles/libusb.dir/libusb/sync.c.o.d -o CMakeFiles/libusb.dir/libusb/sync.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[9/28] Building C object CMakeFiles/libusb.dir/libusb/io.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/io.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/io.c.o -MF CMakeFiles/libusb.dir/libusb/io.c.o.d -o CMakeFiles/libusb.dir/libusb/io.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[10/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:329:49: error: expected function body after function declarator
+  329 |         const char *function, const char *format, ...) PRINTF_FORMAT(4, 5);
+      |                                                        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:367:2: error: unknown type name 'usbi_event_t'; did you mean 'sigevent_t'?
+  367 |         usbi_event_t event;
+      |         ^~~~~~~~~~~~
+      |         sigevent_t
+/Users/feinlabsfilms/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/siginfo.h:227:3: note: 'sigevent_t' declared here
+  227 | } sigevent_t;
+      |   ^
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:375:2: error: unknown type name 'usbi_mutex_t'
+  375 |         usbi_mutex_t usb_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:380:2: error: unknown type name 'usbi_mutex_t'
+  380 |         usbi_mutex_t open_devs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:384:2: error: unknown type name 'usbi_mutex_t'
+  384 |         usbi_mutex_t hotplug_cbs_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:393:2: error: unknown type name 'usbi_mutex_t'
+  393 |         usbi_mutex_t flying_transfers_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:408:2: error: unknown type name 'usbi_mutex_t'
+  408 |         usbi_mutex_t events_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:415:2: error: unknown type name 'usbi_tls_key_t'
+  415 |         usbi_tls_key_t event_handling_key;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:419:2: error: unknown type name 'usbi_mutex_t'
+  419 |         usbi_mutex_t event_waiters_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:420:2: error: unknown type name 'usbi_cond_t'
+  420 |         usbi_cond_t event_waiters_cond;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:423:2: error: unknown type name 'usbi_mutex_t'
+  423 |         usbi_mutex_t event_data_lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:457:8: error: unknown type name 'usbi_mutex_static_t'
+  457 | extern usbi_mutex_static_t active_contexts_lock;
+      |        ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:470:4: error: call to undeclared function 'usbi_log'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  470 |                         usbi_err(ctx, "API misuse! Using non-default context as implicit default.");
+      |                         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:333:28: note: expanded from macro 'usbi_err'
+  333 | #define usbi_err(ctx, ...)      _usbi_log(ctx, LIBUSB_LOG_LEVEL_ERROR, __VA_ARGS__)
+      |                                 ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:331:36: note: expanded from macro '_usbi_log'
+  331 | #define _usbi_log(ctx, level, ...) usbi_log(ctx, level, __func__, __VA_ARGS__)
+      |                                    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:500:9: error: call to undeclared function 'usbi_tls_key_get'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  500 |         return usbi_tls_key_get(ctx->event_handling_key) != NULL;
+      |                ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:505:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  505 |         usbi_tls_key_set(ctx->event_handling_key, ctx);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:510:2: error: call to undeclared function 'usbi_tls_key_set'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  510 |         usbi_tls_key_set(ctx->event_handling_key, NULL);
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:535:2: error: unknown type name 'usbi_mutex_t'
+  535 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:600:2: error: unknown type name 'usbi_mutex_t'
+  600 |         usbi_mutex_t lock;
+      |         ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:835:2: error: unknown type name 'usbi_os_handle_t'
+  835 |         usbi_os_handle_t os_handle;
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+ninja: build stopped: subcommand failed.

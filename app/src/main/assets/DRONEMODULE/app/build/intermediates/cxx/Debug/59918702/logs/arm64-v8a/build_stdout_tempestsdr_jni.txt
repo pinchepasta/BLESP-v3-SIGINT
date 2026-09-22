@@ -1,0 +1,89 @@
+ninja: Entering directory `/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/arm64-v8a'
+[1/28] Building C object CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o
+FAILED: CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dtempestsdr_jni_EXPORTS -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/tsdr/include" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o -MF CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o.d -o CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr_plugin.c'
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr_plugin.c:45:5: warning: implicit declaration of function 'tsdr_push_samples' is invalid in C99 [-Wimplicit-function-declaration]
+    tsdr_push_samples(ctx->tsdr, buf, len);
+    ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr_plugin.c:62:14: warning: implicit declaration of function 'rtlsdr_open_fd' is invalid in C99 [-Wimplicit-function-declaration]
+    int rc = rtlsdr_open_fd(&g_ctx.dev, (uint32_t)usb_fd);
+             ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr_plugin.c:69:8: error: incomplete definition of type 'struct tsdr_lib'
+    lib->dev   = g_ctx.dev;
+    ~~~^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/tsdr/include/TSDRLibrary.h:33:16: note: forward declaration of 'struct tsdr_lib'
+typedef struct tsdr_lib tsdr_lib_t;
+               ^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/rtlsdr_plugin.c:88:12: error: incomplete definition of type 'struct tsdr_lib'
+        lib->dev   = NULL;
+        ~~~^
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/tsdr/include/TSDRLibrary.h:33:16: note: forward declaration of 'struct tsdr_lib'
+typedef struct tsdr_lib tsdr_lib_t;
+               ^
+2 warnings and 2 errors generated.
+[2/28] Building C object CMakeFiles/libusb.dir/libusb/hotplug.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/hotplug.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/hotplug.c.o -MF CMakeFiles/libusb.dir/libusb/hotplug.c.o.d -o CMakeFiles/libusb.dir/libusb/hotplug.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/hotplug.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[3/28] Building C object CMakeFiles/libusb.dir/libusb/strerror.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/strerror.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/strerror.c.o -MF CMakeFiles/libusb.dir/libusb/strerror.c.o.d -o CMakeFiles/libusb.dir/libusb/strerror.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/strerror.c:23:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[4/28] Building C object CMakeFiles/libusb.dir/libusb/sync.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/sync.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/sync.c.o -MF CMakeFiles/libusb.dir/libusb/sync.c.o.d -o CMakeFiles/libusb.dir/libusb/sync.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/sync.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[5/28] Building C object CMakeFiles/libusb.dir/libusb/io.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/io.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/io.c.o -MF CMakeFiles/libusb.dir/libusb/io.c.o.d -o CMakeFiles/libusb.dir/libusb/io.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/io.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[6/28] Building C object CMakeFiles/libusb.dir/libusb/descriptor.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/descriptor.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/descriptor.c.o -MF CMakeFiles/libusb.dir/libusb/descriptor.c.o.d -o CMakeFiles/libusb.dir/libusb/descriptor.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/descriptor.c:24:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[7/28] Building C object CMakeFiles/libusb.dir/libusb/core.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/core.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/core.c.o -MF CMakeFiles/libusb.dir/libusb/core.c.o.d -o CMakeFiles/libusb.dir/libusb/core.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/core.c:25:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[8/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_netlink.c:26:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+[9/28] Building C object CMakeFiles/tempestsdr_jni.dir/jni_bridge.c.o
+[10/28] Building C object CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o
+FAILED: CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o 
+/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android28 --sysroot=/Users/feinlabsfilms/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDEFAULT_VISIBILITY=\"\" -DENABLE_LOGGING=1 -DLIBUSB_DESCRIBE=\"\" -D_GNU_SOURCE -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb" -I"/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os" -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c11 -O2 -fno-limit-debug-info  -fPIC -MD -MT CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -MF CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o.d -o CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o -c '/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c'
+In file included from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/os/linux_usbfs.c:27:
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/libusb/libusbi.h:30:10: fatal error: 'config.h' file not found
+#include <config.h>
+         ^~~~~~~~~~
+1 error generated.
+ninja: build stopped: subcommand failed.

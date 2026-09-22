@@ -41,6 +41,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnClear;
 
   @NonNull
+  public final ImageView btnDrone;
+
+  @NonNull
   public final ImageView btnEsl;
 
   @NonNull
@@ -50,13 +53,16 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ImageView btnGlobeListTop;
 
   @NonNull
-  public final ImageView btnInfo;
-
-  @NonNull
   public final ImageView btnKillswitch;
 
   @NonNull
   public final ImageView btnPager;
+
+  @NonNull
+  public final ImageView btnQr;
+
+  @NonNull
+  public final Button btnSave;
 
   @NonNull
   public final Button btnScan;
@@ -69,6 +75,9 @@ public final class ActivityMainBinding implements ViewBinding {
 
   @NonNull
   public final ImageView btnThemeToggle;
+
+  @NonNull
+  public final ImageView btnWspr;
 
   @NonNull
   public final CheckBox cb24;
@@ -132,12 +141,13 @@ public final class ActivityMainBinding implements ViewBinding {
 
   private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull LinearLayout bottomBar,
       @NonNull ImageView btnArchive, @NonNull Button btnBeep, @NonNull Button btnClear,
-      @NonNull ImageView btnEsl, @NonNull Button btnExt, @NonNull ImageView btnGlobeListTop,
-      @NonNull ImageView btnInfo, @NonNull ImageView btnKillswitch, @NonNull ImageView btnPager,
+      @NonNull ImageView btnDrone, @NonNull ImageView btnEsl, @NonNull Button btnExt,
+      @NonNull ImageView btnGlobeListTop, @NonNull ImageView btnKillswitch,
+      @NonNull ImageView btnPager, @NonNull ImageView btnQr, @NonNull Button btnSave,
       @NonNull Button btnScan, @NonNull ImageView btnStats, @NonNull Button btnTerminal,
-      @NonNull ImageView btnThemeToggle, @NonNull CheckBox cb24, @NonNull CheckBox cb5,
-      @NonNull CheckBox cbAero, @NonNull CheckBox cbBle, @NonNull CheckBox cbCams,
-      @NonNull CheckBox cbMap, @NonNull LinearLayout headerBar,
+      @NonNull ImageView btnThemeToggle, @NonNull ImageView btnWspr, @NonNull CheckBox cb24,
+      @NonNull CheckBox cb5, @NonNull CheckBox cbAero, @NonNull CheckBox cbBle,
+      @NonNull CheckBox cbCams, @NonNull CheckBox cbMap, @NonNull LinearLayout headerBar,
       @NonNull LinearLayout headerContainer, @NonNull LinearLayout infoContainer,
       @NonNull ImageView ivLogo, @NonNull RecyclerView listView, @NonNull MapView mapView,
       @NonNull MiniGraphView miniGraph, @NonNull MiniGraphView netGraph,
@@ -149,16 +159,19 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnArchive = btnArchive;
     this.btnBeep = btnBeep;
     this.btnClear = btnClear;
+    this.btnDrone = btnDrone;
     this.btnEsl = btnEsl;
     this.btnExt = btnExt;
     this.btnGlobeListTop = btnGlobeListTop;
-    this.btnInfo = btnInfo;
     this.btnKillswitch = btnKillswitch;
     this.btnPager = btnPager;
+    this.btnQr = btnQr;
+    this.btnSave = btnSave;
     this.btnScan = btnScan;
     this.btnStats = btnStats;
     this.btnTerminal = btnTerminal;
     this.btnThemeToggle = btnThemeToggle;
+    this.btnWspr = btnWspr;
     this.cb24 = cb24;
     this.cb5 = cb5;
     this.cbAero = cbAero;
@@ -232,6 +245,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnDrone;
+      ImageView btnDrone = ViewBindings.findChildViewById(rootView, id);
+      if (btnDrone == null) {
+        break missingId;
+      }
+
       id = R.id.btnEsl;
       ImageView btnEsl = ViewBindings.findChildViewById(rootView, id);
       if (btnEsl == null) {
@@ -250,12 +269,6 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnInfo;
-      ImageView btnInfo = ViewBindings.findChildViewById(rootView, id);
-      if (btnInfo == null) {
-        break missingId;
-      }
-
       id = R.id.btnKillswitch;
       ImageView btnKillswitch = ViewBindings.findChildViewById(rootView, id);
       if (btnKillswitch == null) {
@@ -265,6 +278,18 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btnPager;
       ImageView btnPager = ViewBindings.findChildViewById(rootView, id);
       if (btnPager == null) {
+        break missingId;
+      }
+
+      id = R.id.btnQr;
+      ImageView btnQr = ViewBindings.findChildViewById(rootView, id);
+      if (btnQr == null) {
+        break missingId;
+      }
+
+      id = R.id.btnSave;
+      Button btnSave = ViewBindings.findChildViewById(rootView, id);
+      if (btnSave == null) {
         break missingId;
       }
 
@@ -289,6 +314,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.btnThemeToggle;
       ImageView btnThemeToggle = ViewBindings.findChildViewById(rootView, id);
       if (btnThemeToggle == null) {
+        break missingId;
+      }
+
+      id = R.id.btnWspr;
+      ImageView btnWspr = ViewBindings.findChildViewById(rootView, id);
+      if (btnWspr == null) {
         break missingId;
       }
 
@@ -413,10 +444,11 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((ConstraintLayout) rootView, bottomBar, btnArchive, btnBeep,
-          btnClear, btnEsl, btnExt, btnGlobeListTop, btnInfo, btnKillswitch, btnPager, btnScan,
-          btnStats, btnTerminal, btnThemeToggle, cb24, cb5, cbAero, cbBle, cbCams, cbMap, headerBar,
-          headerContainer, infoContainer, ivLogo, listView, mapView, miniGraph, netGraph,
-          radarContainer, radarView, statusText, tvCoordinates, tvOverlayNetworkName, tvTimecode);
+          btnClear, btnDrone, btnEsl, btnExt, btnGlobeListTop, btnKillswitch, btnPager, btnQr,
+          btnSave, btnScan, btnStats, btnTerminal, btnThemeToggle, btnWspr, cb24, cb5, cbAero,
+          cbBle, cbCams, cbMap, headerBar, headerContainer, infoContainer, ivLogo, listView,
+          mapView, miniGraph, netGraph, radarContainer, radarView, statusText, tvCoordinates,
+          tvOverlayNetworkName, tvTimecode);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="26"
-        android:targetSdkVersion="34" />
+        android:targetSdkVersion="35" />
 
     <!-- WiFi Permissions -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -16,12 +16,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
@@ -42,6 +39,7 @@
     <!-- Background scanning -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -64,6 +62,9 @@
     <uses-feature
         android:name="android.hardware.wifi"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
 
     <permission
         android:name="com.radar.blewifi.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -94,6 +95,7 @@
         android:extractNativeLibs="false"
         android:icon="@drawable/logo3"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/logo3"
         android:supportsRtl="true"
         android:theme="@style/Theme.BLEWifiRadar"
@@ -146,6 +148,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.radar.blewifi.ArchiveMapActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.radar.blewifi.SettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -154,6 +160,38 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.radar.blewifi.wspr.WsprActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar" />
+        <activity
+            android:name="com.radar.blewifi.FlipperRemoteActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar" />
+        <activity
+            android:name="com.radar.blewifi.qr.ui.QrActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar.Fullscreen" />
+        <activity
+            android:name="com.radar.blewifi.drone.DroneActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:label="@string/drone_app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="fullSensor" >
+
+            <!-- Auto-launch when an RTL-SDR dongle is connected -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/usb_device_filter" />
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -170,6 +208,11 @@
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="microphone" />
+        <service
+            android:name="com.radar.blewifi.VideoRecordService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="camera" />
 
         <!--
         Service for holding metadata. Cannot be instantiated.

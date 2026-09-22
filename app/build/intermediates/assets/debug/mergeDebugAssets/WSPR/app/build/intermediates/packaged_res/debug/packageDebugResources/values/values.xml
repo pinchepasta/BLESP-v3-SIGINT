@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="cyan_dark">#003300</color>
+    <color name="cyan_primary">#00FF00</color>
+    <color name="dark_background">#000000</color>
+    <color name="dark_surface">#0A0A0A</color>
+    <color name="hacker_pink">#FF00FF</color>
+    <color name="neon_green">#00FF00</color>
+    <color name="patched_green">#00FF00</color>
+    <color name="testing_blue">#00FFFF</color>
+    <color name="text_primary">#00FF00</color>
+    <color name="text_secondary">#FF00FF</color>
+    <color name="text_tertiary">#008800</color>
+    <color name="vulnerable_red">#FF0000</color>
+    <color name="warning_orange">#FFA500</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">WSPR</string>
+    <style name="Theme.WSPR" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "tempestsdr",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "libusb::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-libusb-Debug-3efd96542ccf63c19387.json",
+					"name" : "libusb",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "rtlsdr::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-rtlsdr-Debug-1fc6e3547bf65b08cb86.json",
+					"name" : "rtlsdr",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tempestsdr_core::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tempestsdr_core-Debug-ebcffe3361c0dab24dda.json",
+					"name" : "tempestsdr_core",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tempestsdr_jni::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tempestsdr_jni-Debug-09aece4bdaff80cbf74b.json",
+					"name" : "tempestsdr_jni",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a",
+		"source" : "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

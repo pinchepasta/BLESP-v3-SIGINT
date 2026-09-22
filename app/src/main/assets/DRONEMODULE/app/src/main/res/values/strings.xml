@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UAV Signal Intelligence</string>
+    <string name="app_label">UAV Signal Intelligence</string>
+    <string name="connect">Connect RTL-SDR</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="settings">Settings</string>
+    <string name="fine_tuning">FINE TUNING</string>
+    <string name="status_ready">SYSTEM READY</string>
+    <string name="status_connecting">CONNECTING...</string>
+    <string name="status_connected">CONNECTED - STANDBY</string>
+    <string name="status_disconnected">DISCONNECTED</string>
+    <string name="status_stopped">STOPPED</string>
+    <string name="status_finding_device">SEARCHING FOR RTL-SDR...</string>
+    <string name="status_requesting_permission">REQUESTING PERMISSION...</string>
+    <string name="status_synced">SYNCED: %.2f Hz</string>
+    <string name="no_device">No RTL-SDR dongle detected. Connect via USB OTG.</string>
+    <string name="permission_denied">USB permission denied.</string>
+    <string name="initializing_db">Initializing Intelligence Database...</string>
+    <string name="hud_sys_op">SYS_OP: ACTIVE</string>
+    <string name="hud_mode_prefix">MODE: %s</string>
+    <string name="hud_rec">REC [●]</string>
+    <string name="hud_freq_format">%s MHz</string>
+    <string name="hud_snr_format">SNR: %s dB</string>
+    <string name="hud_target_prefix">TARGET: %s</string>
+    <string name="hud_target_no_lock">NO_LOCK</string>
+    <string name="btn_scan">SCAN</string>
+    <string name="btn_drone">DRONE</string>
+    <string name="preset_placeholder">Select a preset...</string>
+    <string name="error_sdr_open">Failed to open RTL-SDR (code %d)</string>
+    <string name="error_start_failed">Start failed (code %d)</string>
+    <string name="status_drone_scan">DRONE SCAN</string>
+    <string name="status_sweeping">SWEEPING</string>
+    <string name="hud_mode_active">ACTIVE</string>
+    <string name="hud_mode_standby">STANDBY</string>
+    <string name="hud_mode_default">RF_SYNC</string>
+    <string name="preset_info_format">Frequency: %.3f MHz\n\nRecommended Hardware:\n%s\n\nRecommended Antenna:\n%s\n\nManufacturer/Vendor:\n%s\n\nIdentified Foreign Components:\n%s\n\nSignal Status: %s</string>
+    <string name="signal_unencrypted">UNENCRYPTED (Interceptable)</string>
+    <string name="signal_encrypted">ENCRYPTED / DATA</string>
+</resources>

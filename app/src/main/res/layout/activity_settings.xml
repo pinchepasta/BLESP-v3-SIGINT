@@ -118,7 +118,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
                 android:orientation="vertical"
                 android:padding="20dp"
                 android:background="@drawable/status_box_bg">
@@ -157,6 +156,50 @@
                     android:letterSpacing="0.05" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutSecretVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/status_box_bg">
+
+                <TextView
+                    android:id="@+id/tvSecretVideoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SECRET VIDEO"
+                    android:fontFamily="monospace"
+                    android:textColor="#00FF41"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:alpha="0.8" />
+
+                <TextView
+                    android:id="@+id/tvSecretVideoCommands"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="START CODE: 77874\nSTOP  CODE: 77875"
+                    android:textColor="#00FF41"
+                    android:fontFamily="monospace"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvSecretVideoPath"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PATH: /Download/BLESP"
+                    android:textColor="#4400FF41"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -164,7 +207,7 @@
         android:id="@+id/btnSettingsBack"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/status_box_bg_pink"
         android:fontFamily="monospace"
         android:minWidth="80dp"

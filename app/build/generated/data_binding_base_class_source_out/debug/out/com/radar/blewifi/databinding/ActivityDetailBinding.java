@@ -28,12 +28,6 @@ public final class ActivityDetailBinding implements ViewBinding {
   public final Button btnBack;
 
   @NonNull
-  public final Button btnBeepAirTag;
-
-  @NonNull
-  public final Button btnEsl;
-
-  @NonNull
   public final Button btnSound;
 
   @NonNull
@@ -88,18 +82,16 @@ public final class ActivityDetailBinding implements ViewBinding {
   public final TextView tvType;
 
   private ActivityDetailBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnAlarm,
-      @NonNull Button btnBack, @NonNull Button btnBeepAirTag, @NonNull Button btnEsl,
-      @NonNull Button btnSound, @NonNull Button idEmpty, @NonNull Spinner spExploits,
-      @NonNull TextView tvAddress, @NonNull TextView tvDist, @NonNull TextView tvExploitDesc,
-      @NonNull TextView tvExtra1, @NonNull TextView tvExtra2, @NonNull TextView tvExtra3,
-      @NonNull TextView tvExtra4, @NonNull TextView tvExtra5, @NonNull TextView tvExtra6,
-      @NonNull TextView tvFastPair, @NonNull TextView tvName, @NonNull TextView tvRssi,
-      @NonNull TextView tvSelectExploitLabel, @NonNull TextView tvTitle, @NonNull TextView tvType) {
+      @NonNull Button btnBack, @NonNull Button btnSound, @NonNull Button idEmpty,
+      @NonNull Spinner spExploits, @NonNull TextView tvAddress, @NonNull TextView tvDist,
+      @NonNull TextView tvExploitDesc, @NonNull TextView tvExtra1, @NonNull TextView tvExtra2,
+      @NonNull TextView tvExtra3, @NonNull TextView tvExtra4, @NonNull TextView tvExtra5,
+      @NonNull TextView tvExtra6, @NonNull TextView tvFastPair, @NonNull TextView tvName,
+      @NonNull TextView tvRssi, @NonNull TextView tvSelectExploitLabel, @NonNull TextView tvTitle,
+      @NonNull TextView tvType) {
     this.rootView = rootView;
     this.btnAlarm = btnAlarm;
     this.btnBack = btnBack;
-    this.btnBeepAirTag = btnBeepAirTag;
-    this.btnEsl = btnEsl;
     this.btnSound = btnSound;
     this.idEmpty = idEmpty;
     this.spExploits = spExploits;
@@ -156,18 +148,6 @@ public final class ActivityDetailBinding implements ViewBinding {
       id = R.id.btnBack;
       Button btnBack = ViewBindings.findChildViewById(rootView, id);
       if (btnBack == null) {
-        break missingId;
-      }
-
-      id = R.id.btnBeepAirTag;
-      Button btnBeepAirTag = ViewBindings.findChildViewById(rootView, id);
-      if (btnBeepAirTag == null) {
-        break missingId;
-      }
-
-      id = R.id.btnEsl;
-      Button btnEsl = ViewBindings.findChildViewById(rootView, id);
-      if (btnEsl == null) {
         break missingId;
       }
 
@@ -279,10 +259,10 @@ public final class ActivityDetailBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityDetailBinding((ConstraintLayout) rootView, btnAlarm, btnBack,
-          btnBeepAirTag, btnEsl, btnSound, idEmpty, spExploits, tvAddress, tvDist, tvExploitDesc,
-          tvExtra1, tvExtra2, tvExtra3, tvExtra4, tvExtra5, tvExtra6, tvFastPair, tvName, tvRssi,
-          tvSelectExploitLabel, tvTitle, tvType);
+      return new ActivityDetailBinding((ConstraintLayout) rootView, btnAlarm, btnBack, btnSound,
+          idEmpty, spExploits, tvAddress, tvDist, tvExploitDesc, tvExtra1, tvExtra2, tvExtra3,
+          tvExtra4, tvExtra5, tvExtra6, tvFastPair, tvName, tvRssi, tvSelectExploitLabel, tvTitle,
+          tvType);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

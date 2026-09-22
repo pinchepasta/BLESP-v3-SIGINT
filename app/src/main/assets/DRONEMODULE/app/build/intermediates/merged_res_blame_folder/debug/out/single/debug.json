@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.tempestsdr.app-merged_res-32:/layout_dialog_settings.xml.flat",
+        "source": "com.tempestsdr.app-main-34:/layout/dialog_settings.xml"
+    },
+    {
+        "merged": "com.tempestsdr.app-merged_res-32:/xml_usb_device_filter.xml.flat",
+        "source": "com.tempestsdr.app-main-34:/xml/usb_device_filter.xml"
+    },
+    {
+        "merged": "com.tempestsdr.app-merged_res-32:/layout_activity_main.xml.flat",
+        "source": "com.tempestsdr.app-main-34:/layout/activity_main.xml"
+    }
+]

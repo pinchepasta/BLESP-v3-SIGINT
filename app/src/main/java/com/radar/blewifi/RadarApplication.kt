@@ -19,6 +19,7 @@ class RadarApplication : Application() {
     private var currentActivity: Activity? = null
     lateinit var scanner: ScannerManager
     lateinit var nearbyManager: NearbyManager
+    lateinit var apiServer: BlespApiServer
     
     private val handler = Handler(Looper.getMainLooper())
     private val sentMessages = Collections.synchronizedList(mutableListOf<Pair<String, Long>>())
@@ -55,6 +56,9 @@ class RadarApplication : Application() {
         
         scanner.startScanning(true)
         nearbyManager.start()
+        
+        apiServer = BlespApiServer(this, 8888)
+        apiServer.start()
     }
 
     private fun setupMessaging() {
@@ -225,24 +229,29 @@ class RadarApplication : Application() {
     }
 
     private fun showGlitchOverlay(activity: Activity) {
+        val prefs = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
+        val theme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+        val colors = ThemeUtils.getThemeColors(theme)
+        
         val root = activity.window.decorView as ViewGroup
         val overlay = View(activity)
-        overlay.setBackgroundColor(Color.parseColor("#00FF41"))
+        overlay.setBackgroundColor(colors.primary)
         overlay.alpha = 0.4f
         root.addView(overlay, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
         var frames = 0
         val glitchAction = object : Runnable {
             override fun run() {
-                if (frames > 2) { // Flash once: Green frame, Pink frame, then Done
+                if (frames > 2) { // Flash once: Primary frame, Accent frame, then Done
                     root.removeView(overlay)
                     activity.window.decorView.translationX = 0f
                     activity.window.decorView.translationY = 0f
                     return
                 }
 
-                val isGreen = frames % 2 == 0
-                overlay.setBackgroundColor(if (isGreen) Color.parseColor("#00FF41") else Color.parseColor("#FF00FF"))
+                val isPrimary = frames % 2 == 0
+                overlay.setBackgroundColor(if (isPrimary) colors.primary else colors.accent)
                 overlay.alpha = 0.5f
                 
                 activity.window.decorView.translationX = ((-15..15).random()).toFloat()
@@ -256,6 +265,11 @@ class RadarApplication : Application() {
     }
 
     private fun showMessageBubble(activity: Activity, sender: String, text: String) {
+        val prefs = activity.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
+        val theme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+        val colors = ThemeUtils.getThemeColors(theme)
+        
         val root = activity.window.decorView as ViewGroup
         
         val bubbleContainer = FrameLayout(activity)
@@ -270,11 +284,11 @@ class RadarApplication : Application() {
         
         val bubble = TextView(activity)
         bubble.text = ">> NEW_MSG: $sender\n${text.take(40)}${if(text.length > 40) "..." else ""}"
-        bubble.setTextColor(Color.parseColor("#00FF41"))
-        bubble.setBackgroundResource(R.drawable.status_box_bg_black)
+        bubble.setTextColor(colors.primary)
+        bubble.setBackgroundResource(colors.statusBoxRes)
         bubble.setPadding(30, 20, 30, 20)
         bubble.typeface = android.graphics.Typeface.MONOSPACE
-        bubble.setShadowLayer(5f, 0f, 0f, Color.parseColor("#00FF41"))
+        bubble.setShadowLayer(5f, 0f, 0f, colors.primary)
         
         bubbleContainer.addView(bubble)
         root.addView(bubbleContainer, params)

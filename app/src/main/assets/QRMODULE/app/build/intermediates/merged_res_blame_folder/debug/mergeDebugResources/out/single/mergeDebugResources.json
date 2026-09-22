@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/xml_file_paths.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/xml/file_paths.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/layout_fragment_receive.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/fragment_receive.xml"
+    },
+    {
+        "merged": "com.node8.transfer.app-debug-43:/layout_fragment_send.xml.flat",
+        "source": "com.node8.transfer.app-main-45:/layout/fragment_send.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/layout_activity_main.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/layout_fragment_send.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/fragment_send.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-debug-43:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    }
+]

@@ -1,0 +1,4 @@
+/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/59918702/armeabi-v7a" \
+  tempestsdr_jni

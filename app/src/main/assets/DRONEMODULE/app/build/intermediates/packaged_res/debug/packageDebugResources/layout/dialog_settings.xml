@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/windowBackground"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp" />
+
+        <!-- ── Frequency ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Frequency Presets" android:textColor="#CCCCCC" android:textSize="13sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <Spinner android:id="@+id/sp_freq_presets" android:layout_width="0dp"
+                android:layout_height="48dp" android:layout_weight="1"
+                android:backgroundTint="?attr/colorPrimary" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_info_preset"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="0dp"
+                app:icon="@android:drawable/ic_dialog_info"
+                app:iconTint="?attr/colorPrimary" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_preset"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="0dp"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="#FF5252"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/et_new_preset_name" android:layout_width="0dp"
+                android:layout_height="40dp" android:layout_weight="1"
+                android:hint="New preset name" android:textColor="#FFFFFF"
+                android:backgroundTint="#444444" android:textSize="12sp"
+                android:inputType="text" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_preset"
+                android:layout_width="wrap_content" android:layout_height="40dp"
+                android:text="Save" app:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="11sp" android:layout_marginStart="4dp"
+                app:cornerRadius="12dp"
+                style="@style/Widget.MaterialComponents.Button" />
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Center Frequency (MHz)" android:textColor="#CCCCCC" android:textSize="13sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_freq_minus_coarse"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:padding="0dp"
+                android:text="--"
+                android:textColor="?attr/colorPrimary"
+                app:strokeColor="?attr/colorPrimary"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_freq_minus"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:padding="0dp"
+                android:text="-"
+                android:textColor="?attr/colorPrimary"
+                app:strokeColor="?attr/colorPrimary"
+                app:cornerRadius="12dp" />
+
+            <EditText
+                android:id="@+id/et_freq_mhz"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="?attr/colorPrimary"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_freq_plus"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:padding="0dp"
+                android:text="+"
+                android:textColor="?attr/colorPrimary"
+                app:strokeColor="?attr/colorPrimary"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_freq_plus_coarse"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:padding="0dp"
+                android:text="++"
+                android:textColor="?attr/colorPrimary"
+                app:strokeColor="?attr/colorPrimary"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+
+        <!-- ── RF Gain ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="RF Gain" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_gain_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_gain" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="49" android:layout_marginBottom="12dp"
+            android:progressTint="?attr/colorPrimary" android:thumbTint="?attr/colorPrimary"/>
+
+        <!-- ── Gain offset ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Gain Offset" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_gain_offset_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_gain_offset" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="100" android:layout_marginBottom="12dp"
+            android:progressTint="?attr/colorPrimary" android:thumbTint="?attr/colorPrimary"/>
+
+        <!-- ── Shift ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Horizontal Shift" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_shift_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_shift" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="1000" android:layout_marginBottom="12dp"
+            android:progressTint="?attr/colorPrimary" android:thumbTint="?attr/colorPrimary"/>
+
+        <!-- ── Sample Rate ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Sample Rate" android:textColor="#CCCCCC" android:textSize="13sp"
+            android:layout_marginBottom="4dp"/>
+        <Spinner android:id="@+id/sp_sample_rate" android:layout_width="match_parent"
+            android:layout_height="48dp" android:backgroundTint="?attr/colorPrimary"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── Video Mode ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Video Mode (total lines × refresh)" android:textColor="#CCCCCC"
+            android:textSize="13sp" android:layout_marginBottom="4dp"/>
+        <Spinner android:id="@+id/sp_video_mode" android:layout_width="match_parent"
+            android:layout_height="48dp" android:backgroundTint="?attr/colorPrimary"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- ── Custom resolution ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="12dp">
+            <EditText android:id="@+id/et_custom_height" android:layout_width="0dp"
+                android:layout_height="48dp" android:layout_weight="1" android:hint="Height"
+                android:inputType="number" android:textColor="#FFFFFF"
+                android:backgroundTint="#444444" android:layout_marginEnd="8dp"/>
+            <EditText android:id="@+id/et_custom_refresh" android:layout_width="0dp"
+                android:layout_height="48dp" android:layout_weight="1" android:hint="Hz"
+                android:inputType="numberDecimal" android:textColor="#FFFFFF"
+                android:backgroundTint="#444444" android:layout_marginEnd="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_apply_custom"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:text="Apply" app:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/colorOnPrimary"
+                app:cornerRadius="12dp"
+                style="@style/Widget.MaterialComponents.Button"/>
+        </LinearLayout>
+
+        <!-- ── DSP options ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Detection &amp; Scan" android:textColor="#CCCCCC" android:textSize="13sp"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Signal Detection Threshold" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_threshold_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="?attr/colorPrimary" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_threshold" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="200" android:layout_marginBottom="12dp"
+            android:progressTint="?attr/colorPrimary" android:thumbTint="?attr/colorPrimary"/>
+
+        <CheckBox android:id="@+id/cb_sweep" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Enable Band Sweep (±50MHz)"
+            android:textColor="?attr/colorSecondary" android:buttonTint="?attr/colorSecondary"/>
+        <CheckBox android:id="@+id/cb_full_scan" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Enable Full SDR Scan (24MHz - 1.7GHz)"
+            android:textColor="?attr/colorSecondary" android:buttonTint="?attr/colorSecondary"/>
+        <CheckBox android:id="@+id/cb_harmonics" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Enable Harmonics (Up to 3.4GHz)"
+            android:textColor="?attr/colorSecondary" android:buttonTint="?attr/colorSecondary"/>
+        <CheckBox android:id="@+id/cb_stop_on_signal" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Stop scan when signal detected"
+            android:textColor="?attr/colorPrimary" android:buttonTint="?attr/colorPrimary"/>
+        <CheckBox android:id="@+id/cb_lowpass" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Low-pass before sync"
+            android:textColor="#FFFFFF" android:buttonTint="?attr/colorPrimary"/>
+        <CheckBox android:id="@+id/cb_autogain" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Auto-gain after processing"
+            android:textColor="#FFFFFF" android:buttonTint="?attr/colorPrimary"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── Appearance ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Appearance" android:textColor="#CCCCCC" android:textSize="13sp"
+            android:layout_marginBottom="4dp"/>
+        <CheckBox android:id="@+id/cb_cyberpunk" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Cyberpunk Mode (Green/Pink)"
+            android:textColor="?attr/colorPrimary" android:buttonTint="?attr/colorSecondary"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── Reset autocorr ── -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reset_autocorr"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:text="Reset Autocorrelation Plot"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="#455A64"
+            app:cornerRadius="12dp"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+        <TextView
+            android:id="@+id/tv_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="https://dev.mostlyawesome.de"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:autoLink="web" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#888888"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</ScrollView>

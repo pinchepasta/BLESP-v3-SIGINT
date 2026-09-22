@@ -1,13 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">[ BLESP v3 ]</string>
-    <string name="about_title">WHAT DOES THE APP DO?</string>
+    <string name="about_title">LICENSE &amp; CREDENTIALS</string>
     <string name="label_core_version">CORE VERSION</string>
-    <string name="core_version">3.1.5</string>
+    <string name="core_version">3.4 </string>
     <string name="label_author">AUTHOR</string>
     <string name="author_name">Chris Edgar</string>
     <string name="label_development">DEVELOPMENT</string>
     <string name="dev_url">www.mostlyawesome.de</string>
-    <string name="about_description">Designed for passive and active signal intelligence and mapping operations.\n\nAll signals processed locally. No data transmitted to cloud services without explicit user command.</string>
+    <string name="about_description">Designed for passive and active signal intelligence and mapping operations.\n\nAll signals processed locally. No data transmitted to cloud services without explicit user command. Also without these people and their work the app wouldn\'t be possible. Thanks to: Zalexdev, the Bruce team, i12bp8, Sor3nt and FlipperDevices.</string>
     <string name="btn_back">BACK</string>
+    <string name="btn_close">CLOSE</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="esl_tag_tools">ESL Tag Tools</string>
+    <string name="qr_tools">QR Tools</string>
+
+    <!-- UAV Signal Intelligence Strings -->
+    <string name="drone_app_name">UAV Signal Intelligence</string>
+    <string name="drone_connect">Connect RTL-SDR</string>
+    <string name="drone_start">Start</string>
+    <string name="drone_stop">Stop</string>
+    <string name="drone_settings">Settings</string>
+    <string name="drone_fine_tuning">FINE TUNING</string>
+    <string name="drone_status_ready">SYSTEM READY</string>
+    <string name="drone_status_connecting">CONNECTING...</string>
+    <string name="drone_status_connected">CONNECTED - STANDBY</string>
+    <string name="drone_status_disconnected">DISCONNECTED</string>
+    <string name="drone_status_stopped">STOPPED</string>
+    <string name="drone_status_finding_device">SEARCHING FOR RTL-SDR...</string>
+    <string name="drone_status_requesting_permission">REQUESTING PERMISSION...</string>
+    <string name="drone_status_synced">SYNCED: %.2f Hz</string>
+    <string name="drone_no_device">No RTL-SDR dongle detected. Connect via USB OTG.</string>
+    <string name="drone_permission_denied">USB permission denied.</string>
+    <string name="drone_initializing_db">Initializing Intelligence Database...</string>
+    <string name="drone_hud_sys_op">SYS_OP: ACTIVE</string>
+    <string name="drone_hud_mode_prefix">MODE: %s</string>
+    <string name="drone_hud_rec">REC [●]</string>
+    <string name="drone_hud_freq_format">%s MHz</string>
+    <string name="drone_hud_snr_format">SNR: %s dB</string>
+    <string name="drone_hud_target_prefix">TARGET: %s</string>
+    <string name="drone_hud_target_no_lock">NO_LOCK</string>
+    <string name="drone_hud_turbo_lock">TURBO_LOCK !!</string>
+    <string name="drone_btn_scan">SCAN</string>
+    <string name="drone_btn_drone">DRONE</string>
+    <string name="drone_preset_placeholder">Select a preset...</string>
+    <string name="drone_error_sdr_open">Failed to open RTL-SDR (code %d)</string>
+    <string name="drone_error_start_failed">Start failed (code %d)</string>
+    <string name="drone_status_drone_scan">DRONE SCAN</string>
+    <string name="drone_status_sweeping">SWEEPING</string>
+    <string name="drone_hud_mode_active">ACTIVE</string>
+    <string name="drone_hud_mode_standby">STANDBY</string>
+    <string name="drone_hud_mode_default">RF_SYNC</string>
+    <string name="drone_preset_info_format">Frequency: %.3f MHz\n\nRecommended Hardware:\n%s\n\nRecommended Antenna:\n%s\n\nManufacturer/Vendor:\n%s\n\nIdentified Foreign Components:\n%s\n\nSignal Status: %s</string>
+    <string name="drone_signal_unencrypted">UNENCRYPTED (Interceptable)</string>
+    <string name="drone_signal_encrypted">ENCRYPTED / DATA</string>
+    <string name="drone_ok">OK</string>
+
+    <!-- QR Tools Strings -->
+    <string name="qr_header_title">DATA TRANSFER</string>
+    <string name="tab_send">SEND</string>
+    <string name="tab_receive">RECEIVE</string>
+
+    <!-- SSH Terminal Strings -->
+    <string name="terminal_title">SSH LOGIN</string>
+    <string name="terminal_host_hint">REMOTE HOST</string>
+    <string name="terminal_user_hint">USER</string>
+    <string name="terminal_pass_hint">PASSWORD</string>
+    <string name="terminal_btn_connect">INITIATE UPLINK</string>
+    <string name="terminal_btn_abort">ABORT</string>
+    <string name="terminal_btn_back">BACK</string>
+    <string name="terminal_btn_logout">LOGOUT</string>
+    <string name="terminal_status_connecting">CONNECTING...</string>
+    <string name="terminal_status_error">ERR: RE-TRY</string>
+    <string name="terminal_key_none">NO KEY</string>
+    <string name="terminal_key_browse">BROWSE...</string>
+    <string name="terminal_key_selected_toast">Key selected: %s</string>
+    <string name="terminal_storage_permission_msg">Grant Storage Access to use SSH keys in Downloads/BLESP/ssh</string>
+    <string name="terminal_key_label">KEY: %s</string>
+    <string name="terminal_external_node_title">EXTERNAL NODE</string>
+    <string name="terminal_target_ip_label">TARGET IP ADDRESS:</string>
+    <string name="terminal_btn_uplink">UPLINK</string>
+    <string name="terminal_btn_flipper">MOSTLY-A-FLIPPER</string>
 </resources>

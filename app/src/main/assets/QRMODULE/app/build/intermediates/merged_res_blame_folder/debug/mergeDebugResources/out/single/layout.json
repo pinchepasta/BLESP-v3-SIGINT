@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-mergeDebugResources-42:/layout/activity_main.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-mergeDebugResources-42:/layout/fragment_receive.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/fragment_receive.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-mergeDebugResources-42:/layout/fragment_send.xml",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.node8.transfer.app-main-45:/layout/fragment_send.xml"
+    },
+    {
+        "merged": "com.node8.transfer.app-mergeDebugResources-42:/layout/fragment_send.xml",
+        "source": "com.node8.transfer.app-main-45:/layout/fragment_send.xml"
+    }
+]

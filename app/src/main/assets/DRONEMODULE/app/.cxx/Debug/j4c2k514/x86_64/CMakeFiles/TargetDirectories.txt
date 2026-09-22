@@ -1,0 +1,6 @@
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/libusb.dir
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/rtlsdr.dir
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/tempestsdr_core.dir
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/tempestsdr_jni.dir
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/edit_cache.dir
+/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/x86_64/CMakeFiles/rebuild_cache.dir

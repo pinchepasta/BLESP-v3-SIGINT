@@ -37,8 +37,8 @@ class CalculatorActivity : AppCompatActivity() {
     private var pinEntered: Boolean = false
     private var isChangingPin: Boolean = false
     private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
-    private var primaryColor: Int = Color.parseColor("#00FF41")
-    private var accentColor: Int = Color.parseColor("#FF00FF")
+    private var primaryColor: Int = Color.parseColor(ThemeUtils.LEGACY_GREEN)
+    private var accentColor: Int = Color.parseColor(ThemeUtils.LEGACY_PINK)
     private var secondaryColor: Int = Color.parseColor("#990000")
     private var neutralColor: Int = Color.WHITE
     private var bgColor: Int = Color.BLACK
@@ -69,9 +69,18 @@ class CalculatorActivity : AppCompatActivity() {
         binding = ActivityCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Request microphone permission on startup if not granted
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1001)
+        // Request permissions on startup if not granted
+        val permissions = mutableListOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        
+        val missingPermissions = permissions.filter {
+            ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missingPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), 1001)
         }
 
 
@@ -84,49 +93,13 @@ class CalculatorActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         currentTheme = try { RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name) } catch(e: Exception) { RadarView.Theme.DEFAULT }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
 
-        bgColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
-            else -> Color.BLACK
-        }
-        
-        primaryColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-            RadarView.Theme.MORIO -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-
-        accentColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-            RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#FF00FF")
-        }
-
-        secondaryColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.LTGRAY
-            RadarView.Theme.RED_NIGHT -> Color.parseColor("#990000")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-            RadarView.Theme.MORIO -> Color.parseColor("#244f48")
-            else -> primaryColor
-        }
-
-        neutralColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.DKGRAY
-            else -> accentColor
-        }
+        bgColor = colors.background
+        primaryColor = colors.primary
+        accentColor = colors.accent
+        secondaryColor = colors.dim
+        neutralColor = colors.accent
 
         binding.root.setBackgroundColor(bgColor)
         binding.tvDisplay.setTextColor(accentColor)
@@ -220,6 +193,12 @@ class CalculatorActivity : AppCompatActivity() {
         } else if (code == "77873") {
             stopAudioRecording()
             onClear()
+        } else if (code == "77874") {
+            startVideoRecording()
+            onClear()
+        } else if (code == "77875") {
+            stopVideoRecording()
+            onClear()
         }
 
         checkPin()
@@ -243,6 +222,28 @@ class CalculatorActivity : AppCompatActivity() {
     private fun stopAudioRecording() {
         val intent = Intent(this, AudioRecordService::class.java).apply {
             action = AudioRecordService.ACTION_STOP
+        }
+        startService(intent)
+    }
+
+    private fun startVideoRecording() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1002)
+            return
+        }
+        val intent = Intent(this, VideoRecordService::class.java).apply {
+            action = VideoRecordService.ACTION_START
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+    }
+
+    private fun stopVideoRecording() {
+        val intent = Intent(this, VideoRecordService::class.java).apply {
+            action = VideoRecordService.ACTION_STOP
         }
         startService(intent)
     }
@@ -364,7 +365,18 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun flashAndVibrateWithGlitch() {
-        val flashColor = if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.LTGRAY else primaryColor
+        val flashColor = when (currentTheme) {
+            RadarView.Theme.HIGH_CONTRAST -> Color.LTGRAY
+            RadarView.Theme.DEFAULT,
+            RadarView.Theme.RED_NIGHT,
+            RadarView.Theme.PINK,
+            RadarView.Theme.NEON,
+            RadarView.Theme.NARANJA,
+            RadarView.Theme.BUBBLEGUM,
+            RadarView.Theme.SUMMERTIME,
+            RadarView.Theme.FLIPPER,
+            RadarView.Theme.MORIO -> primaryColor
+        }
 
         // Flash screen
         binding.root.setBackgroundColor(flashColor)
@@ -476,14 +488,19 @@ class CalculatorActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val currentPin = prefs.getString("secret_pin", "123456") ?: "123456"
 
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val inputTextColor = if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.BLACK else colors.accent
+        val inputBgColor = if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.parseColor("#EEEEEE") else Color.parseColor("#111111")
+        val buttonTextColor = if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.WHITE else Color.BLACK
+
         val pinInput = android.widget.EditText(this).apply {
             layoutParams = android.widget.LinearLayout.LayoutParams(
                 android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
             )
             setText(currentPin)
-            setTextColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.BLACK else neutralColor)
-            setBackgroundColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.parseColor("#EEEEEE") else Color.parseColor("#111111"))
+            setTextColor(inputTextColor)
+            setBackgroundColor(inputBgColor)
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 24f
             setPadding(20, 20, 20, 20)
@@ -495,7 +512,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         val saveBtn = android.widget.Button(this).apply {
             text = "UPDATE ACCESS CODE"
-            setTextColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.WHITE else Color.BLACK)
+            setTextColor(buttonTextColor)
             setBackgroundColor(primaryColor)
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 14f
@@ -528,5 +545,10 @@ class CalculatorActivity : AppCompatActivity() {
 
         dialog.setContentView(root)
         dialog.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

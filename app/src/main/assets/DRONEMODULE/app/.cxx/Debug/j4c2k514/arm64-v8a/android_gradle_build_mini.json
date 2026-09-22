@@ -1,0 +1,45 @@
+{
+  "buildFiles": [
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/jni/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "tempestsdr_jni::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_jni",
+      "abi": "arm64-v8a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/arm64-v8a/libtempestsdr_jni.so",
+      "runtimeFiles": []
+    },
+    "libusb::@6890427a1f51a3e7e1df": {
+      "artifactName": "libusb",
+      "abi": "arm64-v8a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a/liblibusb.a",
+      "runtimeFiles": []
+    },
+    "rtlsdr::@6890427a1f51a3e7e1df": {
+      "artifactName": "rtlsdr",
+      "abi": "arm64-v8a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a/librtlsdr.a",
+      "runtimeFiles": []
+    },
+    "tempestsdr_core::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_core",
+      "abi": "arm64-v8a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/.cxx/Debug/j4c2k514/arm64-v8a/libtempestsdr_core.a",
+      "runtimeFiles": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+R_DEF: Internal format may change without notice
+local
+id autocorr_view
+id bottom_panel
+id btn_apply_custom
+id btn_connect
+id btn_reset_autocorr
+id btn_settings
+id cb_autogain
+id cb_lowpass
+id et_custom_height
+id et_custom_refresh
+id et_freq_mhz
+id fab_start
+id iv_frame
+id loading_overlay
+id sb_gain
+id sb_gain_offset
+id sb_shift
+id sp_sample_rate
+id sp_video_mode
+id tv_gain_offset_val
+id tv_gain_val
+id tv_shift_val
+id tv_status
+layout activity_main
+layout dialog_settings
+string app_name
+string connect
+string no_device
+string permission_denied
+string settings
+string start
+string status_ready
+string stop
+style Theme.TempestSDR
+xml usb_device_filter

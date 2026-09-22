@@ -1,0 +1,7 @@
+com.mostlyawesome.tagtinker.app-resValues-0 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/build/generated/res/resValues/debug
+com.mostlyawesome.tagtinker.app-updated_navigation_xml-1 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/build/generated/updated_navigation_xml/debug
+com.mostlyawesome.tagtinker.app-packageDebugResources-2 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.mostlyawesome.tagtinker.app-packageDebugResources-3 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.mostlyawesome.tagtinker.app-debug-4 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.mostlyawesome.tagtinker.app-debug-5 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/src/debug/res
+com.mostlyawesome.tagtinker.app-main-6 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TagTinker by mostlyAWESOME Media/app/src/main/res

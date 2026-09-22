@@ -1,6 +1,8 @@
 package com.radar.blewifi
 
+import android.animation.ValueAnimator
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -18,9 +20,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import com.radar.blewifi.wspr.WsprActivity
 import android.os.VibratorManager
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
@@ -31,7 +36,10 @@ import android.view.Gravity
 import android.graphics.Typeface
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.net.Uri
+import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -53,7 +61,14 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import androidx.core.graphics.ColorUtils
 import com.radar.blewifi.databinding.ActivityMainBinding
+import com.radar.blewifi.databinding.TerminalOverlayBinding
+import java.security.Security
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import net.i2p.crypto.eddsa.EdDSASecurityProvider
+import com.jcraft.jsch.*
+import kotlin.math.abs
 import kotlin.math.sin
 
 class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
@@ -80,6 +95,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     private var noisePulsator: android.animation.ObjectAnimator? = null
     private var glitchRunnable: Runnable? = null
     private var noiseVibrator: Vibrator? = null
+    private var noiseHoldRunnable: Runnable? = null
+    private var isNoiseHoldTriggered = false
     private var pagerNotificationReceiver: android.content.BroadcastReceiver? = null
     private var pagerBreatheAnim: android.animation.ValueAnimator? = null
     private var statusPulseAnim: android.animation.ObjectAnimator? = null
@@ -127,9 +144,11 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             list += Manifest.permission.POST_NOTIFICATIONS
         } else {
             list += Manifest.permission.READ_EXTERNAL_STORAGE
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                list += Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }
+            list += Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Note: MANAGE_EXTERNAL_STORAGE is a special permission handled via Settings intent,
+            // but we list it here for completeness or if using a custom perm handler.
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             list += Manifest.permission.BLUETOOTH_SCAN
@@ -157,8 +176,52 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         ActivityResultContracts.StartActivityForResult()
     ) { _ -> checkAndStartScanning() }
 
+    private var selectedKeyUri: android.net.Uri? = null
+    private var selectedKeyName: String? = null
+    private val keyPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let {
+            contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            selectedKeyUri = it
+            selectedKeyName = getFileName(it)
+            Toast.makeText(this, getString(R.string.terminal_key_selected_toast, selectedKeyName), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getFileName(uri: android.net.Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                    if (index != -1) result = cursor.getString(index)
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/') ?: -1
+            if (cut != -1) result = result?.substring(cut + 1)
+        }
+        return result ?: "unknown_key"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Fix for SSH modern private keys
+        try {
+            // Remove existing BC if any to ensure our version is used
+            Security.removeProvider("BC")
+            Security.insertProviderAt(BouncyCastleProvider(), 1)
+            
+            if (Security.getProvider("EdDSA") == null) {
+                Security.insertProviderAt(EdDSASecurityProvider(), 2)
+            }
+            android.util.Log.d("SSH_DEBUG", "Security providers initialized (BC at pos 1)")
+        } catch (e: Exception) {
+            android.util.Log.e("SSH_DEBUG", "Failed to register security providers", e)
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
@@ -183,13 +246,15 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         scanner.addListener(this)
         
         // Setup graphs initial colors
-        if (currentTheme == RadarView.Theme.SUMMERTIME) {
-            binding.netGraph.setColors("#ff9f6b", "#886befff")
-            binding.miniGraph.setColors("#ff9f6b", "#886befff")
-        } else {
-            binding.netGraph.setColors("#00FF41", "#99FF00FF")
-            binding.miniGraph.setColors("#00FF41", "#99FF00FF")
-        }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        binding.netGraph.setColors(
+            String.format("#%06X", (0xFFFFFF and colors.primary)),
+            String.format("#88%06X", (0xFFFFFF and colors.accent))
+        )
+        binding.miniGraph.setColors(
+            String.format("#%06X", (0xFFFFFF and colors.primary)),
+            String.format("#88%06X", (0xFFFFFF and colors.accent))
+        )
 
         checkAndStartScanning()
 
@@ -202,7 +267,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
         binding.radarView.onDeviceClickListener = object : RadarView.OnDeviceClickListener {
-            override fun onDeviceClicked(device: ScanDevice) {
+            override fun onDeviceClicked(device: ScanDevice, isConfirm: Boolean) {
                 markers[device.id]?.let { marker ->
                     marker.showInfoWindow()
                     binding.mapView.controller.animateTo(marker.position)
@@ -233,6 +298,11 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                         .start()
                 }
                 handler.postDelayed(overlayHideRunnable!!, 3000)
+
+                // Show deep device insights dialog with MAC details and OS Fingerprinting only on second click
+                if (isConfirm) {
+                    showDeviceDetailsDialog(device)
+                }
             }
 
             override fun onNothingSelected() {
@@ -257,15 +327,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             }
         }
 
-        // Neon pulsate animation for the Logo
-        val logoPvhX = android.animation.PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 1.05f)
-        val logoPvhY = android.animation.PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 1.05f)
-        android.animation.ObjectAnimator.ofPropertyValuesHolder(binding.ivLogo, logoPvhX, logoPvhY).apply {
-            duration = 1500
-            repeatCount = android.animation.ValueAnimator.INFINITE
-            repeatMode = android.animation.ValueAnimator.REVERSE
-            start()
-        }
+        // Neon pulsate animation removed
+
 
         binding.btnClear.setOnClickListener {
             setActiveButton(binding.btnClear)
@@ -295,6 +358,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.cbMap.setOnCheckedChangeListener { _, isChecked ->
             binding.radarView.showMap = isChecked
             binding.mapView.visibility = if (isChecked) View.VISIBLE else View.GONE
+            scanner.isMapActive = isChecked
         }
 
         setupMapView()
@@ -312,22 +376,26 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         updateViewVisibility()
         setActiveHeaderButton(binding.btnGlobeListTop)
 
+        // Logo click listeners
         binding.ivLogo.setOnClickListener {
-            showInfoDialog()
+            startLogoAnimation()
+            showAboutDialog()
         }
-        
-        binding.ivLogo.setOnLongClickListener {
-            showChangePinDialog()
-            true
-        }
-        
+
         binding.btnExt.setOnClickListener {
             setActiveButton(binding.btnExt)
             showExtOverlay()
         }
         binding.btnTerminal.setOnClickListener {
             setActiveButton(binding.btnTerminal)
-            showTerminalOverlay()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager()) {
+                val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+                Toast.makeText(this, getString(R.string.terminal_storage_permission_msg), Toast.LENGTH_LONG).show()
+            } else {
+                showTerminalOverlay()
+            }
         }
 
         binding.btnStats.setOnClickListener {
@@ -351,14 +419,28 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
 
         binding.btnEsl.setOnClickListener {
-            val packageName = "com.mostlyawesome.tagtinker"
-            val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
-            if (launchIntent != null) {
-                startActivity(launchIntent)
-            } else {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/pinchepasta/ESL-Tag-Tools"))
-                startActivity(browserIntent)
-            }
+            val intent = Intent(this, EslActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
+        }
+
+        binding.btnQr.setOnClickListener {
+            val intent = Intent(this, com.radar.blewifi.qr.ui.QrActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
+        }
+
+
+        binding.btnWspr.setOnClickListener {
+            val intent = Intent(this, com.radar.blewifi.wspr.WsprActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
+        }
+
+        binding.btnDrone.setOnClickListener {
+            val intent = Intent(this, com.radar.blewifi.drone.DroneActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
         }
 
         binding.btnThemeToggle.setOnClickListener {
@@ -367,25 +449,99 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             startActivity(intent, options.toBundle())
         }
 
-        binding.btnBeep.setOnClickListener {
-            if (isBeeping) {
-                stopBeep()
-            } else {
-                startBeep()
+        val touchSlop = ViewConfiguration.get(this).scaledTouchSlop
+        var touchDownX = 0f
+        var touchDownY = 0f
+
+        @SuppressLint("ClickableViewAccessibility")
+        binding.btnBeep.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    touchDownX = event.x
+                    touchDownY = event.y
+                    isNoiseHoldTriggered = false
+
+                    if (!isBeeping) {
+                        noiseHoldRunnable?.let { handler.removeCallbacks(it) }
+                        binding.btnBeep.animate().cancel()
+                        binding.btnBeep.animate()
+                            .scaleX(1.15f)
+                            .scaleY(1.15f)
+                            .setDuration(3000L)
+                            .start()
+
+                        noiseHoldRunnable = Runnable {
+                            isNoiseHoldTriggered = true
+                            startBeep()
+                        }
+                        handler.postDelayed(noiseHoldRunnable!!, 3000L)
+                    }
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (!isBeeping && !isNoiseHoldTriggered) {
+                        val dx = abs(event.x - touchDownX)
+                        val dy = abs(event.y - touchDownY)
+                        val isOutOfBounds = event.x < 0 || event.x > view.width || event.y < 0 || event.y > view.height
+                        if (dx > touchSlop || dy > touchSlop || isOutOfBounds) {
+                            noiseHoldRunnable?.let { handler.removeCallbacks(it) }
+                            noiseHoldRunnable = null
+                            binding.btnBeep.animate().cancel()
+                            binding.btnBeep.scaleX = 1.0f
+                            binding.btnBeep.scaleY = 1.0f
+                        }
+                    }
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    if (!isBeeping) {
+                        noiseHoldRunnable?.let { handler.removeCallbacks(it) }
+                        noiseHoldRunnable = null
+                        binding.btnBeep.animate().cancel()
+                        binding.btnBeep.scaleX = 1.0f
+                        binding.btnBeep.scaleY = 1.0f
+                    } else {
+                        if (!isNoiseHoldTriggered) {
+                            val isWithinBounds = event.x >= 0 && event.x <= view.width && event.y >= 0 && event.y <= view.height
+                            if (isWithinBounds) {
+                                stopBeep()
+                            }
+                        }
+                    }
+                    isNoiseHoldTriggered = false
+                    view.performClick()
+                    true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    if (!isBeeping) {
+                        noiseHoldRunnable?.let { handler.removeCallbacks(it) }
+                        noiseHoldRunnable = null
+                        binding.btnBeep.animate().cancel()
+                        binding.btnBeep.scaleX = 1.0f
+                        binding.btnBeep.scaleY = 1.0f
+                    }
+                    isNoiseHoldTriggered = false
+                    true
+                }
+                else -> false
             }
         }
+        binding.btnBeep.setOnClickListener { }
 
-        binding.btnInfo.setOnClickListener {
-            showAboutDialog()
-        }
+
 
         // Initial tinting removed as updateThemeUI() handles it below
 
         setActiveButton(binding.btnScan)
-        startLogoAnimation()
         startGraphUpdates()
 
         updateThemeUI()
+    }
+
+    private fun showAboutActivity() {
+        val intent = Intent(this, AboutActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+        startActivity(intent, options.toBundle())
     }
 
     private fun showAboutDialog() {
@@ -419,344 +575,146 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     private fun updateThemeUI() {
         val theme = currentTheme
+        val colors = ThemeUtils.getThemeColors(theme)
         
-        val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = theme == RadarView.Theme.RED_NIGHT
-        val isPink = theme == RadarView.Theme.PINK
-        val isNeon = theme == RadarView.Theme.NEON
-        val isNaranja = theme == RadarView.Theme.NARANJA
-        val isBubblegum = theme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = theme == RadarView.Theme.SUMMERTIME
-        val isMorio = theme == RadarView.Theme.MORIO
-        
-        val bgColor = when {
-            isHighContrast -> Color.WHITE
-            isRedNight || isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> Color.BLACK
-            else -> Color.BLACK
-        }
-        val headerColor = when {
-            isHighContrast -> Color.parseColor("#F0F0F0")
-            isRedNight -> Color.parseColor("#0A0000")
-            isPink -> Color.parseColor("#2A002A")
-            isNeon -> Color.parseColor("#1A1A00")
-            isNaranja -> Color.parseColor("#1A0F00")
-            isBubblegum -> Color.parseColor("#1A001A")
-            isSummertime -> Color.parseColor("#2A1F1A")
-            isMorio -> Color.parseColor("#244f48")
-            else -> Color.parseColor("#0A0A0A")
-        }
-        val textColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-        val accentColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#00FDFF")
-            isSummertime -> Color.parseColor("#6befff")
-            isMorio -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#FF00FF")
-        }
+        val bgColor = colors.background
+        val headerColor = colors.header
+        val primaryColor = colors.primary
+        val textColor = primaryColor
+        val accentColor = colors.accent
 
         binding.root.setBackgroundColor(bgColor)
         binding.headerContainer.setBackgroundColor(headerColor)
-        binding.headerBar.setBackgroundColor(when {
-            isHighContrast -> Color.LTGRAY
-            isRedNight -> Color.parseColor("#1A0000")
-            isPink -> Color.parseColor("#330033")
-            isNeon -> Color.parseColor("#333300")
-            isNaranja -> Color.parseColor("#331E00")
-            isBubblegum -> Color.parseColor("#2A002A")
-            isSummertime -> Color.parseColor("#1A1A1A")
-            isMorio -> Color.parseColor("#0A1412")
-            else -> Color.parseColor("#0F0F0F")
-        })
+        binding.headerBar.setBackgroundColor(colors.headerBar)
         
         binding.statusText.setTextColor(textColor)
-        binding.statusText.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
-            isSummertime -> R.drawable.btn_bg_summertime
-            isMorio -> R.drawable.btn_bg_morio
-            else -> R.drawable.status_box_bg
+        binding.statusText.setBackgroundResource(when(theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.status_box_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_summertime
+            RadarView.Theme.MORIO -> R.drawable.status_box_bg_morio
+            RadarView.Theme.FLIPPER -> R.drawable.status_box_bg_flipper
+            else -> R.drawable.status_box_bg_green
         })
         
         binding.tvCoordinates.setTextColor(textColor)
         binding.tvOverlayNetworkName.setTextColor(accentColor)
-        binding.tvCoordinates.setBackgroundColor(when {
-            isHighContrast -> Color.parseColor("#1A000000")
-            isRedNight -> Color.parseColor("#33FF0000")
-            isPink -> Color.parseColor("#33FF00FF")
-            isNeon -> Color.parseColor("#33E6FB04")
-            isNaranja -> Color.parseColor("#33FF8C00")
-            isBubblegum -> Color.parseColor("#33FF00FF")
-            isSummertime -> Color.parseColor("#33ff9f6b")
-            isMorio -> Color.parseColor("#33c3ac3a")
-            else -> Color.parseColor("#44000000")
-        })
+        binding.tvCoordinates.setBackgroundColor(ColorUtils.setAlphaComponent(textColor, 51))
         binding.tvTimecode.setTextColor(accentColor)
-        binding.tvTimecode.setBackgroundColor(when {
-            isHighContrast -> Color.parseColor("#1A000000")
-            isRedNight -> Color.parseColor("#33FF0000")
-            isPink -> Color.parseColor("#33FF00FF")
-            isNeon -> Color.parseColor("#33E6FB04")
-            isNaranja -> Color.parseColor("#33FF8C00")
-            isBubblegum -> Color.parseColor("#3300FDFF")
-            isSummertime -> Color.parseColor("#336befff")
-            isMorio -> Color.parseColor("#33c8f29e")
-            else -> Color.parseColor("#44000000")
-        })
+        binding.tvTimecode.setBackgroundColor(ColorUtils.setAlphaComponent(accentColor, 51))
         
         binding.listView.setBackgroundColor(bgColor)
         binding.bottomBar.setBackgroundColor(headerColor)
         
         val filterRow = (binding.cbBle.parent as View)
-        filterRow.setBackgroundResource(when {
-            isHighContrast -> R.drawable.status_box_bg_white
-            isRedNight -> R.drawable.status_box_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.status_box_bg_neon
-            isNaranja -> R.drawable.status_box_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
-            isSummertime -> R.drawable.btn_bg_summertime
+        filterRow.setBackgroundResource(when(theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime
+            RadarView.Theme.MORIO -> R.drawable.btn_bg_morio
+            RadarView.Theme.FLIPPER -> R.drawable.status_box_bg_flipper
             else -> R.drawable.status_box_bg
         })
 
-        binding.btnInfo.imageTintList = ColorStateList.valueOf(textColor)
+
+        binding.btnWspr.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnDrone.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnGlobeListTop.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnKillswitch.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnThemeToggle.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnStats.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnArchive.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnEsl.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnQr.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnPager.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnBeep.setTextColor(textColor)
+        binding.btnBeep.compoundDrawableTintList = ColorStateList.valueOf(textColor)
 
         // Force tactical buttons
-        when {
-            isRedNight -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_red)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_red)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_red)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_red)
-            }
-            isHighContrast -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_white)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_white)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_white)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_white)
-            }
-            isPink -> {
-                binding.btnScan.setBackgroundResource(R.drawable.status_box_bg_pink)
-                binding.btnExt.setBackgroundResource(R.drawable.status_box_bg_pink)
-                binding.btnTerminal.setBackgroundResource(R.drawable.status_box_bg_pink)
-                binding.btnClear.setBackgroundResource(R.drawable.status_box_bg_pink)
-            }
-            isNeon -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_neon)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_neon)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_neon)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_neon)
-            }
-            isNaranja -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_naranja)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_naranja)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_naranja)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_naranja)
-            }
-            isBubblegum -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-            }
-            isSummertime -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_summertime)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_summertime)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_summertime)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_summertime)
-            }
-            isMorio -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_morio)
-            }
-            isMorio -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg_morio)
-            }
-            else -> {
-                binding.btnScan.setBackgroundResource(R.drawable.btn_bg)
-                binding.btnExt.setBackgroundResource(R.drawable.btn_bg)
-                binding.btnTerminal.setBackgroundResource(R.drawable.btn_bg)
-                binding.btnClear.setBackgroundResource(R.drawable.btn_bg)
-            }
+        val btnBg = when (theme) {
+            RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_red
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_white
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.btn_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.btn_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime
+            RadarView.Theme.MORIO -> R.drawable.btn_bg_morio
+            RadarView.Theme.FLIPPER -> R.drawable.btn_bg_flipper
+            else -> R.drawable.btn_bg
         }
+        binding.btnScan.setBackgroundResource(btnBg)
+        binding.btnExt.setBackgroundResource(btnBg)
+        binding.btnTerminal.setBackgroundResource(btnBg)
+        binding.btnClear.setBackgroundResource(btnBg)
+        binding.btnBeep.setBackgroundResource(btnBg)
+        binding.btnSave.setBackgroundResource(btnBg)
+
+        binding.netGraph.setColors(
+            String.format("#%06X", (0xFFFFFF and textColor)),
+            String.format("#88%06X", (0xFFFFFF and accentColor))
+        )
+        binding.miniGraph.setColors(
+            String.format("#%06X", (0xFFFFFF and textColor)),
+            String.format("#88%06X", (0xFFFFFF and accentColor))
+        )
 
         val checkBoxes = listOf(binding.cbBle, binding.cb24, binding.cb5, binding.cbAero, binding.cbMap, binding.cbCams)
         checkBoxes.forEach {
-            val cbColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#00AA2A")
-            }
-            it.setTextColor(cbColor)
-            it.buttonTintList = android.content.res.ColorStateList.valueOf(cbColor)
+            it.setTextColor(accentColor)
+            it.buttonTintList = ColorStateList.valueOf(accentColor)
         }
 
-        binding.btnThemeToggle.setImageResource(when {
-            isHighContrast -> R.drawable.ic_theme_toggle_light
-            isRedNight -> R.drawable.ic_theme_toggle_red
-            isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> R.drawable.ic_theme_toggle
+        binding.btnThemeToggle.setImageResource(when (theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.ic_theme_toggle_light
+            RadarView.Theme.RED_NIGHT -> R.drawable.ic_theme_toggle_red
             else -> R.drawable.ic_theme_toggle
         })
         
-        val iconTint = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-        val secondaryTint = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#00FDFF")
-            isSummertime -> Color.parseColor("#6befff")
-            isMorio -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#FF00FF")
-        }
-
         // Set text for buttons
         val scanText = if (isScanning) "[ STOP ]" else "[ SCAN ]"
-        setCyberText(binding.btnScan, scanText, if (binding.btnScan.scaleX > 1.05f) secondaryTint else textColor, forceAllGreen = binding.btnScan.scaleX <= 1.05f)
-        setCyberText(binding.btnExt, "[ EXT ]", if (binding.btnExt.scaleX > 1.05f) secondaryTint else textColor, forceAllGreen = binding.btnExt.scaleX <= 1.05f)
-        setCyberText(binding.btnTerminal, "[ SSH ]", if (binding.btnTerminal.scaleX > 1.05f) secondaryTint else textColor, forceAllGreen = binding.btnTerminal.scaleX <= 1.05f)
-        setCyberText(binding.btnClear, "[ CLEAR ]", if (binding.btnClear.scaleX > 1.05f) secondaryTint else textColor, forceAllGreen = binding.btnClear.scaleX <= 1.05f)
+        setCyberText(binding.btnScan, scanText, if (binding.btnScan.scaleX > 1.05f) accentColor else textColor, forceAllGreen = binding.btnScan.scaleX <= 1.05f)
+        setCyberText(binding.btnExt, "[ EXT ]", if (binding.btnExt.scaleX > 1.05f) accentColor else textColor, forceAllGreen = binding.btnExt.scaleX <= 1.05f)
+        setCyberText(binding.btnTerminal, "[ SSH ]", if (binding.btnTerminal.scaleX > 1.05f) accentColor else textColor, forceAllGreen = binding.btnTerminal.scaleX <= 1.05f)
+        setCyberText(binding.btnClear, "[ CLEAR ]", if (binding.btnClear.scaleX > 1.05f) accentColor else textColor, forceAllGreen = binding.btnClear.scaleX <= 1.05f)
+        setCyberText(binding.btnSave, "[ SAVE ]", if (binding.btnSave.scaleX > 1.05f) accentColor else textColor, forceAllGreen = binding.btnSave.scaleX <= 1.05f)
 
-        binding.btnStats.setColorFilter(iconTint)
-        binding.btnPager.setColorFilter(iconTint)
-        binding.btnGlobeListTop.setColorFilter(iconTint)
-        binding.btnKillswitch.setColorFilter(secondaryTint)
-        binding.btnEsl.setColorFilter(iconTint)
-        binding.btnArchive.setImageResource(if (isHighContrast) R.drawable.ic_archive_light else if (isRedNight) R.drawable.ic_archive_red else R.drawable.ic_archive)
-        binding.btnArchive.setColorFilter(iconTint)
-        binding.btnThemeToggle.setColorFilter(iconTint)
+        binding.btnStats.setColorFilter(textColor)
+        binding.btnPager.setColorFilter(textColor)
+        binding.btnEsl.setColorFilter(textColor)
+        binding.btnQr.setColorFilter(textColor)
+        binding.btnWspr.setColorFilter(textColor)
+        binding.btnDrone.setColorFilter(textColor)
+        binding.btnGlobeListTop.setColorFilter(textColor)
+        binding.btnKillswitch.setColorFilter(accentColor)
+        binding.btnArchive.setImageResource(if (theme == RadarView.Theme.HIGH_CONTRAST) R.drawable.ic_archive_light else if (theme == RadarView.Theme.RED_NIGHT) R.drawable.ic_archive_red else R.drawable.ic_archive)
+        binding.btnArchive.setColorFilter(textColor)
+        binding.btnThemeToggle.setColorFilter(textColor)
         
-        binding.miniGraph.theme = currentTheme
-        binding.netGraph.theme = currentTheme
-        
-        if (isSummertime) {
-            binding.miniGraph.setColors("#ff9f6b", "#886befff")
-            binding.netGraph.setColors("#ff9f6b", "#886befff")
-        } else if (isMorio) {
-            binding.miniGraph.setColors("#c3ac3a", "#88c8f29e")
-            binding.netGraph.setColors("#c3ac3a", "#88c8f29e")
-        } else {
-            // Restore defaults for other themes if needed, or let the theme property handle it
-            // The MiniGraphView theme setter already handles colors based on currentTheme.
-        }
-
-
-        // Tint ivLogo for RED_NIGHT
-        if (isRedNight) {
-            binding.ivLogo.setColorFilter(Color.RED)
-        } else {
-            binding.ivLogo.clearColorFilter()
-        }
-
-        when {
-            isHighContrast -> {
-                binding.btnBeep.setTextColor(Color.BLACK)
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.BLACK))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_white)
-            }
-            isRedNight -> {
-                binding.btnBeep.setTextColor(Color.RED)
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.RED))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_red)
-            }
-            isPink -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF00FF")))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_pink)
-            }
-            isNeon -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#E6FB04"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#E6FB04")))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_neon)
-            }
-            isNaranja -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#FF8C00"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF8C00")))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_naranja)
-            }
-            isBubblegum -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF00FF")))
-                binding.btnBeep.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-            }
-            isSummertime -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#ff9f6b"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#ff9f6b")))
-                binding.btnBeep.setBackgroundResource(R.drawable.btn_bg_summertime)
-            }
-            isMorio -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#c3ac3a"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#c3ac3a")))
-                binding.btnBeep.setBackgroundResource(R.drawable.btn_bg_morio)
-            }
-            else -> {
-                binding.btnBeep.setTextColor(Color.parseColor("#00FF41"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#00FF41")))
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_green)
-            }
-        }
-        
-        // Update button states
-        setActiveButton(if (binding.btnScan.scaleX > 1.05f) binding.btnScan else if (binding.btnExt.scaleX > 1.05f) binding.btnExt else if (binding.btnTerminal.scaleX > 1.05f) binding.btnTerminal else binding.btnClear)
-        updateViewVisibility()
-        
-        // Ensure RadarView is updated
-        binding.radarView.theme = theme
         binding.miniGraph.theme = theme
         binding.netGraph.theme = theme
         
-        if (theme == RadarView.Theme.SUMMERTIME) {
-            binding.miniGraph.setColors("#ff9f6b", "#886befff")
-            binding.netGraph.setColors("#ff9f6b", "#886befff")
-        } else if (theme == RadarView.Theme.MORIO) {
-            binding.miniGraph.setColors("#c3ac3a", "#88c8f29e")
-            binding.netGraph.setColors("#c3ac3a", "#88c8f29e")
-        }
-
+        // Logo tinting
+        binding.ivLogo.imageTintList = null
+        
+        // Scan status changed removed logo references
+        setActiveButton(if (binding.btnScan.scaleX > 1.05f) binding.btnScan else if (binding.btnExt.scaleX > 1.05f) binding.btnExt else if (binding.btnTerminal.scaleX > 1.05f) binding.btnTerminal else binding.btnClear)
+        updateViewVisibility()
+        
         if (::deviceAdapter.isInitialized) {
             deviceAdapter.theme = theme
             deviceAdapter.notifyDataSetChanged()
         }
     }
+
 
     private fun setupImmersiveMode() {
         if (isSshWindowOpen) return
@@ -772,57 +730,28 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     private fun setActiveButton(activeButton: Button) {
         activeAnimator?.cancel()
         
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-        val isMorio = currentTheme == RadarView.Theme.MORIO
+        val theme = currentTheme
+        val colors = ThemeUtils.getThemeColors(theme)
+        val primaryColor = colors.primary
+        val secondaryColor = colors.accent
 
-        val primaryColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
-        val secondaryColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#00FDFF")
-            isSummertime -> Color.parseColor("#6befff")
-            isMorio -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#FF00FF")
-        }
-        val dimBg = when {
-            isHighContrast -> R.drawable.btn_bg_white_dim
-            isRedNight -> R.drawable.btn_bg_black
-            isPink -> R.drawable.status_box_bg_pink // Assume we have or use pink with alpha
-            isNeon -> R.drawable.btn_bg_neon // Assume we have or use neon with alpha
-            isNaranja -> R.drawable.btn_bg_naranja // Assume we have or use naranja with alpha
-            isBubblegum -> R.drawable.btn_bg_bubblegum
-            isSummertime -> R.drawable.btn_bg_summertime_dim
-            isMorio -> R.drawable.btn_bg_morio_dim
+        val dimBg = when (theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_white_dim
+            RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_black
+            RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime_dim
+            RadarView.Theme.MORIO -> R.drawable.btn_bg_morio_dim
             else -> R.drawable.btn_bg_dim
         }
-        val activeBg = when {
-            isHighContrast -> R.drawable.btn_bg_white
-            isRedNight -> R.drawable.btn_bg_red
-            isPink -> R.drawable.status_box_bg_pink
-            isNeon -> R.drawable.btn_bg_neon
-            isMorio -> R.drawable.btn_bg_morio
-            isNaranja -> R.drawable.btn_bg_naranja
-            isBubblegum -> R.drawable.btn_bg_bubblegum
-            isSummertime -> R.drawable.btn_bg_summertime
+        val activeBg = when (theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.btn_bg_neon
+            RadarView.Theme.MORIO -> R.drawable.btn_bg_morio
+            RadarView.Theme.NARANJA -> R.drawable.btn_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime
+            RadarView.Theme.FLIPPER -> R.drawable.btn_bg_flipper
             else -> R.drawable.btn_bg
         }
 
@@ -866,26 +795,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     private fun setCyberText(button: Button, text: String, contentColor: Int, forceAllGreen: Boolean = false) {
         val spannable = android.text.SpannableString(text)
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-        val isMorio = currentTheme == RadarView.Theme.MORIO
-        
-        val primaryColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#00FF41")
-        }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val primaryColor = colors.primary
         
         // Find brackets
         val openIdx = text.indexOf("[")
@@ -900,8 +811,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val insideColor = if (forceAllGreen) primaryColor else contentColor
             spannable.setSpan(android.text.style.ForegroundColorSpan(insideColor), openIdx + 1, closeIdx, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             
-            if (contentColor == Color.parseColor("#FF00FF") || contentColor == Color.BLACK || contentColor == Color.parseColor("#00FDFF") || contentColor == Color.parseColor("#ff9f6b") || contentColor == Color.parseColor("#6befff")) {
-                spannable.setSpan(android.text.style.StyleSpan(android.graphics.Typeface.BOLD), openIdx + 1, closeIdx, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (insideColor == Color.BLACK || currentTheme == RadarView.Theme.PINK || currentTheme == RadarView.Theme.BUBBLEGUM || currentTheme == RadarView.Theme.SUMMERTIME) {
+                spannable.setSpan(android.text.style.StyleSpan(Typeface.BOLD), openIdx + 1, closeIdx, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
             
             // Any other text is primary
@@ -909,7 +820,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             if (closeIdx < text.length - 1) spannable.setSpan(android.text.style.ForegroundColorSpan(primaryColor), closeIdx + 1, text.length, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         } else {
             button.setTextColor(if (forceAllGreen) primaryColor else contentColor)
-            if (contentColor == Color.parseColor("#FF00FF") || contentColor == Color.BLACK) button.setTypeface(null, android.graphics.Typeface.BOLD)
+            if (contentColor == Color.BLACK) button.setTypeface(null, Typeface.BOLD)
             button.text = text
             return
         }
@@ -917,17 +828,12 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun blinkPink(button: Button) {
-        val isHighContrast = getSharedPreferences("settings", MODE_PRIVATE).getBoolean("high_contrast", false)
-        button.setBackgroundResource(R.drawable.status_box_bg_pink)
-        button.setTextColor(Color.BLACK)
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        button.setBackgroundResource(colors.statusBoxRes)
+        button.setTextColor(colors.accent)
         button.postDelayed({
-            if (isHighContrast) {
-                button.setBackgroundResource(R.drawable.btn_bg_white)
-                button.setTextColor(Color.BLACK)
-            } else {
-                button.setBackgroundResource(R.drawable.btn_bg_dim)
-                button.setTextColor(Color.parseColor("#00FF41"))
-            }
+            button.setBackgroundResource(colors.buttonDimRes)
+            button.setTextColor(colors.primary)
         }, 100)
     }
 
@@ -936,98 +842,36 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
         
         // Theme-based colors
-        val primaryColor: Int
-        val secondaryColor: Int
-        val bgColor: Int
-        val inputBg: Int
-        val inputTextColor: Int
-        val statusBoxRes: Int
-        val buttonBgRes: Int
-        val buttonTextColor: Int
-
-        when (theme) {
-            RadarView.Theme.HIGH_CONTRAST -> {
-                primaryColor = Color.BLACK
-                secondaryColor = Color.BLACK
-                bgColor = Color.WHITE
-                inputTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_white
-                buttonBgRes = R.drawable.btn_bg_black
-                buttonTextColor = Color.WHITE
-            }
-            RadarView.Theme.RED_NIGHT -> {
-                primaryColor = Color.RED
-                secondaryColor = Color.RED
-                bgColor = Color.BLACK
-                inputTextColor = Color.RED
-                statusBoxRes = R.drawable.status_box_bg_red
-                buttonBgRes = R.drawable.btn_bg_red
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.PINK -> {
-                primaryColor = Color.parseColor("#FF00FF")
-                secondaryColor = Color.parseColor("#FF00FF")
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#FF00FF")
-                statusBoxRes = R.drawable.status_box_bg_pink
-                buttonBgRes = R.drawable.status_box_bg_pink
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.NEON -> {
-                primaryColor = Color.parseColor("#E6FB04")
-                secondaryColor = Color.parseColor("#E6FB04")
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#E6FB04")
-                statusBoxRes = R.drawable.status_box_bg_neon
-                buttonBgRes = R.drawable.btn_bg_neon
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.NARANJA -> {
-                primaryColor = Color.parseColor("#FF8C00")
-                secondaryColor = Color.parseColor("#FF8C00")
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#FF8C00")
-                statusBoxRes = R.drawable.status_box_bg_naranja
-                buttonBgRes = R.drawable.btn_bg_naranja
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.BUBBLEGUM -> {
-                primaryColor = Color.parseColor("#00FDFF") // Turquoise
-                secondaryColor = Color.parseColor("#FF00FF") // Magenta
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#FF00FF")
-                statusBoxRes = R.drawable.status_box_bg_bubblegum
-                buttonBgRes = R.drawable.btn_bg_bubblegum
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.SUMMERTIME -> {
-                primaryColor = Color.parseColor("#ff9f6b")
-                secondaryColor = Color.parseColor("#6befff")
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#ff9f6b")
-                statusBoxRes = R.drawable.btn_bg_summertime
-                buttonBgRes = R.drawable.btn_bg_summertime
-                buttonTextColor = Color.BLACK
-            }
-            RadarView.Theme.MORIO -> {
-                primaryColor = Color.parseColor("#c3ac3a")
-                secondaryColor = Color.parseColor("#c8f29e")
-                bgColor = Color.BLACK
-                inputTextColor = Color.parseColor("#c3ac3a")
-                statusBoxRes = R.drawable.status_box_bg_morio
-                buttonBgRes = R.drawable.btn_bg_morio
-                buttonTextColor = Color.BLACK
-            }
-            else -> { // DEFAULT
-                primaryColor = Color.parseColor("#00FF41")
-                secondaryColor = Color.parseColor("#FF00FF")
-                bgColor = Color.BLACK
-                inputTextColor = Color.WHITE
-                statusBoxRes = R.drawable.status_box_bg
-                buttonBgRes = R.drawable.btn_bg
-                buttonTextColor = Color.BLACK
-            }
+        val colors = ThemeUtils.getThemeColors(theme)
+        val primaryColor = colors.primary
+        val secondaryColor = colors.accent
+        val bgColor = colors.background
+        val inputTextColor = if (isHighContrast) Color.BLACK else Color.WHITE
+        val statusBoxRes = when (theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.status_box_bg_white
+            RadarView.Theme.RED_NIGHT -> R.drawable.status_box_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.status_box_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.status_box_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.status_box_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.status_box_bg_summertime
+            RadarView.Theme.MORIO -> R.drawable.status_box_bg_morio
+            RadarView.Theme.FLIPPER -> R.drawable.status_box_bg_flipper
+            else -> R.drawable.status_box_bg
         }
+        val buttonBgRes = when (theme) {
+            RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_black
+            RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_red
+            RadarView.Theme.PINK -> R.drawable.status_box_bg_pink
+            RadarView.Theme.NEON -> R.drawable.btn_bg_neon
+            RadarView.Theme.NARANJA -> R.drawable.btn_bg_naranja
+            RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
+            RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime
+            RadarView.Theme.MORIO -> R.drawable.btn_bg_morio
+            RadarView.Theme.FLIPPER -> R.drawable.btn_bg_flipper
+            else -> R.drawable.btn_bg
+        }
+        val buttonTextColor = if (isHighContrast) Color.WHITE else Color.BLACK
 
         val dialog = android.app.Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setOnDismissListener { setupImmersiveMode() }
@@ -1049,7 +893,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         // Title
         val title = android.widget.TextView(this).apply {
-            text = " EXTERNAL NODE // MULTIPASS "
+            text = " " + getString(R.string.terminal_external_node_title) + " "
             setTextColor(primaryColor)
             textSize = 24f
             typeface = android.graphics.Typeface.MONOSPACE
@@ -1060,7 +904,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         // IP Input Field
         val ipLabel = android.widget.TextView(this).apply {
-            text = "TARGET IP ADDRESS:"
+            text = getString(R.string.terminal_target_ip_label)
             setTextColor(primaryColor)
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 14f
@@ -1095,9 +939,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val primaryHex = String.format("#%06X", (0xFFFFFF and primaryColor))
         val goBtn = android.widget.Button(this).apply {
             if (isHighContrast) {
-                text = "INITIATE UPLINK"
+                text = getString(R.string.terminal_btn_uplink)
             } else {
-                text = android.text.Html.fromHtml("<font color='$primaryHex'>[</font> INITIATE UPLINK <font color='$primaryHex'>]</font>", android.text.Html.FROM_HTML_MODE_LEGACY)
+                text = android.text.Html.fromHtml("<font color='$primaryHex'>[</font> " + getString(R.string.terminal_btn_uplink) + " <font color='$primaryHex'>]</font>", android.text.Html.FROM_HTML_MODE_LEGACY)
             }
             setTextColor(buttonTextColor)
             setBackgroundResource(buttonBgRes)
@@ -1112,17 +956,48 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
         root.addView(goBtn)
 
+        // Flipper Button (Directly under Uplink)
+        val flipperBtn = android.widget.Button(this).apply {
+            if (isHighContrast) {
+                text = getString(R.string.terminal_btn_flipper)
+            } else {
+                text = android.text.Html.fromHtml("<font color='$primaryHex'>[</font> " + getString(R.string.terminal_btn_flipper) + " <font color='$primaryHex'>]</font>", android.text.Html.FROM_HTML_MODE_LEGACY)
+            }
+            setTextColor(buttonTextColor)
+            setBackgroundResource(buttonBgRes)
+            backgroundTintList = android.content.res.ColorStateList.valueOf(primaryColor)
+            typeface = android.graphics.Typeface.MONOSPACE
+            textSize = 18f
+            setPadding(60, 40, 60, 40)
+            layoutParams = android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(40, 10, 40, 20) }
+        }
+        root.addView(flipperBtn)
+
         // Cancel Button
         val cancelBtn = android.widget.Button(this).apply {
-            text = "ABORT"
+            text = getString(R.string.terminal_btn_abort)
             setTextColor(secondaryColor)
             background = null
             typeface = android.graphics.Typeface.MONOSPACE
             textSize = 16f
-            setPadding(0, 60, 0, 0)
+            setPadding(0, 40, 0, 0)
         }
         root.addView(cancelBtn)
 
+        flipperBtn.setOnClickListener {
+            dialog.dismiss()
+            val flippers = scanner.getDevices().filter { it.type == DeviceType.FLIPPER }
+            val archived = scanner.getArchivedDevices().filter { it.type == DeviceType.FLIPPER }
+            
+            when {
+                flippers.size == 1 -> showFlipperRemoteControl(flippers[0])
+                flippers.isEmpty() && archived.isNotEmpty() -> showFlipperRemoteControl(archived[0])
+                else -> showFlipperDiscoveryDialog()
+            }
+        }
 
         goBtn.setOnClickListener {
             val rawIp = ipInput.text.toString().trim()
@@ -1139,6 +1014,84 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         dialog.setContentView(root)
         dialog.show()
+    }
+
+    private fun showFlipperDiscoveryDialog() {
+        val theme = currentTheme
+        val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
+        val themeColors = ThemeUtils.getThemeColors(theme)
+        val primaryColor = themeColors.primary
+        val backgroundColor = themeColors.background
+        val textColor = if (isHighContrast) Color.BLACK else Color.WHITE
+        
+        val dialog = android.app.Dialog(this, if (isHighContrast) android.R.style.Theme_Material_Light_Dialog_NoActionBar else android.R.style.Theme_Material_Dialog_NoActionBar)
+        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(backgroundColor))
+
+        val root = android.widget.LinearLayout(this).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(40, 40, 40, 40)
+            gravity = android.view.Gravity.CENTER_HORIZONTAL
+        }
+
+        val title = android.widget.TextView(this).apply {
+            text = "FLIPPER DISCOVERY"
+            setTextColor(primaryColor)
+            typeface = android.graphics.Typeface.MONOSPACE
+            textSize = 20f
+            gravity = android.view.Gravity.CENTER
+            setPadding(0, 0, 0, 30)
+        }
+        root.addView(title)
+
+        val flippers = scanner.getDevices().filter { it.type == DeviceType.FLIPPER }
+
+        if (flippers.isEmpty()) {
+            val emptyMsg = android.widget.TextView(this).apply {
+                text = "NO FLIPPERS DETECTED\nENSURE BLE IS ON"
+                setTextColor(textColor)
+                typeface = android.graphics.Typeface.MONOSPACE
+                textSize = 14f
+                gravity = android.view.Gravity.CENTER
+                setPadding(0, 20, 0, 40)
+            }
+            root.addView(emptyMsg)
+        } else {
+            flippers.forEach { device: ScanDevice ->
+                val btn = android.widget.Button(this).apply {
+                    text = "${device.name}\n${device.address}"
+                    setTextColor(textColor)
+                    setBackgroundResource(if (isHighContrast) android.R.drawable.btn_default else 0)
+                    typeface = android.graphics.Typeface.MONOSPACE
+                    textSize = 16f
+                    setPadding(20, 20, 20, 20)
+                    setOnClickListener {
+                        dialog.dismiss()
+                        showFlipperRemoteControl(device)
+                    }
+                }
+                root.addView(btn)
+            }
+        }
+
+        val closeBtn = android.widget.Button(this).apply {
+            text = "[ CLOSE ]"
+            setTextColor(primaryColor)
+            background = null
+            typeface = android.graphics.Typeface.MONOSPACE
+            textSize = 14f
+        }
+        closeBtn.setOnClickListener { dialog.dismiss() }
+        root.addView(closeBtn)
+
+        dialog.setContentView(root)
+        dialog.show()
+    }
+
+    private fun showFlipperRemoteControl(device: ScanDevice) {
+        val intent = android.content.Intent(this, FlipperRemoteActivity::class.java).apply {
+            putExtra(FlipperRemoteActivity.EXTRA_DEVICE, device)
+        }
+        startActivity(intent)
     }
 
     private fun showWebViewOverlay(url: String) {
@@ -1220,14 +1173,18 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         dialog.show()
     }
 
-    private var sshSession: com.jcraft.jsch.Session? = null
-    private var sshChannel: com.jcraft.jsch.ChannelShell? = null
+    private var sshSession: Session? = null
+    private var sshChannel: ChannelShell? = null
     private var sshIn: java.io.InputStream? = null
     private var sshOut: java.io.OutputStream? = null
     private val sshExecutor = java.util.concurrent.Executors.newSingleThreadExecutor()
+    private val sshWriteExecutor = java.util.concurrent.Executors.newSingleThreadExecutor()
+    private var ansiParser: AnsiParser? = null
 
-    private var terminalOutputBuffer = StringBuilder()
+    private val terminalOutputBuffer = SpannableStringBuilder()
     private var isSshWindowOpen = false
+    private var activeTerminalBinding: com.radar.blewifi.databinding.TerminalOverlayBinding? = null
+    private var isReaderRunning = false
 
     private fun showTerminalOverlay() {
         val theme = currentTheme
@@ -1236,113 +1193,26 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val dialog = android.app.Dialog(this, if (isHighContrast) android.R.style.Theme_Light_NoTitleBar else android.R.style.Theme_Black_NoTitleBar)
         dialog.setOnDismissListener { 
             isSshWindowOpen = false
+            activeTerminalBinding = null
             setupImmersiveMode() 
         }
         isSshWindowOpen = true
         val overlayBinding = com.radar.blewifi.databinding.TerminalOverlayBinding.inflate(layoutInflater)
+        activeTerminalBinding = overlayBinding
         dialog.setContentView(overlayBinding.root)
 
-        // Theme-based colors
-        val primaryColor: Int
-        val secondaryColor: Int
-        val bgColor: Int
-        val headerColor: Int
-        val inputTextColor: Int
-        val hintColor: Int
-        val buttonBgRes: Int
-        val buttonTextColor: Int
-        val statusBoxRes: Int
-
-        when (theme) {
-            RadarView.Theme.HIGH_CONTRAST -> {
-                primaryColor = Color.BLACK
-                secondaryColor = Color.BLACK
-                bgColor = Color.WHITE
-                headerColor = Color.WHITE
-                inputTextColor = Color.BLACK
-                hintColor = Color.GRAY
-                buttonBgRes = R.drawable.btn_bg_black
-                buttonTextColor = Color.WHITE
-                statusBoxRes = R.drawable.status_box_bg_white
-            }
-            RadarView.Theme.RED_NIGHT -> {
-                primaryColor = Color.RED
-                secondaryColor = Color.RED
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0A0000")
-                inputTextColor = Color.RED
-                hintColor = Color.parseColor("#330000")
-                buttonBgRes = R.drawable.btn_bg_red
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_red
-            }
-            RadarView.Theme.PINK -> {
-                primaryColor = Color.parseColor("#FF00FF")
-                secondaryColor = Color.parseColor("#FF00FF")
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0F000F")
-                inputTextColor = Color.parseColor("#FF00FF")
-                hintColor = Color.parseColor("#330033")
-                buttonBgRes = R.drawable.status_box_bg_pink
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_pink
-            }
-            RadarView.Theme.NEON -> {
-                primaryColor = Color.parseColor("#E6FB04")
-                secondaryColor = Color.parseColor("#E6FB04")
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0F0F00")
-                inputTextColor = Color.parseColor("#E6FB04")
-                hintColor = Color.parseColor("#333801")
-                buttonBgRes = R.drawable.btn_bg_neon
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_neon
-            }
-            RadarView.Theme.NARANJA -> {
-                primaryColor = Color.parseColor("#FF8C00")
-                secondaryColor = Color.parseColor("#FF8C00")
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0F0A00")
-                inputTextColor = Color.parseColor("#FF8C00")
-                hintColor = Color.parseColor("#331C00")
-                buttonBgRes = R.drawable.btn_bg_naranja
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_naranja
-            }
-            RadarView.Theme.BUBBLEGUM -> {
-                primaryColor = Color.parseColor("#00FDFF") // Turquoise
-                secondaryColor = Color.parseColor("#FF00FF") // Magenta
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#050005")
-                inputTextColor = Color.parseColor("#FF00FF")
-                hintColor = Color.parseColor("#330033")
-                buttonBgRes = R.drawable.btn_bg_bubblegum
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg_bubblegum
-            }
-            RadarView.Theme.SUMMERTIME -> {
-                primaryColor = Color.parseColor("#ff9f6b")
-                secondaryColor = Color.parseColor("#6befff")
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0F0906")
-                inputTextColor = Color.parseColor("#ff9f6b")
-                hintColor = Color.parseColor("#331f15")
-                buttonBgRes = R.drawable.btn_bg_summertime
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.btn_bg_summertime
-            }
-            else -> { // DEFAULT
-                primaryColor = Color.parseColor("#00FF41")
-                secondaryColor = Color.parseColor("#FF00FF")
-                bgColor = Color.BLACK
-                headerColor = Color.parseColor("#0F0F0F")
-                inputTextColor = Color.WHITE
-                hintColor = Color.parseColor("#004400")
-                buttonBgRes = R.drawable.btn_bg
-                buttonTextColor = Color.BLACK
-                statusBoxRes = R.drawable.status_box_bg
-            }
-        }
+        // Theme-based colors and resources
+        val colors = ThemeUtils.getThemeColors(theme)
+        val primaryColor = colors.primary
+        val secondaryColor = colors.accent
+        val bgColor = colors.background
+        val headerColor = colors.header
+        val inputTextColor = if (isHighContrast) Color.BLACK else Color.WHITE
+        val hintColor = ColorUtils.setAlphaComponent(primaryColor, 128)
+        
+        val buttonBgRes = colors.buttonRes
+        val buttonTextColor = if (theme == RadarView.Theme.HIGH_CONTRAST) Color.WHITE else Color.BLACK
+        val statusBoxRes = colors.statusBoxRes
 
 
         // Apply colors to views
@@ -1352,30 +1222,94 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         overlayBinding.connectionLayout.setBackgroundColor(bgColor)
         overlayBinding.terminalLayout.setBackgroundColor(bgColor)
         
-        overlayBinding.headerSshLogin.setBackgroundColor(headerColor)
         overlayBinding.headerSshTerminal.setBackgroundColor(headerColor)
-        overlayBinding.terminalControlsRoot.setBackgroundColor(headerColor)
 
-        overlayBinding.ivLogoSshLogin.setImageResource(R.drawable.logo3)
-        if (theme != RadarView.Theme.HIGH_CONTRAST && theme != RadarView.Theme.DEFAULT) {
-            overlayBinding.ivLogoSshLogin.setColorFilter(primaryColor)
-        } else {
-            overlayBinding.ivLogoSshLogin.clearColorFilter()
-        }
-        
         overlayBinding.tvSshLoginTitle.setTextColor(primaryColor)
         
-        val editTexts = listOf(overlayBinding.etHost, overlayBinding.etUser, overlayBinding.etPassword, overlayBinding.etCommand)
+        val editTexts = listOf(overlayBinding.etHost, overlayBinding.etUser, overlayBinding.etPassword)
         editTexts.forEach {
             it.setTextColor(inputTextColor)
             it.setHintTextColor(hintColor)
-            if (it != overlayBinding.etCommand) {
-                it.setBackgroundResource(statusBoxRes)
-            } else {
-                it.setBackgroundResource(if (theme == RadarView.Theme.DEFAULT) R.drawable.btn_bg_dim else statusBoxRes)
-            }
+            it.setBackgroundResource(statusBoxRes)
         }
         
+        // Ensure etCommand stays transparent and functional as a proxy
+        overlayBinding.etCommand.apply {
+            setBackgroundColor(Color.TRANSPARENT)
+            setTextColor(Color.TRANSPARENT)
+            setHintTextColor(Color.TRANSPARENT)
+            isCursorVisible = false
+            // Use textNoSuggestions to avoid interfering with terminal input
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_NONE
+            importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO
+        }
+        
+        overlayBinding.spKeyFile.setBackgroundResource(statusBoxRes)
+
+        // Setup Key File Spinner
+        val searchPaths = listOf(
+            java.io.File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS), "BLESP/ssh"),
+            java.io.File(android.os.Environment.getExternalStorageDirectory(), "Download/BLESP/ssh"),
+            java.io.File(android.os.Environment.getExternalStorageDirectory(), "Downloads/BLESP/ssh"),
+            java.io.File("/sdcard/Download/BLESP/ssh"),
+            java.io.File("/sdcard/Downloads/BLESP/ssh"),
+            java.io.File("/sdcard"),
+            java.io.File(android.os.Environment.getExternalStorageDirectory(), "")
+        )
+        
+        val keyFilesMap = mutableMapOf<String, java.io.File>()
+        searchPaths.forEach { dir ->
+            if (dir.exists()) {
+                dir.listFiles()?.forEach { file ->
+                    if (file.isFile && (file.name.startsWith("id_") || file.name.endsWith(".key") || file.name.endsWith(".pem") || file.name.endsWith(".pub"))) {
+                        keyFilesMap[file.name] = file
+                    }
+                }
+            }
+        }
+
+        val keyOptions = listOf(getString(R.string.terminal_key_none), getString(R.string.terminal_key_browse)) + keyFilesMap.keys.toList().sorted()
+        val keyAdapter = object : android.widget.ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, keyOptions) {
+            override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
+                val v = super.getView(position, convertView, parent)
+                val text = if (position == 1 && selectedKeyName != null) getString(R.string.terminal_key_label, selectedKeyName) else keyOptions[position]
+                (v as TextView).text = text
+                v.setTextColor(inputTextColor)
+                v.typeface = android.graphics.Typeface.MONOSPACE
+                v.gravity = android.view.Gravity.CENTER
+                v.setPadding(0, 0, 0, 0)
+                return v
+            }
+            override fun getDropDownView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
+                val v = super.getDropDownView(position, convertView, parent)
+                v.setBackgroundColor(bgColor)
+                val text = if (position == 1 && selectedKeyName != null) getString(R.string.terminal_key_label, selectedKeyName) else keyOptions[position]
+                (v as TextView).text = text
+                (v as TextView).setTextColor(inputTextColor)
+                v.typeface = android.graphics.Typeface.MONOSPACE
+                v.gravity = android.view.Gravity.CENTER
+                v.setPadding(32, 32, 32, 32)
+                return v
+            }
+        }
+        overlayBinding.spKeyFile.adapter = keyAdapter
+        
+        overlayBinding.spKeyFile.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (keyOptions[position] == getString(R.string.terminal_key_browse)) {
+                    keyPickerLauncher.launch(arrayOf("*/*"))
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        
+        // Match selection if last key used is present
+        val sshPrefs = getSharedPreferences("ssh_prefs", android.content.Context.MODE_PRIVATE)
+        val lastKey = sshPrefs.getString("last_key", getString(R.string.terminal_key_none))
+        val keyIndex = keyOptions.indexOf(lastKey)
+        if (keyIndex >= 0) overlayBinding.spKeyFile.setSelection(keyIndex)
+
         overlayBinding.btnConnect.setTextColor(buttonTextColor)
         overlayBinding.btnConnect.backgroundTintList = android.content.res.ColorStateList.valueOf(primaryColor)
         if (theme == RadarView.Theme.HIGH_CONTRAST) {
@@ -1387,19 +1321,23 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         overlayBinding.tvTerminalOutput.setTextColor(primaryColor)
         overlayBinding.svTerminal.setBackgroundResource(statusBoxRes)
         
-        val ctrlBtns = listOf(
-            overlayBinding.btnCtrl, overlayBinding.btnTab, overlayBinding.btnCtrlC,
-            overlayBinding.btnLeft, overlayBinding.btnUp, overlayBinding.btnDown, overlayBinding.btnRight
+        // Style Login Close button (footer style)
+        overlayBinding.btnSshLoginClose.setTextColor(secondaryColor)
+
+        val terminalButtons = listOf(
+            overlayBinding.btnSshTerminalClose,
+            overlayBinding.btnSshLogout
         )
-        ctrlBtns.forEach {
-            it.setTextColor(primaryColor)
-            it.setBackgroundResource(if (theme == RadarView.Theme.DEFAULT) R.drawable.btn_bg_dim else statusBoxRes)
+        terminalButtons.forEach {
+            val isLogout = it == overlayBinding.btnSshLogout
+            it.setTextColor(if (isLogout) Color.RED else secondaryColor)
+            
+            if (theme == RadarView.Theme.HIGH_CONTRAST) {
+                it.setBackgroundResource(R.drawable.status_box_bg_black)
+            } else {
+                it.setBackgroundResource(if (isLogout) R.drawable.status_box_bg_red else R.drawable.status_box_bg_pink)
+            }
         }
-        
-        overlayBinding.btnSshLoginBack.setTextColor(secondaryColor)
-        overlayBinding.btnSshLoginBack.background = null
-        overlayBinding.btnSshTerminalBack.setTextColor(secondaryColor)
-        overlayBinding.btnSshTerminalBack.setBackgroundResource(statusBoxRes)
 
         dialog.window?.let { window ->
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -1433,8 +1371,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         } else {
             overlayBinding.btnConnect.text = android.text.Html.fromHtml("<font color='$primaryHex'>[</font> CONNECT <font color='$primaryHex'>]</font>", android.text.Html.FROM_HTML_MODE_LEGACY)
         }
-        overlayBinding.btnSshLoginBack.text = "ABORT"
-        overlayBinding.btnSshTerminalBack.text = "BACK"
+        overlayBinding.btnSshLoginClose.text = getString(R.string.btn_close)
+        overlayBinding.btnSshTerminalClose.text = getString(R.string.btn_close)
 
         val prefs = getSharedPreferences("ssh_prefs", android.content.Context.MODE_PRIVATE)
         val historyJson = prefs.getString("host_history", "[]") ?: "[]"
@@ -1449,12 +1387,20 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         overlayBinding.etHost.setText(prefs.getString("last_host", ""))
         overlayBinding.etUser.setText(prefs.getString("last_user", ""))
 
-        overlayBinding.btnSshLoginBack.setOnClickListener { 
+        overlayBinding.btnSshLoginClose.setOnClickListener { 
             dialog.dismiss()
         }
 
-        overlayBinding.btnSshTerminalBack.setOnClickListener { 
+        overlayBinding.btnSshTerminalClose.setOnClickListener {
             dialog.dismiss()
+        }
+
+        overlayBinding.btnSshLogout.setOnClickListener {
+            logoutSSH()
+            overlayBinding.sshTerminalPage.visibility = View.GONE
+            overlayBinding.sshLoginPage.visibility = View.VISIBLE
+            overlayBinding.btnConnect.isEnabled = true
+            overlayBinding.btnConnect.text = getString(R.string.terminal_btn_connect)
         }
 
         // Start Glitch Effect for SSH Window
@@ -1487,6 +1433,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val host = overlayBinding.etHost.text.toString()
             val user = overlayBinding.etUser.text.toString()
             val pass = overlayBinding.etPassword.text.toString()
+            val selectedKey = overlayBinding.spKeyFile.selectedItem as String
 
             if (host.isBlank() || user.isBlank()) return@setOnClickListener
 
@@ -1496,35 +1443,172 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 putString("host_history", org.json.JSONArray(updatedHistory).toString())
                 putString("last_host", host)
                 putString("last_user", user)
+                putString("last_key", selectedKey)
                 apply()
             }
 
             overlayBinding.btnConnect.isEnabled = false
-            if (isHighContrast) {
-                overlayBinding.btnConnect.text = "CONNECTING..."
-            } else {
-                overlayBinding.btnConnect.text = "CONNECTING..."
-            }
+            overlayBinding.btnConnect.text = getString(R.string.terminal_status_connecting)
 
             Thread {
                 try {
-                    val jsch = com.jcraft.jsch.JSch()
+                    val jsch = JSch()
+                    jsch.removeAllIdentity() // Clear previous identities to avoid pollution
+                    
+                    JSch.setLogger(object : com.jcraft.jsch.Logger {
+                        override fun isEnabled(level: Int) = true
+                        override fun log(level: Int, message: String) {
+                            android.util.Log.d("SSH_DEBUG", message)
+                        }
+                    })
+                    
+                    if (selectedKey != getString(R.string.terminal_key_none)) {
+                        if (selectedKey == getString(R.string.terminal_key_browse) && selectedKeyUri != null) {
+                            try {
+                                contentResolver.openInputStream(selectedKeyUri!!)?.use { inputStream ->
+                                    val keyBytes = inputStream.readBytes()
+                                    val passphraseBytes = if (pass.isNotEmpty()) pass.toByteArray() else null
+                                    
+                                    val kp = KeyPair.load(jsch, keyBytes, null)
+                                    if (kp.isEncrypted && passphraseBytes != null) {
+                                        kp.decrypt(passphraseBytes)
+                                    }
+                                    jsch.addIdentity(selectedKeyName ?: "selected_key", keyBytes, null, passphraseBytes)
+                                    android.util.Log.d("SSH_DEBUG", "Added identity from URI: $selectedKeyName")
+                                }
+                            } catch (e: Exception) {
+                                android.util.Log.e("SSH_DEBUG", "Failed to load key from URI: ${e.message}")
+                            }
+                        } else {
+                            val keyFile = keyFilesMap[selectedKey]
+                            if (keyFile != null && keyFile.exists()) {
+                                // ... existing key file logic ...
+                                val privateKeyPath = if (keyFile.name.endsWith(".pub")) {
+                                    keyFile.absolutePath.removeSuffix(".pub")
+                                } else {
+                                    keyFile.absolutePath
+                                }
+                                
+                                val privFile = java.io.File(privateKeyPath)
+                                if (privFile.exists()) {
+                                    try {
+                                        val keyBytes = privFile.readBytes()
+                                        val passphraseBytes = if (pass.isNotEmpty()) pass.toByteArray() else null
+                                        
+                                        val kp = KeyPair.load(jsch, keyBytes, null)
+                                        if (kp.isEncrypted && passphraseBytes != null) {
+                                            kp.decrypt(passphraseBytes)
+                                        }
+                                        val pubFile = java.io.File("$privateKeyPath.pub")
+                                        val pubBytes = if (pubFile.exists()) pubFile.readBytes() else null
+                                        jsch.addIdentity(privFile.absolutePath, keyBytes, pubBytes, passphraseBytes)
+                                        android.util.Log.d("SSH_DEBUG", "Added identity: ${privFile.name}")
+                                    } catch (e: Exception) {
+                                        android.util.Log.e("SSH_DEBUG", "Failed to load key ${privFile.name}: ${e.message}")
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     val session = jsch.getSession(user, host, 22)
-                    session.setPassword(pass)
+                    if (pass.isNotBlank()) {
+                        session.setPassword(pass)
+                    }
                     session.setConfig("StrictHostKeyChecking", "no")
+                    
+                    // Explicitly set preferred order and include keyboard-interactive for better compatibility
+                    session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password")
+                    session.setConfig("PubkeyAcceptedAlgorithms", "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,ssh-rsa")
+                    session.setConfig("server_host_key", "ssh-ed25519,rsa-sha2-512,rsa-sha2-256,ssh-rsa")
+
+                    // Handle interactive auth prompts (common cause of "user auth fail" or "auth cancel")
+                    session.setUserInfo(object : UserInfo, UIKeyboardInteractive {
+                        override fun getPassphrase(): String? = pass
+                        override fun getPassword(): String? = pass
+                        override fun promptPassword(message: String?): Boolean = true
+                        override fun promptPassphrase(message: String?): Boolean = true
+                        override fun promptYesNo(message: String?): Boolean = true
+                        override fun showMessage(message: String?) {
+                            android.util.Log.d("SSH_DEBUG", "UserInfo Message: $message")
+                        }
+                        override fun promptKeyboardInteractive(
+                            destination: String?,
+                            name: String?,
+                            instruction: String?,
+                            prompt: Array<out String>?,
+                            echo: BooleanArray?
+                        ): Array<String>? {
+                            android.util.Log.d("SSH_DEBUG", "Keyboard Interactive Prompt: $instruction")
+                            if (prompt != null && prompt.isNotEmpty()) {
+                                return Array(prompt.size) { pass }
+                            }
+                            return arrayOf()
+                        }
+                    })
+
                     session.connect(10000)
 
-                    val channel = session.openChannel("shell") as com.jcraft.jsch.ChannelShell
+                    val channel = session.openChannel("shell") as ChannelShell
+                    
+                    // Initial PTY size calculation
+                    val paint = overlayBinding.tvTerminalOutput.paint
+                    paint.typeface = android.graphics.Typeface.MONOSPACE
+                    val charWidth = paint.measureText("M")
+                    val charHeight = overlayBinding.tvTerminalOutput.lineHeight.toFloat()
+                    
+                    val initialWidth = if (overlayBinding.svTerminal.width > 0) overlayBinding.svTerminal.width else resources.displayMetrics.widthPixels
+                    val initialHeight = if (overlayBinding.svTerminal.height > 0) overlayBinding.svTerminal.height else (resources.displayMetrics.heightPixels * 0.5).toInt()
+
+                    val cols = (initialWidth / charWidth).toInt().coerceIn(40, 250)
+                    val rows = (initialHeight / charHeight).toInt().coerceIn(10, 100)
+
+                    channel.setPtyType("xterm-256color")
+                    channel.setPtySize(cols, rows, (cols * charWidth).toInt(), (rows * charHeight).toInt())
+                    
                     channel.connect()
 
                     sshSession = session
                     sshChannel = channel
-                    sshIn = channel.inputStream
-                    sshOut = channel.outputStream
+                    sshIn = channel.getInputStream()
+                    sshOut = channel.getOutputStream()
+                    ansiParser = AnsiParser(cols, rows)
 
                     runOnUiThread {
                         overlayBinding.sshLoginPage.visibility = View.GONE
                         overlayBinding.sshTerminalPage.visibility = View.VISIBLE
+                        
+                        // Force initial size
+                        overlayBinding.tvTerminalOutput.requestLayout()
+
+                        // Setup dynamic resize listener
+                        overlayBinding.svTerminal.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+                            val p = overlayBinding.tvTerminalOutput.paint
+                            val cW = p.measureText("M")
+                            val cH = overlayBinding.tvTerminalOutput.lineHeight.toFloat()
+                            
+                            val newCols = (overlayBinding.svTerminal.width / cW).toInt().coerceIn(40, 250)
+                            val newRows = (overlayBinding.svTerminal.height / cH).toInt().coerceIn(10, 100)
+                            
+                            if (ansiParser?.cols != newCols || ansiParser?.rows != newRows) {
+                                sshExecutor.execute {
+                                    try {
+                                        sshChannel?.setPtySize(newCols, newRows, (newCols * cW).toInt(), (newRows * cH).toInt())
+                                        ansiParser?.resize(newCols, newRows)
+                                        
+                                        runOnUiThread {
+                                            // Ensure TextView update is requested
+                                            overlayBinding.tvTerminalOutput.requestLayout()
+                                            
+                                            // Scroll to bottom after resize if needed
+                                            overlayBinding.svTerminal.post {
+                                                overlayBinding.svTerminal.fullScroll(View.FOCUS_DOWN)
+                                            }
+                                        }
+                                    } catch (e: Exception) {}
+                                }
+                            }
+                        }
                         
                         // Maintains keyboard compatibility by not forcing layout_fullscreen
                         dialog.window?.let { win ->
@@ -1538,22 +1622,22 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
                         overlayBinding.btnConnect.isEnabled = true
                         if (isHighContrast) {
-                            overlayBinding.btnConnect.text = "CONNECT"
+                            overlayBinding.btnConnect.text = getString(R.string.terminal_btn_connect)
                         } else {
-                            overlayBinding.btnConnect.text = "CONNECT"
+                            overlayBinding.btnConnect.text = getString(R.string.terminal_btn_connect)
                         }
                         
-                        // Hide keyboard
+                        // Request focus and show keyboard when session starts
+                        overlayBinding.etCommand.requestFocus()
                         val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
-                        imm.hideSoftInputFromWindow(overlayBinding.etCommand.windowToken, 0)
-                        overlayBinding.etCommand.clearFocus()
+                        imm.showSoftInput(overlayBinding.etCommand, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
 
-                        startTerminalReader(overlayBinding)
+                        startTerminalReader()
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
                         overlayBinding.btnConnect.isEnabled = true
-                        overlayBinding.btnConnect.text = if (isHighContrast) "ERR: RE-TRY" else "ERR: RE-TRY"
+                        overlayBinding.btnConnect.text = getString(R.string.terminal_status_error)
                         Toast.makeText(this@MainActivity, "SSH Error: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -1570,78 +1654,134 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
 
         val sendRaw = { bytes: ByteArray ->
-            sshExecutor.execute {
+            sshWriteExecutor.execute {
                 try {
                     sshOut?.write(bytes)
                     sshOut?.flush()
-                } catch (e: Exception) {}
+                } catch (e: Exception) {
+                    android.util.Log.e("SSH_WRITE", "Error sending raw: ${e.message}")
+                }
             }
         }
 
-        overlayBinding.btnUp.setOnClickListener { sendRaw(byteArrayOf(27, 91, 65)) }
-        overlayBinding.btnDown.setOnClickListener { sendRaw(byteArrayOf(27, 91, 66)) }
-        overlayBinding.btnRight.setOnClickListener { sendRaw(byteArrayOf(27, 91, 67)) }
-        overlayBinding.btnLeft.setOnClickListener { sendRaw(byteArrayOf(27, 91, 68)) }
-        overlayBinding.btnTab.setOnClickListener { 
-            sendRaw(byteArrayOf(9))
-            blinkPink(overlayBinding.btnTab)
+        overlayBinding.tvTerminalOutput.setOnClickListener {
+            overlayBinding.etCommand.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+            imm.showSoftInput(overlayBinding.etCommand, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
         }
-        overlayBinding.btnCtrlC.setOnClickListener { 
-            sendRaw(byteArrayOf(3))
-            blinkPink(overlayBinding.btnCtrlC)
+        overlayBinding.svTerminal.setOnClickListener {
+            overlayBinding.etCommand.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+            imm.showSoftInput(overlayBinding.etCommand, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
         }
+        
+        // Ensure proxy is ready
+        overlayBinding.etCommand.setText(" ")
+        overlayBinding.etCommand.setSelection(1)
+        overlayBinding.etCommand.addTextChangedListener(object : android.text.TextWatcher {
+            private var isUpdating = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isUpdating) return
+                val currentText = s.toString()
 
-        var isCtrlPressed = false
-        overlayBinding.btnCtrl.setOnClickListener {
-            isCtrlPressed = !isCtrlPressed
-            if (isHighContrast) {
-                overlayBinding.btnCtrl.setBackgroundResource(
-                    if (isCtrlPressed) R.drawable.status_box_bg_pink else R.drawable.btn_bg_white
-                )
-                overlayBinding.btnCtrl.setTextColor(Color.BLACK)
-            } else {
-                overlayBinding.btnCtrl.setBackgroundResource(
-                    if (isCtrlPressed) R.drawable.btn_bg else R.drawable.btn_bg_dim
-                )
-                overlayBinding.btnCtrl.setTextColor(
-                    if (isCtrlPressed) android.graphics.Color.BLACK else android.graphics.Color.parseColor("#00FF41")
-                )
-            }
-        }
-
-        overlayBinding.etCommand.setOnEditorActionListener { v, actionId, event ->
-            val rawCmd = overlayBinding.etCommand.text.toString()
-            overlayBinding.etCommand.setText("")
-            
-            sshExecutor.execute {
-                try {
-                    if (isCtrlPressed && rawCmd.isNotEmpty()) {
-                        val char = rawCmd[0].lowercaseChar()
-                        if (char in 'a'..'z') {
-                            // Control characters are 1-26 (A-Z)
-                            val ctrlChar = (char.toInt() - 'a'.toInt() + 1).toByte()
-                            sshOut?.write(byteArrayOf(ctrlChar))
-                        } else {
-                            sshOut?.write((rawCmd + "\n").toByteArray())
-                        }
-                        
-                        runOnUiThread {
-                            isCtrlPressed = false
-                            if (isHighContrast) {
-                                overlayBinding.btnCtrl.setBackgroundResource(R.drawable.btn_bg_white)
-                                overlayBinding.btnCtrl.setTextColor(Color.BLACK)
-                            } else {
-                                overlayBinding.btnCtrl.setBackgroundResource(R.drawable.btn_bg_dim)
-                                overlayBinding.btnCtrl.setTextColor(android.graphics.Color.parseColor("#00FF41"))
-                            }
-                        }
+                // If the text is not our single-space proxy, something was typed or deleted
+                if (currentText != " ") {
+                    val textToSend = if (currentText.isEmpty()) {
+                        null // Signifies backspace
+                    } else if (currentText.length > 1 && currentText.startsWith(" ")) {
+                        currentText.substring(1)
+                    } else if (currentText.length == 1 && currentText != " ") {
+                        currentText
                     } else {
-                        sshOut?.write((rawCmd + "\n").toByteArray())
+                        currentText.replace(" ", "")
                     }
-                    sshOut?.flush()
-                } catch (e: Exception) {}
+
+                    sshWriteExecutor.execute {
+                        try {
+                            if (textToSend == null) {
+                                sshOut?.write(byteArrayOf(127)) // DEL (Standard for Backspace in Linux terminals)
+                            } else {
+                                for (char in textToSend) {
+                                    sshOut?.write(char.toString().toByteArray(Charsets.UTF_8))
+                                }
+                            }
+                            sshOut?.flush()
+                        } catch (e: Exception) {
+                            android.util.Log.e("SSH_WRITE", "Error sending text: ${e.message}")
+                        }
+                    }
+
+                    isUpdating = true
+                    overlayBinding.etCommand.setText(" ")
+                    overlayBinding.etCommand.setSelection(1)
+                    isUpdating = false
+                }
             }
-            true
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
+
+        // Catch hardware backspace and other keys that don't trigger TextWatcher
+        overlayBinding.etCommand.setOnKeyListener { _, keyCode, event ->
+            if (event.action == android.view.KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    android.view.KeyEvent.KEYCODE_DEL -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write(byteArrayOf(127)) // DEL
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                    android.view.KeyEvent.KEYCODE_ENTER -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write("\r".toByteArray()) // CR (Carriage Return)
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                    android.view.KeyEvent.KEYCODE_DPAD_UP -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write(byteArrayOf(27, '['.code.toByte(), 'A'.code.toByte()))
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                    android.view.KeyEvent.KEYCODE_DPAD_DOWN -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write(byteArrayOf(27, '['.code.toByte(), 'B'.code.toByte()))
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                    android.view.KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write(byteArrayOf(27, '['.code.toByte(), 'C'.code.toByte()))
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                    android.view.KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        sshWriteExecutor.execute {
+                            try {
+                                sshOut?.write(byteArrayOf(27, '['.code.toByte(), 'D'.code.toByte()))
+                                sshOut?.flush()
+                            } catch (e: Exception) {}
+                        }
+                        return@setOnKeyListener true
+                    }
+                }
+            }
+            false
         }
 
         // If session exists, skip login and restore buffer
@@ -1661,86 +1801,89 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 )
             }
 
-            overlayBinding.tvTerminalOutput.text = terminalOutputBuffer.toString()
+            overlayBinding.tvTerminalOutput.text = ansiParser?.render() ?: ""
             overlayBinding.svTerminal.post {
                 overlayBinding.svTerminal.fullScroll(View.FOCUS_DOWN)
             }
-            startTerminalReader(overlayBinding)
+            
+            // Request focus and show keyboard for existing session
+            overlayBinding.etCommand.postDelayed({
+                overlayBinding.etCommand.requestFocus()
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+                imm.showSoftInput(overlayBinding.etCommand, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+            }, 300)
+
+            startTerminalReader()
         }
 
         dialog.show()
     }
 
-    private fun startTerminalReader(overlayBinding: com.radar.blewifi.databinding.TerminalOverlayBinding) {
+    private fun startTerminalReader() {
+        if (isReaderRunning) return
+        isReaderRunning = true
+        val channel = sshChannel
+        val inputStream = sshIn
+        val parser = ansiParser
         Thread {
-            val reader = java.io.BufferedReader(java.io.InputStreamReader(sshIn))
-            while (sshChannel?.isConnected == true) {
+            val buffer = ByteArray(8192)
+            while (channel?.isConnected == true) {
                 try {
-                    val charBuffer = CharArray(1024)
-                    if (reader.ready()) {
-                        val charsRead = reader.read(charBuffer)
-                        if (charsRead > 0) {
-                            val text = String(charBuffer, 0, charsRead)
+                    val bytesRead = inputStream?.read(buffer) ?: -1
+                    if (bytesRead <= 0) break
+                    val text = String(buffer, 0, bytesRead)
+                    
+                    sshExecutor.execute {
+                        val currentParser = parser ?: ansiParser
+                        currentParser?.parse(text)
+                        val rendered = currentParser?.render()
+                        
+                        if (rendered != null && (currentParser == ansiParser || parser == null)) {
                             runOnUiThread {
-                                terminalOutputBuffer.append(text)
-                                // Keep buffer reasonable size
-                                if (terminalOutputBuffer.length > 10000) {
-                                    terminalOutputBuffer.delete(0, terminalOutputBuffer.length - 8000)
-                                }
-                                overlayBinding.tvTerminalOutput.text = terminalOutputBuffer.toString()
-                                overlayBinding.svTerminal.post {
-                                    overlayBinding.svTerminal.fullScroll(View.FOCUS_DOWN)
+                                activeTerminalBinding?.let { binding ->
+                                    binding.tvTerminalOutput.setText(rendered, TextView.BufferType.SPANNABLE)
+                                    binding.svTerminal.post {
+                                        binding.svTerminal.fullScroll(View.FOCUS_DOWN)
+                                    }
                                 }
                             }
                         }
                     }
-                    Thread.sleep(50)
-                } catch (e: Exception) { break }
+                } catch (e: Exception) { 
+                    android.util.Log.e("SSH_READER", "Error: ${e.message}")
+                    break 
+                }
             }
+            isReaderRunning = false
         }.start()
     }
 
-    private fun startLogoAnimation() {
-        val handler = android.os.Handler(android.os.Looper.getMainLooper())
-        val glitchRunnable = object : Runnable {
-            override fun run() {
-                val duration = (50..150).random().toLong()
-                val isCritical = (1..10).random() == 1
-                
-                // Jitter effect
-                binding.ivLogo.translationX = ((-5..5).random()).toFloat()
-                binding.ivLogo.translationY = ((-2..2).random()).toFloat()
-                
-                if (isCritical) {
-                    binding.ivLogo.setColorFilter(if ((1..2).random() == 1) Color.CYAN else Color.RED)
-                    binding.ivLogo.scaleX = 1.1f
-                } else {
-                    binding.ivLogo.clearColorFilter()
-                    binding.ivLogo.scaleX = 1.0f
+    private fun logoutSSH() {
+        sshWriteExecutor.execute {
+            try {
+                sshOut?.close()
+                sshIn?.close()
+                sshChannel?.disconnect()
+                sshSession?.disconnect()
+            } catch (e: Exception) {
+                android.util.Log.e("SSH_LOGOUT", "Error during logout: ${e.message}")
+            } finally {
+                sshOut = null
+                sshIn = null
+                sshChannel = null
+                sshSession = null
+                ansiParser = null
+                runOnUiThread {
+                    activeTerminalBinding?.tvTerminalOutput?.text = ""
                 }
-
-                handler.postDelayed({
-                    binding.ivLogo.translationX = 0f
-                    binding.ivLogo.translationY = 0f
-                    binding.ivLogo.clearColorFilter()
-                    binding.ivLogo.scaleX = 1.0f
-                    
-                    val nextGlitch = if (isCritical) (500..2000).random() else (100..500).random()
-                    handler.postDelayed(this, nextGlitch.toLong())
-                }, duration)
             }
         }
-        handler.post(glitchRunnable)
+    }
 
-        // Subtler neon pulse combined
-        val neonAnim = android.animation.ValueAnimator.ofFloat(0.7f, 1f)
-        neonAnim.duration = 2000
-        neonAnim.repeatCount = android.animation.ValueAnimator.INFINITE
-        neonAnim.repeatMode = android.animation.ValueAnimator.REVERSE
-        neonAnim.addUpdateListener { anim ->
-            binding.ivLogo.alpha = anim.animatedValue as Float
-        }
-        neonAnim.start()
+    private fun startLogoAnimation() {
+        binding.ivLogo.animate().scaleX(1.1f).scaleY(1.1f).setDuration(100).withEndAction {
+            binding.ivLogo.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start()
+        }.start()
     }
 
     private fun showChangePinDialog() {
@@ -1864,6 +2007,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun showInfoDialog() {
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         val title = "[ BLESP v3 ]"
         val subtitle = "Advanced Signal Analytics - v3 Beta 13"
         val disclaimer = "\"This tool is intended for authorized security testing and red-team operations only. Unauthorized use is strictly prohibited.\""
@@ -1906,17 +2050,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 discStart, discEnd,
                 android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            val discColor = when (currentTheme) {
-                RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-                RadarView.Theme.RED_NIGHT -> Color.RED
-                RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-                RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-                RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-                RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-                RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#FF00FF")
-            }
+            val discColor = colors.accent
             spannable.setSpan(
                 android.text.style.ForegroundColorSpan(discColor),
                 discStart, discEnd,
@@ -1926,17 +2060,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         val titleText = "PROJECT INFO"
         val spannableTitle = android.text.SpannableString(titleText)
-        val titleColor = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-            RadarView.Theme.MORIO -> Color.parseColor("#c3ac3a")
-            else -> Color.parseColor("#FF00FF")
-        }
+        val titleColor = colors.primary
         spannableTitle.setSpan(
             android.text.style.ForegroundColorSpan(titleColor),
             0, titleText.length,
@@ -1951,53 +2075,15 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         dialog.setOnDismissListener { setupImmersiveMode() }
 
         val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-        val isMorio = currentTheme == RadarView.Theme.MORIO
-
+        
         // Background styling
         val bg = android.graphics.drawable.GradientDrawable()
-        when {
-            isHighContrast -> {
-                bg.setColor(android.graphics.Color.WHITE)
-                bg.setStroke(4, android.graphics.Color.BLACK)
-            }
-            isRedNight -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.RED)
-            }
-            isPink -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#FF00FF"))
-            }
-            isNeon -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#E6FB04"))
-            }
-            isNaranja -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#FF8C00"))
-            }
-            isBubblegum -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#00FDFF"))
-            }
-            isSummertime -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#6befff"))
-            }
-            isMorio -> {
-                bg.setColor(android.graphics.Color.BLACK)
-                bg.setStroke(2, android.graphics.Color.parseColor("#c8f29e"))
-            }
-            else -> {
-                bg.setColor(android.graphics.Color.parseColor("#99002200")) // Translucent dark green
-                bg.setStroke(2, android.graphics.Color.parseColor("#00FF41")) // Neon border
-            }
+        if (isHighContrast) {
+            bg.setColor(Color.WHITE)
+            bg.setStroke(4, Color.BLACK)
+        } else {
+            bg.setColor(if (currentTheme == RadarView.Theme.DEFAULT) Color.parseColor("#99002200") else Color.BLACK)
+            bg.setStroke(2, colors.primary)
         }
         bg.cornerRadius = 60f
         dialog.window?.setBackgroundDrawable(bg)
@@ -2008,72 +2094,16 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             it.autoLinkMask = android.text.util.Linkify.WEB_URLS or android.text.util.Linkify.EMAIL_ADDRESSES
             it.movementMethod = android.text.method.LinkMovementMethod.getInstance()
             
-            val linkColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#00FF41")
-            }
+            val linkColor = colors.accent
 
-            when {
-                isHighContrast -> {
-                    it.setTextColor(android.graphics.Color.BLACK)
-                    it.setLinkTextColor(android.graphics.Color.BLACK)
-                }
-                isRedNight -> {
-                    it.setTextColor(android.graphics.Color.RED)
-                    it.setLinkTextColor(android.graphics.Color.RED)
-                }
-                isPink -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#FF00FF"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#FF00FF"))
-                }
-                isNeon -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#E6FB04"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#E6FB04"))
-                }
-                isNaranja -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#FF8C00"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#FF8C00"))
-                }
-                isBubblegum -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#FF00FF"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#00FDFF"))
-                }
-                isSummertime -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#ff9f6b"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#6befff"))
-                }
-                isMorio -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#c3ac3a"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#c8f29e"))
-                }
-                else -> {
-                    it.setTextColor(android.graphics.Color.parseColor("#00FF41"))
-                    it.setLinkTextColor(android.graphics.Color.parseColor("#00FF41"))
-                }
-            }
-            it.typeface = android.graphics.Typeface.MONOSPACE
+            it.setTextColor(colors.primary)
+            it.setLinkTextColor(linkColor)
+            it.typeface = Typeface.MONOSPACE
         }
 
         dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.let {
-            it.setTextColor(when {
-                isHighContrast -> android.graphics.Color.BLACK
-                isRedNight -> android.graphics.Color.RED
-                isPink -> android.graphics.Color.parseColor("#FF00FF")
-                isNeon -> android.graphics.Color.parseColor("#E6FB04")
-                isNaranja -> android.graphics.Color.parseColor("#FF8C00")
-                isBubblegum -> android.graphics.Color.parseColor("#00FDFF")
-                isSummertime -> android.graphics.Color.parseColor("#6befff")
-                isMorio -> android.graphics.Color.parseColor("#c8f29e")
-                else -> android.graphics.Color.parseColor("#FF00FF")
-            })
-            it.setTypeface(null, android.graphics.Typeface.BOLD)
+            it.setTextColor(colors.accent)
+            it.setTypeface(null, Typeface.BOLD)
             val params = it.layoutParams as android.widget.LinearLayout.LayoutParams
             params.bottomMargin = (10 * resources.displayMetrics.density).toInt()
             it.layoutParams = params
@@ -2101,6 +2131,113 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                     }, (50..150).random().toLong())
                 } else {
                     handler.postDelayed(this, (100..500).random().toLong())
+                }
+            }
+        }
+        handler.post(glitchRunnable)
+    }
+
+    private fun showDeviceDetailsDialog(device: ScanDevice) {
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val titleText = "DEVICE DEEP INSIGHTS"
+        
+        val macAddress = device.address
+        val vendorText = device.vendor ?: "Unknown Vendor"
+        val isRandomized = if (device.isRandomizedMac) "YES (Private/Locally Administered)" else "NO (Hardware MAC)"
+        val osFingerprintText = device.osFingerprint ?: "Scanning/Unknown OS"
+        
+        val details = """
+            IDENTIFIER
+            Name: ${device.displayName}
+            Type: ${device.typeLabel}
+            
+            MAC ADDRESS & VENDOR
+            MAC Address: $macAddress
+            OUI Vendor: $vendorText
+            Randomized MAC: $isRandomized
+            
+            OS FINGERPRINTING
+            Detected OS: $osFingerprintText
+            Method: Open ports & banner heuristic response
+            
+            SIGNAL ANALYTICS
+            RSSI: ${device.rssi} dBm (${device.signalStrength})
+            Est. Distance: ${device.distanceLabel}
+            Seen Count: ${device.seenCount}
+        """.trimIndent()
+
+        val spannable = android.text.SpannableStringBuilder(details)
+        
+        // Highlight headers in secondary color
+        val headers = listOf("IDENTIFIER", "MAC ADDRESS & VENDOR", "OS FINGERPRINTING", "SIGNAL ANALYTICS")
+        headers.forEach { header ->
+            val start = details.indexOf(header)
+            if (start >= 0) {
+                spannable.setSpan(
+                    android.text.style.ForegroundColorSpan(colors.accent),
+                    start, start + header.length,
+                    android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable.setSpan(
+                    android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
+                    start, start + header.length,
+                    android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        val spannableTitle = android.text.SpannableString(titleText)
+        spannableTitle.setSpan(
+            android.text.style.ForegroundColorSpan(colors.primary),
+            0, titleText.length,
+            android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            .setTitle(spannableTitle)
+            .setMessage(spannable)
+            .setPositiveButton("CLOSE", null)
+            .show()
+            
+        dialog.setOnDismissListener { setupImmersiveMode() }
+
+        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
+        val bg = android.graphics.drawable.GradientDrawable()
+        if (isHighContrast) {
+            bg.setColor(Color.WHITE)
+            bg.setStroke(4, Color.BLACK)
+        } else {
+            bg.setColor(if (currentTheme == RadarView.Theme.DEFAULT) Color.parseColor("#99002200") else Color.BLACK)
+            bg.setStroke(2, colors.primary)
+        }
+        bg.cornerRadius = 60f
+        dialog.window?.setBackgroundDrawable(bg)
+
+        val messageView = dialog.findViewById<android.widget.TextView>(android.R.id.message)
+        messageView?.let {
+            it.setTextColor(colors.primary)
+            it.typeface = Typeface.MONOSPACE
+            it.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 13f)
+        }
+
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.let {
+            it.setTextColor(colors.accent)
+            it.setTypeface(null, Typeface.BOLD)
+        }
+        
+        // Cyberpunk minor glitch jitter effect
+        val glitchRunnable = object : Runnable {
+            override fun run() {
+                if (!dialog.isShowing) return
+                val decorView = dialog.window?.decorView
+                if ((1..20).random() == 1) {
+                    decorView?.translationX = ((-6..6).random()).toFloat()
+                    handler.postDelayed({
+                        decorView?.translationX = 0f
+                        handler.postDelayed(this, (400..1500).random().toLong())
+                    }, 80L)
+                } else {
+                    handler.postDelayed(this, 250L)
                 }
             }
         }
@@ -2180,15 +2317,19 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             // We need to convert it to a GeoPoint relative to userGeoPoint
             
             // Adjust angle by device rotation to get true bearing
-            val bearing = (device.angle + binding.radarView.rotationDegrees) % 360.0
-            val destination = if (device.type == DeviceType.CAMERA || device.type == DeviceType.AIRCRAFT) {
-                if (device.lat != null && device.lon != null) {
-                    GeoPoint(device.lat!!, device.lon!!)
-                } else {
-                    calculateDestinationPoint(userGeoPoint, dist, bearing)
+            val bearing = (device.angle + (binding.radarView.rotationDegrees + 180f)) % 360.0
+            val destination = when {
+                device.type == DeviceType.WIFI && device.capturedLat != null -> {
+                    GeoPoint(device.capturedLat!!, device.capturedLon!!)
                 }
-            } else {
-                calculateDestinationPoint(userGeoPoint, dist, bearing)
+                device.type == DeviceType.CAMERA || device.type == DeviceType.AIRCRAFT -> {
+                    if (device.lat != null && device.lon != null) {
+                        GeoPoint(device.lat!!, device.lon!!)
+                    } else {
+                        calculateDestinationPoint(userGeoPoint, dist, bearing)
+                    }
+                }
+                else -> calculateDestinationPoint(userGeoPoint, dist, bearing)
             }
 
             var marker = markers[device.id]
@@ -2202,7 +2343,14 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
             marker.position = destination
             marker.title = device.displayName
-            marker.snippet = "${device.typeLabel} | ${device.distanceLabel} | RSSI: ${device.rssi}"
+            var snippetText = "${device.typeLabel} | ${device.distanceLabel} | RSSI: ${device.rssi}"
+            if (device.streetName != null) {
+                val addrStr = "${device.streetName} ${device.houseNumber ?: ""}, ${device.cityName}".replace(" ,", ",")
+                snippetText += "\nLoc: $addrStr"
+            } else if (device.capturedLat != null) {
+                snippetText += "\nLoc: %.5f, %.5f".format(device.capturedLat, device.capturedLon)
+            }
+            marker.snippet = snippetText
             
             // Custom Icon based on device type and status - cached
             marker.icon = getCachedMarkerIcon(device)
@@ -2235,21 +2383,23 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val canvas = Canvas(bitmap)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
+        
         val baseColor = when (device.type) {
-            DeviceType.WIFI, DeviceType.PAGER -> Color.parseColor("#00FF41") // Green
-            DeviceType.BLE, DeviceType.CAR, DeviceType.ESCOOTER, DeviceType.TV, DeviceType.COMPUTER, DeviceType.SMARTPHONE -> Color.parseColor("#FF00FF")  // Pink
-            DeviceType.AIRCRAFT, DeviceType.DRONE -> Color.parseColor("#00FFFF") // Cyan
-            DeviceType.LTE, DeviceType.FIVE_G -> Color.parseColor("#FFB300") // Amber
-            DeviceType.CAMERA -> Color.RED
+            DeviceType.WIFI, DeviceType.PAGER, DeviceType.ROUTER, DeviceType.PRINTER, DeviceType.IOT -> colors.primary
+            DeviceType.BLE, DeviceType.CAR, DeviceType.ESCOOTER, DeviceType.TV, DeviceType.COMPUTER, DeviceType.SMARTPHONE, DeviceType.FLIPPER, DeviceType.HEADPHONES, DeviceType.WEARABLE, DeviceType.TABLET, DeviceType.TRACKER, DeviceType.GAME_CONSOLE -> colors.accent
+            DeviceType.AIRCRAFT, DeviceType.DRONE -> colors.accent
+            DeviceType.LTE, DeviceType.FIVE_G -> colors.primary
+            DeviceType.CAMERA -> if (isHighContrast) Color.BLACK else Color.RED
+            DeviceType.SUBGHZ -> colors.accent
         }
 
-        // Blinking logic for Map markers too?
-        // For simplicity, let's just use the static color or the blink state if we had a global timer
         var finalColor = baseColor
         if (device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP")) {
-            finalColor = Color.parseColor("#FF00FF") // Pink for WEP
+            finalColor = colors.accent
         } else if (device.isAirTag) {
-            finalColor = Color.WHITE
+            finalColor = if (isHighContrast) Color.BLACK else Color.WHITE
         }
 
         paint.color = finalColor
@@ -2257,7 +2407,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 2f
-        paint.color = Color.BLACK
+        paint.color = if (isHighContrast) Color.WHITE else Color.BLACK
         canvas.drawCircle(size / 2f, size / 2f, size / 3f, paint)
 
         return BitmapDrawable(resources, bitmap)
@@ -2322,26 +2472,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             repeatMode = android.animation.ValueAnimator.REVERSE
             repeatCount = android.animation.ValueAnimator.INFINITE
             
-            val colorStart = when (currentTheme) {
-                RadarView.Theme.RED_NIGHT -> Color.RED
-                RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-                RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-                RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-                RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-                RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-                else -> Color.parseColor("#00FF41")
-            }
-            val colorEnd = when (currentTheme) {
-                RadarView.Theme.RED_NIGHT -> Color.parseColor("#660000")
-                RadarView.Theme.PINK -> Color.parseColor("#880088")
-                RadarView.Theme.NEON -> Color.parseColor("#888800")
-                RadarView.Theme.NARANJA -> Color.parseColor("#884400")
-                RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-                RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-                RadarView.Theme.HIGH_CONTRAST -> Color.GRAY
-                else -> Color.parseColor("#FF00FF") // Keep pink accent for default? Or maybe #004411?
-            }
+            val colors = ThemeUtils.getThemeColors(currentTheme)
+            val colorStart = colors.primary
+            val colorEnd = ColorUtils.setAlphaComponent(colors.accent, 128)
             
             addUpdateListener { animator ->
                 val fraction = animator.animatedValue as Float
@@ -2357,17 +2490,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     private fun stopPagerBreathing() {
         pagerBreatheAnim?.cancel()
         pagerBreatheAnim = null
-        val color = when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> Color.parseColor("#FF00FF")
-            RadarView.Theme.NEON -> Color.parseColor("#E6FB04")
-            RadarView.Theme.NARANJA -> Color.parseColor("#FF8C00")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#FF00FF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#ff9f6b")
-            else -> Color.parseColor("#00FF41")
-        }
-        binding.btnPager.setColorFilter(color)
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        binding.btnPager.setColorFilter(colors.primary)
     }
 
     override fun onPause() {
@@ -2468,10 +2592,14 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val filteredForRadar = devices.filter { 
                 when (it.type) {
                     DeviceType.BLE, DeviceType.CAR, DeviceType.ESCOOTER, 
-                    DeviceType.TV, DeviceType.COMPUTER, DeviceType.SMARTPHONE, DeviceType.PAGER -> binding.cbBle.isChecked
+                    DeviceType.TV, DeviceType.COMPUTER, DeviceType.SMARTPHONE, DeviceType.PAGER, DeviceType.HEADPHONES,
+                    DeviceType.WEARABLE, DeviceType.TABLET, DeviceType.IOT, DeviceType.TRACKER, DeviceType.GAME_CONSOLE -> binding.cbBle.isChecked
                     DeviceType.AIRCRAFT, DeviceType.DRONE -> binding.cbAero.isChecked
                     DeviceType.LTE, DeviceType.FIVE_G -> true // Always show or handle differently if needed
                     DeviceType.CAMERA -> binding.cbCams.isChecked
+                    DeviceType.FLIPPER -> binding.cbBle.isChecked
+                    DeviceType.SUBGHZ -> binding.cbBle.isChecked
+                    DeviceType.ROUTER, DeviceType.PRINTER -> binding.cb24.isChecked || binding.cb5.isChecked
                     DeviceType.WIFI -> {
                         val is24 = it.frequency in 2400..2500
                         val is5 = it.frequency in 5000..6000
@@ -2513,44 +2641,11 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val aeroC = filteredForRadar.count { it.type == DeviceType.AIRCRAFT }
             val camC  = filteredForRadar.count { it.type == DeviceType.CAMERA }
 
+            val colors = ThemeUtils.getThemeColors(currentTheme)
+            val numColor = colors.primary
+            val targetColor = colors.accent
+            val aeroNumColor = colors.accent
             val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-            val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-            val isPink = currentTheme == RadarView.Theme.PINK
-            val isNeon = currentTheme == RadarView.Theme.NEON
-            val isNaranja = currentTheme == RadarView.Theme.NARANJA
-            val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-            val isSummertime = currentTheme == RadarView.Theme.SUMMERTIME
-            
-            val numColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#FF00FF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                else -> Color.parseColor("#00FF41")
-            }
-            val targetColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                else -> Color.parseColor("#FF00FF")
-            }
-            val aeroNumColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                else -> Color.parseColor("#00FFFF")
-            }
 
             // Build status string with highlighted numbers
             val sb = android.text.SpannableStringBuilder()
@@ -2723,6 +2818,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun startNoiseBlinking() {
+        binding.btnBeep.animate().cancel()
         binding.btnBeep.textSize = 12f
         
         noisePulsator = android.animation.ObjectAnimator.ofPropertyValuesHolder(
@@ -2739,33 +2835,20 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         startGlitchEffect()
 
         val blinker = object : Runnable {
-            var isPink = true
+            var isAccent = true
             override fun run() {
                 if (!isBeeping) return
-                if (isPink) {
-                    binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_pink)
-                    val color = Color.parseColor("#FF00FF")
-                    binding.btnBeep.setTextColor(color)
-                    binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(color))
+                val colors = ThemeUtils.getThemeColors(currentTheme)
+                if (isAccent) {
+                    binding.btnBeep.setBackgroundResource(colors.statusBoxRes)
+                    binding.btnBeep.setTextColor(colors.accent)
+                    binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(colors.accent))
                 } else {
-                    val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-                    val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-                    
-                    binding.btnBeep.setBackgroundResource(when {
-                        isHighContrast -> R.drawable.status_box_bg_white
-                        isRedNight -> R.drawable.status_box_bg_red
-                        else -> R.drawable.status_box_bg_green
-                    })
-                    
-                    val color = when {
-                        isHighContrast -> Color.BLACK
-                        isRedNight -> Color.RED
-                        else -> Color.parseColor("#00FF41")
-                    }
-                    binding.btnBeep.setTextColor(color)
-                    binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(color))
+                    binding.btnBeep.setBackgroundResource(colors.buttonRes)
+                    binding.btnBeep.setTextColor(colors.primary)
+                    binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(colors.primary))
                 }
-                isPink = !isPink
+                isAccent = !isAccent
                 handler.postDelayed(this, 300)
             }
         }
@@ -2802,8 +2885,11 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun stopNoiseBlinking() {
-        handler.removeCallbacks(noiseBlinkRunnable ?: return)
-        handler.removeCallbacks(glitchRunnable ?: return)
+        noiseHoldRunnable?.let { handler.removeCallbacks(it) }
+        noiseHoldRunnable = null
+        binding.btnBeep.animate().cancel()
+        noiseBlinkRunnable?.let { handler.removeCallbacks(it) }
+        glitchRunnable?.let { handler.removeCallbacks(it) }
         noisePulsator?.cancel()
         noisePulsator = null
         binding.btnBeep.scaleX = 1.0f
@@ -2813,50 +2899,10 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.btnBeep.text = "[ NOISEGENERATOR ]"
         binding.btnBeep.textSize = 10f
         
-        val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val isRedNight = currentTheme == RadarView.Theme.RED_NIGHT
-        val isPink = currentTheme == RadarView.Theme.PINK
-        val isNeon = currentTheme == RadarView.Theme.NEON
-        val isNaranja = currentTheme == RadarView.Theme.NARANJA
-        val isBubblegum = currentTheme == RadarView.Theme.BUBBLEGUM
-        
-        when {
-            isHighContrast -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_white)
-                binding.btnBeep.setTextColor(Color.BLACK)
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.BLACK))
-            }
-            isRedNight -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_red)
-                binding.btnBeep.setTextColor(Color.RED)
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.RED))
-            }
-            isPink -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_pink)
-                binding.btnBeep.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF00FF")))
-            }
-            isNeon -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_neon)
-                binding.btnBeep.setTextColor(Color.parseColor("#E6FB04"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#E6FB04")))
-            }
-            isNaranja -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_naranja)
-                binding.btnBeep.setTextColor(Color.parseColor("#FF8C00"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF8C00")))
-            }
-            isBubblegum -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                binding.btnBeep.setTextColor(Color.parseColor("#FF00FF"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#FF00FF")))
-            }
-            else -> {
-                binding.btnBeep.setBackgroundResource(R.drawable.status_box_bg_green)
-                binding.btnBeep.setTextColor(Color.parseColor("#00FF41"))
-                binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#00FF41")))
-            }
-        }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        binding.btnBeep.setBackgroundResource(colors.statusBoxRes)
+        binding.btnBeep.setTextColor(colors.primary)
+        binding.btnBeep.setCompoundDrawableTintList(android.content.res.ColorStateList.valueOf(colors.primary))
     }
 
     override fun onError(msg: String) {
@@ -2881,15 +2927,6 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
     private var selectedId: String? = null
     var theme: RadarView.Theme = RadarView.Theme.DEFAULT
 
-    private val isHighContrast: Boolean get() = theme == RadarView.Theme.HIGH_CONTRAST
-    private val isRedNight: Boolean get() = theme == RadarView.Theme.RED_NIGHT
-    private val isPink: Boolean get() = theme == RadarView.Theme.PINK
-    private val isNeon: Boolean get() = theme == RadarView.Theme.NEON
-    private val isNaranja: Boolean get() = theme == RadarView.Theme.NARANJA
-    private val isBubblegum: Boolean get() = theme == RadarView.Theme.BUBBLEGUM
-    private val isSummertime: Boolean get() = theme == RadarView.Theme.SUMMERTIME
-    private val isMorio: Boolean get() = theme == RadarView.Theme.MORIO
-
     fun submitList(newList: List<ScanDevice>) {
         list = newList
         notifyDataSetChanged()
@@ -2911,91 +2948,54 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
         val device = list[position]
         holder.name.text = device.displayName
         
+        val colors = ThemeUtils.getThemeColors(theme)
+        val isHighContrast = theme == RadarView.Theme.HIGH_CONTRAST
+        val isRedNight = theme == RadarView.Theme.RED_NIGHT
+        
         val isSelected = device.id == selectedId
-        val selectionColor = when {
-            isHighContrast -> Color.parseColor("#33000000")
-            isRedNight -> Color.parseColor("#33FF0000")
-            isPink -> Color.parseColor("#33FF00FF")
-            isNeon -> Color.parseColor("#33E6FB04")
-            isNaranja -> Color.parseColor("#33FF8C00")
-            isBubblegum -> Color.parseColor("#33FF00FF")
-            isSummertime -> Color.parseColor("#33ff9f6b")
-            isMorio -> Color.parseColor("#33c3ac3a")
-            else -> Color.parseColor("#33FF00FF")
-        }
+        val selectionColor = ColorUtils.setAlphaComponent(colors.accent, 51) // 33 hex is ~51/255 (20%)
+        
         holder.itemView.setBackgroundColor(if (isSelected) selectionColor else Color.TRANSPARENT)
         
         val isWep = device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP")
         val isWhisper = device.isVulnerableWhisperPair
         
-        val nameColor = when {
-            isHighContrast -> Color.BLACK
-            isRedNight -> Color.RED
-            isPink -> Color.parseColor("#FF00FF")
-            isNeon -> Color.parseColor("#E6FB04")
-            isNaranja -> Color.parseColor("#FF8C00")
-            isBubblegum -> Color.parseColor("#FF00FF")
-            isSummertime -> Color.parseColor("#ff9f6b")
-            isMorio -> Color.parseColor("#c3ac3a")
-            device.type == DeviceType.BLE -> Color.parseColor("#0066FF")
-            device.type == DeviceType.AIRCRAFT -> Color.parseColor("#00FFFF")
-            else -> {
+        val nameColor = if (isHighContrast) Color.BLACK 
+            else if (isRedNight) Color.RED
+            else if (device.type == DeviceType.WIFI) {
                 val caps = device.capabilities.uppercase()
                 val is5GHz = device.frequency in 5000..6000
-                when {
-                    is5GHz -> Color.parseColor("#008F22")
-                    caps.contains("WPA") -> Color.parseColor("#00FF41")
-                    else -> Color.WHITE
-                }
-            }
-        }
+                if (is5GHz) colors.dim
+                else if (caps.contains("WPA")) colors.primary
+                else colors.primary
+            } else colors.primary
         
         holder.name.setTextColor(nameColor)
         holder.dist.text = device.distanceLabel
         
-        // Show manufacturer logo behind the device info
+        // Show manufacturer logo
         val isApple = device.manufacturer == "0x004C" || device.name.lowercase().contains("apple") || device.isAirTag
         val isAndroid = device.manufacturer == "0x00E0" || device.name.lowercase().contains("android") || device.isFastPair
         
-        if (isApple) {
+        if (isApple || isAndroid) {
             holder.mfrLogo.visibility = View.VISIBLE
-            holder.mfrLogo.setImageResource(when {
-                isHighContrast -> R.drawable.ic_apple_black
-                isRedNight -> R.drawable.ic_apple_red
-                isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> R.drawable.ic_apple
-                else -> R.drawable.ic_apple
+            holder.mfrLogo.setImageResource(if (isApple) {
+                if (isHighContrast) R.drawable.ic_apple_black else if (isRedNight) R.drawable.ic_apple_red else R.drawable.ic_apple
+            } else {
+                if (isHighContrast) R.drawable.ic_android_black else if (isRedNight) R.drawable.ic_android_red else R.drawable.ic_android
             })
-            if (isSummertime) holder.mfrLogo.setColorFilter(Color.parseColor("#ff9f6b")) 
-            else if (isMorio) holder.mfrLogo.setColorFilter(Color.parseColor("#c3ac3a"))
-            else holder.mfrLogo.clearColorFilter()
-        } else if (isAndroid) {
-            holder.mfrLogo.visibility = View.VISIBLE
-            holder.mfrLogo.setImageResource(when {
-                isHighContrast -> R.drawable.ic_android_black
-                isRedNight -> R.drawable.ic_android_red
-                isPink || isNeon || isNaranja || isBubblegum || isSummertime || isMorio -> R.drawable.ic_android
-                else -> R.drawable.ic_android
-            })
-            if (isSummertime) holder.mfrLogo.setColorFilter(Color.parseColor("#ff9f6b")) 
-            else if (isMorio) holder.mfrLogo.setColorFilter(Color.parseColor("#c3ac3a"))
-            else holder.mfrLogo.clearColorFilter()
+            if (!isHighContrast && !isRedNight && theme != RadarView.Theme.DEFAULT) {
+                holder.mfrLogo.setColorFilter(colors.primary)
+            } else {
+                holder.mfrLogo.clearColorFilter()
+            }
         } else {
             holder.mfrLogo.visibility = View.GONE
         }
         
         // Pink and glowing for close proximity (< 1m)
         if (device.distanceMeters < 1.0) {
-            val closeColor = when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isPink -> Color.parseColor("#FF00FF")
-                isNeon -> Color.parseColor("#E6FB04")
-                isNaranja -> Color.parseColor("#FF8C00")
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#FF00FF")
-            }
+            val closeColor = if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent
             holder.dist.setTextColor(closeColor)
             if (!isHighContrast && !isRedNight) {
                 holder.dist.setShadowLayer(15f, 0f, 0f, closeColor)
@@ -3003,7 +3003,6 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
                 holder.dist.setShadowLayer(0f, 0f, 0f, 0)
             }
             
-            // Pulsate animation for the "glowing" effect
             holder.dist.clearAnimation()
             val anim = android.view.animation.AlphaAnimation(0.5f, 1.0f).apply {
                 duration = 400
@@ -3012,43 +3011,28 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
             }
             holder.dist.startAnimation(anim)
         } else {
-            holder.dist.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.parseColor("#990000")
-                isPink -> Color.parseColor("#990099")
-                isNeon -> Color.parseColor("#B3C403")
-                isNaranja -> Color.parseColor("#995400")
-                isBubblegum -> Color.parseColor("#008A8C")
-                isSummertime -> Color.parseColor("#ff9f6b")
-                isMorio -> Color.parseColor("#244f48")
-                else -> Color.parseColor("#FFB300")
-            })
+            holder.dist.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) ColorUtils.setAlphaComponent(Color.RED, 153) else colors.dim)
             holder.dist.setShadowLayer(0f, 0f, 0f, 0)
             holder.dist.clearAnimation()
             holder.dist.alpha = 1.0f
         }
 
-        holder.addr.text = device.address
-        holder.addr.setTextColor(when {
-            isHighContrast -> Color.DKGRAY
-            isRedNight -> Color.parseColor("#660000")
-            isPink -> Color.parseColor("#660066")
-            isNeon -> Color.parseColor("#666600")
-            isNaranja -> Color.parseColor("#663B00")
-            isBubblegum -> Color.parseColor("#004E50")
-            isSummertime -> Color.parseColor("#66ff9f6b")
-            isMorio -> Color.parseColor("#66c3ac3a")
-            else -> Color.GRAY
-        })
+        holder.addr.text = if (device.streetName != null) {
+            val addrStr = "${device.streetName} ${device.houseNumber ?: ""}, ${device.cityName}".replace(" ,", ",")
+            "${device.address} | ADDR: $addrStr"
+        } else if (device.capturedLat != null) {
+            "${device.address} | ADDR: %.5f, %.5f".format(device.capturedLat, device.capturedLon)
+        } else if (device.lat != null) {
+            "${device.address} | ADDR: %.5f, %.5f".format(device.lat, device.lon)
+        } else {
+            "${device.address} | ADDR: Awaiting GPS..."
+        }
+        holder.addr.setTextColor(if (isHighContrast) Color.DKGRAY else ColorUtils.setAlphaComponent(colors.primary, 102))
 
         // Only show vulnerability text/alarms if it's WEP or WhisperPair
         if (isWep) {
             holder.alarm.visibility = View.VISIBLE
-            holder.alarm.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                else -> Color.RED
-            })
-            // Simple blinking animation
+            holder.alarm.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
             holder.alarm.clearAnimation()
             val anim = android.view.animation.AlphaAnimation(0.0f, 1.0f).apply {
                 duration = 500
@@ -3063,14 +3047,7 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
 
         if (isWhisper) {
             holder.whisper.visibility = View.VISIBLE
-            holder.whisper.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isBubblegum -> Color.parseColor("#00FDFF")
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#FF00FF")
-            })
+            holder.whisper.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
             holder.whisper.clearAnimation()
             val anim = android.view.animation.AlphaAnimation(0.2f, 1.0f).apply {
                 duration = 800
@@ -3085,52 +3062,28 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
 
         if (device.isAirTag) {
             holder.airtag.visibility = View.VISIBLE
-            holder.airtag.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isSummertime -> Color.parseColor("#ff9f6b")
-                isMorio -> Color.parseColor("#c3ac3a")
-                else -> Color.WHITE
-            })
+            holder.airtag.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.primary)
         } else {
             holder.airtag.visibility = View.GONE
         }
 
         if (device.type == DeviceType.AIRCRAFT) {
             holder.aero.visibility = View.VISIBLE
-            holder.aero.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.CYAN
-            })
+            holder.aero.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
         } else {
             holder.aero.visibility = View.GONE
         }
 
         if (device.isCar) {
             holder.car.visibility = View.VISIBLE
-            holder.car.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.parseColor("#FF00FF")
-            })
+            holder.car.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
         } else {
             holder.car.visibility = View.GONE
         }
 
         if (device.isPubliclyConnectable) {
             holder.hijack.visibility = View.VISIBLE
-            holder.hijack.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.YELLOW
-            })
+            holder.hijack.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
         } else {
             holder.hijack.visibility = View.GONE
         }
@@ -3144,13 +3097,7 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
         if (extraVulns.isNotEmpty()) {
             holder.vuln.visibility = View.VISIBLE
             holder.vuln.text = "[ ${extraVulns.joinToString(" | ")} ]"
-            holder.vuln.setTextColor(when {
-                isHighContrast -> Color.BLACK
-                isRedNight -> Color.RED
-                isSummertime -> Color.parseColor("#6befff")
-                isMorio -> Color.parseColor("#c8f29e")
-                else -> Color.YELLOW
-            })
+            holder.vuln.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
             
             // Blink for CVE
             if (device.isVulnerableCVE202536911) {

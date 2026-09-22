@@ -1,0 +1,76 @@
+# ninja log v5
+1	305	1781553684873127697	CMakeFiles/libusb.dir/libusb/descriptor.c.o	dffdbacb954012f0
+2	160	1781553919089363869	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc2580.c.o	80f67e948fa74580
+0	444	1781553784100200655	CMakeFiles/libusb.dir/libusb/core.c.o	a74a5faa6a8115a0
+1	194	1781553783845270461	CMakeFiles/libusb.dir/libusb/sync.c.o	c231f93de77c0c03
+2	421	1781553684990304993	CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o	1f4a63f6f81def1c
+1	154	1781553684723237182	CMakeFiles/libusb.dir/libusb/strerror.c.o	1f1789feebb98e2c
+1	191	1781553684759877068	CMakeFiles/libusb.dir/libusb/hotplug.c.o	18afa578c28f7f6b
+2	145	1781553919075585871	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc0012.c.o	7d2c986001ed8f29
+2	171	1781553684740582604	CMakeFiles/libusb.dir/libusb/os/events_posix.c.o	9660a17669e11368
+2	189	1781553684758229728	CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o	6c2231ae2d2797dd
+2	156	1781553919087131459	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_fc0013.c.o	dda0b6a6adad8611
+4	147	1781553684715997253	CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o	2cf1e0dd8f99a048
+1	216	1781553919147625462	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_e4k.c.o	c8654a566174a59d
+230	285	1781553783941556826	CMakeFiles/tempestsdr_core.dir/tsdr/threading.c.o	23fe4051b4286b7
+1	125	1781553883723664584	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+305	368	1781553919302256000	librtlsdr.a	5ccbda7e3ab8ba82
+134	239	1781553783889964884	CMakeFiles/tempestsdr_core.dir/tsdr/syncdetector.c.o	fc08866dd92791a5
+4	128	1781553919058946517	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+1	282	1781553684851184498	CMakeFiles/libusb.dir/libusb/io.c.o	db317102befbc1a5
+4	141	1781553919073048092	CMakeFiles/tempestsdr_jni.dir/jni_bridge.c.o	6802f1c231612291
+183	248	1781553783904717486	CMakeFiles/tempestsdr_core.dir/tsdr/superbandwidth.c.o	7e9bc6376210e555
+2	219	1781553919151471171	CMakeFiles/rtlsdr.dir/rtlsdr/tuner_r82xx.c.o	9ba1ee208f523e35
+3	165	1781553919099255000	libtempestsdr_core.a	61523bf5c672935d
+194	289	1781553783945269914	CMakeFiles/tempestsdr_core.dir/tsdr/circbuff.c.o	7af86cec96335280
+1	305	1781553919233875708	CMakeFiles/rtlsdr.dir/rtlsdr/rtl-sdr.c.o	fa9bbd2f92d7dd28
+6	134	1781553783787693104	CMakeFiles/tempestsdr_core.dir/tsdr/dsp.c.o	14fd54ee0296ea80
+1	95	1781553883694047000	liblibusb.a	8febeca12f8bf3a0
+1	173	1781553984905497898	CMakeFiles/libusb.dir/libusb/strerror.c.o	5003876ccfb698e1
+3	173	1781553984903602772	CMakeFiles/libusb.dir/libusb/os/threads_posix.c.o	35ab4a5dbca23d
+1	181	1781553984915508977	CMakeFiles/libusb.dir/libusb/sync.c.o	537e7c801e723a5
+1	223	1781553984955052926	CMakeFiles/libusb.dir/libusb/hotplug.c.o	d3be21a4b595ca4c
+2	238	1781553984971949566	CMakeFiles/libusb.dir/libusb/os/linux_netlink.c.o	c17b5861c68f8310
+2	239	1781553984973228414	CMakeFiles/libusb.dir/libusb/os/events_posix.c.o	f35eaf9477270ad9
+1	339	1781553985072429509	CMakeFiles/libusb.dir/libusb/io.c.o	1c9e2d8a14eea0ef
+1	357	1781553985089457771	CMakeFiles/libusb.dir/libusb/descriptor.c.o	d3e27bb87e684301
+0	373	1781553985107328932	CMakeFiles/libusb.dir/libusb/core.c.o	193637782090fb34
+1	465	1781553985199517510	CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o	9b57bb33967f804d
+466	527	1781553985264648000	liblibusb.a	8febeca12f8bf3a0
+527	598	1781553985330578885	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+2	83	1781556227695327718	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+2	270	1781556227880260774	CMakeFiles/rtlsdr.dir/rtlsdr/rtl-sdr.c.o	fa9bbd2f92d7dd28
+2	378	1781556227986415863	CMakeFiles/libusb.dir/libusb/os/linux_usbfs.c.o	9b57bb33967f804d
+378	455	1781556228069547000	liblibusb.a	8febeca12f8bf3a0
+455	526	1781556228140120000	librtlsdr.a	5ccbda7e3ab8ba82
+526	645	1781556228249157247	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+2	80	1781557254324117774	CMakeFiles/tempestsdr_core.dir/tsdr/circbuff.c.o	7af86cec96335280
+2	80	1781557254324651158	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+2	98	1781557254341861569	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+98	167	1781557254414174000	libtempestsdr_core.a	61523bf5c672935d
+1	254	1781557254497570370	CMakeFiles/rtlsdr.dir/rtlsdr/rtl-sdr.c.o	fa9bbd2f92d7dd28
+254	323	1781557254570545000	librtlsdr.a	5ccbda7e3ab8ba82
+323	399	1781557254642789579	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+1	73	1781557368962753260	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+1	91	1781557368986188233	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+91	193	1781557369090149000	libtempestsdr_core.a	61523bf5c672935d
+193	273	1781557369166087478	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+0	63	1781557460718810300	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+63	140	1781557460794877525	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+3	109	1781557543060299875	CMakeFiles/tempestsdr_jni.dir/jni_bridge.c.o	6802f1c231612291
+109	212	1781557543162513993	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+3	595	1781588322482657457	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+595	762	1781588322653447000	libtempestsdr_core.a	61523bf5c672935d
+762	1028	1781588322913025227	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+1	83	1781588597113897773	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+83	148	1781588597181304000	libtempestsdr_core.a	61523bf5c672935d
+148	232	1781588597260122747	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+2	87	1781593142028181996	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+87	153	1781593142096365000	libtempestsdr_core.a	61523bf5c672935d
+153	242	1781593142179381573	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f
+1	277	1781602969106171339	CMakeFiles/tempestsdr_core.dir/tsdr/circbuff.c.o	7af86cec96335280
+1	278	1781602969106194255	CMakeFiles/tempestsdr_jni.dir/rtlsdr_plugin.c.o	8940d0113752ae53
+1	281	1781602969111344692	CMakeFiles/tempestsdr_jni.dir/jni_bridge.c.o	6802f1c231612291
+0	286	1781602969117046372	CMakeFiles/tempestsdr_core.dir/tsdr/TSDRLibrary.c.o	3813f6174abfd76c
+286	376	1781602969209828000	libtempestsdr_core.a	61523bf5c672935d
+377	574	1781602969403341541	/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/build/intermediates/cxx/Debug/j4c2k514/obj/armeabi-v7a/libtempestsdr_jni.so	d875911e8f8ded3f

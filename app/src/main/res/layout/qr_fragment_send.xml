@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Removed tv_send_title -->
+
+        <RadioGroup
+            android:id="@+id/modePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <RadioButton
+                android:id="@+id/radioFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="File"
+                android:checked="true"
+                android:fontFamily="monospace" />
+
+            <RadioButton
+                android:id="@+id/radioText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Text"
+                android:fontFamily="monospace" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/paneFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="14dp">
+
+            <Button
+                android:id="@+id/btnPickFile"
+                style="@style/Node8.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select File" />
+
+            <TextView
+                android:id="@+id/fileLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:text="Any file · up to 64 MB"
+                android:fontFamily="monospace"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/paneSnippet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="12dp">
+
+            <EditText
+                android:id="@+id/snippetText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="5"
+                android:gravity="top"
+                android:fontFamily="monospace"
+                android:hint="Paste or type anything…"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#444444"
+                android:background="@null"
+                android:padding="4dp" />
+
+            <Button
+                android:id="@+id/btnStartSnippet"
+                style="@style/Node8.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Start text stream" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/stage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <ImageView android:id="@+id/qr0" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" />
+            <ImageView android:id="@+id/qr1" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:visibility="gone" />
+            <ImageView android:id="@+id/qr2" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:visibility="gone" />
+            <ImageView android:id="@+id/qr3" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:visibility="gone" />
+            <ImageView android:id="@+id/qr4" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:visibility="gone" />
+            <ImageView android:id="@+id/qr5" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_columnWeight="1" android:layout_margin="2dp" android:scaleType="fitCenter" android:adjustViewBounds="true" android:visibility="gone" />
+        </GridLayout>
+
+        <Button
+            android:id="@+id/btnStop"
+            style="@style/Node8.Button.Outline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Stop"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/statusLine"
+            style="@style/Node8.Hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Choose a file to begin" />
+
+        <LinearLayout
+            android:id="@+id/transfer_settings_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_marginTop="14dp">
+
+            <TextView
+                android:id="@+id/tv_settings_label"
+                style="@style/Node8.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TRANSFER SETTINGS"
+                android:textColor="?attr/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView style="@style/Node8.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="tx fps" />
+                    <Spinner android:id="@+id/spinFps" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView style="@style/Node8.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="bytes / frame" />
+                    <Spinner android:id="@+id/spinBytes" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView style="@style/Node8.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="error correction" />
+                    <Spinner android:id="@+id/spinEcc" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView style="@style/Node8.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="layout" />
+                    <Spinner android:id="@+id/spinGrid" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

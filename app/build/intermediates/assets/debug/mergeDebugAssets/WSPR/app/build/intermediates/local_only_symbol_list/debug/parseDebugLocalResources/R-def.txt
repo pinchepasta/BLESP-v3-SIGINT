@@ -1,0 +1,30 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color cyan_dark
+color cyan_primary
+color dark_background
+color dark_surface
+color hacker_pink
+color neon_green
+color patched_green
+color testing_blue
+color text_primary
+color text_secondary
+color text_tertiary
+color vulnerable_red
+color warning_orange
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable iconpixl
+mipmap ic_launcher
+mipmap ic_launcher_background
+mipmap ic_launcher_foreground
+mipmap ic_launcher_monochrome
+mipmap ic_launcher_round
+string app_name
+style Theme.WSPR
+xml backup_rules
+xml data_extraction_rules
+xml file_paths

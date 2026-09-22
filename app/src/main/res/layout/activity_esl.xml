@@ -1,64 +1,455 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/eslRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#000000">
 
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/headerEsl"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="12dp"
         android:gravity="center_vertical"
         android:background="#0F0F0F">
 
         <Button
-            android:id="@+id/btnScanBarcode"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:text="SCANNER"
-            android:fontFamily="monospace"
-            android:textColor="#00FF41"
-            android:textSize="12sp"
-            android:background="@drawable/status_box_bg_green"
-            android:layout_marginEnd="8dp"
-            style="?attr/borderlessButtonStyle" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
             android:id="@+id/btnEslBack"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:minWidth="80dp"
-            android:text="CLOSE"
+            android:layout_height="40dp"
+            android:text="@string/btn_close"
             android:fontFamily="monospace"
-            android:textColor="#FF00FF"
+            android:textColor="#00FF41"
+            android:background="@android:color/transparent"
             android:textSize="12sp"
-            android:background="@drawable/status_box_bg_pink"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
             style="?attr/borderlessButtonStyle" />
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/webViewEsl"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-        <!-- Overlay for native scanner if needed -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Section 01: Target ESL -->
+                <LinearLayout
+                    android:id="@+id/sectionTarget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/item_bg_cyber"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvLabelBarcode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BARCODE / TAG ID"
+                        android:fontFamily="monospace"
+                        android:textSize="11sp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <EditText
+                        android:id="@+id/etBarcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tactical_input_bg"
+                        android:text="N4611470825513274"
+                        android:textColor="#00FF41"
+                        android:fontFamily="monospace"
+                        android:textSize="13sp"
+                        android:inputType="text"
+                        android:layout_marginBottom="24dp"
+                        android:singleLine="true"
+                        android:padding="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnScanBarcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="SCAN BARCODE"
+                        android:fontFamily="monospace"
+                        android:textColor="#FF00FF"
+                        android:textSize="11sp"
+                        android:background="@drawable/btn_outline_only"
+                        android:layout_marginBottom="24dp"
+                        android:padding="0dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="8dp">
+                            <TextView
+                                android:id="@+id/tvLabelWidth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="WIDTH (PX)"
+                                android:fontFamily="monospace"
+                                android:textSize="11sp"
+                                android:layout_marginBottom="8dp"/>
+                            <EditText
+                                android:id="@+id/etWidth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/tactical_input_bg"
+                                android:text="200"
+                                android:textColor="#00FF41"
+                                android:fontFamily="monospace"
+                                android:textSize="13sp"
+                                android:inputType="number"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvLabelHeight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="HEIGHT (PX)"
+                                android:fontFamily="monospace"
+                                android:textSize="11sp"
+                                android:layout_marginBottom="8dp"/>
+                            <EditText
+                                android:id="@+id/etHeight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/tactical_input_bg"
+                                android:text="80"
+                                android:textColor="#00FF41"
+                                android:fontFamily="monospace"
+                                android:textSize="13sp"
+                                android:inputType="number"
+                                android:padding="10dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabelRepeats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TX REPEATS"
+                        android:fontFamily="monospace"
+                        android:textSize="11sp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="8dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+                        <SeekBar
+                            android:id="@+id/sbRepeats"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="500"
+                            android:progress="200" />
+                        <TextView
+                            android:id="@+id/tvRepeatsVal"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:text="200"
+                            android:textColor="#00FF41"
+                            android:fontFamily="monospace"
+                            android:gravity="end"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLabelDelay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DELAY (MS)"
+                        android:fontFamily="monospace"
+                        android:textSize="11sp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+                        <SeekBar
+                            android:id="@+id/sbDelay"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="100"
+                            android:progress="15" />
+                        <TextView
+                            android:id="@+id/tvDelayVal"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:text="15"
+                            android:fontFamily="monospace"
+                            android:gravity="end"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:id="@+id/containerPlid"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/tactical_input_bg"
+                            android:padding="8dp"
+                            android:gravity="center"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:id="@+id/tvPlidDisplay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="—"
+                                android:fontFamily="monospace"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/containerCrc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/tactical_input_bg"
+                            android:padding="8dp"
+                            android:gravity="center"
+                            android:layout_marginStart="4dp">
+                            <TextView
+                                android:id="@+id/tvCrcDisplay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="—"
+                                android:fontFamily="monospace"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tabs Mock -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabsEsl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabMode="fixed"
+                    android:layout_marginBottom="2dp">
+                    <com.google.android.material.tabs.TabItem android:text="IMAGE" />
+                    <com.google.android.material.tabs.TabItem android:text="IR FILE" />
+                    <com.google.android.material.tabs.TabItem android:text="XBM" />
+                    <com.google.android.material.tabs.TabItem android:text="PROTO" />
+                </com.google.android.material.tabs.TabLayout>
+
+                <!-- Tab Content: Image -->
+                <LinearLayout
+                    android:id="@+id/tabContentImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#171717"
+                    android:padding="16dp">
+
+                    <Button
+                        android:id="@+id/btnSelectImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="ADD IMAGE"
+                        android:textColor="#606060"
+                        android:fontFamily="monospace"
+                        android:background="@drawable/btn_outline_only"
+                        android:layout_marginBottom="12dp"
+                        android:padding="0dp" />
+
+                    <ImageView
+                        android:id="@+id/ivPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:scaleType="fitCenter"
+                        android:background="#000000"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:id="@+id/tvPreviewLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="200 × 80 PX"
+                        android:fontFamily="monospace"
+                        android:gravity="end"
+                        android:textSize="10sp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/btnExportXbm"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="EXPORT XBM"
+                            android:textColor="#00FF41"
+                            android:background="@drawable/btn_outline_only"
+                            android:fontFamily="monospace"
+                            android:textSize="11sp"
+                            android:layout_marginEnd="4dp"
+                            android:padding="0dp" />
+                        <Button
+                            android:id="@+id/btnGenerateIr"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="GENERATE IR"
+                            android:textColor="#00FF41"
+                            android:background="@drawable/btn_outline_only"
+                            android:fontFamily="monospace"
+                            android:textSize="11sp"
+                            android:layout_marginStart="4dp"
+                            android:padding="0dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tab Content: IR File (Hidden by default) -->
+                <LinearLayout
+                    android:id="@+id/tabContentIr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#171717"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvLabelCmdType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="COMMAND TYPE"
+                        android:fontFamily="monospace"
+                        android:textSize="11sp"
+                        android:layout_marginBottom="8dp"/>
+                    <Spinner
+                        android:id="@+id/spIrCmd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tactical_input_bg"
+                        android:layout_marginBottom="12dp"/>
+
+                    <Button
+                        android:id="@+id/btnBuildIr"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="GENERATE IR FILE"
+                        android:textColor="#00FF41"
+                        android:background="@drawable/btn_outline_only"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="12dp"
+                        android:padding="0dp" />
+
+                    <TextView
+                        android:id="@+id/tvIrOutput"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@drawable/tactical_input_bg"
+                        android:text="// Generated .ir content will appear here"
+                        android:textColor="#606060"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:scrollbars="vertical"
+                        android:textIsSelectable="true"/>
+                </LinearLayout>
+
+                <!-- Tab Content: XBM (Hidden by default) -->
+                <LinearLayout
+                    android:id="@+id/tabContentXbm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#171717"
+                    android:padding="16dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tvXbmOutput"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@drawable/tactical_input_bg"
+                        android:text="// XBM Data"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:scrollbars="vertical"
+                        android:textIsSelectable="true"/>
+                </LinearLayout>
+
+                <!-- Tab Content: Proto (Hidden by default) -->
+                <LinearLayout
+                    android:id="@+id/tabContentProto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tvProtoInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="HANSHOW / NEWTON ESL PROTOCOL\n\nIR carrier: 1.255 MHz\nModulation: 38 kHz\nEncoding: Manchester / NRZ\n\nPacket Structure:\n[SYNC 9ms] [PLID 7B] [CMD 1B] [PAYLOAD NB] [CRC-8]"
+                        android:background="@drawable/item_bg_cyber"
+                        android:padding="12dp"
+                        android:fontFamily="monospace"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+
+                <!-- Deploy Section -->
+                <LinearLayout
+                    android:id="@+id/sectionDeploy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <Button
+                        android:id="@+id/btnDownloadScript"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="EXPORT SCRIPT"
+                        android:background="@drawable/btn_outline_only"
+                        android:fontFamily="monospace"
+                        android:padding="0dp" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Overlay for native scanner -->
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraPreview"
             android:layout_width="match_parent"
@@ -81,6 +472,8 @@
             android:text="ALIGN BARCODE"
             android:textColor="#00FF41"
             android:fontFamily="monospace"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:visibility="gone" />
 
     </FrameLayout>

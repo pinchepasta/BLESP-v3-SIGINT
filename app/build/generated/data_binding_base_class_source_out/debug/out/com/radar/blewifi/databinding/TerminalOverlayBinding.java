@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,31 +29,13 @@ public final class TerminalOverlayBinding implements ViewBinding {
   public final Button btnConnect;
 
   @NonNull
-  public final Button btnCtrl;
+  public final Button btnSshLoginClose;
 
   @NonNull
-  public final Button btnCtrlC;
+  public final Button btnSshLogout;
 
   @NonNull
-  public final Button btnDown;
-
-  @NonNull
-  public final Button btnLeft;
-
-  @NonNull
-  public final Button btnRight;
-
-  @NonNull
-  public final Button btnSshLoginBack;
-
-  @NonNull
-  public final Button btnSshTerminalBack;
-
-  @NonNull
-  public final Button btnTab;
-
-  @NonNull
-  public final Button btnUp;
+  public final Button btnSshTerminalClose;
 
   @NonNull
   public final LinearLayout connectionLayout;
@@ -71,13 +53,10 @@ public final class TerminalOverlayBinding implements ViewBinding {
   public final EditText etUser;
 
   @NonNull
-  public final LinearLayout headerSshLogin;
-
-  @NonNull
   public final LinearLayout headerSshTerminal;
 
   @NonNull
-  public final ImageView ivLogoSshLogin;
+  public final Spinner spKeyFile;
 
   @NonNull
   public final LinearLayout sshLoginPage;
@@ -87,9 +66,6 @@ public final class TerminalOverlayBinding implements ViewBinding {
 
   @NonNull
   public final ScrollView svTerminal;
-
-  @NonNull
-  public final LinearLayout terminalControlsRoot;
 
   @NonNull
   public final LinearLayout terminalLayout;
@@ -104,40 +80,30 @@ public final class TerminalOverlayBinding implements ViewBinding {
   public final TextView tvTerminalOutput;
 
   private TerminalOverlayBinding(@NonNull RelativeLayout rootView, @NonNull Button btnConnect,
-      @NonNull Button btnCtrl, @NonNull Button btnCtrlC, @NonNull Button btnDown,
-      @NonNull Button btnLeft, @NonNull Button btnRight, @NonNull Button btnSshLoginBack,
-      @NonNull Button btnSshTerminalBack, @NonNull Button btnTab, @NonNull Button btnUp,
-      @NonNull LinearLayout connectionLayout, @NonNull EditText etCommand,
-      @NonNull AutoCompleteTextView etHost, @NonNull EditText etPassword, @NonNull EditText etUser,
-      @NonNull LinearLayout headerSshLogin, @NonNull LinearLayout headerSshTerminal,
-      @NonNull ImageView ivLogoSshLogin, @NonNull LinearLayout sshLoginPage,
-      @NonNull LinearLayout sshTerminalPage, @NonNull ScrollView svTerminal,
-      @NonNull LinearLayout terminalControlsRoot, @NonNull LinearLayout terminalLayout,
+      @NonNull Button btnSshLoginClose, @NonNull Button btnSshLogout,
+      @NonNull Button btnSshTerminalClose, @NonNull LinearLayout connectionLayout,
+      @NonNull EditText etCommand, @NonNull AutoCompleteTextView etHost,
+      @NonNull EditText etPassword, @NonNull EditText etUser,
+      @NonNull LinearLayout headerSshTerminal, @NonNull Spinner spKeyFile,
+      @NonNull LinearLayout sshLoginPage, @NonNull LinearLayout sshTerminalPage,
+      @NonNull ScrollView svTerminal, @NonNull LinearLayout terminalLayout,
       @NonNull RelativeLayout terminalRoot, @NonNull TextView tvSshLoginTitle,
       @NonNull TextView tvTerminalOutput) {
     this.rootView = rootView;
     this.btnConnect = btnConnect;
-    this.btnCtrl = btnCtrl;
-    this.btnCtrlC = btnCtrlC;
-    this.btnDown = btnDown;
-    this.btnLeft = btnLeft;
-    this.btnRight = btnRight;
-    this.btnSshLoginBack = btnSshLoginBack;
-    this.btnSshTerminalBack = btnSshTerminalBack;
-    this.btnTab = btnTab;
-    this.btnUp = btnUp;
+    this.btnSshLoginClose = btnSshLoginClose;
+    this.btnSshLogout = btnSshLogout;
+    this.btnSshTerminalClose = btnSshTerminalClose;
     this.connectionLayout = connectionLayout;
     this.etCommand = etCommand;
     this.etHost = etHost;
     this.etPassword = etPassword;
     this.etUser = etUser;
-    this.headerSshLogin = headerSshLogin;
     this.headerSshTerminal = headerSshTerminal;
-    this.ivLogoSshLogin = ivLogoSshLogin;
+    this.spKeyFile = spKeyFile;
     this.sshLoginPage = sshLoginPage;
     this.sshTerminalPage = sshTerminalPage;
     this.svTerminal = svTerminal;
-    this.terminalControlsRoot = terminalControlsRoot;
     this.terminalLayout = terminalLayout;
     this.terminalRoot = terminalRoot;
     this.tvSshLoginTitle = tvSshLoginTitle;
@@ -177,57 +143,21 @@ public final class TerminalOverlayBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnCtrl;
-      Button btnCtrl = ViewBindings.findChildViewById(rootView, id);
-      if (btnCtrl == null) {
+      id = R.id.btnSshLoginClose;
+      Button btnSshLoginClose = ViewBindings.findChildViewById(rootView, id);
+      if (btnSshLoginClose == null) {
         break missingId;
       }
 
-      id = R.id.btnCtrlC;
-      Button btnCtrlC = ViewBindings.findChildViewById(rootView, id);
-      if (btnCtrlC == null) {
+      id = R.id.btnSshLogout;
+      Button btnSshLogout = ViewBindings.findChildViewById(rootView, id);
+      if (btnSshLogout == null) {
         break missingId;
       }
 
-      id = R.id.btnDown;
-      Button btnDown = ViewBindings.findChildViewById(rootView, id);
-      if (btnDown == null) {
-        break missingId;
-      }
-
-      id = R.id.btnLeft;
-      Button btnLeft = ViewBindings.findChildViewById(rootView, id);
-      if (btnLeft == null) {
-        break missingId;
-      }
-
-      id = R.id.btnRight;
-      Button btnRight = ViewBindings.findChildViewById(rootView, id);
-      if (btnRight == null) {
-        break missingId;
-      }
-
-      id = R.id.btnSshLoginBack;
-      Button btnSshLoginBack = ViewBindings.findChildViewById(rootView, id);
-      if (btnSshLoginBack == null) {
-        break missingId;
-      }
-
-      id = R.id.btnSshTerminalBack;
-      Button btnSshTerminalBack = ViewBindings.findChildViewById(rootView, id);
-      if (btnSshTerminalBack == null) {
-        break missingId;
-      }
-
-      id = R.id.btnTab;
-      Button btnTab = ViewBindings.findChildViewById(rootView, id);
-      if (btnTab == null) {
-        break missingId;
-      }
-
-      id = R.id.btnUp;
-      Button btnUp = ViewBindings.findChildViewById(rootView, id);
-      if (btnUp == null) {
+      id = R.id.btnSshTerminalClose;
+      Button btnSshTerminalClose = ViewBindings.findChildViewById(rootView, id);
+      if (btnSshTerminalClose == null) {
         break missingId;
       }
 
@@ -261,21 +191,15 @@ public final class TerminalOverlayBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.headerSshLogin;
-      LinearLayout headerSshLogin = ViewBindings.findChildViewById(rootView, id);
-      if (headerSshLogin == null) {
-        break missingId;
-      }
-
       id = R.id.headerSshTerminal;
       LinearLayout headerSshTerminal = ViewBindings.findChildViewById(rootView, id);
       if (headerSshTerminal == null) {
         break missingId;
       }
 
-      id = R.id.ivLogoSshLogin;
-      ImageView ivLogoSshLogin = ViewBindings.findChildViewById(rootView, id);
-      if (ivLogoSshLogin == null) {
+      id = R.id.spKeyFile;
+      Spinner spKeyFile = ViewBindings.findChildViewById(rootView, id);
+      if (spKeyFile == null) {
         break missingId;
       }
 
@@ -294,12 +218,6 @@ public final class TerminalOverlayBinding implements ViewBinding {
       id = R.id.svTerminal;
       ScrollView svTerminal = ViewBindings.findChildViewById(rootView, id);
       if (svTerminal == null) {
-        break missingId;
-      }
-
-      id = R.id.terminalControlsRoot;
-      LinearLayout terminalControlsRoot = ViewBindings.findChildViewById(rootView, id);
-      if (terminalControlsRoot == null) {
         break missingId;
       }
 
@@ -323,11 +241,10 @@ public final class TerminalOverlayBinding implements ViewBinding {
         break missingId;
       }
 
-      return new TerminalOverlayBinding((RelativeLayout) rootView, btnConnect, btnCtrl, btnCtrlC,
-          btnDown, btnLeft, btnRight, btnSshLoginBack, btnSshTerminalBack, btnTab, btnUp,
-          connectionLayout, etCommand, etHost, etPassword, etUser, headerSshLogin,
-          headerSshTerminal, ivLogoSshLogin, sshLoginPage, sshTerminalPage, svTerminal,
-          terminalControlsRoot, terminalLayout, terminalRoot, tvSshLoginTitle, tvTerminalOutput);
+      return new TerminalOverlayBinding((RelativeLayout) rootView, btnConnect, btnSshLoginClose,
+          btnSshLogout, btnSshTerminalClose, connectionLayout, etCommand, etHost, etPassword,
+          etUser, headerSshTerminal, spKeyFile, sshLoginPage, sshTerminalPage, svTerminal,
+          terminalLayout, terminalRoot, tvSshLoginTitle, tvTerminalOutput);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

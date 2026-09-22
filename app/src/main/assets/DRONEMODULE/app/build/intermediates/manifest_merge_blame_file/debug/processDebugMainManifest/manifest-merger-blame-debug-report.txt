@@ -1,0 +1,161 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tempestsdr"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+7-->INJECTED
+8        android:minSdkVersion="28"
+8-->INJECTED
+9        android:targetSdkVersion="34" />
+9-->INJECTED
+10
+11    <!-- USB Host access (no special permission needed; granted via intent-filter) -->
+12    <uses-feature
+12-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:6:5-86
+13        android:name="android.hardware.usb.host"
+13-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:6:19-59
+14        android:required="true" />
+14-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:6:60-83
+15
+16    <permission
+16-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+17        android:name="com.tempestsdr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.tempestsdr.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:8:5-40:19
+23        android:allowBackup="true"
+23-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:9:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.9.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/f83a4a9ca7e8beb4576eaa3f81930fd7/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+25        android:debuggable="true"
+26        android:extractNativeLibs="false"
+26-->INJECTED
+27        android:icon="@mipmap/ic_launcher"
+27-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:10:9-43
+28        android:label="@string/app_name"
+28-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:11:9-41
+29        android:roundIcon="@mipmap/ic_launcher_round"
+29-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:12:9-54
+30        android:supportsRtl="true"
+30-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:13:9-35
+31        android:testOnly="true"
+32        android:theme="@style/Theme.RFVideoReceiver" >
+32-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:14:9-53
+33        <activity
+33-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:16:9-38:20
+34            android:name="com.tempestsdr.MainActivity"
+34-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:17:13-41
+35            android:configChanges="orientation|screenSize|keyboardHidden"
+35-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:20:13-74
+36            android:exported="true"
+36-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:18:13-36
+37            android:label="@string/app_name"
+37-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:22:13-45
+38            android:launchMode="singleTop"
+38-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:21:13-43
+39            android:screenOrientation="fullSensor" >
+39-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:19:13-51
+40            <intent-filter>
+40-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:24:13-27:29
+41                <action android:name="android.intent.action.MAIN" />
+41-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:25:17-69
+41-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:25:25-66
+42
+43                <category android:name="android.intent.category.LAUNCHER" />
+43-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:26:17-77
+43-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:26:27-74
+44            </intent-filter>
+45
+46            <!-- Auto-launch when an RTL-SDR dongle is connected -->
+47            <intent-filter>
+47-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:30:13-32:29
+48                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:31:17-90
+48-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:31:25-87
+49            </intent-filter>
+50
+51            <meta-data
+51-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:34:13-36:61
+52                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+52-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:35:17-79
+53                android:resource="@xml/usb_device_filter" />
+53-->/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/TempestSDR-Android/app/src/main/AndroidManifest.xml:36:17-58
+54        </activity>
+55
+56        <provider
+56-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+57            android:name="androidx.startup.InitializationProvider"
+57-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+58            android:authorities="com.tempestsdr.androidx-startup"
+58-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+59            android:exported="false" >
+59-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+60            <meta-data
+60-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+61                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+61-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+62                android:value="androidx.startup" />
+62-->[androidx.emoji2:emoji2:1.2.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/73c640a2bb1775d83d96d8c7b95cedec/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+63            <meta-data
+63-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/94731ae4a4a7a07960c455ef9d14c74e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+64                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+64-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/94731ae4a4a7a07960c455ef9d14c74e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+65                android:value="androidx.startup" />
+65-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/94731ae4a4a7a07960c455ef9d14c74e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+66            <meta-data
+66-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+67                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+67-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+68                android:value="androidx.startup" />
+68-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+69        </provider>
+70
+71        <receiver
+71-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+72            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+72-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+73            android:directBootAware="false"
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+74            android:enabled="true"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+75            android:exported="true"
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+76            android:permission="android.permission.DUMP" >
+76-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+77            <intent-filter>
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+78                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+79            </intent-filter>
+80            <intent-filter>
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+81                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+82            </intent-filter>
+83            <intent-filter>
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+84                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+85            </intent-filter>
+86            <intent-filter>
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+87                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/feinlabsfilms/.gradle/caches/9.3.1/transforms/9907f59c01a83e115da57b26c56baa16/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+88            </intent-filter>
+89        </receiver>
+90    </application>
+91
+92</manifest>

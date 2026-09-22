@@ -26,11 +26,6 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
     private lateinit var scanner: ScannerManager
     private lateinit var currentDevice: ScanDevice
 
-    private var GREEN  = Color.parseColor("#00FF41")
-    private var CYAN   = Color.parseColor("#00FFFF")
-    private var AMBER  = Color.parseColor("#FFB300")
-    private var PINK   = Color.parseColor("#FF00FF")
-
     private var currentTheme = RadarView.Theme.DEFAULT
 
     private val handler = Handler(Looper.getMainLooper())
@@ -50,8 +45,6 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val themeName = prefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         currentTheme = try { RadarView.Theme.valueOf(themeName!!) } catch (e: Exception) { RadarView.Theme.DEFAULT }
 
-        updateThemeColors()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
@@ -68,23 +61,24 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        applyThemeToUI()
+        scanner = (application as RadarApplication).scanner
+        scanner.addListener(this)
 
         @Suppress("DEPRECATION")
         val device = intent.getParcelableExtra<ScanDevice>(EXTRA_DEVICE) ?: run {
             finish(); return
         }
         currentDevice = device
-
-        scanner = ScannerManager(this)
-        scanner.addListener(this)
         
         displayDevice(device)
         updateAlarmButton()
         updateSoundButton()
         applyGlow(binding.btnBack, true)
 
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener {
+            finish()
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
 
         binding.tvAddress.setOnClickListener {
             val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
@@ -104,26 +98,7 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             updateSoundButton()
         }
 
-        binding.btnEsl.setOnClickListener {
-            val packageName = "com.mostlyawesome.tagtinker"
-            val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
-            if (launchIntent != null) {
-                startActivity(launchIntent)
-            } else {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/pinchepasta/ESL-Tag-Tools"))
-                startActivity(browserIntent)
-            }
-        }
 
-        binding.btnBeepAirTag.setOnClickListener {
-            if (currentDevice.isAirTag) {
-                binding.btnBeepAirTag.text = "► 03 BEEPING..."
-                toneGenerator?.startTone(ToneGenerator.TONE_DTMF_D, 1000)
-                handler.postDelayed({
-                    binding.btnBeepAirTag.text = "► 03 TRIGGER BEEP"
-                }, 3000)
-            }
-        }
 
         val exploits = when (currentDevice.type) {
             DeviceType.WIFI -> arrayOf(
@@ -197,6 +172,22 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 "Stagefright (CVE-2015-3824)",
                 "SIMjacker (CVE-2019-16256)"
             )
+            DeviceType.CAMERA -> arrayOf(
+                "Shodan Leak (CVE-2020-25078)",
+                "Mirai Botnet (Telnet)",
+                "ONVIF Auth Bypass",
+                "Cloud-Relay Intercept",
+                "RTSP Stream Hijack",
+                "Firmware Backdoor (RCE)"
+            )
+            DeviceType.DRONE -> arrayOf(
+                "DDoS Advertising Flood",
+                "Remote ID Spoofing",
+                "GPS Jamming / RTH Hijack",
+                "Protocol Deauth (OcuSync)",
+                "Inertial Sensor Spoofing",
+                "C2 Signal Replay"
+            )
             DeviceType.PAGER -> arrayOf(
                 "POCSAG Intercept (SDR)",
                 "FLEX Decryption",
@@ -214,39 +205,23 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val adapter = object : android.widget.ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, exploits) {
             override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
+                val colors = ThemeUtils.getThemeColors(currentTheme)
                 (v as? android.widget.TextView)?.setTextColor(getDeviceColor(currentDevice.type))
-                (v as? android.widget.TextView)?.setBackgroundColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) Color.WHITE else Color.TRANSPARENT)
+                (v as? android.widget.TextView)?.setBackgroundColor(if (currentTheme == RadarView.Theme.HIGH_CONTRAST) colors.background else Color.TRANSPARENT)
                 (v as? android.widget.TextView)?.typeface = android.graphics.Typeface.MONOSPACE
                 return v
             }
             override fun getDropDownView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
                 val v = super.getDropDownView(position, convertView, parent)
+                val colors = ThemeUtils.getThemeColors(currentTheme)
                 (v as? android.widget.TextView)?.setTextColor(getDeviceColor(currentDevice.type))
-                (v as? android.widget.TextView)?.setBackgroundColor(
-                    when (currentTheme) {
-                        RadarView.Theme.HIGH_CONTRAST -> Color.WHITE
-                        RadarView.Theme.RED_NIGHT -> Color.BLACK
-                        RadarView.Theme.PINK -> Color.BLACK
-                        RadarView.Theme.NEON -> Color.BLACK
-                        RadarView.Theme.NARANJA -> Color.BLACK
-                        RadarView.Theme.BUBBLEGUM -> Color.BLACK
-                        RadarView.Theme.SUMMERTIME -> Color.BLACK
-                        RadarView.Theme.MORIO -> Color.BLACK
-                        RadarView.Theme.DEFAULT -> Color.BLACK
-                    }
-                )
+                (v as? android.widget.TextView)?.setBackgroundColor(colors.background)
                 (v as? android.widget.TextView)?.typeface = android.graphics.Typeface.MONOSPACE
                 return v
             }
         }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spExploits.adapter = adapter
-        
-        if (currentTheme == RadarView.Theme.RED_NIGHT) {
-            binding.spExploits.background = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.btn_bg_red)
-        } else if (currentTheme == RadarView.Theme.MORIO) {
-            binding.spExploits.background = androidx.appcompat.content.res.AppCompatResources.getDrawable(this, R.drawable.btn_bg_morio)
-        }
         
         binding.spExploits.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -339,6 +314,24 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
                         4 -> "Risk: HIGH. Address Spoofing exploits the lack of source authentication in paging networks. An attacker can impersonate a central dispatch console and send messages that appear to come from a trusted authority, tricking the recipient into revealing sensitive information or performing unauthorized actions. [Tools: BladeRF, custom Python-SDR-scripts]"
                         else -> ""
                     }
+                    DeviceType.CAMERA -> when(position) {
+                        0 -> "Risk: CRITICAL | CVE-2020-25078. This vulnerability allows an unauthenticated attacker to bypass authentication and gain access to the camera's administrative interface. From there, they can view live video feeds, change security settings, and potentially use the camera as a pivot point for attacking other devices on the local network. [Tools: Shodan, custom exploit-scripts]"
+                        1 -> "Risk: HIGH. The Mirai botnet exploits default Telnet credentials (like admin/admin) commonly found on IP cameras and other IoT devices. Once a device is infected, it becomes part of a global botnet used to launch massive Distributed Denial of Service (DDoS) attacks against high-profile targets. [Tools: Mirai-source, Telnet-scanners]"
+                        2 -> "Risk: HIGH. ONVIF Authentication Bypass targets the standard protocol used by IP cameras. By exploiting flaws in the Digest Authentication implementation, an attacker can gain access to the RTSP stream and PTZ controls without providing the correct credentials, enabling unauthorized surveillance. [Tools: ONVIF-Device-Manager, custom Python-ONVIF-scripts]"
+                        3 -> "Risk: MEDIUM. Cloud-Relay Intercept targets the communication between the camera and the manufacturer's cloud servers. By performing a DNS poisoning or Man-in-the-Middle attack, an attacker can intercept the encrypted video stream as it's being uploaded, potentially gaining access to private video recordings. [Tools: Bettercap, Wireshark, DNS-spoofers]"
+                        4 -> "Risk: HIGH. RTSP Stream Hijacking involves intercepting the Real-Time Streaming Protocol used for video transmission. If the stream is unencrypted or uses weak authentication, an attacker can easily view the live feed and even inject their own video content into the stream, tricking the monitoring operator. [Tools: VLC, FFmpeg, RTSP-scanners]"
+                        5 -> "Risk: CRITICAL. Firmware Backdoor vulnerabilities involve undocumented administrative accounts or debug interfaces left in the production firmware. Attackers can exploit these to gain root access to the camera's operating system, allowing for persistent surveillance and the installation of additional malware. [Tools: Binwalk, Firmware-Mod-Kit]"
+                        else -> ""
+                    }
+                    DeviceType.DRONE -> when(position) {
+                        0 -> "Risk: MEDIUM. A DoS Advertising Flood involves saturating the drone's communication channels with fake advertising packets. This can prevent the pilot's controller from establishing a stable connection, potentially leading to a loss of control and triggering an automatic 'Return to Home' sequence. [Tools: ESP32-BLE-Payload, mdk4]"
+                        1 -> "Risk: HIGH. Remote ID Spoofing involves broadcasting fake Remote ID signals that mimic multiple drones. This can be used to create 'ghost drones' on aviation tracking systems, confusing air traffic controllers and other pilots, and potentially concealing the presence of a real, malicious drone. [Tools: HackRF, Remote-ID-sender, custom SDR-scripts]"
+                        2 -> "Risk: CRITICAL. GPS Jamming or RTH Hijacking involves drowning out the drone's GNSS signals or providing fake coordinates. This can cause the drone to lose its position lock and drift, or trigger a 'Return to Home' to an attacker-controlled location, allowing for the silent capture of the drone. [Tools: GPS-SDR-SIM, BladeRF, Jammer-Pro]"
+                        3 -> "Risk: HIGH. Protocol Deauthentication targets the OcuSync or other proprietary drone communication protocols. By sending spoofed deauth packets, an attacker can force the drone to disconnect from the pilot's controller, potentially causing it to crash or enter an unguided flight state. [Tools: USRP, custom FPGA-SDR, OcuSync-deauth-scripts]"
+                        4 -> "Risk: LOW. Inertial Sensor Spoofing uses resonant ultrasonic frequencies to vibrate the drone's MEMS gyroscope and accelerometer. This can trick the drone's flight controller into thinking it's tilting or rotating, causing it to make sudden, dangerous maneuvers that can lead to a crash. [Tools: Signal Generator, Ultrasonic Transducer]"
+                        5 -> "Risk: MEDIUM. C2 Signal Replay involves capturing the Command and Control signals sent from the pilot's controller and re-broadcasting them later. This can be used to repeat maneuvers or to interfere with the pilot's current commands, potentially causing the drone to behave unpredictably. [Tools: Portapack H2, HackRF One]"
+                        else -> ""
+                    }
                     else -> "Detailed risk analysis for this vector is pending manual evaluation. This device exhibits signals consistent with non-standard RF signatures, requiring further packet-level inspection."
                 }
             }
@@ -347,7 +340,7 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         toneGenerator = ToneGenerator(AudioManager.STREAM_ALARM, 100)
         
-        scanner.startScanning()
+        applyThemeToUI()
         startBlink()
         startBeeping()
         startAlarmNeonAnimation()
@@ -371,247 +364,50 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         )
     }
 
-    private fun updateThemeColors() {
-        when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> {
-                GREEN = Color.BLACK
-                CYAN = Color.BLACK
-                AMBER = Color.BLACK
-                PINK = Color.BLACK
-            }
-            RadarView.Theme.RED_NIGHT -> {
-                GREEN = Color.RED
-                CYAN = Color.RED
-                AMBER = Color.RED
-                PINK = Color.RED
-            }
-            RadarView.Theme.DEFAULT -> {
-                GREEN = Color.parseColor("#00FF41")
-                CYAN = Color.parseColor("#00FFFF")
-                AMBER = Color.parseColor("#FFB300")
-                PINK = Color.parseColor("#FF00FF")
-            }
-            RadarView.Theme.PINK -> {
-                GREEN = Color.parseColor("#FF00FF")
-                CYAN = Color.parseColor("#FF1493")
-                AMBER = Color.parseColor("#FF69B4")
-                PINK = Color.parseColor("#FF00FF")
-            }
-            RadarView.Theme.NEON -> {
-                GREEN = Color.parseColor("#E6FB04")
-                CYAN = Color.parseColor("#E6FB04")
-                AMBER = Color.parseColor("#E6FB04")
-                PINK = Color.parseColor("#E6FB04")
-            }
-            RadarView.Theme.NARANJA -> {
-                GREEN = Color.parseColor("#FF8C00")
-                CYAN = Color.parseColor("#FF8C00")
-                AMBER = Color.parseColor("#FF8C00")
-                PINK = Color.parseColor("#FF8C00")
-            }
-            RadarView.Theme.BUBBLEGUM -> {
-                GREEN = Color.parseColor("#FF00FF") // Neon Magenta
-                CYAN = Color.parseColor("#00FDFF") // Turquoise
-                AMBER = Color.parseColor("#00FDFF")
-                PINK = Color.parseColor("#FF00FF")
-            }
-            RadarView.Theme.SUMMERTIME -> {
-                GREEN = Color.parseColor("#ff9f6b")
-                CYAN = Color.parseColor("#6befff")
-                AMBER = Color.parseColor("#6befff")
-                PINK = Color.parseColor("#ff9f6b")
-            }
-            RadarView.Theme.MORIO -> {
-                GREEN = Color.parseColor("#c3ac3a")
-                CYAN = Color.parseColor("#c8f29e")
-                AMBER = Color.parseColor("#c8f29e")
-                PINK = Color.parseColor("#c8f29e")
-            }
-        }
-    }
-
     private fun applyThemeToUI() {
-        when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> {
-                binding.root.setBackgroundColor(Color.WHITE)
-                val textColor = Color.BLACK
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(textColor)
-                binding.tvRssi.setTextColor(textColor)
-                binding.tvDist.setTextColor(textColor)
-                binding.tvExtra1.setTextColor(textColor)
-                binding.tvExtra2.setTextColor(textColor)
-                binding.tvExtra3.setTextColor(textColor)
-                binding.tvExtra4.setTextColor(textColor)
-                binding.tvExtra5.setTextColor(textColor)
-                binding.tvExtra6.setTextColor(textColor)
-                binding.tvFastPair.setTextColor(textColor)
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_white_dim)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#F0F0F0"))
-                binding.tvExploitDesc.setTextColor(textColor)
-                
-                binding.btnBack.setBackgroundResource(R.drawable.status_box_bg_white_pink)
-                binding.btnBack.setTextColor(Color.BLACK)
-            }
-            RadarView.Theme.RED_NIGHT -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.RED
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(Color.parseColor("#990000"))
-                binding.tvRssi.setTextColor(Color.parseColor("#990000"))
-                binding.tvDist.setTextColor(textColor)
-                binding.tvExtra1.setTextColor(Color.parseColor("#990000"))
-                binding.tvExtra2.setTextColor(Color.parseColor("#990000"))
-                binding.tvExtra3.setTextColor(Color.parseColor("#990000"))
-                binding.tvExtra4.setTextColor(Color.parseColor("#990000"))
-                binding.tvExtra5.setTextColor(Color.parseColor("#990000"))
-                binding.tvExtra6.setTextColor(Color.parseColor("#990000"))
-                binding.tvFastPair.setTextColor(Color.parseColor("#990000"))
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_red)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1A0000"))
-                binding.tvExploitDesc.setTextColor(Color.parseColor("#990000"))
-            }
-            RadarView.Theme.DEFAULT -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                // Default XML colors are mostly fine, but let's be explicit
-                binding.tvTitle.setTextColor(GREEN)
-                binding.tvType.setTextColor(GREEN)
-                binding.tvName.setTextColor(GREEN)
-                binding.tvAddress.setTextColor(Color.parseColor("#00AA2A"))
-                binding.tvRssi.setTextColor(Color.parseColor("#00AA2A"))
-                binding.tvDist.setTextColor(Color.parseColor("#00AA2A"))
-                binding.tvSelectExploitLabel.setTextColor(GREEN)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_dim)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1AFFFFFF"))
-                binding.tvExploitDesc.setTextColor(Color.parseColor("#888888"))
-            }
-            RadarView.Theme.PINK -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#FF00FF")
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(Color.parseColor("#990099"))
-                binding.tvRssi.setTextColor(Color.parseColor("#990099"))
-                binding.tvDist.setTextColor(Color.parseColor("#990099"))
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_dim)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1A001A"))
-                binding.tvExploitDesc.setTextColor(Color.parseColor("#990099"))
-            }
-            RadarView.Theme.NEON -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#E6FB04")
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(Color.parseColor("#B3C403"))
-                binding.tvRssi.setTextColor(Color.parseColor("#B3C403"))
-                binding.tvDist.setTextColor(Color.parseColor("#B3C403"))
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_neon)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1A1A00"))
-                binding.tvExploitDesc.setTextColor(Color.parseColor("#B3C403"))
-            }
-            RadarView.Theme.NARANJA -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#FF8C00")
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(Color.parseColor("#995400"))
-                binding.tvRssi.setTextColor(Color.parseColor("#995400"))
-                binding.tvDist.setTextColor(Color.parseColor("#995400"))
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_naranja)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1A0F00"))
-                binding.tvExploitDesc.setTextColor(Color.parseColor("#995400"))
-            }
-            RadarView.Theme.BUBBLEGUM -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#FF00FF") // Neon Magenta
-                val accentColor = Color.parseColor("#00FDFF") // Turquoise
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(accentColor)
-                binding.tvRssi.setTextColor(accentColor)
-                binding.tvDist.setTextColor(accentColor)
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_bubblegum)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#1A001A"))
-                binding.tvExploitDesc.setTextColor(accentColor)
-            }
-            RadarView.Theme.SUMMERTIME -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#ff9f6b") // Peach
-                val accentColor = Color.parseColor("#6befff") // Cyan
-                val secondaryColor = Color.parseColor("#996befff") // Dim Cyan
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val isWhite = currentTheme == RadarView.Theme.HIGH_CONTRAST
+        binding.root.setBackgroundColor(colors.background)
 
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(secondaryColor)
-                binding.tvRssi.setTextColor(secondaryColor)
-                binding.tvDist.setTextColor(textColor)
+        binding.btnBack.setBackgroundResource(colors.statusBoxRes)
 
-                binding.tvExtra1.setTextColor(secondaryColor)
-                binding.tvExtra2.setTextColor(secondaryColor)
-                binding.tvExtra3.setTextColor(secondaryColor)
-                binding.tvExtra4.setTextColor(secondaryColor)
-                binding.tvExtra5.setTextColor(secondaryColor)
-                binding.tvExtra6.setTextColor(secondaryColor)
-                binding.tvFastPair.setTextColor(secondaryColor)
+        val textColor = colors.primary
+        val accentColor = colors.accent
+        val dimColor = colors.dim
 
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_summertime)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#2A1F1A"))
-                binding.tvExploitDesc.setTextColor(accentColor)
-            }
-            RadarView.Theme.MORIO -> {
-                binding.root.setBackgroundColor(Color.BLACK)
-                val textColor = Color.parseColor("#c3ac3a") // Main Green
-                val accentColor = Color.parseColor("#c8f29e") // Cyanish accent
-                val secondaryColor = Color.parseColor("#99c8f29e") // Dim Cyan
+        binding.tvTitle.setTextColor(textColor)
+        binding.tvType.setTextColor(textColor)
+        binding.tvName.setTextColor(textColor)
+        binding.tvAddress.setTextColor(dimColor)
+        binding.tvRssi.setTextColor(dimColor)
+        binding.tvDist.setTextColor(accentColor)
+        binding.tvExtra1.setTextColor(dimColor)
+        binding.tvExtra2.setTextColor(dimColor)
+        binding.tvExtra3.setTextColor(dimColor)
+        binding.tvExtra4.setTextColor(dimColor)
+        binding.tvExtra5.setTextColor(dimColor)
+        binding.tvExtra6.setTextColor(dimColor)
+        binding.tvFastPair.setTextColor(dimColor)
+        binding.tvSelectExploitLabel.setTextColor(textColor)
 
-                binding.tvTitle.setTextColor(textColor)
-                binding.tvType.setTextColor(textColor)
-                binding.tvName.setTextColor(textColor)
-                binding.tvAddress.setTextColor(secondaryColor)
-                binding.tvRssi.setTextColor(secondaryColor)
-                binding.tvDist.setTextColor(textColor)
+        binding.spExploits.setBackgroundResource(colors.buttonRes)
 
-                binding.tvExtra1.setTextColor(secondaryColor)
-                binding.tvExtra2.setTextColor(secondaryColor)
-                binding.tvExtra3.setTextColor(secondaryColor)
-                binding.tvExtra4.setTextColor(secondaryColor)
-                binding.tvExtra5.setTextColor(secondaryColor)
-                binding.tvExtra6.setTextColor(secondaryColor)
-                binding.tvFastPair.setTextColor(secondaryColor)
-
-                binding.tvSelectExploitLabel.setTextColor(textColor)
-                binding.spExploits.setBackgroundResource(R.drawable.btn_bg_morio)
-                binding.tvExploitDesc.setBackgroundColor(Color.parseColor("#244f48"))
-                binding.tvExploitDesc.setTextColor(accentColor)
-            }
-        }
+        binding.tvExploitDesc.setBackgroundColor(colors.header)
+        binding.tvExploitDesc.setTextColor(dimColor)
+        
+        binding.btnBack.setTextColor(if (isWhite) Color.BLACK else textColor)
     }
 
     private fun startAlarmNeonAnimation() {
         if (currentTheme == RadarView.Theme.HIGH_CONTRAST) return // Skip glow in white themes
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         val anim = android.animation.ValueAnimator.ofFloat(2f, 12f)
         anim.duration = 1500
         anim.repeatCount = android.animation.ValueAnimator.INFINITE
         anim.repeatMode = android.animation.ValueAnimator.REVERSE
         anim.addUpdateListener { valueAnimator ->
             val radius = valueAnimator.animatedValue as Float
-            val glowColor = PINK
+            val glowColor = colors.primary
             binding.btnAlarm.setShadowLayer(radius, 0f, 0f, glowColor)
         }
         anim.start()
@@ -619,6 +415,7 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     private fun updateAlarmButton() {
         val enabled = scanner.isAlarmEnabled(currentDevice.id)
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         val action = if (enabled) "OFF" else "ON"
         val text = "► 01 ALARM: $action"
         val spannable = android.text.SpannableString(text)
@@ -627,26 +424,16 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val alarmIdx = text.indexOf("ALARM")
         val statusIdx = text.indexOf(": ") + 2
 
-        val labelColor = when(currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.parseColor("#990000")
-            RadarView.Theme.PINK -> Color.parseColor("#990099")
-            RadarView.Theme.NEON -> Color.parseColor("#B3C403")
-            RadarView.Theme.NARANJA -> Color.parseColor("#995400")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-            RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#00AA2A")
-        }
+        val labelColor = colors.dim
 
         if (protocolIdx != -1) {
-            spannable.setSpan(android.text.style.ForegroundColorSpan(GREEN), protocolIdx, protocolIdx + 4, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(android.text.style.ForegroundColorSpan(colors.primary), protocolIdx, protocolIdx + 4, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         if (alarmIdx != -1) {
             spannable.setSpan(android.text.style.ForegroundColorSpan(labelColor), alarmIdx, alarmIdx + 5, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         if (statusIdx >= 2) {
-            val statusColor = if (enabled) PINK else labelColor
+            val statusColor = if (enabled) colors.primary else labelColor
             spannable.setSpan(android.text.style.ForegroundColorSpan(statusColor), statusIdx, text.length, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         
@@ -656,24 +443,15 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     private fun updateSoundButton() {
         val status = if (isSoundEnabled) "ON" else "OFF"
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         val text = "► 02 SOUND: $status"
         val spannable = android.text.SpannableString(text)
         
         val protocolIdx = text.indexOf("► 02")
-        val labelColor = when(currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.parseColor("#990000")
-            RadarView.Theme.PINK -> Color.parseColor("#990099")
-            RadarView.Theme.NEON -> Color.parseColor("#B3C403")
-            RadarView.Theme.NARANJA -> Color.parseColor("#995400")
-            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-            RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
-            else -> Color.parseColor("#00AA2A")
-        }
+        val labelColor = colors.dim
 
         if (protocolIdx != -1) {
-            spannable.setSpan(android.text.style.ForegroundColorSpan(GREEN), protocolIdx, protocolIdx + 4, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(android.text.style.ForegroundColorSpan(colors.primary), protocolIdx, protocolIdx + 4, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         
         val soundLabelIdx = text.indexOf("SOUND: ")
@@ -681,7 +459,7 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             spannable.setSpan(android.text.style.ForegroundColorSpan(labelColor), soundLabelIdx, soundLabelIdx + 7, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             
             val statusIdx = soundLabelIdx + 7
-            val statusColor = if (isSoundEnabled) PINK else labelColor
+            val statusColor = if (isSoundEnabled) colors.primary else labelColor
             spannable.setSpan(android.text.style.ForegroundColorSpan(statusColor), statusIdx, text.length, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         
@@ -689,8 +467,10 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         applyGlow(binding.btnSound, isSoundEnabled)
     }
 
+
     private fun applyGlow(button: View, active: Boolean) {
         buttonAnimators[button]?.cancel()
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         if (active) {
             val pvhX = android.animation.PropertyValuesHolder.ofFloat(View.SCALE_X, 1.0f, 1.05f)
             val pvhY = android.animation.PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.0f, 1.05f)
@@ -702,20 +482,9 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             }
             buttonAnimators[button] = anim
             if (button is Button) {
-                val bgRes = when(currentTheme) {
-                    RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_white
-                    RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_red
-                    RadarView.Theme.PINK -> R.drawable.btn_bg_pink
-                    RadarView.Theme.NEON -> R.drawable.btn_bg_neon
-                    RadarView.Theme.NARANJA -> R.drawable.btn_bg_naranja
-                    RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_bubblegum
-                    RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime
-                    RadarView.Theme.MORIO -> R.drawable.btn_bg_morio
-                    RadarView.Theme.DEFAULT -> R.drawable.btn_bg
-                }
-                button.setBackgroundResource(bgRes)
+                button.setBackgroundResource(colors.buttonRes)
                 if (button.id != binding.btnSound.id && button.id != binding.btnAlarm.id) {
-                    val glowColor = PINK
+                    val glowColor = colors.primary
                     setCyberText(button, button.text.toString(), glowColor)
                 }
             }
@@ -723,32 +492,11 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             button.scaleX = 1.0f
             button.scaleY = 1.0f
             if (button is Button) {
-                val bgRes = when(currentTheme) {
-                    RadarView.Theme.HIGH_CONTRAST -> R.drawable.btn_bg_white_dim
-                    RadarView.Theme.RED_NIGHT -> R.drawable.btn_bg_red
-                    RadarView.Theme.PINK -> R.drawable.btn_bg_dim
-                    RadarView.Theme.NEON -> R.drawable.btn_bg_dim
-                    RadarView.Theme.NARANJA -> R.drawable.btn_bg_dim
-                    RadarView.Theme.BUBBLEGUM -> R.drawable.btn_bg_dim
-                    RadarView.Theme.SUMMERTIME -> R.drawable.btn_bg_summertime_dim
-                    RadarView.Theme.MORIO -> R.drawable.btn_bg_morio_dim
-                    RadarView.Theme.DEFAULT -> R.drawable.btn_bg_dim
-                }
-                button.setBackgroundResource(bgRes)
+                button.setBackgroundResource(colors.buttonDimRes)
                 if (button.id != binding.btnSound.id && button.id != binding.btnAlarm.id) {
                     val color = when (button.id) {
-                        binding.btnAlarm.id -> when(currentTheme) {
-                            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-                            RadarView.Theme.RED_NIGHT -> Color.parseColor("#990000")
-                            RadarView.Theme.PINK -> Color.parseColor("#990099")
-                            RadarView.Theme.NEON -> Color.parseColor("#B3C403")
-                            RadarView.Theme.NARANJA -> Color.parseColor("#995400")
-                            RadarView.Theme.BUBBLEGUM -> Color.parseColor("#00FDFF")
-                            RadarView.Theme.SUMMERTIME -> Color.parseColor("#6befff")
-                            RadarView.Theme.MORIO -> Color.parseColor("#c8f29e")
-                            else -> Color.parseColor("#00AA2A")
-                        }
-                        else -> GREEN
+                        binding.btnAlarm.id -> colors.dim
+                        else -> colors.primary
                     }
                     setCyberText(button, button.text.toString(), color)
                 }
@@ -758,12 +506,13 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
     }
 
     private fun setCyberText(button: Button, text: String, contentColor: Int) {
+        val colors = ThemeUtils.getThemeColors(currentTheme)
         val spannable = android.text.SpannableString(text)
         
         val protocolIdx = text.indexOf("►")
         
         if (protocolIdx != -1) {
-            spannable.setSpan(android.text.style.ForegroundColorSpan(GREEN), protocolIdx, protocolIdx + 4, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(android.text.style.ForegroundColorSpan(colors.primary), protocolIdx, protocolIdx + 4, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             spannable.setSpan(android.text.style.ForegroundColorSpan(contentColor), protocolIdx + 4, text.length, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         } else {
             button.setTextColor(contentColor)
@@ -802,72 +551,26 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
     override fun onLocationUpdated(lat: Double, lon: Double) {}
     override fun onMovementDetected(device: ScanDevice) {
         if (device.id == currentDevice.id) {
+            val colors = ThemeUtils.getThemeColors(currentTheme)
             runOnUiThread {
                 binding.tvTitle.text = "!! MOVEMENT DETECTED !!"
-                binding.tvTitle.setTextColor(Color.RED)
+                binding.tvTitle.setTextColor(colors.accent)
             }
         }
     }
     override fun onError(msg: String) {}
 
     private fun getDeviceColor(type: DeviceType): Int {
-        return when (currentTheme) {
-            RadarView.Theme.HIGH_CONTRAST -> Color.BLACK
-            RadarView.Theme.RED_NIGHT -> Color.RED
-            RadarView.Theme.PINK -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> GREEN
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> CYAN
-                DeviceType.LTE, DeviceType.FIVE_G -> AMBER
-                DeviceType.CAMERA -> Color.RED
-                else -> PINK
-            }
-            RadarView.Theme.NEON -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> GREEN
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> GREEN
-                DeviceType.LTE, DeviceType.FIVE_G -> GREEN
-                DeviceType.CAMERA -> Color.RED
-                else -> GREEN
-            }
-            RadarView.Theme.NARANJA -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> GREEN
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> GREEN
-                DeviceType.LTE, DeviceType.FIVE_G -> GREEN
-                DeviceType.CAMERA -> Color.RED
-                else -> GREEN
-            }
-            RadarView.Theme.BUBBLEGUM -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> GREEN
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> CYAN
-                DeviceType.LTE, DeviceType.FIVE_G -> AMBER
-                DeviceType.CAMERA -> Color.RED
-                else -> PINK
-            }
-            RadarView.Theme.SUMMERTIME -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> Color.parseColor("#ff9f6b") // Peach
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> Color.parseColor("#6befff") // Cyan
-                DeviceType.LTE, DeviceType.FIVE_G -> Color.parseColor("#6befff") // Cyan
-                DeviceType.CAMERA -> Color.RED
-                else -> Color.parseColor("#ff9f6b") // Peach
-            }
-            RadarView.Theme.MORIO -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> Color.parseColor("#c3ac3a") // Main Green
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> Color.parseColor("#c8f29e") // Cyan
-                DeviceType.LTE, DeviceType.FIVE_G -> Color.parseColor("#c8f29e") // Cyan
-                DeviceType.CAMERA -> Color.RED
-                else -> Color.parseColor("#c3ac3a") // Main Green
-            }
-            RadarView.Theme.DEFAULT -> when (type) {
-                DeviceType.WIFI, DeviceType.PAGER -> GREEN
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> CYAN
-                DeviceType.LTE, DeviceType.FIVE_G -> AMBER
-                DeviceType.CAMERA -> Color.RED
-                else -> PINK
-            }
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        return when (type) {
+            DeviceType.WIFI, DeviceType.PAGER, DeviceType.LTE, DeviceType.FIVE_G -> colors.primary
+            else -> colors.accent
         }
     }
 
     private fun displayDevice(d: ScanDevice) {
         val color = getDeviceColor(d.type)
+        val colors = ThemeUtils.getThemeColors(currentTheme)
 
         binding.tvType.text    = "▸ TYPE    : ${d.typeLabel}"
         binding.tvType.setTextColor(color)
@@ -881,17 +584,17 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val spannable = android.text.SpannableString(fullText)
         
         // Label color
-        val distLabelColor = GREEN
+        val distLabelColor = colors.primary
         spannable.setSpan(
             android.text.style.ForegroundColorSpan(distLabelColor),
             0, label.length,
             android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         
-        // Value color (Blended Green to Pink as distance decreases)
+        // Value color (Blended primary to accent/dim as distance decreases)
         val ratio = (d.distanceMeters / 15.0).coerceIn(0.0, 1.0).toFloat()
-        val farColor = GREEN
-        val nearColor = PINK
+        val farColor = colors.primary
+        val nearColor = colors.accent
         val blendedColor = ColorUtils.blendARGB(nearColor, farColor, ratio)
         spannable.setSpan(
             android.text.style.ForegroundColorSpan(blendedColor),
@@ -904,17 +607,21 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             binding.tvExtra1.text = "▸ SSID    : ${d.ssid}"
             binding.tvExtra2.text = "▸ FREQ    : ${d.frequency} MHz  (Ch ${d.channel})"
             binding.tvExtra3.text = "▸ SECURITY: ${parseSecurityShort(d.capabilities)}"
-            binding.tvExtra4.text = "▸ SEEN    : ${d.seenCount} TIMES"
-            
-            val lastSeenSec = (System.currentTimeMillis() - d.lastSeen) / 1000
-            binding.tvExtra5.text = "▸ UPDATED : ${lastSeenSec}s AGO"
+            binding.tvExtra4.text = "▸ VENDOR  : ${d.vendor ?: "Scanning..."}"
+            binding.tvExtra5.text = "▸ OS      : ${d.osFingerprint ?: "Fingerprinting..."}"
+            binding.tvExtra6.text = when {
+                d.streetName != null -> "▸ ADDR    : ${d.streetName} ${d.houseNumber ?: ""}, ${d.cityName}".replace(" ,", ",")
+                d.capturedLat != null -> "▸ ADDR    : %.5f, %.5f".format(d.capturedLat, d.capturedLon)
+                else -> "▸ ADDR    : Awaiting GPS..."
+            }
             
             binding.tvExtra1.visibility = View.VISIBLE
             binding.tvExtra2.visibility = View.VISIBLE
             binding.tvExtra3.visibility = View.VISIBLE
             binding.tvExtra4.visibility = View.VISIBLE
             binding.tvExtra5.visibility = View.VISIBLE
-            binding.tvExtra6.visibility = View.GONE
+            binding.tvExtra6.visibility = View.VISIBLE
+            binding.tvFastPair.visibility = View.GONE
         } else if (d.type == DeviceType.AIRCRAFT) {
             binding.tvExtra1.text = "▸ ALTITUDE: ${d.altitude?.let { "%.0f m".format(it * 0.3048f) } ?: "---"}"
             binding.tvExtra2.text = "▸ SPEED   : ${d.speed?.let { "%.0f km/h".format(it * 1.852f) } ?: "---"}"
@@ -974,26 +681,23 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
             val lastSeenSec = (System.currentTimeMillis() - d.lastSeen) / 1000
             binding.tvExtra3.text = "▸ SEEN    : ${d.seenCount} TIMES"
             binding.tvExtra4.text = "▸ UPDATED : ${lastSeenSec}s AGO"
+            binding.tvExtra5.text = when {
+                d.streetName != null -> "▸ ADDR    : ${d.streetName} ${d.houseNumber ?: ""}, ${d.cityName}".replace(" ,", ",")
+                d.capturedLat != null -> "▸ ADDR    : %.5f, %.5f".format(d.capturedLat, d.capturedLon)
+                else -> "▸ ADDR    : Awaiting GPS..."
+            }
             
             binding.tvExtra1.visibility = View.VISIBLE
             binding.tvExtra2.visibility = View.VISIBLE
             binding.tvExtra3.visibility = View.VISIBLE
             binding.tvExtra4.visibility = View.VISIBLE
-            binding.tvExtra5.visibility = View.GONE
+            binding.tvExtra5.visibility = View.VISIBLE
             binding.tvExtra6.visibility = View.GONE
             binding.tvFastPair.visibility = View.GONE
         }
 
-        // Vulnerabilities are handled by the exploit dropdown, no need for redundant text
-        // binding.tvFastPair.visibility = if (d.type == DeviceType.AIRCRAFT) View.VISIBLE else View.GONE
-        // if (d.type != DeviceType.AIRCRAFT) binding.tvExtra6.visibility = View.GONE
-        // binding.tvExtra3.visibility = View.GONE
-
-        // ESL Tag Tools Visibility
-        binding.btnEsl.visibility = if (d.type == DeviceType.BLE) View.VISIBLE else View.GONE
-
         binding.tvTitle.text      = "TARGET ACQUIRED"
-        val titleColor = PINK
+        val titleColor = ThemeUtils.getThemeColors(currentTheme).primary
         binding.tvTitle.setTextColor(titleColor)
         
         // Pulsate animation for target acquired

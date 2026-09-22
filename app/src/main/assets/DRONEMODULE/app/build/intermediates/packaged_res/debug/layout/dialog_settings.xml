@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1A1A2E"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="#00E5FF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="12dp" />
+
+        <!-- ── Frequency ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Center Frequency (MHz)" android:textColor="#CCCCCC" android:textSize="13sp"/>
+        <EditText
+            android:id="@+id/et_freq_mhz"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00E5FF"
+            android:layout_marginBottom="12dp" />
+
+        <!-- ── RF Gain ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="RF Gain" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_gain_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#00E5FF" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_gain" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="49" android:layout_marginBottom="12dp"
+            android:progressTint="#00E5FF" android:thumbTint="#00E5FF"/>
+
+        <!-- ── Gain offset ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Gain Offset" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_gain_offset_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#00E5FF" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_gain_offset" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="100" android:layout_marginBottom="12dp"
+            android:progressTint="#00E5FF" android:thumbTint="#00E5FF"/>
+
+        <!-- ── Shift ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Horizontal Shift" android:textColor="#CCCCCC" android:textSize="13sp"/>
+            <TextView android:id="@+id/tv_shift_val" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#00E5FF" android:textSize="13sp"/>
+        </LinearLayout>
+        <SeekBar android:id="@+id/sb_shift" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="1000" android:layout_marginBottom="12dp"
+            android:progressTint="#00E5FF" android:thumbTint="#00E5FF"/>
+
+        <!-- ── Sample Rate ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Sample Rate" android:textColor="#CCCCCC" android:textSize="13sp"
+            android:layout_marginBottom="4dp"/>
+        <Spinner android:id="@+id/sp_sample_rate" android:layout_width="match_parent"
+            android:layout_height="48dp" android:backgroundTint="#00E5FF"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── Video Mode ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Video Mode (total lines × refresh)" android:textColor="#CCCCCC"
+            android:textSize="13sp" android:layout_marginBottom="4dp"/>
+        <Spinner android:id="@+id/sp_video_mode" android:layout_width="match_parent"
+            android:layout_height="48dp" android:backgroundTint="#00E5FF"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- ── Custom resolution ── -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="12dp">
+            <EditText android:id="@+id/et_custom_height" android:layout_width="0dp"
+                android:layout_height="48dp" android:layout_weight="1" android:hint="Height"
+                android:inputType="number" android:textColor="#FFFFFF"
+                android:backgroundTint="#444444" android:layout_marginEnd="8dp"/>
+            <EditText android:id="@+id/et_custom_refresh" android:layout_width="0dp"
+                android:layout_height="48dp" android:layout_weight="1" android:hint="Hz"
+                android:inputType="numberDecimal" android:textColor="#FFFFFF"
+                android:backgroundTint="#444444" android:layout_marginEnd="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_apply_custom"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:text="Apply" app:backgroundTint="#1565C0"
+                style="@style/Widget.MaterialComponents.Button"/>
+        </LinearLayout>
+
+        <!-- ── DSP options ── -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="DSP Options" android:textColor="#CCCCCC" android:textSize="13sp"
+            android:layout_marginBottom="4dp"/>
+        <CheckBox android:id="@+id/cb_lowpass" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Low-pass before sync"
+            android:textColor="#FFFFFF" android:buttonTint="#00E5FF"/>
+        <CheckBox android:id="@+id/cb_autogain" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Auto-gain after processing"
+            android:textColor="#FFFFFF" android:buttonTint="#00E5FF"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── Reset autocorr ── -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reset_autocorr"
+            android:layout_width="match_parent" android:layout_height="44dp"
+            android:text="Reset Autocorrelation Plot"
+            app:backgroundTint="#37474F"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+    </LinearLayout>
+</ScrollView>

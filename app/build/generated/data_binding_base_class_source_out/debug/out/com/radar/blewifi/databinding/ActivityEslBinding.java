@@ -4,15 +4,19 @@ package com.radar.blewifi.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.view.PreviewView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.tabs.TabLayout;
 import com.radar.blewifi.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,42 +27,193 @@ public final class ActivityEslBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
+  public final Button btnBuildIr;
+
+  @NonNull
+  public final Button btnDownloadScript;
+
+  @NonNull
   public final Button btnEslBack;
+
+  @NonNull
+  public final Button btnExportXbm;
+
+  @NonNull
+  public final Button btnGenerateIr;
 
   @NonNull
   public final Button btnScanBarcode;
 
   @NonNull
+  public final Button btnSelectImage;
+
+  @NonNull
   public final PreviewView cameraPreview;
+
+  @NonNull
+  public final LinearLayout containerCrc;
+
+  @NonNull
+  public final LinearLayout containerPlid;
 
   @NonNull
   public final LinearLayout eslRoot;
 
   @NonNull
+  public final EditText etBarcode;
+
+  @NonNull
+  public final EditText etHeight;
+
+  @NonNull
+  public final EditText etWidth;
+
+  @NonNull
   public final LinearLayout headerEsl;
+
+  @NonNull
+  public final ImageView ivPreview;
+
+  @NonNull
+  public final SeekBar sbDelay;
+
+  @NonNull
+  public final SeekBar sbRepeats;
 
   @NonNull
   public final View scannerOverlay;
 
   @NonNull
+  public final LinearLayout sectionDeploy;
+
+  @NonNull
+  public final LinearLayout sectionTarget;
+
+  @NonNull
+  public final Spinner spIrCmd;
+
+  @NonNull
+  public final LinearLayout tabContentImage;
+
+  @NonNull
+  public final LinearLayout tabContentIr;
+
+  @NonNull
+  public final LinearLayout tabContentProto;
+
+  @NonNull
+  public final LinearLayout tabContentXbm;
+
+  @NonNull
+  public final TabLayout tabsEsl;
+
+  @NonNull
+  public final TextView tvCrcDisplay;
+
+  @NonNull
+  public final TextView tvDelayVal;
+
+  @NonNull
+  public final TextView tvIrOutput;
+
+  @NonNull
+  public final TextView tvLabelBarcode;
+
+  @NonNull
+  public final TextView tvLabelCmdType;
+
+  @NonNull
+  public final TextView tvLabelDelay;
+
+  @NonNull
+  public final TextView tvLabelHeight;
+
+  @NonNull
+  public final TextView tvLabelRepeats;
+
+  @NonNull
+  public final TextView tvLabelWidth;
+
+  @NonNull
+  public final TextView tvPlidDisplay;
+
+  @NonNull
+  public final TextView tvPreviewLabel;
+
+  @NonNull
+  public final TextView tvProtoInfo;
+
+  @NonNull
+  public final TextView tvRepeatsVal;
+
+  @NonNull
   public final TextView tvScannerHint;
 
   @NonNull
-  public final WebView webViewEsl;
+  public final TextView tvXbmOutput;
 
-  private ActivityEslBinding(@NonNull LinearLayout rootView, @NonNull Button btnEslBack,
-      @NonNull Button btnScanBarcode, @NonNull PreviewView cameraPreview,
-      @NonNull LinearLayout eslRoot, @NonNull LinearLayout headerEsl, @NonNull View scannerOverlay,
-      @NonNull TextView tvScannerHint, @NonNull WebView webViewEsl) {
+  private ActivityEslBinding(@NonNull LinearLayout rootView, @NonNull Button btnBuildIr,
+      @NonNull Button btnDownloadScript, @NonNull Button btnEslBack, @NonNull Button btnExportXbm,
+      @NonNull Button btnGenerateIr, @NonNull Button btnScanBarcode, @NonNull Button btnSelectImage,
+      @NonNull PreviewView cameraPreview, @NonNull LinearLayout containerCrc,
+      @NonNull LinearLayout containerPlid, @NonNull LinearLayout eslRoot,
+      @NonNull EditText etBarcode, @NonNull EditText etHeight, @NonNull EditText etWidth,
+      @NonNull LinearLayout headerEsl, @NonNull ImageView ivPreview, @NonNull SeekBar sbDelay,
+      @NonNull SeekBar sbRepeats, @NonNull View scannerOverlay, @NonNull LinearLayout sectionDeploy,
+      @NonNull LinearLayout sectionTarget, @NonNull Spinner spIrCmd,
+      @NonNull LinearLayout tabContentImage, @NonNull LinearLayout tabContentIr,
+      @NonNull LinearLayout tabContentProto, @NonNull LinearLayout tabContentXbm,
+      @NonNull TabLayout tabsEsl, @NonNull TextView tvCrcDisplay, @NonNull TextView tvDelayVal,
+      @NonNull TextView tvIrOutput, @NonNull TextView tvLabelBarcode,
+      @NonNull TextView tvLabelCmdType, @NonNull TextView tvLabelDelay,
+      @NonNull TextView tvLabelHeight, @NonNull TextView tvLabelRepeats,
+      @NonNull TextView tvLabelWidth, @NonNull TextView tvPlidDisplay,
+      @NonNull TextView tvPreviewLabel, @NonNull TextView tvProtoInfo,
+      @NonNull TextView tvRepeatsVal, @NonNull TextView tvScannerHint,
+      @NonNull TextView tvXbmOutput) {
     this.rootView = rootView;
+    this.btnBuildIr = btnBuildIr;
+    this.btnDownloadScript = btnDownloadScript;
     this.btnEslBack = btnEslBack;
+    this.btnExportXbm = btnExportXbm;
+    this.btnGenerateIr = btnGenerateIr;
     this.btnScanBarcode = btnScanBarcode;
+    this.btnSelectImage = btnSelectImage;
     this.cameraPreview = cameraPreview;
+    this.containerCrc = containerCrc;
+    this.containerPlid = containerPlid;
     this.eslRoot = eslRoot;
+    this.etBarcode = etBarcode;
+    this.etHeight = etHeight;
+    this.etWidth = etWidth;
     this.headerEsl = headerEsl;
+    this.ivPreview = ivPreview;
+    this.sbDelay = sbDelay;
+    this.sbRepeats = sbRepeats;
     this.scannerOverlay = scannerOverlay;
+    this.sectionDeploy = sectionDeploy;
+    this.sectionTarget = sectionTarget;
+    this.spIrCmd = spIrCmd;
+    this.tabContentImage = tabContentImage;
+    this.tabContentIr = tabContentIr;
+    this.tabContentProto = tabContentProto;
+    this.tabContentXbm = tabContentXbm;
+    this.tabsEsl = tabsEsl;
+    this.tvCrcDisplay = tvCrcDisplay;
+    this.tvDelayVal = tvDelayVal;
+    this.tvIrOutput = tvIrOutput;
+    this.tvLabelBarcode = tvLabelBarcode;
+    this.tvLabelCmdType = tvLabelCmdType;
+    this.tvLabelDelay = tvLabelDelay;
+    this.tvLabelHeight = tvLabelHeight;
+    this.tvLabelRepeats = tvLabelRepeats;
+    this.tvLabelWidth = tvLabelWidth;
+    this.tvPlidDisplay = tvPlidDisplay;
+    this.tvPreviewLabel = tvPreviewLabel;
+    this.tvProtoInfo = tvProtoInfo;
+    this.tvRepeatsVal = tvRepeatsVal;
     this.tvScannerHint = tvScannerHint;
-    this.webViewEsl = webViewEsl;
+    this.tvXbmOutput = tvXbmOutput;
   }
 
   @Override
@@ -88,9 +243,33 @@ public final class ActivityEslBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnBuildIr;
+      Button btnBuildIr = ViewBindings.findChildViewById(rootView, id);
+      if (btnBuildIr == null) {
+        break missingId;
+      }
+
+      id = R.id.btnDownloadScript;
+      Button btnDownloadScript = ViewBindings.findChildViewById(rootView, id);
+      if (btnDownloadScript == null) {
+        break missingId;
+      }
+
       id = R.id.btnEslBack;
       Button btnEslBack = ViewBindings.findChildViewById(rootView, id);
       if (btnEslBack == null) {
+        break missingId;
+      }
+
+      id = R.id.btnExportXbm;
+      Button btnExportXbm = ViewBindings.findChildViewById(rootView, id);
+      if (btnExportXbm == null) {
+        break missingId;
+      }
+
+      id = R.id.btnGenerateIr;
+      Button btnGenerateIr = ViewBindings.findChildViewById(rootView, id);
+      if (btnGenerateIr == null) {
         break missingId;
       }
 
@@ -100,17 +279,71 @@ public final class ActivityEslBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnSelectImage;
+      Button btnSelectImage = ViewBindings.findChildViewById(rootView, id);
+      if (btnSelectImage == null) {
+        break missingId;
+      }
+
       id = R.id.cameraPreview;
       PreviewView cameraPreview = ViewBindings.findChildViewById(rootView, id);
       if (cameraPreview == null) {
         break missingId;
       }
 
+      id = R.id.containerCrc;
+      LinearLayout containerCrc = ViewBindings.findChildViewById(rootView, id);
+      if (containerCrc == null) {
+        break missingId;
+      }
+
+      id = R.id.containerPlid;
+      LinearLayout containerPlid = ViewBindings.findChildViewById(rootView, id);
+      if (containerPlid == null) {
+        break missingId;
+      }
+
       LinearLayout eslRoot = (LinearLayout) rootView;
+
+      id = R.id.etBarcode;
+      EditText etBarcode = ViewBindings.findChildViewById(rootView, id);
+      if (etBarcode == null) {
+        break missingId;
+      }
+
+      id = R.id.etHeight;
+      EditText etHeight = ViewBindings.findChildViewById(rootView, id);
+      if (etHeight == null) {
+        break missingId;
+      }
+
+      id = R.id.etWidth;
+      EditText etWidth = ViewBindings.findChildViewById(rootView, id);
+      if (etWidth == null) {
+        break missingId;
+      }
 
       id = R.id.headerEsl;
       LinearLayout headerEsl = ViewBindings.findChildViewById(rootView, id);
       if (headerEsl == null) {
+        break missingId;
+      }
+
+      id = R.id.ivPreview;
+      ImageView ivPreview = ViewBindings.findChildViewById(rootView, id);
+      if (ivPreview == null) {
+        break missingId;
+      }
+
+      id = R.id.sbDelay;
+      SeekBar sbDelay = ViewBindings.findChildViewById(rootView, id);
+      if (sbDelay == null) {
+        break missingId;
+      }
+
+      id = R.id.sbRepeats;
+      SeekBar sbRepeats = ViewBindings.findChildViewById(rootView, id);
+      if (sbRepeats == null) {
         break missingId;
       }
 
@@ -120,20 +353,152 @@ public final class ActivityEslBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.sectionDeploy;
+      LinearLayout sectionDeploy = ViewBindings.findChildViewById(rootView, id);
+      if (sectionDeploy == null) {
+        break missingId;
+      }
+
+      id = R.id.sectionTarget;
+      LinearLayout sectionTarget = ViewBindings.findChildViewById(rootView, id);
+      if (sectionTarget == null) {
+        break missingId;
+      }
+
+      id = R.id.spIrCmd;
+      Spinner spIrCmd = ViewBindings.findChildViewById(rootView, id);
+      if (spIrCmd == null) {
+        break missingId;
+      }
+
+      id = R.id.tabContentImage;
+      LinearLayout tabContentImage = ViewBindings.findChildViewById(rootView, id);
+      if (tabContentImage == null) {
+        break missingId;
+      }
+
+      id = R.id.tabContentIr;
+      LinearLayout tabContentIr = ViewBindings.findChildViewById(rootView, id);
+      if (tabContentIr == null) {
+        break missingId;
+      }
+
+      id = R.id.tabContentProto;
+      LinearLayout tabContentProto = ViewBindings.findChildViewById(rootView, id);
+      if (tabContentProto == null) {
+        break missingId;
+      }
+
+      id = R.id.tabContentXbm;
+      LinearLayout tabContentXbm = ViewBindings.findChildViewById(rootView, id);
+      if (tabContentXbm == null) {
+        break missingId;
+      }
+
+      id = R.id.tabsEsl;
+      TabLayout tabsEsl = ViewBindings.findChildViewById(rootView, id);
+      if (tabsEsl == null) {
+        break missingId;
+      }
+
+      id = R.id.tvCrcDisplay;
+      TextView tvCrcDisplay = ViewBindings.findChildViewById(rootView, id);
+      if (tvCrcDisplay == null) {
+        break missingId;
+      }
+
+      id = R.id.tvDelayVal;
+      TextView tvDelayVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvDelayVal == null) {
+        break missingId;
+      }
+
+      id = R.id.tvIrOutput;
+      TextView tvIrOutput = ViewBindings.findChildViewById(rootView, id);
+      if (tvIrOutput == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelBarcode;
+      TextView tvLabelBarcode = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelBarcode == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelCmdType;
+      TextView tvLabelCmdType = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelCmdType == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelDelay;
+      TextView tvLabelDelay = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelDelay == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelHeight;
+      TextView tvLabelHeight = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelHeight == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelRepeats;
+      TextView tvLabelRepeats = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelRepeats == null) {
+        break missingId;
+      }
+
+      id = R.id.tvLabelWidth;
+      TextView tvLabelWidth = ViewBindings.findChildViewById(rootView, id);
+      if (tvLabelWidth == null) {
+        break missingId;
+      }
+
+      id = R.id.tvPlidDisplay;
+      TextView tvPlidDisplay = ViewBindings.findChildViewById(rootView, id);
+      if (tvPlidDisplay == null) {
+        break missingId;
+      }
+
+      id = R.id.tvPreviewLabel;
+      TextView tvPreviewLabel = ViewBindings.findChildViewById(rootView, id);
+      if (tvPreviewLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.tvProtoInfo;
+      TextView tvProtoInfo = ViewBindings.findChildViewById(rootView, id);
+      if (tvProtoInfo == null) {
+        break missingId;
+      }
+
+      id = R.id.tvRepeatsVal;
+      TextView tvRepeatsVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvRepeatsVal == null) {
+        break missingId;
+      }
+
       id = R.id.tvScannerHint;
       TextView tvScannerHint = ViewBindings.findChildViewById(rootView, id);
       if (tvScannerHint == null) {
         break missingId;
       }
 
-      id = R.id.webViewEsl;
-      WebView webViewEsl = ViewBindings.findChildViewById(rootView, id);
-      if (webViewEsl == null) {
+      id = R.id.tvXbmOutput;
+      TextView tvXbmOutput = ViewBindings.findChildViewById(rootView, id);
+      if (tvXbmOutput == null) {
         break missingId;
       }
 
-      return new ActivityEslBinding((LinearLayout) rootView, btnEslBack, btnScanBarcode,
-          cameraPreview, eslRoot, headerEsl, scannerOverlay, tvScannerHint, webViewEsl);
+      return new ActivityEslBinding((LinearLayout) rootView, btnBuildIr, btnDownloadScript,
+          btnEslBack, btnExportXbm, btnGenerateIr, btnScanBarcode, btnSelectImage, cameraPreview,
+          containerCrc, containerPlid, eslRoot, etBarcode, etHeight, etWidth, headerEsl, ivPreview,
+          sbDelay, sbRepeats, scannerOverlay, sectionDeploy, sectionTarget, spIrCmd,
+          tabContentImage, tabContentIr, tabContentProto, tabContentXbm, tabsEsl, tvCrcDisplay,
+          tvDelayVal, tvIrOutput, tvLabelBarcode, tvLabelCmdType, tvLabelDelay, tvLabelHeight,
+          tvLabelRepeats, tvLabelWidth, tvPlidDisplay, tvPreviewLabel, tvProtoInfo, tvRepeatsVal,
+          tvScannerHint, tvXbmOutput);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

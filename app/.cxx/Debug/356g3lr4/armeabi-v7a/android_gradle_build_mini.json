@@ -1,0 +1,45 @@
+{
+  "buildFiles": [
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "tempestsdr_jni::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_jni",
+      "abi": "armeabi-v7a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/cxx/Debug/356g3lr4/obj/armeabi-v7a/libtempestsdr_jni.so",
+      "runtimeFiles": []
+    },
+    "libusb::@6890427a1f51a3e7e1df": {
+      "artifactName": "libusb",
+      "abi": "armeabi-v7a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a/liblibusb.a",
+      "runtimeFiles": []
+    },
+    "rtlsdr::@6890427a1f51a3e7e1df": {
+      "artifactName": "rtlsdr",
+      "abi": "armeabi-v7a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a/librtlsdr.a",
+      "runtimeFiles": []
+    },
+    "tempestsdr_core::@6890427a1f51a3e7e1df": {
+      "artifactName": "tempestsdr_core",
+      "abi": "armeabi-v7a",
+      "output": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/armeabi-v7a/libtempestsdr_core.a",
+      "runtimeFiles": []
+    }
+  }
+}

@@ -1,0 +1,4 @@
+/Users/feinlabsfilms/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/.cxx/Debug/356g3lr4/x86" \
+  tempestsdr_jni

@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-hdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.mostlyawesome.tagtinker.app-debug-69:/drawable_app_logo.png.flat",
+        "source": "com.mostlyawesome.tagtinker.app-main-71:/drawable/app_logo.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xxxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/xml_file_paths.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/xml/file_paths.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/drawable_app_logo.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/drawable/app_logo.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/drawable_app_logo.jpg.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/drawable/app_logo.jpg"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-debug-69:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.1/com.mostlyawesome.tagtinker.app-main-71:/mipmap-xxxhdpi/ic_launcher.xml"
+    }
+]
