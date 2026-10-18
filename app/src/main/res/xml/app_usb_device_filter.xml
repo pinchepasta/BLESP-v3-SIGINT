@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PBJ / ESP-SDR / USB Serial Devices -->
+    <!-- Espressif (ESP32 / ESP32-S3 native USB / USB-Serial-JTAG 0x303A) -->
+    <usb-device vendor-id="12346" />
+    <!-- Silicon Labs CP210x (0x10C4) -->
+    <usb-device vendor-id="4292" />
+    <!-- WCH CH34x (0x1A86) -->
+    <usb-device vendor-id="6790" />
+    <!-- Generic CDC (0x2FE3) -->
+    <usb-device vendor-id="12259" />
+    <!-- FTDI (0x0403) -->
+    <usb-device vendor-id="1027" />
+    <!-- Prolific PL2303 (0x067B) -->
+    <usb-device vendor-id="1659" />
+
+    <!-- RTL-SDR Dongles -->
+    <usb-device vendor-id="3034" product-id="10290" />
+    <usb-device vendor-id="3034" product-id="10296" />
+    <usb-device vendor-id="3034" product-id="10295" />
+    <usb-device vendor-id="3034" product-id="10304" />
+    <usb-device vendor-id="2826" product-id="10290" />
+    <usb-device vendor-id="2826" product-id="10296" />
+    <usb-device vendor-id="2826" product-id="10295" />
+    <usb-device vendor-id="2826" product-id="10304" />
+    <usb-device vendor-id="6235" product-id="1568" />
+    <usb-device vendor-id="8013" product-id="12288" />
+    <usb-device vendor-id="8013" product-id="12291" />
+    <usb-device vendor-id="8013" product-id="43011" />
+    <usb-device vendor-id="7040" product-id="54163" />
+    <usb-device vendor-id="7040" product-id="54165" />
+</resources>

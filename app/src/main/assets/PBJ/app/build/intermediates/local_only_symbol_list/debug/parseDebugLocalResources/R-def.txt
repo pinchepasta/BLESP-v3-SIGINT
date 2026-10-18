@@ -1,0 +1,10 @@
+R_DEF: Internal format may change without notice
+local
+color accent
+color bg
+drawable ic_launcher
+drawable logo
+drawable logo_dark
+drawable pbjlogo
+style Theme.EspJammer
+xml device_filter

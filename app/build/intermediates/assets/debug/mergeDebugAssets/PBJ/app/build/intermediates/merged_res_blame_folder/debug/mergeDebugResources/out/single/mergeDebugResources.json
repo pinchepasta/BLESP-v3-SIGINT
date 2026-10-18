@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-debug-43:/drawable_logo.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-main-45:/drawable/logo.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-debug-43:/drawable_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-main-45:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.espsdr.jammer.app-debug-43:/drawable_pbjlogo.png.flat",
+        "source": "com.espsdr.jammer.app-main-45:/drawable/pbjlogo.png"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-debug-43:/xml_device_filter.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-main-45:/xml/device_filter.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-debug-43:/drawable_logo_dark.png.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/9.3.0/com.espsdr.jammer.app-main-45:/drawable/logo_dark.png"
+    }
+]

@@ -63,11 +63,19 @@
             android:name=".CalculatorActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.BLEWifiRadar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/app_usb_device_filter" />
         </activity>
 
         <activity
@@ -144,22 +152,22 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".pbj.PbjActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BLEWifiRadar"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
+            android:label="@string/pbj_app_name">
+        </activity>
+
+        <activity
             android:name=".drone.DroneActivity"
             android:exported="true"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:label="@string/drone_app_name">
-
-            <!-- Auto-launch when an RTL-SDR dongle is connected -->
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/usb_device_filter" />
-
         </activity>
 
         <provider

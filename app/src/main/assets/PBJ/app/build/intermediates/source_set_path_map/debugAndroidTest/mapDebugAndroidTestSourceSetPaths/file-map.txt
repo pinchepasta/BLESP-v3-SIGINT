@@ -1,0 +1,4 @@
+com.espsdr.jammer.test.app-androidTest-0 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/espSDRJammerAndroid/app/build/generated/res/resValues/androidTest/debug
+com.espsdr.jammer.test.app-mergeDebugAndroidTestResources-1 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/espSDRJammerAndroid/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+com.espsdr.jammer.test.app-mergeDebugAndroidTestResources-2 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/espSDRJammerAndroid/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+com.espsdr.jammer.test.app-debugAndroidTest-3 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/espSDRJammerAndroid/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

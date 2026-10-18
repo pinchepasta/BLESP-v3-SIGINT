@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espressif (ESP32-S3 native USB / USB-Serial-JTAG) -->
+    <usb-device vendor-id="12346" />
+    <!-- Silicon Labs CP210x -->
+    <usb-device vendor-id="4292" />
+    <!-- WCH CH34x -->
+    <usb-device vendor-id="6790" />
+    <!-- generic CDC -->
+    <usb-device vendor-id="12259" />
+</resources>

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.espsdr.jammer.app-mergeDebugResources-41:/values-v30/values-v30.xml",
+            "map": [
+                {
+                    "source": "/Users/feinlabsfilms/.gradle/caches/9.3.0/transforms/96fbbfb23074f2e0228db8da8f02d4dd/transformed/material3-release/res/values-v30/values-v30.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "72",
+                        "endOffsets": "123"
+                    }
+                }
+            ]
+        }
+    ]
+}

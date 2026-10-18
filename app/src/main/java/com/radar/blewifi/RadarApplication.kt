@@ -12,7 +12,10 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.util.*
+import java.util.concurrent.Executors
 
 class RadarApplication : Application() {
 
@@ -23,11 +26,46 @@ class RadarApplication : Application() {
     
     private val handler = Handler(Looper.getMainLooper())
     private val sentMessages = Collections.synchronizedList(mutableListOf<Pair<String, Long>>())
+    private val gson = Gson()
+    private val historyType = object : TypeToken<MutableMap<String, MutableList<PagerActivity.ChatMessage>>>() {}.type
+    @Volatile private var cachedMessagesMap: MutableMap<String, MutableList<PagerActivity.ChatMessage>>? = null
+
+    private fun getMessagesMap(): MutableMap<String, MutableList<PagerActivity.ChatMessage>> {
+        var map = cachedMessagesMap
+        if (map == null) {
+            synchronized(this) {
+                map = cachedMessagesMap
+                if (map == null) {
+                    val prefs = getSharedPreferences("pager_history", MODE_PRIVATE)
+                    val json = prefs.getString("all_messages", "{}")
+                    map = try {
+                        gson.fromJson(json, historyType) ?: mutableMapOf()
+                    } catch (e: Exception) {
+                        mutableMapOf()
+                    }
+                    cachedMessagesMap = map
+                }
+            }
+        }
+        return map!!
+    }
+
+    private fun persistMessagesMap() {
+        val map = cachedMessagesMap ?: return
+        val json = synchronized(map) { gson.toJson(map) }
+        val prefs = getSharedPreferences("pager_history", MODE_PRIVATE)
+        prefs.edit().putString("all_messages", json).apply()
+    }
 
     fun recordSentMessage(text: String) {
-        sentMessages.add(text to System.currentTimeMillis())
-        val now = System.currentTimeMillis()
-        sentMessages.removeAll { now - it.second > 30000 } // Keep for 30s
+        synchronized(sentMessages) {
+            sentMessages.add(text to System.currentTimeMillis())
+            val now = System.currentTimeMillis()
+            sentMessages.removeAll { now - it.second > 30000 }
+            if (sentMessages.size > 50) {
+                sentMessages.removeAt(0)
+            }
+        }
     }
 
     private fun isDuplicateOfSentMessage(text: String): Boolean {
@@ -57,6 +95,11 @@ class RadarApplication : Application() {
         scanner.startScanning(true)
         nearbyManager.start()
         
+        val settingsPrefs = getSharedPreferences("settings", MODE_PRIVATE)
+        if (!settingsPrefs.contains("api_server_enabled")) {
+            settingsPrefs.edit().putBoolean("api_server_enabled", true).apply()
+        }
+        
         apiServer = BlespApiServer(this, 8888)
         apiServer.start()
     }
@@ -82,7 +125,7 @@ class RadarApplication : Application() {
         })
 
         scanner.addListener(object : ScannerManager.ScanListener {
-            private val processedMessageIds = mutableSetOf<String>()
+            private val processedMessageIds = Collections.synchronizedSet(mutableSetOf<String>())
             private val lastReceivedTimestamps = mutableMapOf<String, Long>()
 
             override fun onDevicesUpdated(devices: List<ScanDevice>) {
@@ -107,6 +150,9 @@ class RadarApplication : Application() {
                         val finalMsgId = msgId ?: "${chatName}_${displayMessage.hashCode()}_${device.lastMessageTime}"
 
                         if (!processedMessageIds.contains(finalMsgId)) {
+                            if (processedMessageIds.size > 200) {
+                                processedMessageIds.clear()
+                            }
                             processedMessageIds.add(finalMsgId)
                             lastReceivedTimestamps[chatName] = device.lastMessageTime
                             handleNewMessage(chatName, displayMessage)
@@ -170,43 +216,39 @@ class RadarApplication : Application() {
         }
     }
 
+    private val ioExecutor = Executors.newSingleThreadExecutor()
+
     private fun saveMessageToHistory(sender: String, text: String) {
-        val prefs = getSharedPreferences("pager_history", MODE_PRIVATE)
-        val json = prefs.getString("all_messages", "{}")
-        val gson = com.google.gson.Gson()
-        val type = object : com.google.gson.reflect.TypeToken<MutableMap<String, MutableList<PagerActivity.ChatMessage>>>() {}.type
-        val allMessages: MutableMap<String, MutableList<PagerActivity.ChatMessage>> = gson.fromJson(json, type) ?: mutableMapOf()
-        
-        val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, text, System.currentTimeMillis(), false)
-        allMessages.getOrPut(sender) { mutableListOf() }.add(msg)
-        
-        prefs.edit().putString("all_messages", gson.toJson(allMessages)).apply()
+        ioExecutor.execute {
+            val map = getMessagesMap()
+            val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, text, System.currentTimeMillis(), false)
+            synchronized(map) {
+                map.getOrPut(sender) { mutableListOf() }.add(msg)
+            }
+            persistMessagesMap()
+        }
     }
 
     private fun saveFileToHistory(sender: String, filePath: String, fileName: String) {
-        val prefs = getSharedPreferences("pager_history", MODE_PRIVATE)
-        val json = prefs.getString("all_messages", "{}")
-        val gson = com.google.gson.Gson()
-        val type = object : com.google.gson.reflect.TypeToken<MutableMap<String, MutableList<PagerActivity.ChatMessage>>>() {}.type
-        val allMessages: MutableMap<String, MutableList<PagerActivity.ChatMessage>> = gson.fromJson(json, type) ?: mutableMapOf()
-
-        val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, "[FILE: $fileName]", System.currentTimeMillis(), false, filePath = filePath, fileName = fileName)
-        allMessages.getOrPut(sender) { mutableListOf() }.add(msg)
-
-        prefs.edit().putString("all_messages", gson.toJson(allMessages)).apply()
+        ioExecutor.execute {
+            val map = getMessagesMap()
+            val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, "[FILE: $fileName]", System.currentTimeMillis(), false, filePath = filePath, fileName = fileName)
+            synchronized(map) {
+                map.getOrPut(sender) { mutableListOf() }.add(msg)
+            }
+            persistMessagesMap()
+        }
     }
 
     private fun saveVoiceMessageToHistory(sender: String, filePath: String) {
-        val prefs = getSharedPreferences("pager_history", MODE_PRIVATE)
-        val json = prefs.getString("all_messages", "{}")
-        val gson = com.google.gson.Gson()
-        val type = object : com.google.gson.reflect.TypeToken<MutableMap<String, MutableList<PagerActivity.ChatMessage>>>() {}.type
-        val allMessages: MutableMap<String, MutableList<PagerActivity.ChatMessage>> = gson.fromJson(json, type) ?: mutableMapOf()
-
-        val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, "[VOICE_MAIL]", System.currentTimeMillis(), false, audioPath = filePath)
-        allMessages.getOrPut(sender) { mutableListOf() }.add(msg)
-
-        prefs.edit().putString("all_messages", gson.toJson(allMessages)).apply()
+        ioExecutor.execute {
+            val map = getMessagesMap()
+            val msg = PagerActivity.ChatMessage(UUID.randomUUID().toString(), sender, "[VOICE_MAIL]", System.currentTimeMillis(), false, audioPath = filePath)
+            synchronized(map) {
+                map.getOrPut(sender) { mutableListOf() }.add(msg)
+            }
+            persistMessagesMap()
+        }
     }
 
     private fun triggerGlobalEffects(sender: String, text: String) {

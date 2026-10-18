@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 8-Bit Pixel Art White "PBJ" Letters -->
+    <!-- Letter P (24x48) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,30h6v48h-6z M18,30h18v6h-18z M30,36h6v12h-6z M18,48h18v6h-18z" />
+
+    <!-- Letter B (24x48) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,30h6v48h-6z M48,30h18v6h-18z M60,36h6v12h-6z M48,48h18v6h-18z M60,54h6v18h-6z M48,72h18v6h-18z" />
+
+    <!-- Letter J (24x48) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M72,30h24v6h-24z M90,36h6v36h-6z M72,72h24v6h-24z M72,54h6v18h-6z" />
+</vector>

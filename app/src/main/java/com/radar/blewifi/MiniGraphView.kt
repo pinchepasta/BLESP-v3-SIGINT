@@ -100,16 +100,9 @@ class MiniGraphView @JvmOverloads constructor(
         points.forEachIndexed { i, load ->
             val x = i * barWidth
             val barHeight = (load / 100f) * (h - 4f)
-            
-            // Draw jumping bar with segmented look
-            val segmentHeight = 6f
-            val segmentGap = 2f
-            var currentY = h - 2f
-            
-            while (currentY > h - 2f - barHeight) {
-                val rectTop = (currentY - segmentHeight).coerceAtLeast(h - 2f - barHeight)
-                canvas.drawRect(x + gap, rectTop, x + barWidth - gap, currentY, paint)
-                currentY -= (segmentHeight + segmentGap)
+            if (barHeight > 0f) {
+                val top = (h - 2f - barHeight).coerceAtLeast(2f)
+                canvas.drawRect(x + gap, top, x + barWidth - gap, h - 2f, paint)
             }
         }
     }
