@@ -88,10 +88,12 @@ The little icon right next to the settings icon opens the networks statistics sc
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ext.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
 
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n5.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%">
+
 By clicking on the [ext] button, you can initiate a connection to a device like mostly-a-Flipper, Bruce, Flipper Zero, Cardputer ADV and so on, wirelessly. Now you can forward SubGHz or Infrared payloads in .sub and .ir format, for example if you want to flash an ESL Tag via .ir payload.
 
 If you need more power, or a very specific function, just click [ssh], it starts a terminal window and lets you ssh into your favorite hacking devices like a Raspberry Pi or just a plain old Linux computer, for example to jam a radio signal on 433.92MHz via RPITX, or you include openclaw for automated hacking tasks.
-Btw, I'm already working on a deeper integration of agents like hermes or openclaw.
+Btw, I'm already working on a deeper integration of agents like hermes or openclaw. 
 
 <br>
 <br>
