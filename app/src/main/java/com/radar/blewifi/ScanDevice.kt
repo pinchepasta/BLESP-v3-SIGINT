@@ -149,7 +149,4 @@ data class ScanDevice(
 
     val displayName: String
         get() = name.ifBlank { if (type == DeviceType.WIFI) ssid else address.takeLast(8) }
-
-    val isWep: Boolean
-        get() = type == DeviceType.WIFI && capabilities.contains("WEP", ignoreCase = true)
 }

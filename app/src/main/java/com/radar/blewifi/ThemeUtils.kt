@@ -4,27 +4,13 @@ import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.toColorInt
 
-import java.util.EnumMap
-
 object ThemeUtils {
     const val LEGACY_GREEN = "#00FF41"
     const val LEGACY_PINK = "#FF00FF"
     const val LEGACY_CYAN = "#00FFFF"
     const val LEGACY_AMBER = "#FFB300"
 
-    private val themeColorsMap: EnumMap<RadarView.Theme, ThemeColors> by lazy {
-        EnumMap<RadarView.Theme, ThemeColors>(RadarView.Theme::class.java).apply {
-            for (theme in RadarView.Theme.entries) {
-                put(theme, createThemeColors(theme))
-            }
-        }
-    }
-
     fun getThemeColors(theme: RadarView.Theme): ThemeColors {
-        return themeColorsMap[theme] ?: themeColorsMap[RadarView.Theme.DEFAULT]!!
-    }
-
-    private fun createThemeColors(theme: RadarView.Theme): ThemeColors {
         return when (theme) {
             RadarView.Theme.HIGH_CONTRAST -> ThemeColors(
                 primary = Color.BLACK,

@@ -1,0 +1,6 @@
+# C/C++ build system timings
+<<<<<<< HEAD
+=======
+generate_cxx_metadata 14ms
+>>>>>>> parent of 5dc96b0 (v3.5.3)
+

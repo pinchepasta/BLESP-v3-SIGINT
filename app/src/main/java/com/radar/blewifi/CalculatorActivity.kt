@@ -24,13 +24,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import android.Manifest
-import android.R
 import android.content.pm.PackageManager
-import android.hardware.usb.UsbDevice
-import android.hardware.usb.UsbManager
 import com.radar.blewifi.databinding.ActivityCalculatorBinding
-import com.radar.blewifi.drone.DroneActivity
-import com.radar.blewifi.pbj.PbjActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 
 class CalculatorActivity : AppCompatActivity() {
@@ -41,7 +36,6 @@ class CalculatorActivity : AppCompatActivity() {
     private var lastDot: Boolean = false
     private var pinEntered: Boolean = false
     private var isChangingPin: Boolean = false
-    private var pendingUsbIntent: Intent? = null
     private var currentTheme: RadarView.Theme = RadarView.Theme.DEFAULT
     private var primaryColor: Int = Color.parseColor(ThemeUtils.LEGACY_GREEN)
     private var accentColor: Int = Color.parseColor(ThemeUtils.LEGACY_PINK)
@@ -52,16 +46,12 @@ class CalculatorActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val proceedRunnable = Runnable {
         if (!isChangingPin) {
-            proceedAfterPin()
+            proceedToSplash()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (UsbManager.ACTION_USB_DEVICE_ATTACHED == intent.action) {
-            pendingUsbIntent = intent
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
@@ -468,51 +458,11 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        if (UsbManager.ACTION_USB_DEVICE_ATTACHED == intent.action) {
-            pendingUsbIntent = intent
-            if (pinEntered) {
-                proceedAfterPin()
-            }
-        }
-    }
-
-    private fun proceedAfterPin() {
-        val usbIntent = pendingUsbIntent ?: intent
-        if (usbIntent != null && UsbManager.ACTION_USB_DEVICE_ATTACHED == usbIntent.action) {
-            val device: UsbDevice? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                usbIntent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice::class.java)
-            } else {
-                @Suppress("DEPRECATION")
-                usbIntent.getParcelableExtra(UsbManager.EXTRA_DEVICE)
-            }
-            if (device != null && isRtlSdrDevice(device)) {
-                val droneIntent = Intent(this, DroneActivity::class.java).apply {
-                    action = usbIntent.action
-                    putExtras(usbIntent)
-                }
-                startActivity(droneIntent)
-            } else {
-                val pbjIntent = Intent(this, PbjActivity::class.java).apply {
-                    action = usbIntent.action
-                    putExtras(usbIntent)
-                }
-                startActivity(pbjIntent)
-            }
-        } else {
-            val splashIntent = Intent(this, SplashActivity::class.java)
-            startActivity(splashIntent)
-        }
+    private fun proceedToSplash() {
+        val intent = Intent(this, SplashActivity::class.java)
+        startActivity(intent)
         finish()
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-    }
-
-    private fun isRtlSdrDevice(device: UsbDevice): Boolean {
-        val vid = device.vendorId
-        val pid = device.productId
-        return (vid == 3034 || vid == 2826 || vid == 6235 || (vid == 8013 && pid == 12288) || (vid == 8013 && pid == 12291) || (vid == 8013 && pid == 43011) || vid == 7040)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     private fun showChangePinDialog() {
@@ -590,7 +540,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         dialog.setOnCancelListener {
             isChangingPin = false
-            proceedAfterPin()
+            proceedToSplash()
         }
 
         dialog.setContentView(root)

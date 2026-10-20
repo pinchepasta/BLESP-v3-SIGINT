@@ -539,15 +539,10 @@ class DetailActivity : AppCompatActivity(), ScannerManager.ScanListener {
         })
     }
 
-    private var lastDetailUpdate = 0L
-
     override fun onDevicesUpdated(devices: List<ScanDevice>) {
-        val now = System.currentTimeMillis()
-        if (now - lastDetailUpdate < 500) return
         val updated = devices.find { it.id == currentDevice.id }
         if (updated != null) {
             currentDevice = updated
-            lastDetailUpdate = now
             runOnUiThread { displayDevice(currentDevice) }
         }
     }

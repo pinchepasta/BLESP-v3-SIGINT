@@ -25,7 +25,10 @@
     "variantName": "debug",
     "isDebuggableEnabled": true,
     "validAbiList": [
-      "arm64-v8a"
+      "armeabi-v7a",
+      "arm64-v8a",
+      "x86",
+      "x86_64"
     ],
     "buildTargetSet": [],
     "implicitBuildTargetSet": [],
@@ -150,7 +153,6 @@
         "rootBuildGradleFolder": "/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10",
         "sdkFolder": "/Users/feinlabsfilms/Library/Android/sdk",
         "isBuildOnlyTargetAbiEnabled": true,
-        "ideBuildTargetAbi": "arm64-v8a,armeabi-v7a,armeabi",
         "isCmakeBuildCohabitationEnabled": false,
         "isPrefabEnabled": false
       },

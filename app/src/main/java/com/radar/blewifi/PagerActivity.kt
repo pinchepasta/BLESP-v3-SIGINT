@@ -60,18 +60,13 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
     }
 
-    private var lastMessageCount = -1
-
     private fun updateChatUI() {
         activeChatId?.let { chatId ->
             val messages = allMessages[chatId] ?: mutableListOf()
-            if (messages.size != lastMessageCount) {
-                lastMessageCount = messages.size
-                chatAdapter.updateData(messages)
-                if (messages.isNotEmpty()) {
-                    binding.rvChatHistory.post {
-                        binding.rvChatHistory.scrollToPosition(messages.size - 1)
-                    }
+            chatAdapter.updateData(messages)
+            if (messages.isNotEmpty()) {
+                binding.rvChatHistory.post {
+                    binding.rvChatHistory.scrollToPosition(messages.size - 1)
                 }
             }
         }
@@ -765,7 +760,6 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
     override fun onDestroy() {
         super.onDestroy()
         nearbyManager.removeListener(nearbyListener)
-        ioExecutor.shutdown()
     }
 
     @SuppressLint("MissingSuperCall")

@@ -56,13 +56,7 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ImageView btnKillswitch;
 
   @NonNull
-  public final ImageView btnLockRadar;
-
-  @NonNull
   public final ImageView btnPager;
-
-  @NonNull
-  public final ImageView btnPbj;
 
   @NonNull
   public final ImageView btnQr;
@@ -149,12 +143,11 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull ImageView btnArchive, @NonNull Button btnBeep, @NonNull Button btnClear,
       @NonNull ImageView btnDrone, @NonNull ImageView btnEsl, @NonNull Button btnExt,
       @NonNull ImageView btnGlobeListTop, @NonNull ImageView btnKillswitch,
-      @NonNull ImageView btnLockRadar, @NonNull ImageView btnPager, @NonNull ImageView btnPbj,
-      @NonNull ImageView btnQr, @NonNull Button btnSave, @NonNull Button btnScan,
-      @NonNull ImageView btnStats, @NonNull Button btnTerminal, @NonNull ImageView btnThemeToggle,
-      @NonNull ImageView btnWspr, @NonNull CheckBox cb24, @NonNull CheckBox cb5,
-      @NonNull CheckBox cbAero, @NonNull CheckBox cbBle, @NonNull CheckBox cbCams,
-      @NonNull CheckBox cbMap, @NonNull LinearLayout headerBar,
+      @NonNull ImageView btnPager, @NonNull ImageView btnQr, @NonNull Button btnSave,
+      @NonNull Button btnScan, @NonNull ImageView btnStats, @NonNull Button btnTerminal,
+      @NonNull ImageView btnThemeToggle, @NonNull ImageView btnWspr, @NonNull CheckBox cb24,
+      @NonNull CheckBox cb5, @NonNull CheckBox cbAero, @NonNull CheckBox cbBle,
+      @NonNull CheckBox cbCams, @NonNull CheckBox cbMap, @NonNull LinearLayout headerBar,
       @NonNull LinearLayout headerContainer, @NonNull LinearLayout infoContainer,
       @NonNull ImageView ivLogo, @NonNull RecyclerView listView, @NonNull MapView mapView,
       @NonNull MiniGraphView miniGraph, @NonNull MiniGraphView netGraph,
@@ -171,9 +164,7 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnExt = btnExt;
     this.btnGlobeListTop = btnGlobeListTop;
     this.btnKillswitch = btnKillswitch;
-    this.btnLockRadar = btnLockRadar;
     this.btnPager = btnPager;
-    this.btnPbj = btnPbj;
     this.btnQr = btnQr;
     this.btnSave = btnSave;
     this.btnScan = btnScan;
@@ -284,21 +275,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnLockRadar;
-      ImageView btnLockRadar = ViewBindings.findChildViewById(rootView, id);
-      if (btnLockRadar == null) {
-        break missingId;
-      }
-
       id = R.id.btnPager;
       ImageView btnPager = ViewBindings.findChildViewById(rootView, id);
       if (btnPager == null) {
-        break missingId;
-      }
-
-      id = R.id.btnPbj;
-      ImageView btnPbj = ViewBindings.findChildViewById(rootView, id);
-      if (btnPbj == null) {
         break missingId;
       }
 
@@ -465,11 +444,11 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((ConstraintLayout) rootView, bottomBar, btnArchive, btnBeep,
-          btnClear, btnDrone, btnEsl, btnExt, btnGlobeListTop, btnKillswitch, btnLockRadar,
-          btnPager, btnPbj, btnQr, btnSave, btnScan, btnStats, btnTerminal, btnThemeToggle, btnWspr,
-          cb24, cb5, cbAero, cbBle, cbCams, cbMap, headerBar, headerContainer, infoContainer,
-          ivLogo, listView, mapView, miniGraph, netGraph, radarContainer, radarView, statusText,
-          tvCoordinates, tvOverlayNetworkName, tvTimecode);
+          btnClear, btnDrone, btnEsl, btnExt, btnGlobeListTop, btnKillswitch, btnPager, btnQr,
+          btnSave, btnScan, btnStats, btnTerminal, btnThemeToggle, btnWspr, cb24, cb5, cbAero,
+          cbBle, cbCams, cbMap, headerBar, headerContainer, infoContainer, ivLogo, listView,
+          mapView, miniGraph, netGraph, radarContainer, radarView, statusText, tvCoordinates,
+          tvOverlayNetworkName, tvTimecode);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

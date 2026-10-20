@@ -166,21 +166,6 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="2" />
-
-        <ImageView
-            android:id="@+id/btnLockRadar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="75dp"
-            android:layout_marginBottom="14dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/lock_radar"
-            android:focusable="true"
-            android:padding="2dp"
-            android:src="@drawable/ic_lock_open"
-            app:tint="#00FF41" />
     </FrameLayout>
 
     <!-- Info bar (Coordinates and Timecode) -->
@@ -252,86 +237,75 @@
 
             <ImageView
                 android:id="@+id/btnThemeToggle"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_theme_toggle"
                 android:contentDescription="Toggle Theme"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
             <ImageView
                 android:id="@+id/btnStats"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_chart"
                 android:contentDescription="Statistics"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
             <ImageView
                 android:id="@+id/btnArchive"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_archive"
                 android:contentDescription="Archive"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
             <ImageView
                 android:id="@+id/btnEsl"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_tag"
                 android:contentDescription="@string/esl_tag_tools"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
             <ImageView
                 android:id="@+id/btnPager"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_pager"
                 android:contentDescription="Pager"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
             <ImageView
                 android:id="@+id/btnQr"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_qr"
                 android:contentDescription="@string/qr_tools"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp"
-                android:layout_marginEnd="10dp" />
-
-            <ImageView
-                android:id="@+id/btnPbj"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_pbj"
-                android:contentDescription="@string/pbj_tools"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="3dp" />
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
 
         </LinearLayout>
 

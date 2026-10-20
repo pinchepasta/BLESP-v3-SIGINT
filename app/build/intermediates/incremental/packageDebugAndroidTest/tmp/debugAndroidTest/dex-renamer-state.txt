@@ -1,4 +1,4 @@
-#Sun Oct 18 00:05:32 CEST 2026
+#Tue Sep 22 13:14:27 CEST 2026
 base.0=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
 base.1=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/1/classes.dex
 path.0=0/classes.dex
