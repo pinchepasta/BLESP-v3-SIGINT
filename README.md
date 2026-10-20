@@ -89,7 +89,7 @@ The little icon right next to the settings icon opens the networks statistics sc
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ext.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n4.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%">
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n7.jpg" alt="BLESP v3" width="25%" height="25%">
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n7.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n10.jpg" alt="BLESP v3" width="25%" height="25%">
 
 By clicking on the [ext] button, you can initiate a connection to a device like mostly-a-Flipper, Bruce, Flipper Zero, Cardputer ADV and so on, wirelessly. Now you can forward SubGHz or Infrared payloads in .sub and .ir format, for example if you want to flash an ESL Tag via .ir payload.
 
