@@ -486,7 +486,15 @@ fun WSPRApp(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { },
+                title = {
+                    Text(
+                        "",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
                 navigationIcon = {
                     TextButton(
                         onClick = { 
@@ -1384,10 +1392,10 @@ fun RecordingsScreen(recordingsDir: File, paddingValues: PaddingValues) {
                     ) {
                         Row(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                             Box(
-                                modifier = Modifier.size(48.dp).clip(CircleShape).background(if (isPlaying) PatchedGreen.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
+                                modifier = Modifier.size(48.dp).clip(CircleShape).background(if (isPlaying) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(if (isPlaying) Icons.Default.GraphicEq else Icons.Default.AudioFile, null, tint = if (isPlaying) PatchedGreen else MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
+                                Icon(if (isPlaying) Icons.Default.GraphicEq else Icons.Default.AudioFile, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
                             }
                             Spacer(Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {

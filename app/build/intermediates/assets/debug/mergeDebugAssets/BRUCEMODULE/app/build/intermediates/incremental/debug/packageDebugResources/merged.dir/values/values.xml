@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="node_accent">#00F5D4</color>
+    <color name="node_bg">#000000</color>
+    <color name="node_primary">#FF5F00</color>
+    <string name="app_name">MULTiPASS</string>
+    <style name="Theme.BruceRemote" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/node_bg</item>
+        <item name="android:statusBarColor">@color/node_bg</item>
+        <item name="android:navigationBarColor">@color/node_bg</item>
+    </style>
+</resources>

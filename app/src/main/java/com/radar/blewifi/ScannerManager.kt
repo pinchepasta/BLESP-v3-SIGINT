@@ -50,23 +50,18 @@ class ScannerManager(private val context: Context) {
     }
 
     private fun notifyDevicesUpdated(devices: List<ScanDevice>) {
-        val list = devices.toList()
         handler.post {
-<<<<<<< HEAD
             listeners.forEach { it.onDevicesUpdated(devices) }
         }
     }
 
     private fun addToArchive(key: String, device: ScanDevice) {
         archiveMap[key] = device
-        if (archiveMap.size > 500) {
+        if (archiveMap.size > 3000) {
             val oldestKey = archiveMap.minByOrNull { it.value.lastSeen }?.key
             if (oldestKey != null) {
                 archiveMap.remove(oldestKey)
             }
-=======
-            listeners.forEach { it.onDevicesUpdated(list) }
->>>>>>> parent of 5dc96b0 (v3.5.3)
         }
     }
 
@@ -791,14 +786,22 @@ class ScannerManager(private val context: Context) {
     }
 
     fun forceSaveArchive() {
-        val prefs = context.getSharedPreferences("radar_archive", Context.MODE_PRIVATE)
-        val json = gson.toJson(archiveMap)
-        prefs.edit().putString("devices", json).apply()
+        val exec = ioExecutor ?: return
+        if (exec.isShutdown) return
+        exec.execute {
+            try {
+                val prefs = context.getSharedPreferences("radar_archive", Context.MODE_PRIVATE)
+                val json = gson.toJson(archiveMap)
+                prefs.edit().putString("devices", json).apply()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun archiveCurrentDevices() {
         deviceMap.forEach { (id, device) ->
-            archiveMap[id] = device
+            addToArchive(id, device)
         }
         forceSaveArchive()
     }
@@ -869,7 +872,8 @@ class ScannerManager(private val context: Context) {
                 if (!scanning) return
                 fetchAircraftData()
                 fetchCameraData()
-                val interval = if (isBackgroundMode) 30000L else 5000L
+                // Increased interval to 30s in foreground (60s in background) to save battery and network bandwidth
+                val interval = if (isBackgroundMode) 60000L else 30000L
                 handler.postDelayed(this, interval)
             }
         })
@@ -1235,7 +1239,9 @@ class ScannerManager(private val context: Context) {
 
     private fun startBleScanning() {
         if (!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) return
-        performBleScan(ScanSettings.SCAN_MODE_LOW_LATENCY)
+        // Use SCAN_MODE_LOW_POWER to reduce Bluetooth power consumption and CPU wakeups
+        val mode = ScanSettings.SCAN_MODE_LOW_POWER
+        performBleScan(mode)
     }
 
     private fun performBleScan(mode: Int) {
@@ -1269,9 +1275,8 @@ class ScannerManager(private val context: Context) {
             override fun run() {
                 if (!scanning) return
                 triggerWifiScan()
-                // Android throttles WiFi scans to 4 per 2 minutes for foreground apps.
-                // 30 seconds ensures we stay within this limit.
-                val interval = if (isBackgroundMode) 600000L else 30000L
+                // Increased interval to 60s in foreground (10m in background) to save battery and energy
+                val interval = if (isBackgroundMode) 600000L else 60000L
                 handler.postDelayed(this, interval)
             }
         })
@@ -1296,19 +1301,35 @@ class ScannerManager(private val context: Context) {
     private fun processBleResult(result: ScanResult) {
         val now = System.currentTimeMillis()
         val device = result.device
-        val scanRecord = result.scanRecord
         val address = device.address ?: return
-        
-        var name = result.device.name ?: scanRecord?.deviceName ?: ""
         val rssi = result.rssi
-        
-        // Check for specific device types based on scan record
+
+        val existing = deviceMap[address]
+        val currentLoc = lastLocation
+
+        if (existing != null) {
+            existing.lastSeen = now
+            existing.rssi = rssi
+            existing.seenCount++
+            val rawName = result.device.name ?: result.scanRecord?.deviceName
+            if (!rawName.isNullOrEmpty() && (existing.name.isEmpty() || existing.name == "BLE Device")) {
+                existing.name = rawName
+            }
+            if (existing.vendor == null) existing.vendor = getVendor(address)
+            if (existing.capturedLat == null && currentLoc != null && !archiveMap.containsKey(address)) {
+                existing.capturedLat = currentLoc.latitude
+                existing.capturedLon = currentLoc.longitude
+                reverseGeocodeWifi(existing)
+            }
+            return
+        }
+
+        val scanRecord = result.scanRecord
+        var name = result.device.name ?: scanRecord?.deviceName ?: ""
         var type = DeviceType.BLE
         var isAirTag = false
-        var isSkimmer = false
-        
+
         scanRecord?.let { record ->
-            // AirTag pattern: Manufacturer data starting with 0x4C 0x00 0x12 0x19
             record.getManufacturerSpecificData(0x004c)?.let { data ->
                 if (data.size >= 2 && (data[0].toInt() and 0xFF) == 0x12 && (data[1].toInt() and 0xFF) == 0x19) {
                     isAirTag = true
@@ -1316,9 +1337,9 @@ class ScannerManager(private val context: Context) {
                 }
             }
 
-            // Flipper Zero specific BLE Service UUID check
             record.serviceUuids?.forEach { uuid ->
-                if (uuid.uuid.toString().lowercase().startsWith("00003080")) {
+                val uStr = uuid.uuid.toString().lowercase()
+                if (uStr.contains("3080")) {
                     type = DeviceType.FLIPPER
                     if (name.isEmpty()) name = "Flipper Zero"
                 }
@@ -1330,41 +1351,22 @@ class ScannerManager(private val context: Context) {
         }
         if (type == DeviceType.TRACKER) isAirTag = true
 
-        val existing = deviceMap[address]
-        val currentLoc = lastLocation
-        if (existing != null) {
-            existing.lastSeen = now
-            existing.rssi = rssi
-            if (name.isNotEmpty()) existing.name = name
-            existing.seenCount++
-            if (existing.vendor == null) existing.vendor = getVendor(address)
-            // Update type if we found a better one
-            if (type != DeviceType.BLE) {
-                existing.type = type
-            }
-            if (existing.capturedLat == null && currentLoc != null && !archiveMap.containsKey(address)) {
-                existing.capturedLat = currentLoc.latitude
-                existing.capturedLon = currentLoc.longitude
-                reverseGeocodeWifi(existing)
-            }
-        } else {
-            val newDev = ScanDevice(
-                id = address,
-                name = if (name.isEmpty()) "BLE Device" else name,
-                type = type,
-                rssi = rssi,
-                address = address,
-                isAirTag = isAirTag,
-                lastSeen = now
-            )
-            newDev.vendor = getVendor(address)
-            if (currentLoc != null && !archiveMap.containsKey(address)) {
-                newDev.capturedLat = currentLoc.latitude
-                newDev.capturedLon = currentLoc.longitude
-                reverseGeocodeWifi(newDev)
-            }
-            deviceMap[address] = newDev
+        val newDev = ScanDevice(
+            id = address,
+            name = if (name.isEmpty()) "BLE Device" else name,
+            type = type,
+            rssi = rssi,
+            address = address,
+            isAirTag = isAirTag,
+            lastSeen = now
+        )
+        newDev.vendor = getVendor(address)
+        if (currentLoc != null && !archiveMap.containsKey(address)) {
+            newDev.capturedLat = currentLoc.latitude
+            newDev.capturedLon = currentLoc.longitude
+            reverseGeocodeWifi(newDev)
         }
+        deviceMap[address] = newDev
     }
 
     private fun processWifiResults() {
@@ -1374,30 +1376,30 @@ class ScannerManager(private val context: Context) {
         val currentLoc = lastLocation
 
         for (res in results) {
-            val id = res.BSSID
-            val name = res.SSID
-            val wifiType = detectDeviceType(name, id, DeviceType.WIFI)
+            val id = res.BSSID ?: continue
+            val name = res.SSID ?: ""
 
             val existing = deviceMap[id]
             if (existing != null) {
                 existing.lastSeen = now
                 existing.rssi = res.level
+                if (name.isNotEmpty() && existing.name.isEmpty()) existing.name = name
                 if (existing.vendor == null) existing.vendor = getVendor(id)
-                if (wifiType != DeviceType.WIFI) existing.type = wifiType
                 if (existing.capturedLat == null && currentLoc != null && !archiveMap.containsKey(id)) {
                     existing.capturedLat = currentLoc.latitude
                     existing.capturedLon = currentLoc.longitude
                     reverseGeocodeWifi(existing)
                 }
             } else {
+                val wifiType = detectDeviceType(name, id, DeviceType.WIFI)
                 val newDev = ScanDevice(
                     id = id,
                     name = name,
                     type = wifiType,
                     rssi = res.level,
                     address = id,
-                    ssid = res.SSID,
-                    capabilities = res.capabilities,
+                    ssid = name,
+                    capabilities = res.capabilities ?: "",
                     frequency = res.frequency,
                     channel = frequencyToChannel(res.frequency),
                     lastSeen = now
@@ -1408,7 +1410,6 @@ class ScannerManager(private val context: Context) {
                     newDev.capturedLon = currentLoc.longitude
                     reverseGeocodeWifi(newDev)
                 }
-                // Trigger fingerprinting for new WiFi devices
                 fingerprintDevice(newDev)
                 deviceMap[id] = newDev
             }
@@ -1487,7 +1488,8 @@ class ScannerManager(private val context: Context) {
 
     private fun pruneStaleDevices() {
         val now = System.currentTimeMillis()
-        val timeout = if (isBackgroundMode) 600000L else 30000L
+        // Extended default device retention duration (5 minutes in foreground, 10 minutes in background)
+        val defaultTimeout = if (isBackgroundMode) 600000L else 300000L
         val it = deviceMap.entries.iterator()
         while (it.hasNext()) {
             val entry = it.next()
@@ -1496,22 +1498,22 @@ class ScannerManager(private val context: Context) {
             // Sticky mode for tracked devices (alarms)
             if (isAlarmEnabled(device.id)) {
                 if (now - device.lastSeen > 600000L) { // Keep tracked devices for 10 mins
-                    archiveMap[entry.key] = device
+                    addToArchive(entry.key, device)
                     it.remove()
                 }
                 continue
             }
 
-            // Don't prune Cameras or Aircraft as quickly if they are from static data/API
+            // Extended timeouts for various device types so detected devices remain longer on the radar map
             val deviceTimeout = when(device.type) {
                 DeviceType.CAMERA -> 3600000L // 1 hour
-                DeviceType.AIRCRAFT -> 60000L
-                DeviceType.WIFI -> if (isBackgroundMode) 600000L else 65000L // WiFi scans are throttled
-                else -> timeout
+                DeviceType.AIRCRAFT -> if (isBackgroundMode) 600000L else 180000L // 3 minutes
+                DeviceType.WIFI -> if (isBackgroundMode) 600000L else 300000L // 5 minutes
+                else -> defaultTimeout // 5 minutes for BLE and other devices
             }
             
             if (now - device.lastSeen > deviceTimeout) {
-                archiveMap[entry.key] = device
+                addToArchive(entry.key, device)
                 it.remove()
             }
         }

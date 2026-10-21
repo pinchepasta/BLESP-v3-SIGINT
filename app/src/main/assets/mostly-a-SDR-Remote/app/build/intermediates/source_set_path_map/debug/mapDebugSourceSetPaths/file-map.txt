@@ -1,0 +1,34 @@
+de.mostlyasdr.neonremote.app-activity-1.8.0-0 /Users/feinlabsfilms/.gradle/caches/transforms-4/0457bb27240462038138d6124a3851e0/transformed/activity-1.8.0/res
+de.mostlyasdr.neonremote.app-lifecycle-viewmodel-savedstate-2.6.2-1 /Users/feinlabsfilms/.gradle/caches/transforms-4/075303c1a579c423313bb64f570c90a9/transformed/lifecycle-viewmodel-savedstate-2.6.2/res
+de.mostlyasdr.neonremote.app-cardview-1.0.0-2 /Users/feinlabsfilms/.gradle/caches/transforms-4/0caa330c8a83ae3d8aab7b79813c903a/transformed/cardview-1.0.0/res
+de.mostlyasdr.neonremote.app-emoji2-1.3.0-3 /Users/feinlabsfilms/.gradle/caches/transforms-4/192474c036ec43764acdf6f3e34ae042/transformed/emoji2-1.3.0/res
+de.mostlyasdr.neonremote.app-lifecycle-livedata-core-2.6.2-4 /Users/feinlabsfilms/.gradle/caches/transforms-4/2123c70e0b087a565ece9761afcdf5e2/transformed/lifecycle-livedata-core-2.6.2/res
+de.mostlyasdr.neonremote.app-recyclerview-1.1.0-5 /Users/feinlabsfilms/.gradle/caches/transforms-4/259b2081233595c989a7e45582d126cf/transformed/recyclerview-1.1.0/res
+de.mostlyasdr.neonremote.app-drawerlayout-1.1.1-6 /Users/feinlabsfilms/.gradle/caches/transforms-4/25d7a0acfcd36a88cec5870374c1add7/transformed/drawerlayout-1.1.1/res
+de.mostlyasdr.neonremote.app-material-1.12.0-7 /Users/feinlabsfilms/.gradle/caches/transforms-4/30dbe09adc47a6fa3161e128d9fbb6b2/transformed/material-1.12.0/res
+de.mostlyasdr.neonremote.app-constraintlayout-2.0.1-8 /Users/feinlabsfilms/.gradle/caches/transforms-4/3284b1fe802a3f384d6e1862779d2989/transformed/constraintlayout-2.0.1/res
+de.mostlyasdr.neonremote.app-core-runtime-2.2.0-9 /Users/feinlabsfilms/.gradle/caches/transforms-4/35b3db2516afa50d8f7eeea7a2525269/transformed/core-runtime-2.2.0/res
+de.mostlyasdr.neonremote.app-appcompat-1.7.0-10 /Users/feinlabsfilms/.gradle/caches/transforms-4/36b3856ba9c7cbbdc36c1fd5fe2a4d44/transformed/appcompat-1.7.0/res
+de.mostlyasdr.neonremote.app-fragment-1.5.4-11 /Users/feinlabsfilms/.gradle/caches/transforms-4/3d9efbf281507841f2c86d9fd1c4139f/transformed/fragment-1.5.4/res
+de.mostlyasdr.neonremote.app-lifecycle-process-2.6.2-12 /Users/feinlabsfilms/.gradle/caches/transforms-4/44d9374c2fc79a1ce870385ec114cea5/transformed/lifecycle-process-2.6.2/res
+de.mostlyasdr.neonremote.app-coordinatorlayout-1.1.0-13 /Users/feinlabsfilms/.gradle/caches/transforms-4/46c3eec3db88da37d66b1997214a1a7d/transformed/coordinatorlayout-1.1.0/res
+de.mostlyasdr.neonremote.app-lifecycle-viewmodel-2.6.2-14 /Users/feinlabsfilms/.gradle/caches/transforms-4/475157b7fb9afaa8cbd268d644c85bc1/transformed/lifecycle-viewmodel-2.6.2/res
+de.mostlyasdr.neonremote.app-savedstate-1.2.1-15 /Users/feinlabsfilms/.gradle/caches/transforms-4/4bd627a9048f6ce18b1b2d88bd05a714/transformed/savedstate-1.2.1/res
+de.mostlyasdr.neonremote.app-profileinstaller-1.3.1-16 /Users/feinlabsfilms/.gradle/caches/transforms-4/4e16cc280eaa0a1f5277c41379c36ea2/transformed/profileinstaller-1.3.1/res
+de.mostlyasdr.neonremote.app-startup-runtime-1.1.1-17 /Users/feinlabsfilms/.gradle/caches/transforms-4/705c330e03d4e2fcb62a924d14782115/transformed/startup-runtime-1.1.1/res
+de.mostlyasdr.neonremote.app-core-1.13.1-18 /Users/feinlabsfilms/.gradle/caches/transforms-4/8e0a0bff2d388b6446750efdf4a5758f/transformed/core-1.13.1/res
+de.mostlyasdr.neonremote.app-viewpager2-1.0.0-19 /Users/feinlabsfilms/.gradle/caches/transforms-4/94d31c5817af2daa94c50455e2cb418d/transformed/viewpager2-1.0.0/res
+de.mostlyasdr.neonremote.app-lifecycle-livedata-2.6.2-20 /Users/feinlabsfilms/.gradle/caches/transforms-4/a1eb4c955a5536edee1a0604e5a8d871/transformed/lifecycle-livedata-2.6.2/res
+de.mostlyasdr.neonremote.app-annotation-experimental-1.4.0-21 /Users/feinlabsfilms/.gradle/caches/transforms-4/b602daaf2448be52ca00da64464dbe99/transformed/annotation-experimental-1.4.0/res
+de.mostlyasdr.neonremote.app-emoji2-views-helper-1.3.0-22 /Users/feinlabsfilms/.gradle/caches/transforms-4/dc9369d3a3308050fc6782cf03ea6014/transformed/emoji2-views-helper-1.3.0/res
+de.mostlyasdr.neonremote.app-appcompat-resources-1.7.0-23 /Users/feinlabsfilms/.gradle/caches/transforms-4/e97b8fec522e0237fe171c43b96f412b/transformed/appcompat-resources-1.7.0/res
+de.mostlyasdr.neonremote.app-transition-1.5.0-24 /Users/feinlabsfilms/.gradle/caches/transforms-4/eb07a0b9af61cd6747df6be18d6086c6/transformed/transition-1.5.0/res
+de.mostlyasdr.neonremote.app-core-ktx-1.13.1-25 /Users/feinlabsfilms/.gradle/caches/transforms-4/ee0481a11330c26fe06a00831ef0481b/transformed/core-ktx-1.13.1/res
+de.mostlyasdr.neonremote.app-lifecycle-runtime-2.6.2-26 /Users/feinlabsfilms/.gradle/caches/transforms-4/f0d9cfbdb784c10d6a0f1a5315cd19fe/transformed/lifecycle-runtime-2.6.2/res
+de.mostlyasdr.neonremote.app-pngs-27 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/build/generated/res/pngs/debug
+de.mostlyasdr.neonremote.app-resValues-28 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/build/generated/res/resValues/debug
+de.mostlyasdr.neonremote.app-packageDebugResources-29 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+de.mostlyasdr.neonremote.app-packageDebugResources-30 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+de.mostlyasdr.neonremote.app-debug-31 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/build/intermediates/merged_res/debug/mergeDebugResources
+de.mostlyasdr.neonremote.app-debug-32 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/src/debug/res
+de.mostlyasdr.neonremote.app-main-33 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/mostly-a-SDR-Remote-Android/app/src/main/res

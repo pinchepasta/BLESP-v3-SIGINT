@@ -148,12 +148,15 @@ class RadarView @JvmOverloads constructor(
     }
 
 
+    private var currentThemeColors = ThemeUtils.getThemeColors(theme)
+
     init {
         updateColors()
     }
 
     private fun updateColors() {
         val colors = ThemeUtils.getThemeColors(theme)
+        currentThemeColors = colors
         val isHighContrast = theme == Theme.HIGH_CONTRAST
         val isRedNight = theme == Theme.RED_NIGHT
 
@@ -250,41 +253,19 @@ class RadarView @JvmOverloads constructor(
     private var isGlitching = false
     private var glitchShift = 0f
 
-    // Sweep animation
+    // Single master animation driver for radar sweep & pulse
     private var sweepAngle = 0f
+    private var pulseRadius = 0f
+    private var blinkAlpha = 255
+    private var centerBlinkAlpha = 255
+
     private val sweepAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
-        duration = 5000 // Slower (from 3000)
+        duration = 5000
         interpolator = LinearInterpolator()
         repeatCount = ValueAnimator.INFINITE
         addUpdateListener {
-            sweepAngle = it.animatedValue as Float
             invalidate()
         }
-    }
-
-    // Blip pulse animation
-    private var pulseRadius = 0f
-    private val pulseAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-        duration = 1500
-        interpolator = LinearInterpolator()
-        repeatCount = ValueAnimator.INFINITE
-        addUpdateListener { pulseRadius = it.animatedValue as Float; invalidate() }
-    }
-
-    private var blinkAlpha = 255
-    private val blinkAnimator = ValueAnimator.ofInt(0, 255).apply {
-        duration = 500
-        repeatCount = ValueAnimator.INFINITE
-        repeatMode = ValueAnimator.REVERSE
-        addUpdateListener { blinkAlpha = it.animatedValue as Int; invalidate() }
-    }
-
-    private var centerBlinkAlpha = 255
-    private val centerBlinkAnimator = ValueAnimator.ofInt(0, 255).apply {
-        duration = 1000
-        repeatCount = ValueAnimator.INFINITE
-        repeatMode = ValueAnimator.REVERSE
-        addUpdateListener { centerBlinkAlpha = it.animatedValue as Int; invalidate() }
     }
 
     // Device list and positions
@@ -356,7 +337,8 @@ class RadarView @JvmOverloads constructor(
         
         var bc = 0
         var wc = 0
-        list.forEach { d ->
+        for (i in 0 until list.size) {
+            val d = list[i]
             if (d.type == DeviceType.BLE || d.type == DeviceType.PAGER) bc++
             else if (d.type == DeviceType.WIFI) wc++
         }
@@ -364,7 +346,8 @@ class RadarView @JvmOverloads constructor(
         wifiCountCache = wc
 
         sortedDevices.clear()
-        sortedDevices.addAll(list.sortedBy { it.id })
+        sortedDevices.addAll(list)
+        sortedDevices.sortBy { it.id }
         assignPositions()
         invalidate()
     }
@@ -376,41 +359,10 @@ class RadarView @JvmOverloads constructor(
         val cy = height / 2f
         val r  = min(cx, cy) * 0.97f
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        val deviceCount = devices.size
-        
-        // Throttling position updates for non-selected devices in high density
-        val skipModulo = when {
-            deviceCount > 500 -> 10
-            deviceCount > 200 -> 5
-            else -> 1
-        }
-        
->>>>>>> parent of 1ed2e71 (v3.5.3)
         currentIds.clear()
-=======
-        val deviceCount = devices.size
-        
-        // Throttling position updates for non-selected devices in high density
-        val skipModulo = when {
-            deviceCount > 500 -> 10
-            deviceCount > 200 -> 5
-            else -> 1
-        }
-        
-        // Optimize: Use a pre-sized HashSet to avoid repeated allocations if possible
-        val currentIds = HashSet<String>(devices.size)
->>>>>>> parent of 5dc96b0 (v3.5.3)
         devices.forEach { currentIds.add(it.id) }
         
-        devices.forEachIndexed { index, d ->
-            val isSelected = d.id == selectedId
-            if (!isSelected && skipModulo > 1 && (index + drawCount) % skipModulo != 0) {
-                return@forEachIndexed
-            }
-            
+        devices.forEach { d ->
             var pos = devicePositions[d.id]
             
             if (pos == null && d.type != DeviceType.AIRCRAFT && d.type != DeviceType.CAMERA) {
@@ -522,6 +474,12 @@ class RadarView @JvmOverloads constructor(
     private val pointPool = PointF()
 
     override fun onDraw(canvas: Canvas) {
+        val timeNow = System.currentTimeMillis()
+        sweepAngle = ((timeNow % 5000L) / 5000f) * 360f
+        pulseRadius = ((timeNow % 1500L) / 1500f)
+        blinkAlpha = (((sin((timeNow % 500L) / 500.0 * 2 * Math.PI) + 1) / 2) * 255).toInt()
+        centerBlinkAlpha = (((sin((timeNow % 1000L) / 1000.0 * 2 * Math.PI) + 1) / 2) * 255).toInt()
+
         // Ensure black background for Summertime and Morio themes
         if (theme == Theme.SUMMERTIME || theme == Theme.MORIO) {
             canvas.drawColor(Color.BLACK)
@@ -529,11 +487,6 @@ class RadarView @JvmOverloads constructor(
         super.onDraw(canvas)
         
         val deviceCount = devices.size
-        
-        // Remove aggressive frame-skipping / return early without drawing anything, 
-        // which causes intense screen flickering when there are many wifi dots.
-        // Instead, we always draw every frame completely to avoid flickering.
-
 
         if (cachedBg == null || cachedBg?.width != width || cachedBg?.height != height) {
             buildStaticCache()
@@ -579,114 +532,18 @@ class RadarView @JvmOverloads constructor(
         canvas.drawCircle(cx, cy, 6f, centerPaint)
 
         // Blips
-        val isHighDensity = deviceCount > 250
+        val isHighDensity = deviceCount > 400
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 1ed2e71 (v3.5.3)
-        if (deviceCount > 500) {
-            renderHighDensityBlips(canvas)
-        } else {
-            renderStandardBlips(canvas, isHighDensity, isHighContrast)
-        }
-        
-        canvas.restore()
-        drawOverlays(canvas)
-        drawStatusBar(canvas)
-    }
-
-    private fun renderHighDensityBlips(canvas: Canvas) {
-<<<<<<< HEAD
-        // Group by type to minimize paint changes
-        val grouped = sortedDevices.groupBy { it.type }
-        
-        grouped.forEach { (type, deviceList) ->
-            if (type == DeviceType.CAMERA) return@forEach // Cameras rendered with full detail below
-
-            val color = when (type) {
-=======
-        blipPaint.strokeWidth = 4f
-        for (i in 0 until sortedDevices.size) {
-            val device = sortedDevices[i]
-            if (!shouldShow(device.type) || device.type == DeviceType.CAMERA) continue
-            val pos = devicePositions[device.id] ?: continue
-            
-            val color = when (device.type) {
->>>>>>> parent of 1ed2e71 (v3.5.3)
-                DeviceType.WIFI -> green
-                DeviceType.BLE, DeviceType.PAGER -> targetPink
-                DeviceType.LTE -> lteColor
-                DeviceType.FIVE_G -> fiveGColor
-                DeviceType.AIRCRAFT, DeviceType.DRONE -> aircraftColor
-                else -> targetPink
-            }
-            
-            blipPaint.color = ColorUtils.setAlphaComponent(color, 180)
-<<<<<<< HEAD
-            blipPaint.strokeWidth = 4f
-            
-            var pointIdx = 0
-            if (blipPointsBuffer.size < deviceList.size * 2) {
-                blipPointsBuffer = FloatArray(deviceList.size * 2)
-            }
-            
-            deviceList.forEach { device ->
-                if (!shouldShow(device.type)) return@forEach
-                val pos = devicePositions[device.id] ?: return@forEach
-                blipPointsBuffer[pointIdx++] = pos.x
-                blipPointsBuffer[pointIdx++] = pos.y
-            }
-            
-            if (pointIdx > 0) {
-                canvas.drawPoints(blipPointsBuffer, 0, pointIdx, blipPaint)
-            }
-        }
-
-        // Render cameras with full visual protocol even in high density
-        sortedDevices.filter { it.type == DeviceType.CAMERA }.forEach { camera ->
-            if (shouldShow(camera.type)) {
-=======
-            canvas.drawPoint(pos.x, pos.y, blipPaint)
-        }
-
-        // Render cameras with full visual protocol even in high density
-        for (i in 0 until sortedDevices.size) {
-            val camera = sortedDevices[i]
-            if (camera.type == DeviceType.CAMERA && shouldShow(camera.type)) {
->>>>>>> parent of 1ed2e71 (v3.5.3)
-                renderSingleBlip(canvas, camera, camera.id == selectedId, theme == Theme.HIGH_CONTRAST, true)
-            }
-        }
-        
-        // Always render selected device on top with full detail
-        selectedId?.let { id ->
-<<<<<<< HEAD
-            devices.find { it.id == id && it.type != DeviceType.CAMERA }?.let { renderSingleBlip(canvas, it, true, theme == Theme.HIGH_CONTRAST) }
-=======
-            for (i in 0 until devices.size) {
-                val dev = devices[i]
-                if (dev.id == id && dev.type != DeviceType.CAMERA) {
-                    renderSingleBlip(canvas, dev, true, theme == Theme.HIGH_CONTRAST)
-                    break
-                }
-            }
->>>>>>> parent of 1ed2e71 (v3.5.3)
-        }
-    }
-
-    private fun renderStandardBlips(canvas: Canvas, isHighDensity: Boolean, isHighContrast: Boolean) {
-<<<<<<< HEAD
->>>>>>> parent of 5dc96b0 (v3.5.3)
-=======
->>>>>>> parent of 1ed2e71 (v3.5.3)
         for (i in 0 until sortedDevices.size) {
             val device = sortedDevices[i]
             if (!shouldShow(device.type)) continue
             val isSelected = device.id == selectedId
             renderSingleBlip(canvas, device, isSelected, isHighContrast, isHighDensity)
         }
+        
+        canvas.restore()
+        drawOverlays(canvas)
+        drawStatusBar(canvas)
     }
 
     private fun shouldShow(type: DeviceType): Boolean {
@@ -703,8 +560,8 @@ class RadarView @JvmOverloads constructor(
 
     private fun renderSingleBlip(canvas: Canvas, device: ScanDevice, isSelected: Boolean, isHighContrast: Boolean, isHighDensity: Boolean = false) {
         val pos = devicePositions[device.id] ?: return
-        val colors = ThemeUtils.getThemeColors(theme)
-        
+        val colors = currentThemeColors
+
         val blipColor = when (device.type) {
             DeviceType.WIFI -> green
             DeviceType.BLE, DeviceType.PAGER -> targetPink
@@ -715,15 +572,6 @@ class RadarView @JvmOverloads constructor(
             else -> targetPink
         }
 
-        if (isHighDensity && !isSelected && device.type != DeviceType.CAMERA) {
-            val lastPos = lastRenderedBlips[device.id]
-            if (lastPos != null && abs(pos.x - lastPos.x) < 0.5f && abs(pos.y - lastPos.y) < 0.5f) {
-                blipPaint.color = ColorUtils.setAlphaComponent(blipColor, 120)
-                canvas.drawPoint(pos.x, pos.y, blipPaint)
-                return
-            }
-        }
-        
         val savedPos = lastRenderedBlips[device.id]
         if (savedPos != null) {
             savedPos.set(pos.x, pos.y)
@@ -731,10 +579,23 @@ class RadarView @JvmOverloads constructor(
             lastRenderedBlips[device.id] = PointF(pos.x, pos.y)
         }
 
-        val alpha = if (isSelected) 255 else 210
+        val baseAlpha = if (isSelected) 255 else 210
+        val ageMs = System.currentTimeMillis() - device.lastSeen
+        val ageFactor = when {
+            ageMs <= 60000L -> 1.0f
+            ageMs >= 300000L -> 0.45f
+            else -> 1.0f - 0.55f * ((ageMs - 60000L) / 240000L.toFloat())
+        }
+        val alpha = (baseAlpha * ageFactor).toInt().coerceIn(70, 255)
         blipPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
         blipRingPaint.color = ColorUtils.setAlphaComponent(blipColor, alpha)
-        val blipR = if (isSelected) 10f else 7f
+
+        val blipR = when {
+            isSelected -> 10f
+            devices.size > 400 -> 5f
+            devices.size > 200 -> 6f
+            else -> 7f
+        }
 
         if (isSelected) {
             val pr = blipR + 6f + pulseRadius * 20f
@@ -762,7 +623,7 @@ class RadarView @JvmOverloads constructor(
 
         val blinkColor = when {
             device.isCar -> colors.accent
-            device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP") -> colors.accent
+            device.isWep -> colors.accent
             device.isAirTag -> if (theme == Theme.RED_NIGHT) Color.BLACK else colors.primary
             device.type == DeviceType.CAMERA -> if (theme == Theme.DEFAULT) Color.YELLOW else colors.accent
             else -> blipColor
@@ -914,13 +775,11 @@ class RadarView @JvmOverloads constructor(
                 performClick()
                 val isConfirm = (selectedId == best.id)
                 selectedId = best.id
-                pulseAnimator.start()
                 onDeviceClickListener?.onDeviceClicked(best, isConfirm)
                 invalidate()
                 return true
             } else {
                 selectedId = null
-                pulseAnimator.cancel()
                 onDeviceClickListener?.onNothingSelected()
                 invalidate()
             }
@@ -933,6 +792,6 @@ class RadarView @JvmOverloads constructor(
         return true
     }
 
-    fun startAnimation() { sweepAnimator.start(); pulseAnimator.start(); blinkAnimator.start(); centerBlinkAnimator.start() }
-    fun stopAnimation()  { sweepAnimator.cancel(); pulseAnimator.cancel(); blinkAnimator.cancel(); centerBlinkAnimator.cancel() }
+    fun startAnimation() { if (!sweepAnimator.isRunning) sweepAnimator.start() }
+    fun stopAnimation()  { sweepAnimator.cancel() }
 }

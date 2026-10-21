@@ -35,8 +35,8 @@ enum class AppTheme(
     DEFAULT(
         title = "Stealth Green & Pink (Default)",
         bg = Color(0xFF000000),
-        panel = Color(0xFF0A0F0A),
-        panel2 = Color(0xFF142016),
+        panel = Color(0xFF0A0A0A),
+        panel2 = Color(0xFF0F0F0F),
         line = Color(0xFF00FF41),
         fg = Color(0xFFFFFFFF),
         dim = Color(0xFF00AA2A),
@@ -56,14 +56,14 @@ enum class AppTheme(
         onBg = Color(0xFF004D18),
         onLine = Color(0xFF00FF41),
         onFg = Color(0xFFE6FFE9),
-        console = Color(0xFF050A05)
+        console = Color(0xFF0A0A0A)
     ),
 
     HIGH_CONTRAST(
         title = "High Contrast White",
         bg = Color(0xFFFFFFFF),
         panel = Color(0xFFF0F0F0),
-        panel2 = Color(0xFFE0E0E0),
+        panel2 = Color(0xFFCCCCCC),
         line = Color(0xFF000000),
         fg = Color(0xFF000000),
         dim = Color(0xFF555555),
@@ -89,8 +89,8 @@ enum class AppTheme(
     RED_NIGHT(
         title = "Tactical Red Night",
         bg = Color(0xFF000000),
-        panel = Color(0xFF140000),
-        panel2 = Color(0xFF240000),
+        panel = Color(0xFF0A0000),
+        panel2 = Color(0xFF1A0000),
         line = Color(0xFFFF0000),
         fg = Color(0xFFFFFFFF),
         dim = Color(0xFF990000),
@@ -116,8 +116,8 @@ enum class AppTheme(
     PINK(
         title = "Cyberpunk Pink",
         bg = Color(0xFF000000),
-        panel = Color(0xFF1A001A),
-        panel2 = Color(0xFF2A002A),
+        panel = Color(0xFF2A002A),
+        panel2 = Color(0xFF330033),
         line = Color(0xFFFF00FF),
         fg = Color(0xFFFFFFFF),
         dim = Color(0xFF990099),
@@ -137,14 +137,14 @@ enum class AppTheme(
         onBg = Color(0xFF4D004D),
         onLine = Color(0xFFFF00FF),
         onFg = Color(0xFFFFE6FF),
-        console = Color(0xFF0A000A)
+        console = Color(0xFF2A002A)
     ),
 
     NEON(
         title = "Tactical Neon Yellow",
         bg = Color(0xFF000000),
         panel = Color(0xFF1A1A00),
-        panel2 = Color(0xFF2A2A00),
+        panel2 = Color(0xFF333300),
         line = Color(0xFFE6FB04),
         fg = Color(0xFFFFFFFF),
         dim = Color(0xFFB3C403),
@@ -164,24 +164,24 @@ enum class AppTheme(
         onBg = Color(0xFF4D4D00),
         onLine = Color(0xFFE6FB04),
         onFg = Color(0xFFFEFFE6),
-        console = Color(0xFF0A0A00)
+        console = Color(0xFF1A1A00)
     ),
 
     NARANJA(
         title = "Cyber Orange",
         bg = Color(0xFF000000),
         panel = Color(0xFF1A0F00),
-        panel2 = Color(0xFF2A1800),
+        panel2 = Color(0xFF331E00),
         line = Color(0xFFFF8C00),
         fg = Color(0xFFFFFFFF),
         dim = Color(0xFF995400),
-        ok = Color(0xFF00FFCC),
+        ok = Color(0xFFFF8C00),
         bad = Color(0xFFFF3333),
         acc = Color(0xFFFF8C00),
         warn = Color(0xFFFFCC00),
-        okBg = Color(0xFF00382E),
-        okLine = Color(0xFF00FFCC),
-        okFg = Color(0xFF80FAEA),
+        okBg = Color(0xFF381F00),
+        okLine = Color(0xFFFF8C00),
+        okFg = Color(0xFFFFDFB3),
         badBg = Color(0xFF4A0800),
         badLine = Color(0xFFFF3333),
         badFg = Color(0xFFFFB3A6),
@@ -191,7 +191,7 @@ enum class AppTheme(
         onBg = Color(0xFF4D2900),
         onLine = Color(0xFFFF8C00),
         onFg = Color(0xFFFFEBD6),
-        console = Color(0xFF0A0600)
+        console = Color(0xFF1A0F00)
     ),
 
     BUBBLEGUM(
@@ -201,7 +201,7 @@ enum class AppTheme(
         panel2 = Color(0xFF2A002A),
         line = Color(0xFFFF00FF),
         fg = Color(0xFFFFFFFF),
-        dim = Color(0xFF990099),
+        dim = Color(0xFF330033),
         ok = Color(0xFF00FDFF),
         bad = Color(0xFFFF1A75),
         acc = Color(0xFF00FDFF),
@@ -218,7 +218,7 @@ enum class AppTheme(
         onBg = Color(0xFF003D40),
         onLine = Color(0xFF00FDFF),
         onFg = Color(0xFFE6FFFF),
-        console = Color(0xFF0A000A)
+        console = Color(0xFF1A001A)
     ),
 
     SUMMERTIME(
@@ -245,7 +245,7 @@ enum class AppTheme(
         onBg = Color(0xFF2A4850),
         onLine = Color(0xFF6BEFFF),
         onFg = Color(0xFFE6FAFF),
-        console = Color(0xFF0D0B0A)
+        console = Color(0xFF2A1F1A)
     ),
 
     MORIO(
@@ -299,7 +299,7 @@ enum class AppTheme(
         onBg = Color(0xFF004554),
         onLine = Color(0xFF00E5FF),
         onFg = Color(0xFFE6FCFF),
-        console = Color(0xFF090605)
+        console = Color(0xFF18120E)
     );
 
     companion object {

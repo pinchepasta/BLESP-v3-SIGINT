@@ -205,7 +205,7 @@ fun PillButton(
         BtnKind.DEFAULT -> Triple(P.Panel2, P.Line, P.Fg)
         BtnKind.ACCENT -> Triple(P.AccBg, P.AccLine, P.AccFg)
         BtnKind.STOP -> Triple(P.BadBg, P.BadLine, P.BadFg)
-        BtnKind.TEST -> Triple(Color(0xFF1E1E2E), Color(0xFF5A5A88), Color(0xFFD6D6FF))
+        BtnKind.TEST -> Triple(P.Panel2, P.Line.copy(alpha = 0.7f), P.Fg)
         BtnKind.ON -> Triple(P.OnBg, P.OnLine, P.OnFg)
         BtnKind.PLAIN -> Triple(Color.Transparent, Color.Transparent, P.Fg)
     }

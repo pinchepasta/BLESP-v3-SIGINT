@@ -1,0 +1,5 @@
+<resources>
+    <color name="node_bg">#000000</color>
+    <color name="node_primary">#FF5F00</color>
+    <color name="node_accent">#00F5D4</color>
+</resources>

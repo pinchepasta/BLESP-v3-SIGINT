@@ -2063,11 +2063,7 @@
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="compass">Compass</string>
-<<<<<<< HEAD
-    <string name="core_version">3.5.2 // Public Release </string>
-=======
-    <string name="core_version">3.4 </string>
->>>>>>> parent of 5dc96b0 (v3.5.3)
+    <string name="core_version">3.5.4 // Public Release </string>
     <string name="cyclemap">Cycle Map</string>
     <string name="default_error_message">"Invalid input"</string>
     <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
@@ -2142,10 +2138,7 @@
     <string name="label_author">AUTHOR</string>
     <string name="label_core_version">CORE VERSION</string>
     <string name="label_development">DEVELOPMENT</string>
-<<<<<<< HEAD
     <string name="lock_radar">Lock Radar Orientation</string>
-=======
->>>>>>> parent of 5dc96b0 (v3.5.3)
     <string name="m3_exceed_max_badge_text_suffix" translatable="false"><ns2:g example="Some te" id="part of a long text">%1$s</ns2:g><ns2:g example="…" id="suffix">%2$s</ns2:g></string>
     <string name="m3_ref_typeface_brand_medium" translatable="false">sans-serif-medium</string>
     <string name="m3_ref_typeface_brand_regular" translatable="false">sans-serif</string>
@@ -2328,11 +2321,8 @@
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
-<<<<<<< HEAD
     <string name="pbj_app_name">PBJ</string>
     <string name="pbj_tools">PBJ</string>
-=======
->>>>>>> parent of 5dc96b0 (v3.5.3)
     <string name="public_transport">Public transport</string>
     <string name="qr_header_title">DATA TRANSFER</string>
     <string name="qr_tools">QR Tools</string>
@@ -2366,15 +2356,12 @@
     <string name="template_percent"><ns2:g id="percentage">%1$d</ns2:g> percent.</string>
     <string name="terminal_btn_abort">ABORT</string>
     <string name="terminal_btn_back">BACK</string>
+    <string name="terminal_btn_bruce_module">MULT1PASS</string>
     <string name="terminal_btn_connect">INITIATE UPLINK</string>
     <string name="terminal_btn_flipper">MOSTLY-A-FLIPPER</string>
     <string name="terminal_btn_logout">LOGOUT</string>
-<<<<<<< HEAD
     <string name="terminal_btn_mult1pass">MOSTLY-A-SDR</string>
     <string name="terminal_btn_uplink">BRUCE WEB</string>
-=======
-    <string name="terminal_btn_uplink">UPLINK</string>
->>>>>>> parent of 5dc96b0 (v3.5.3)
     <string name="terminal_external_node_title">EXTERNAL NODE</string>
     <string name="terminal_host_hint">REMOTE HOST</string>
     <string name="terminal_key_browse">BROWSE...</string>

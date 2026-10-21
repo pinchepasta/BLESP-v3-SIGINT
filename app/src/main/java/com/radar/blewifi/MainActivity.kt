@@ -3,8 +3,11 @@ package com.radar.blewifi
 import android.animation.ValueAnimator
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -36,6 +39,8 @@ import android.view.Gravity
 import android.graphics.Typeface
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.net.Uri
@@ -61,30 +66,26 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-<<<<<<< HEAD
-<<<<<<< HEAD
 import android.text.Html
-=======
->>>>>>> parent of 1ed2e71 (v3.5.3)
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.util.TypedValue
+import android.view.ViewOutlineProvider
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-=======
->>>>>>> parent of 5dc96b0 (v3.5.3)
+import android.widget.ScrollView
 import androidx.core.graphics.ColorUtils
+import com.bruceremote.app.BruceActivity
 import com.radar.blewifi.databinding.ActivityMainBinding
 import com.radar.blewifi.databinding.TerminalOverlayBinding
 import java.security.Security
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import net.i2p.crypto.eddsa.EdDSASecurityProvider
 import com.jcraft.jsch.*
-<<<<<<< HEAD
-<<<<<<< HEAD
 import com.radar.blewifi.masdr.SdrRemoteActivity
-=======
->>>>>>> parent of 1ed2e71 (v3.5.3)
 import com.radar.blewifi.pbj.PbjActivity
-=======
->>>>>>> parent of 5dc96b0 (v3.5.3)
 import kotlin.math.abs
 import kotlin.math.sin
 
@@ -117,31 +118,39 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
     private var pagerNotificationReceiver: android.content.BroadcastReceiver? = null
     private var pagerBreatheAnim: android.animation.ValueAnimator? = null
     private var statusPulseAnim: android.animation.ObjectAnimator? = null
+    private var lockDimRunnable: Runnable? = null
 
+
+    private val rotationMatrix = FloatArray(9)
+    private val orientationValues = FloatArray(3)
+    private var lastSensorUpdate = 0L
+    private var isRadarLocked = false
 
     private val sensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             if (event.sensor.type == Sensor.TYPE_ROTATION_VECTOR) {
-                val rotationMatrix = FloatArray(9)
+                val now = System.currentTimeMillis()
+                if (now - lastSensorUpdate < 33) return // Throttle to ~30 FPS
+                lastSensorUpdate = now
+
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-                val orientation = FloatArray(3)
-                SensorManager.getOrientation(rotationMatrix, orientation)
-                val newAzimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
+                SensorManager.getOrientation(rotationMatrix, orientationValues)
+                val newAzimuth = Math.toDegrees(orientationValues[0].toDouble()).toFloat()
                 
-                // Low-pass filter to reduce sensitivity and jitter
-                // We handle the 360-degree wrap-around to ensure smooth transitions
                 var diff = newAzimuth - lastAzimuth
                 while (diff < -180) diff += 360
                 while (diff > 180) diff -= 360
                 
-                // 0.08f is the smoothing factor; lower values are slower/smoother
                 val smoothedAzimuth = lastAzimuth + (diff * 0.08f)
+                if (abs(smoothedAzimuth - lastAzimuth) < 0.2f) return
                 lastAzimuth = smoothedAzimuth
                 
-                // Update RadarView
-                binding.radarView.setRotation(-smoothedAzimuth)
-                // Update MapView (osmdroid)
-                binding.mapView.mapOrientation = -smoothedAzimuth
+                if (!isRadarLocked) {
+                    binding.radarView.setRotation(-smoothedAzimuth)
+                    if (binding.mapView.visibility == View.VISIBLE) {
+                        binding.mapView.mapOrientation = -smoothedAzimuth
+                    }
+                }
             }
         }
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
@@ -256,8 +265,14 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         controller.hide(WindowInsetsCompat.Type.systemBars())
 
-        val themeName = getSharedPreferences("settings", MODE_PRIVATE).getString("theme_name", RadarView.Theme.DEFAULT.name)
+        val settingsPrefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val themeName = settingsPrefs.getString("theme_name", RadarView.Theme.DEFAULT.name)
         currentTheme = RadarView.Theme.valueOf(themeName ?: RadarView.Theme.DEFAULT.name)
+        isRadarLocked = settingsPrefs.getBoolean("radar_locked", false)
+        if (isRadarLocked) {
+            binding.radarView.setRotation(0f)
+            binding.mapView.mapOrientation = 0f
+        }
         
         scanner = ScannerManager(this)
         scanner.addListener(this)
@@ -375,7 +390,27 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.cbMap.setOnCheckedChangeListener { _, isChecked ->
             binding.radarView.showMap = isChecked
             binding.mapView.visibility = if (isChecked) View.VISIBLE else View.GONE
+            if (isChecked) {
+                binding.mapView.mapOrientation = if (isRadarLocked) 0f else -lastAzimuth
+            }
             scanner.isMapActive = isChecked
+        }
+
+        binding.btnLockRadar.setOnClickListener {
+            isRadarLocked = !isRadarLocked
+            getSharedPreferences("settings", MODE_PRIVATE).edit().putBoolean("radar_locked", isRadarLocked).apply()
+            if (isRadarLocked) {
+                binding.radarView.setRotation(0f)
+                if (binding.mapView.visibility == View.VISIBLE) {
+                    binding.mapView.mapOrientation = 0f
+                }
+            } else {
+                binding.radarView.setRotation(-lastAzimuth)
+                if (binding.mapView.visibility == View.VISIBLE) {
+                    binding.mapView.mapOrientation = -lastAzimuth
+                }
+            }
+            updateLockRadarUI(isClicked = true)
         }
 
         setupMapView()
@@ -443,6 +478,12 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         binding.btnQr.setOnClickListener {
             val intent = Intent(this, com.radar.blewifi.qr.ui.QrActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
+        }
+
+        binding.btnPbj.setOnClickListener {
+            val intent = Intent(this, PbjActivity::class.java)
             val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
             startActivity(intent, options.toBundle())
         }
@@ -652,6 +693,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.btnEsl.imageTintList = ColorStateList.valueOf(textColor)
         binding.btnQr.imageTintList = ColorStateList.valueOf(textColor)
         binding.btnPager.imageTintList = ColorStateList.valueOf(textColor)
+        binding.btnPbj.imageTintList = ColorStateList.valueOf(textColor)
         binding.btnBeep.setTextColor(textColor)
         binding.btnBeep.compoundDrawableTintList = ColorStateList.valueOf(textColor)
 
@@ -708,6 +750,7 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.btnPager.setColorFilter(textColor)
         binding.btnEsl.setColorFilter(textColor)
         binding.btnQr.setColorFilter(textColor)
+        binding.btnPbj.setColorFilter(textColor)
         binding.btnWspr.setColorFilter(textColor)
         binding.btnDrone.setColorFilter(textColor)
         binding.btnGlobeListTop.setColorFilter(textColor)
@@ -719,6 +762,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.miniGraph.theme = theme
         binding.netGraph.theme = theme
         
+        updateLockRadarUI()
+
         // Logo tinting
         binding.ivLogo.imageTintList = null
         
@@ -729,6 +774,39 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         if (::deviceAdapter.isInitialized) {
             deviceAdapter.theme = theme
             deviceAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun updateLockRadarUI(isClicked: Boolean = false) {
+        val colors = ThemeUtils.getThemeColors(currentTheme)
+        val primaryColor = colors.primary
+        val accentColor = colors.accent
+        val textColor = primaryColor
+
+        lockDimRunnable?.let { handler.removeCallbacks(it) }
+
+        if (isRadarLocked) {
+            binding.btnLockRadar.setImageResource(R.drawable.ic_lock)
+            binding.btnLockRadar.setColorFilter(accentColor)
+        } else {
+            binding.btnLockRadar.setImageResource(R.drawable.ic_lock_open)
+            binding.btnLockRadar.setColorFilter(textColor)
+        }
+
+        if (isClicked) {
+            binding.btnLockRadar.animate().cancel()
+            binding.btnLockRadar.alpha = 1.0f
+
+            lockDimRunnable = Runnable {
+                binding.btnLockRadar.animate()
+                    .alpha(0.2f)
+                    .setDuration(500)
+                    .start()
+            }
+            handler.postDelayed(lockDimRunnable!!, 2500)
+        } else {
+            binding.btnLockRadar.animate().cancel()
+            binding.btnLockRadar.alpha = 0.2f
         }
     }
 
@@ -952,8 +1030,28 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
         root.addView(ipInput)
 
-        // Connect Button
+        // MULT1PASS Button (Bruce Module - Directly above BRUCE WEB)
         val primaryHex = String.format("#%06X", (0xFFFFFF and primaryColor))
+        val bruceModuleBtn = Button(this).apply {
+            if (isHighContrast) {
+                text = getString(R.string.terminal_btn_bruce_module)
+            } else {
+                text = Html.fromHtml("<font color='$primaryHex'>[</font> " + getString(R.string.terminal_btn_bruce_module) + " <font color='$primaryHex'>]</font>", Html.FROM_HTML_MODE_LEGACY)
+            }
+            setTextColor(buttonTextColor)
+            setBackgroundResource(buttonBgRes)
+            backgroundTintList = ColorStateList.valueOf(primaryColor)
+            typeface = Typeface.MONOSPACE
+            textSize = 18f
+            setPadding(60, 40, 60, 40)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(40, 20, 40, 10) }
+        }
+        root.addView(bruceModuleBtn)
+
+        // BRUCE WEB Button
         val goBtn = android.widget.Button(this).apply {
             if (isHighContrast) {
                 text = getString(R.string.terminal_btn_uplink)
@@ -969,11 +1067,11 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             layoutParams = android.widget.LinearLayout.LayoutParams(
                 android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { setMargins(40, 20, 40, 20) }
+            ).apply { setMargins(40, 10, 40, 10) }
         }
         root.addView(goBtn)
 
-        // Flipper Button (Directly under Uplink)
+        // Flipper Button (Directly under BRUCE WEB)
         val flipperBtn = android.widget.Button(this).apply {
             if (isHighContrast) {
                 text = getString(R.string.terminal_btn_flipper)
@@ -989,9 +1087,29 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             layoutParams = android.widget.LinearLayout.LayoutParams(
                 android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                 android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { setMargins(40, 10, 40, 20) }
+            ).apply { setMargins(40, 10, 40, 10) }
         }
         root.addView(flipperBtn)
+
+        // MOSTLY-A-SDR Button
+        val mult1passBtn = Button(this).apply {
+            if (isHighContrast) {
+                text = getString(R.string.terminal_btn_mult1pass)
+            } else {
+                text = Html.fromHtml("<font color='$primaryHex'>[</font> " + getString(R.string.terminal_btn_mult1pass) + " <font color='$primaryHex'>]</font>", Html.FROM_HTML_MODE_LEGACY)
+            }
+            setTextColor(buttonTextColor)
+            setBackgroundResource(buttonBgRes)
+            backgroundTintList = ColorStateList.valueOf(primaryColor)
+            typeface = Typeface.MONOSPACE
+            textSize = 18f
+            setPadding(60, 40, 60, 40)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(40, 10, 40, 20) }
+        }
+        root.addView(mult1passBtn)
 
         // Cancel Button
         val cancelBtn = android.widget.Button(this).apply {
@@ -1004,6 +1122,13 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
         root.addView(cancelBtn)
 
+        bruceModuleBtn.setOnClickListener {
+            dialog.dismiss()
+            val intent = Intent(this, BruceActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
+        }
+
         flipperBtn.setOnClickListener {
             dialog.dismiss()
             val flippers = scanner.getDevices().filter { it.type == DeviceType.FLIPPER }
@@ -1014,6 +1139,13 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 flippers.isEmpty() && archived.isNotEmpty() -> showFlipperRemoteControl(archived[0])
                 else -> showFlipperDiscoveryDialog()
             }
+        }
+
+        mult1passBtn.setOnClickListener {
+            dialog.dismiss()
+            val intent = Intent(this, SdrRemoteActivity::class.java)
+            val options = ActivityOptionsCompat.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
+            startActivity(intent, options.toBundle())
         }
 
         goBtn.setOnClickListener {
@@ -2156,7 +2288,6 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
     private fun showDeviceDetailsDialog(device: ScanDevice) {
         val colors = ThemeUtils.getThemeColors(currentTheme)
-        val titleText = "DEVICE DEEP INSIGHTS"
         
         val macAddress = device.address
         val vendorText = device.vendor ?: "Unknown Vendor"
@@ -2185,7 +2316,9 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
         val spannable = android.text.SpannableStringBuilder(details)
         
-        // Highlight headers in secondary color
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+
+        // Highlight headers in secondary color and make MAC & Vendor clickable
         val headers = listOf("IDENTIFIER", "MAC ADDRESS & VENDOR", "OS FINGERPRINTING", "SIGNAL ANALYTICS")
         headers.forEach { header ->
             val start = details.indexOf(header)
@@ -2198,50 +2331,180 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 spannable.setSpan(
                     android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
                     start, start + header.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        // Clickable span for MAC Address (no underline)
+        if (macAddress.isNotBlank()) {
+            val macStart = details.indexOf(macAddress)
+            if (macStart >= 0) {
+                val macEnd = macStart + macAddress.length
+                spannable.setSpan(
+                    object : ClickableSpan() {
+                        override fun onClick(widget: View) {
+                            val clip = ClipData.newPlainText("MAC Address", macAddress)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(this@MainActivity, "COPIED MAC: $macAddress", Toast.LENGTH_SHORT).show()
+                        }
+                        override fun updateDrawState(ds: TextPaint) {
+                            ds.color = colors.accent
+                            ds.isUnderlineText = false
+                        }
+                    },
+                    macStart, macEnd,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        // Clickable span for OUI Vendor (no underline)
+        if (vendorText.isNotBlank() && vendorText != "Unknown Vendor") {
+            val vendorStart = details.indexOf(vendorText)
+            if (vendorStart >= 0) {
+                val vendorEnd = vendorStart + vendorText.length
+                spannable.setSpan(
+                    object : ClickableSpan() {
+                        override fun onClick(widget: View) {
+                            val clip = ClipData.newPlainText("OUI Vendor", vendorText)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(this@MainActivity, "COPIED VENDOR: $vendorText", Toast.LENGTH_SHORT).show()
+                        }
+                        override fun updateDrawState(ds: TextPaint) {
+                            ds.color = colors.accent
+                            ds.isUnderlineText = false
+                        }
+                    },
+                    vendorStart, vendorEnd,
                     android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             }
         }
 
-        val spannableTitle = android.text.SpannableString(titleText)
-        spannableTitle.setSpan(
-            android.text.style.ForegroundColorSpan(colors.primary),
-            0, titleText.length,
-            android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-            .setTitle(spannableTitle)
-            .setMessage(spannable)
-            .setPositiveButton("CLOSE", null)
-            .show()
-            
+        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setOnDismissListener { setupImmersiveMode() }
 
         val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
-        val bg = android.graphics.drawable.GradientDrawable()
-        if (isHighContrast) {
-            bg.setColor(Color.WHITE)
-            bg.setStroke(4, Color.BLACK)
-        } else {
-            bg.setColor(if (currentTheme == RadarView.Theme.DEFAULT) Color.parseColor("#99002200") else Color.BLACK)
-            bg.setStroke(2, colors.primary)
-        }
-        bg.cornerRadius = 60f
-        dialog.window?.setBackgroundDrawable(bg)
-
-        val messageView = dialog.findViewById<android.widget.TextView>(android.R.id.message)
-        messageView?.let {
-            it.setTextColor(colors.primary)
-            it.typeface = Typeface.MONOSPACE
-            it.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 13f)
+        val bg = GradientDrawable().apply {
+            if (isHighContrast) {
+                setColor(Color.argb(248, 255, 255, 255))
+                setStroke(4, Color.BLACK)
+            } else {
+                setColor(Color.argb(208, 10, 10, 10)) // 8% less transparent (~82% fill opacity)
+                setStroke(3, colors.primary)         // Solid frame outline
+            }
+            cornerRadius = 32f
         }
 
-        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.let {
-            it.setTextColor(colors.accent)
-            it.setTypeface(null, Typeface.BOLD)
+        val rootLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = bg
+            elevation = 30f
+            outlineProvider = ViewOutlineProvider.BACKGROUND
+            setPadding(40, 40, 40, 40)
         }
-        
+
+        // Scrollable Message Content pushed to top
+        val scrollView = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0,
+                1f
+            )
+        }
+        val messageView = TextView(this).apply {
+            text = spannable
+            movementMethod = LinkMovementMethod.getInstance()
+            setTextIsSelectable(true)
+            setTextColor(colors.primary)
+            typeface = Typeface.MONOSPACE
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+            setLineSpacing(0f, 1.2f)
+        }
+        scrollView.addView(messageView)
+        rootLayout.addView(scrollView)
+
+        // Bottom Button Bar with Copy MAC & Copy Vendor on LEFT, CLOSE on RIGHT
+        val buttonBar = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(0, 20, 0, 0)
+        }
+
+        val leftBtnGroup = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+
+        val copyMacBtn = Button(this).apply {
+            text = "COPY MAC"
+            setTextColor(if (isHighContrast) Color.BLACK else colors.primary)
+            setTypeface(Typeface.MONOSPACE, Typeface.BOLD)
+            background = null
+            textSize = 12f
+            setPadding(0, 20, 20, 0)
+            setOnClickListener {
+                val clip = ClipData.newPlainText("MAC Address", macAddress)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this@MainActivity, "COPIED MAC: $macAddress", Toast.LENGTH_SHORT).show()
+            }
+        }
+        leftBtnGroup.addView(copyMacBtn)
+
+        if (vendorText.isNotBlank() && vendorText != "Unknown Vendor") {
+            val copyVendorBtn = Button(this).apply {
+                text = "COPY VENDOR"
+                setTextColor(if (isHighContrast) Color.BLACK else colors.primary)
+                setTypeface(Typeface.MONOSPACE, Typeface.BOLD)
+                background = null
+                textSize = 12f
+                setPadding(10, 20, 10, 0)
+                setOnClickListener {
+                    val clip = ClipData.newPlainText("OUI Vendor", vendorText)
+                    clipboard.setPrimaryClip(clip)
+                    Toast.makeText(this@MainActivity, "COPIED VENDOR: $vendorText", Toast.LENGTH_SHORT).show()
+                }
+            }
+            leftBtnGroup.addView(copyVendorBtn)
+        }
+
+        buttonBar.addView(leftBtnGroup)
+
+        val closeBtn = Button(this).apply {
+            text = "CLOSE"
+            setTextColor(if (isHighContrast) Color.BLACK else colors.accent)
+            setTypeface(Typeface.MONOSPACE, Typeface.BOLD)
+            background = null
+            textSize = 12f
+            setPadding(20, 20, 0, 0)
+            setOnClickListener { dialog.dismiss() }
+        }
+        buttonBar.addView(closeBtn)
+        rootLayout.addView(buttonBar)
+
+        dialog.setContentView(rootLayout)
+
+        // Position dialog window further down from top of frame with transparent window background
+        dialog.window?.let { window ->
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+            val wlp = window.attributes
+            wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            wlp.y = 240 // Pushed further down from top edge
+            window.attributes = wlp
+
+            val controller = WindowCompat.getInsetsController(window, window.decorView)
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+        }
+
+        dialog.show()
+
         // Cyberpunk minor glitch jitter effect
         val glitchRunnable = object : Runnable {
             override fun run() {
@@ -2354,6 +2617,14 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 marker = Marker(binding.mapView)
                 marker.id = device.id
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                marker.setOnMarkerClickListener { m, _ ->
+                    m.showInfoWindow()
+                    binding.radarView.selectedId = m.id
+                    binding.radarView.invalidate()
+                    val dev = scanner.deviceMap[m.id]
+                    if (dev != null) showDeviceDetail(dev)
+                    true
+                }
                 markers[device.id] = marker
                 binding.mapView.overlays.add(marker)
             }
@@ -2371,14 +2642,6 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             
             // Custom Icon based on device type and status - cached
             marker.icon = getCachedMarkerIcon(device)
-
-            marker.setOnMarkerClickListener { m, _ ->
-                m.showInfoWindow()
-                binding.radarView.selectedId = m.id
-                binding.radarView.invalidate()
-                showDeviceDetail(device)
-                true
-            }
         }
         binding.mapView.invalidate()
     }
@@ -2564,8 +2827,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         val timeFormat = java.text.SimpleDateFormat("HH:mm:ss:SSS", java.util.Locale.US)
         val runnable = object : Runnable {
             override fun run() {
-                binding.tvTimecode.text = timeFormat.format(java.util.Date().time)
-                handler.postDelayed(this, 33) // ~30fps refresh is plenty for timecode
+                binding.tvTimecode.text = timeFormat.format(System.currentTimeMillis())
+                handler.postDelayed(this, 100)
             }
         }
         handler.post(runnable)
@@ -2594,6 +2857,8 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
+    private var lastRadarUpdate = 0L
+    private var lastMapUpdate = 0L
     private var lastListUpdate = 0L
     private var displayedDevices = listOf<ScanDevice>()
 
@@ -2601,10 +2866,10 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
         runOnUiThread {
             val now = System.currentTimeMillis()
             
-            // Limit UI updates to 10 FPS for radar, even if scanner is faster
-            // (Scanner is already throttled to 1-3s in high density, but let's be safe)
-            val minUpdateInterval = if (devices.size > 200) 100L else 50L
-            if (now - lastListUpdate < minUpdateInterval && !isListView) return@runOnUiThread
+            // Limit radar UI updates to ~20 FPS (50ms) to avoid over-drawing
+            val minUpdateInterval = if (devices.size > 400) 100L else 50L
+            if (now - lastRadarUpdate < minUpdateInterval && !isListView) return@runOnUiThread
+            lastRadarUpdate = now
 
             val filteredForRadar = devices.filter { 
                 when (it.type) {
@@ -2636,24 +2901,12 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
             binding.radarView.setDevices(filteredForRadar)
             
-<<<<<<< HEAD
-<<<<<<< HEAD
             // Throttle map marker updates when map view is active to save CPU
             if (!isListView && binding.mapView.visibility == View.VISIBLE) {
                 if (now - lastMapUpdate >= 500L) {
                     updateMapMarkers(filteredForRadar) 
                     lastMapUpdate = now
                 }
-=======
-            // Limit marker updates as they are expensive on performance
-            if (!isListView) {
-                updateMapMarkers(filteredForRadar) 
->>>>>>> parent of 5dc96b0 (v3.5.3)
-=======
-            // Only update map markers when map view is actually visible to save CPU
-            if (!isListView && binding.mapView.visibility == View.VISIBLE) {
-                updateMapMarkers(filteredForRadar) 
->>>>>>> parent of 1ed2e71 (v3.5.3)
             }
             
             // Freeze the list for 5 seconds to make it easier to click
@@ -2663,15 +2916,22 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 lastListUpdate = now
             }
 
-            val bleC  = filteredForRadar.count { it.type == DeviceType.BLE }
-            val wifiC = filteredForRadar.count { it.type == DeviceType.WIFI }
-            val lteC  = filteredForRadar.count { it.type == DeviceType.LTE || it.type == DeviceType.FIVE_G }
-            val carC  = filteredForRadar.count { it.type == DeviceType.CAR }
-            val tvC   = filteredForRadar.count { it.type == DeviceType.TV }
-            val compC = filteredForRadar.count { it.type == DeviceType.COMPUTER }
-            val phnC  = filteredForRadar.count { it.type == DeviceType.SMARTPHONE }
-            val aeroC = filteredForRadar.count { it.type == DeviceType.AIRCRAFT }
-            val camC  = filteredForRadar.count { it.type == DeviceType.CAMERA }
+            var bleC = 0; var wifiC = 0; var lteC = 0; var carC = 0; var tvC = 0
+            var compC = 0; var phnC = 0; var aeroC = 0; var camC = 0
+            for (d in filteredForRadar) {
+                when (d.type) {
+                    DeviceType.BLE, DeviceType.PAGER -> bleC++
+                    DeviceType.WIFI -> wifiC++
+                    DeviceType.LTE, DeviceType.FIVE_G -> lteC++
+                    DeviceType.CAR -> carC++
+                    DeviceType.TV -> tvC++
+                    DeviceType.COMPUTER -> compC++
+                    DeviceType.SMARTPHONE -> phnC++
+                    DeviceType.AIRCRAFT, DeviceType.DRONE -> aeroC++
+                    DeviceType.CAMERA -> camC++
+                    else -> {}
+                }
+            }
 
             val colors = ThemeUtils.getThemeColors(currentTheme)
             val numColor = colors.primary
@@ -2715,13 +2975,6 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
             if (isHighContrast) sb.setSpan(android.text.style.StyleSpan(android.graphics.Typeface.BOLD), startTotal, sb.length, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
             binding.statusText.text = sb
-            
-            // Subtle flicker effect on the status box
-            if (Math.random() > 0.9) {
-                binding.statusText.animate().alpha(0.7f).setDuration(50).withEndAction {
-                    binding.statusText.animate().alpha(1f).setDuration(50).start()
-                }.start()
-            }
         }
     }
 
@@ -2733,15 +2986,21 @@ class MainActivity : AppCompatActivity(), ScannerManager.ScanListener {
                 val gpuLoad = getGpuLoad()
                 binding.miniGraph.addData(cpuLoad, gpuLoad)
                 
-                val allDevices = scanner.getDevices()
-                val wifiRssi = allDevices.filter { it.type == DeviceType.WIFI }.maxOfOrNull { it.rssi } ?: -100
-                val bleRssi = allDevices.filter { it.type == DeviceType.BLE }.maxOfOrNull { it.rssi } ?: -100
+                var wifiRssi = -100
+                var bleRssi = -100
+                for (d in scanner.deviceMap.values) {
+                    if (d.type == DeviceType.WIFI) {
+                        if (d.rssi > wifiRssi) wifiRssi = d.rssi
+                    } else if (d.type == DeviceType.BLE || d.type == DeviceType.PAGER) {
+                        if (d.rssi > bleRssi) bleRssi = d.rssi
+                    }
+                }
                 // Map RSSI (-100..-30) to 0..100 scale for the EQ bars
                 val wifiScale = ((wifiRssi + 100).coerceIn(0, 70) / 70f * 100f)
                 val bleScale = ((bleRssi + 100).coerceIn(0, 70) / 70f * 100f)
                 binding.netGraph.addData(wifiScale, bleScale)
                 
-                handler.postDelayed(this, 300) // Fast 300ms update for smooth movement
+                handler.postDelayed(this, 600) // 600ms balanced update interval
             }
         })
     }
@@ -2989,7 +3248,7 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
         
         holder.itemView.setBackgroundColor(if (isSelected) selectionColor else Color.TRANSPARENT)
         
-        val isWep = device.type == DeviceType.WIFI && device.capabilities.uppercase().contains("WEP")
+        val isWep = device.isWep
         val isWhisper = device.isVulnerableWhisperPair
         
         val nameColor = if (isHighContrast) Color.BLACK 
@@ -3035,17 +3294,20 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
                 holder.dist.setShadowLayer(0f, 0f, 0f, 0)
             }
             
-            holder.dist.clearAnimation()
-            val anim = android.view.animation.AlphaAnimation(0.5f, 1.0f).apply {
-                duration = 400
-                repeatMode = android.view.animation.Animation.REVERSE
-                repeatCount = android.view.animation.Animation.INFINITE
+            if (holder.dist.animation == null) {
+                val anim = AlphaAnimation(0.5f, 1.0f).apply {
+                    duration = 400
+                    repeatMode = Animation.REVERSE
+                    repeatCount = Animation.INFINITE
+                }
+                holder.dist.startAnimation(anim)
             }
-            holder.dist.startAnimation(anim)
         } else {
             holder.dist.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) ColorUtils.setAlphaComponent(Color.RED, 153) else colors.dim)
             holder.dist.setShadowLayer(0f, 0f, 0f, 0)
-            holder.dist.clearAnimation()
+            if (holder.dist.animation != null) {
+                holder.dist.clearAnimation()
+            }
             holder.dist.alpha = 1.0f
         }
 
@@ -3065,13 +3327,14 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
         if (isWep) {
             holder.alarm.visibility = View.VISIBLE
             holder.alarm.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
-            holder.alarm.clearAnimation()
-            val anim = android.view.animation.AlphaAnimation(0.0f, 1.0f).apply {
-                duration = 500
-                repeatMode = android.view.animation.Animation.REVERSE
-                repeatCount = android.view.animation.Animation.INFINITE
+            if (holder.alarm.animation == null) {
+                val anim = AlphaAnimation(0.0f, 1.0f).apply {
+                    duration = 500
+                    repeatMode = Animation.REVERSE
+                    repeatCount = Animation.INFINITE
+                }
+                holder.alarm.startAnimation(anim)
             }
-            holder.alarm.startAnimation(anim)
         } else {
             holder.alarm.visibility = View.GONE
             holder.alarm.clearAnimation()
@@ -3080,13 +3343,14 @@ class DeviceAdapter(private val onClick: (ScanDevice) -> Unit) : RecyclerView.Ad
         if (isWhisper) {
             holder.whisper.visibility = View.VISIBLE
             holder.whisper.setTextColor(if (isHighContrast) Color.BLACK else if (isRedNight) Color.RED else colors.accent)
-            holder.whisper.clearAnimation()
-            val anim = android.view.animation.AlphaAnimation(0.2f, 1.0f).apply {
-                duration = 800
-                repeatMode = android.view.animation.Animation.REVERSE
-                repeatCount = android.view.animation.Animation.INFINITE
+            if (holder.whisper.animation == null) {
+                val anim = AlphaAnimation(0.2f, 1.0f).apply {
+                    duration = 800
+                    repeatMode = Animation.REVERSE
+                    repeatCount = Animation.INFINITE
+                }
+                holder.whisper.startAnimation(anim)
             }
-            holder.whisper.startAnimation(anim)
         } else {
             holder.whisper.visibility = View.GONE
             holder.whisper.clearAnimation()

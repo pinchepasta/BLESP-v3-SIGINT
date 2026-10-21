@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF050506</color>
+    <color name="surface">#FF0B0C0F</color>
+    <color name="neon_orange">#FFFF7A18</color>
+    <color name="neon_teal">#FF00E5C7</color>
+    <color name="text">#FFEDEDED</color>
+    <color name="dim">#FF7C828C</color>
+</resources>

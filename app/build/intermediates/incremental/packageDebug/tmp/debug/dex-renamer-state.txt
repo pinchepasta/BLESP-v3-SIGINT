@@ -1,44 +1,40 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-#Tue Oct 20 17:58:59 CEST 2026
-=======
-#Tue Sep 22 14:14:51 CEST 2026
->>>>>>> parent of 5dc96b0 (v3.5.3)
-=======
-#Sun Oct 18 14:01:38 CEST 2026
->>>>>>> parent of 1ed2e71 (v3.5.3)
+#Wed Oct 21 13:43:10 CEST 2026
 base.0=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.10=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/5/classes.dex
-base.11=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex
-base.12=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/global_synthetics_dex/debug/mergeDebugGlobalSynthetics/classes.dex
-base.13=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
-base.14=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex
-base.15=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes4.dex
+base.10=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
+base.11=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/4/classes.dex
+base.12=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/5/classes.dex
+base.13=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex
+base.14=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/global_synthetics_dex/debug/mergeDebugGlobalSynthetics/classes.dex
+base.15=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
+base.16=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex
+base.17=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeExtDexDebug/classes4.dex
 base.2=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
 base.3=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/10/classes.dex
 base.4=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
 base.5=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/12/classes.dex
-base.6=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
-base.7=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
-base.8=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
-base.9=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/4/classes.dex
+base.6=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/13/classes.dex
+base.7=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
+base.8=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
+base.9=/Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BLESPv4a0.1 15JULS10/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
-path.10=5/classes.dex
-path.11=9/classes.dex
-path.12=classes.dex
-path.13=classes2.dex
-path.14=classes3.dex
-path.15=classes4.dex
+path.10=3/classes.dex
+path.11=4/classes.dex
+path.12=5/classes.dex
+path.13=9/classes.dex
+path.14=classes.dex
+path.15=classes2.dex
+path.16=classes3.dex
+path.17=classes4.dex
 path.2=1/classes.dex
 path.3=10/classes.dex
 path.4=11/classes.dex
 path.5=12/classes.dex
-path.6=14/classes.dex
-path.7=15/classes.dex
-path.8=2/classes.dex
-path.9=4/classes.dex
+path.6=13/classes.dex
+path.7=14/classes.dex
+path.8=15/classes.dex
+path.9=2/classes.dex
 renamed.0=classes.dex
 renamed.1=classes2.dex
 renamed.10=classes11.dex
@@ -47,6 +43,8 @@ renamed.12=classes13.dex
 renamed.13=classes14.dex
 renamed.14=classes15.dex
 renamed.15=classes16.dex
+renamed.16=classes17.dex
+renamed.17=classes18.dex
 renamed.2=classes3.dex
 renamed.3=classes4.dex
 renamed.4=classes5.dex

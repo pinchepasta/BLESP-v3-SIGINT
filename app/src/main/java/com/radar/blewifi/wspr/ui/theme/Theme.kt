@@ -1,7 +1,6 @@
 package com.radar.blewifi.wspr.ui.theme
 
 import android.app.Activity
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
@@ -12,33 +11,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.radar.blewifi.RadarView
 import com.radar.blewifi.ThemeUtils
-
-private val WSPRColorScheme = darkColorScheme(
-    primary = NeonGreen,
-    onPrimary = Color.Black,
-    primaryContainer = HackerGreenDark,
-    onPrimaryContainer = HackerGreenLight,
-    secondary = HackerPink,
-    onSecondary = Color.Black,
-    secondaryContainer = DarkSurfaceVariant,
-    onSecondaryContainer = HackerPink,
-    tertiary = HackerPink,
-    onTertiary = Color.Black,
-    tertiaryContainer = HackerPink.copy(alpha = 0.5f),
-    onTertiaryContainer = Color.White,
-    background = BlackBackground,
-    onBackground = NeonGreen,
-    surface = BlackSurface,
-    onSurface = NeonGreen,
-    surfaceVariant = BlackSurfaceVariant,
-    onSurfaceVariant = HackerPink,
-    outline = TextTertiary,
-    outlineVariant = DarkCard,
-    error = VulnerableRed,
-    onError = Color.White,
-    errorContainer = VulnerableRedDark,
-    onErrorContainer = Color.White
-)
 
 @Composable
 fun WSPRTheme(
@@ -57,19 +29,35 @@ fun WSPRTheme(
     val backgroundColor = Color(themeColors.background)
     val surfaceColor = Color(themeColors.header)
     val surfaceVariantColor = Color(themeColors.headerBar)
+    val dimColor = Color(themeColors.dim)
+    val isLight = theme == RadarView.Theme.HIGH_CONTRAST
+    val textColor = if (isLight) Color.Black else Color.White
 
-    val colorScheme = WSPRColorScheme.copy(
+    val colorScheme = darkColorScheme(
         primary = primaryColor,
-        onPrimary = if (theme == RadarView.Theme.HIGH_CONTRAST) Color.White else Color.Black,
+        onPrimary = if (isLight) Color.White else Color.Black,
+        primaryContainer = surfaceVariantColor,
+        onPrimaryContainer = primaryColor,
         secondary = accentColor,
-        onSecondary = if (theme == RadarView.Theme.HIGH_CONTRAST) Color.White else Color.Black,
+        onSecondary = if (isLight) Color.White else Color.Black,
+        secondaryContainer = surfaceVariantColor,
+        onSecondaryContainer = accentColor,
         tertiary = accentColor,
+        onTertiary = if (isLight) Color.White else Color.Black,
+        tertiaryContainer = accentColor.copy(alpha = 0.3f),
+        onTertiaryContainer = textColor,
         background = backgroundColor,
-        onBackground = primaryColor,
+        onBackground = if (isLight) Color.Black else primaryColor,
         surface = surfaceColor,
-        onSurface = primaryColor,
+        onSurface = if (isLight) Color.Black else primaryColor,
         surfaceVariant = surfaceVariantColor,
-        onSurfaceVariant = accentColor
+        onSurfaceVariant = if (isLight) Color.Black.copy(alpha = 0.7f) else accentColor,
+        outline = dimColor,
+        outlineVariant = surfaceVariantColor,
+        error = if (isLight) Color(0xFFCC0000) else Color(0xFFFF0000),
+        onError = Color.White,
+        errorContainer = if (isLight) Color(0xFFF0D0D0) else Color(0xFF8B0000),
+        onErrorContainer = Color.White
     )
     val view = LocalView.current
 
@@ -78,7 +66,6 @@ fun WSPRTheme(
             val window = (view.context as Activity).window
             window.statusBarColor = backgroundColor.toArgb()
             window.navigationBarColor = backgroundColor.toArgb()
-            val isLight = theme == RadarView.Theme.HIGH_CONTRAST
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isLight
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = isLight
         }

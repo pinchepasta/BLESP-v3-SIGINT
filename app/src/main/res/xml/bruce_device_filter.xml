@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Vendor IDs mirrored from Bruce's own sd_files/esp32_serial_navigator.html,
+  which lists the USB-serial chips found across supported boards
+  (Espressif native USB, CH340/CH9102, CP210x, FTDI-style clones, etc).
+-->
+<resources>
+    <usb-device vendor-id="12346" /> <!-- 0x303A Espressif (native USB, e.g. ESP32-S3/C5) -->
+    <usb-device vendor-id="6790" />  <!-- 0x1A86 CH340 / CH9102 -->
+    <usb-device vendor-id="4292" />  <!-- 0x10C4 Silicon Labs CP210x -->
+    <usb-device vendor-id="4097" />  <!-- 0x1001 -->
+    <usb-device vendor-id="33049" /> <!-- 0x811B -->
+    <usb-device vendor-id="283" />   <!-- 0x011B -->
+    <usb-device vendor-id="33052" /> <!-- 0x811C -->
+    <usb-device vendor-id="33561" /> <!-- 0x82D4 -->
+    <usb-device vendor-id="9178" />  <!-- 0x239A Adafruit/various native USB boards -->
+    <usb-device vendor-id="32025" /> <!-- 0x8119 -->
+    <usb-device vendor-id="1027" />  <!-- 0x0403 FTDI (common on many dev boards) -->
+</resources>

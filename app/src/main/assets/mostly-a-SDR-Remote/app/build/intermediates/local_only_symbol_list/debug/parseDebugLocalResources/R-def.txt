@@ -1,0 +1,12 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color dim
+color neon_orange
+color neon_teal
+color surface
+color text
+drawable ic_launcher
+string app_name
+style Theme.NeonSdr
+xml network_security_config

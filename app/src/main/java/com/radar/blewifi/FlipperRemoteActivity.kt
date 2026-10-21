@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
-import android.net.Uri
 import android.graphics.Color as AndroidColor
 import android.os.*
 import android.util.Log
@@ -16,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -35,8 +35,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -55,9 +55,6 @@ class FlipperRemoteActivity : ComponentActivity() {
 
     companion object {
         const val EXTRA_DEVICE = "extra_device"
-        val SERVICE_UUID: UUID = UUID.fromString("00003080-0000-1000-8000-00805f9b34fb")
-        val RX_CHAR_UUID: UUID = UUID.fromString("00003081-0000-1000-8000-00805f9b34fb")
-        val TX_CHAR_UUID: UUID = UUID.fromString("00003082-0000-1000-8000-00805f9b34fb")
         val CCCD_UUID: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
     }
 
@@ -71,6 +68,9 @@ class FlipperRemoteActivity : ComponentActivity() {
     private val mainHandler = Handler(Looper.getMainLooper())
     private var inboundBuffer = ByteArray(0)
     private var isBound = false
+    private var isConnecting = false
+    private var gattRetryCount = 0
+    private var isUnlockAttempted = false
 
     private val pairingReceiver = object : BroadcastReceiver() {
         @SuppressLint("MissingPermission")
@@ -81,34 +81,58 @@ class FlipperRemoteActivity : ComponentActivity() {
                 @Suppress("DEPRECATION")
                 intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             }
+            Log.d("FlipperRemote", "pairingReceiver onReceive action=${intent.action}, device=${device?.address}")
             if (device?.address != targetAddress) return
 
             when (intent.action) {
                 BluetoothDevice.ACTION_PAIRING_REQUEST -> {
                     val variant = intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_VARIANT, -1)
-                    Log.d("FlipperRemote", "Pairing request variant: $variant")
+                    val pairingKey = intent.getIntExtra(BluetoothDevice.EXTRA_PAIRING_KEY, -1)
+                    Log.d("FlipperRemote", "Pairing request received: variant=$variant, key=$pairingKey")
                     
                     pairingDevice = device
-                    try {
-                        abortBroadcast()
-                    } catch (e: Exception) {
-                        Log.e("FlipperRemote", "Could not abort pairing broadcast", e)
-                    }
                     
-                    showPairingDialog.value = true
-                    mainHandler.post { connectionStatus.value = "PAIRING PIN NEEDED" }
+                    when (variant) {
+                        BluetoothDevice.PAIRING_VARIANT_PASSKEY_CONFIRMATION, 2, 3 -> {
+                            Log.d("FlipperRemote", "Auto-confirming numeric comparison / passkey variant ($variant)")
+                            try {
+                                device?.setPairingConfirmation(true)
+                            } catch (e: Exception) {
+                                Log.e("FlipperRemote", "Error setting pairing confirmation", e)
+                            }
+                            showPairingDialog.value = false
+                            connectionStatus.value = "PAIRING CONFIRMED"
+                        }
+                        BluetoothDevice.PAIRING_VARIANT_PIN -> {
+                            Log.d("FlipperRemote", "PIN required ($variant). Displaying PIN input dialog.")
+                            showPairingDialog.value = true
+                            mainHandler.post { connectionStatus.value = "ENTER PIN FROM FLIPPER" }
+                        }
+                        else -> {
+                            try {
+                                device?.setPairingConfirmation(true)
+                            } catch (e: Exception) {
+                                showPairingDialog.value = true
+                            }
+                        }
+                    }
                 }
                 BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
                     val state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE)
-                    Log.d("FlipperRemote", "Bond state changed: $state")
+                    val prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.BOND_NONE)
+                    Log.d("FlipperRemote", "Bond state changed: prev=$prevState -> new=$state")
                     when (state) {
+                        BluetoothDevice.BOND_BONDING -> {
+                            mainHandler.post { connectionStatus.value = "PAIRING IN PROGRESS..." }
+                        }
                         BluetoothDevice.BOND_BONDED -> {
                             showPairingDialog.value = false
+                            gattRetryCount = 0
                             mainHandler.post { 
-                                connectionStatus.value = "BONDED"
+                                connectionStatus.value = "PAIRED! CONNECTING..."
                                 mainHandler.postDelayed({
                                     targetAddress?.let { connectToFlipper(it) }
-                                }, 1000)
+                                }, 500)
                             }
                         }
                         BluetoothDevice.BOND_NONE -> {
@@ -144,7 +168,6 @@ class FlipperRemoteActivity : ComponentActivity() {
 
         targetAddress = scanDevice.address
         
-        // Register receiver with protection
         if (!isBound) {
             val filter = IntentFilter().apply {
                 addAction(BluetoothDevice.ACTION_PAIRING_REQUEST)
@@ -163,19 +186,27 @@ class FlipperRemoteActivity : ComponentActivity() {
 
             WSPRTheme(themeName = themeName) {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                        FlipperRemoteContent(
-                            deviceName = scanDevice.name,
-                            status = connectionStatus.value,
-                            screenBitmap = screenState.value,
-                            showPairingDialog = showPairingDialog.value,
-                            onPairingConfirm = { code -> 
-                                pairingDevice?.setPin(code.toByteArray())
-                                showPairingDialog.value = false
-                            },
-                            onPairingDismiss = { showPairingDialog.value = false },
-                            onBackPressed = { finish() },
-                            onSendKey = { key, type -> sendInputKey(key, type) }
-                        )
+                    FlipperRemoteContent(
+                        deviceName = scanDevice.name,
+                        status = connectionStatus.value,
+                        screenBitmap = screenState.value,
+                        showPairingDialog = showPairingDialog.value,
+                        onPairingConfirm = { code -> 
+                            pairingDevice?.setPin(code.toByteArray())
+                            showPairingDialog.value = false
+                        },
+                        onPairingDismiss = { showPairingDialog.value = false },
+                        onRetry = {
+                            gattRetryCount = 0
+                            isUnlockAttempted = false
+                            targetAddress?.let { connectToFlipper(it) }
+                        },
+                        onForcePairing = {
+                            triggerForcePairing()
+                        },
+                        onBackPressed = { finish() },
+                        onSendKey = { key, type -> sendInputKey(key, type) }
+                    )
                 }
             }
         }
@@ -184,47 +215,98 @@ class FlipperRemoteActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (isBound) {
-            try {
-                unregisterReceiver(pairingReceiver)
-            } catch (e: Exception) {
-                Log.e("FlipperRemote", "Error unregistering receiver", e)
-            }
+            try { unregisterReceiver(pairingReceiver) } catch (e: Exception) { Log.e("FlipperRemote", "Error unregistering receiver", e) }
             isBound = false
         }
         disconnectFlipper()
     }
 
-    private var isConnecting = false
+    private fun unbondDevice(device: BluetoothDevice) {
+        try {
+            val method = device.javaClass.getMethod("removeBond")
+            val res = method.invoke(device)
+            Log.d("FlipperRemote", "Successfully unbonded device ${device.address}, res=$res")
+        } catch (e: Exception) {
+            Log.e("FlipperRemote", "Failed to unbond device", e)
+        }
+    }
+
+    private fun triggerForcePairing() {
+        val address = targetAddress ?: return
+        val adapter = (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter ?: return
+        val device = adapter.getRemoteDevice(address)
+        
+        Log.d("FlipperRemote", "Triggering force pairing for $address...")
+        connectionStatus.value = "PAIRING REQUEST SENT..."
+        isUnlockAttempted = false
+        
+        disconnectFlipper()
+        unbondDevice(device)
+        
+        mainHandler.postDelayed({
+            Log.d("FlipperRemote", "Calling device.createBond() for ${device.address}...")
+            val success = device.createBond()
+            Log.d("FlipperRemote", "createBond() returned: $success")
+            if (success) {
+                connectionStatus.value = "CHECK FLIPPER SCREEN FOR PIN"
+            } else {
+                connectionStatus.value = "PAIRING INITIATED"
+            }
+        }, 800)
+    }
 
     private fun connectToFlipper(address: String) {
-        if (isConnecting) {
-            Log.d("FlipperRemote", "Connection attempt already in progress to $address")
-            return
-        }
-        isConnecting = true
-        targetAddress = address
-        val adapter = (getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+        val adapter = (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter
         if (adapter == null || !adapter.isEnabled) {
             connectionStatus.value = "BLE DISABLED"
             isConnecting = false
             return
         }
 
+        targetAddress = address
         val device = adapter.getRemoteDevice(address)
-        
-        // Close previous GATT completely to avoid status 133
-        bluetoothGatt?.disconnect()
-        try {
-            bluetoothGatt?.close()
-        } catch (e: Exception) {
-            Log.e("FlipperRemote", "Error closing old GATT instance", e)
+
+        if (bluetoothGatt != null) {
+            Log.d("FlipperRemote", "Cleaning up existing GATT session before reconnecting to $address...")
+            val oldGatt = bluetoothGatt
+            bluetoothGatt = null
+            txCharacteristic = null
+            refreshGattCache(oldGatt)
+            try { oldGatt?.disconnect() } catch (e: Exception) {}
+            mainHandler.postDelayed({
+                try { oldGatt?.close() } catch (e: Exception) {}
+                mainHandler.postDelayed({ performConnect(device) }, 400)
+            }, 300)
+            return
         }
-        bluetoothGatt = null
-        txCharacteristic = null
-        
+
+        performConnect(device)
+    }
+
+    private fun performConnect(device: BluetoothDevice) {
         connectionStatus.value = "CONNECTING..."
-        Log.d("FlipperRemote", "Connecting to $address...")
+        Log.d("FlipperRemote", "Performing connect to ${device.address} (BondState=${device.bondState})...")
+        isConnecting = true
+
+        if (device.bondState == BluetoothDevice.BOND_NONE) {
+            Log.d("FlipperRemote", "Device is not bonded. Triggering createBond and awaiting BOND_BONDED...")
+            connectionStatus.value = "PAIRING (CHECK FLIPPER SCREEN)..."
+            device.createBond()
+            return
+        }
+
         bluetoothGatt = device.connectGatt(this, false, gattCallback, BluetoothDevice.TRANSPORT_LE)
+    }
+
+    private fun refreshGattCache(gatt: BluetoothGatt?): Boolean {
+        if (gatt == null) return false
+        return try {
+            val refreshMethod = gatt.javaClass.getMethod("refresh")
+            (refreshMethod.invoke(gatt) as? Boolean) ?: false
+        } catch (e: Exception) {
+            Log.e("FlipperRemote", "Could not refresh GATT cache", e)
+            false
+        }
     }
 
     private val gattCallback = object : BluetoothGattCallback() {
@@ -240,24 +322,34 @@ class FlipperRemoteActivity : ComponentActivity() {
                 isConnecting = false
                 isConfigured = false
                 txCharacteristic = null
-                gatt.disconnect()
-                try { gatt.close() } catch(e: Exception) {}
-                if (bluetoothGatt == gatt) bluetoothGatt = null
+                
+                refreshGattCache(gatt)
+                try { gatt.disconnect() } catch (e: Exception) {}
+                mainHandler.postDelayed({
+                    try { gatt.close() } catch (e: Exception) {}
+                    if (bluetoothGatt == gatt) bluetoothGatt = null
+                }, 300)
                 
                 if (device.bondState == BluetoothDevice.BOND_BONDING) {
                     mainHandler.post { connectionStatus.value = "PAIRING..." }
                     return 
                 }
 
-                mainHandler.post { connectionStatus.value = "RETRYING ($status)" }
-                mainHandler.removeCallbacksAndMessages(null)
-                mainHandler.postDelayed({ targetAddress?.let { connectToFlipper(it) } }, 3000)
+                gattRetryCount++
+                if (gattRetryCount >= 3) {
+                    mainHandler.post { connectionStatus.value = "GATT ERROR ($status)" }
+                } else {
+                    mainHandler.post { connectionStatus.value = "RETRYING ($status)..." }
+                    mainHandler.removeCallbacksAndMessages(null)
+                    mainHandler.postDelayed({ targetAddress?.let { connectToFlipper(it) } }, 2000)
+                }
                 return
             }
 
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 isConnecting = false
                 isConfigured = false
+                gattRetryCount = 0
                 val bondState = device.bondState
                 mainHandler.post { 
                     connectionStatus.value = if (bondState == BluetoothDevice.BOND_BONDED) "CONNECTED" else "PAIRING..."
@@ -271,12 +363,11 @@ class FlipperRemoteActivity : ComponentActivity() {
                         Log.d("FlipperRemote", "Not bonded. Triggering createBond.")
                         device.createBond()
                     }
-                }, 1200)
+                }, 800)
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 isConnecting = false
                 isConfigured = false
                 txCharacteristic = null
-                gatt.disconnect()
                 try { gatt.close() } catch(e: Exception) {}
                 if (bluetoothGatt == gatt) bluetoothGatt = null
                 
@@ -284,79 +375,201 @@ class FlipperRemoteActivity : ComponentActivity() {
                     mainHandler.post { connectionStatus.value = "PAIRING..." }
                 } else {
                     mainHandler.post { connectionStatus.value = "DISCONNECTED" }
-                    mainHandler.removeCallbacksAndMessages(null)
-                    mainHandler.postDelayed({ targetAddress?.let { connectToFlipper(it) } }, 2500)
+                    gattRetryCount++
+                    if (gattRetryCount < 3) {
+                        mainHandler.removeCallbacksAndMessages(null)
+                        mainHandler.postDelayed({ targetAddress?.let { connectToFlipper(it) } }, 2000)
+                    }
                 }
             }
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             if (status != BluetoothGatt.GATT_SUCCESS) return
-            Log.d("FlipperRemote", "Services discovered")
+            Log.d("FlipperRemote", "Services discovered. Requesting MTU 512...")
             mainHandler.post { connectionStatus.value = "SETTING MTU..." }
             gatt.requestMtu(512)
             
-            // Fallback for MTU stalling
             mainHandler.postDelayed({
                 if (!isConfigured) setupRpc(gatt)
-            }, 2000)
+            }, 1200)
         }
 
         override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
-            Log.d("FlipperRemote", "MTU: $mtu")
+            Log.d("FlipperRemote", "MTU set to: $mtu")
             if (!isConfigured) setupRpc(gatt)
         }
 
         private fun setupRpc(gatt: BluetoothGatt) {
             if (isConfigured) return
-            val service = gatt.getService(SERVICE_UUID)
-            val rxChar = service?.getCharacteristic(RX_CHAR_UUID)
-            val txChar = service?.getCharacteristic(TX_CHAR_UUID)
+            Log.d("FlipperRemote", "setupRpc called. Discovered services count: ${gatt.services.size}")
             
+            var foundService: BluetoothGattService? = null
+            var rxChar: BluetoothGattCharacteristic? = null
+            var txChar: BluetoothGattCharacteristic? = null
+
+            val knownServiceUuids = listOf(
+                UUID.fromString("30800001-51e3-417b-9294-51cd141be538"),
+                UUID.fromString("30800000-51e3-417b-9294-51cd141be538"),
+                UUID.fromString("00003080-0000-1000-8000-00805f9b34fb")
+            )
+
+            for (suid in knownServiceUuids) {
+                val s = gatt.getService(suid)
+                if (s != null) {
+                    foundService = s
+                    Log.d("FlipperRemote", "Found matching service by exact UUID: ${s.uuid}")
+                    break
+                }
+            }
+
+            if (foundService == null) {
+                for (s in gatt.services) {
+                    Log.d("FlipperRemote", "Device Service: ${s.uuid}")
+                    if (s.uuid.toString().lowercase().contains("3080")) {
+                        foundService = s
+                        Log.d("FlipperRemote", "Found service matching '3080': ${s.uuid}")
+                        break
+                    }
+                }
+            }
+
+            if (foundService == null) {
+                for (s in gatt.services) {
+                    val sUuidStr = s.uuid.toString().lowercase()
+                    if (!sUuidStr.startsWith("0000180") && !sUuidStr.startsWith("0000181")) {
+                        var hasNotify = false
+                        var hasWrite = false
+                        for (c in s.characteristics) {
+                            val props = c.properties
+                            if ((props and (BluetoothGattCharacteristic.PROPERTY_NOTIFY or BluetoothGattCharacteristic.PROPERTY_INDICATE)) != 0) {
+                                hasNotify = true
+                            }
+                            if ((props and (BluetoothGattCharacteristic.PROPERTY_WRITE or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0) {
+                                hasWrite = true
+                            }
+                        }
+                        if (hasNotify && hasWrite) {
+                            foundService = s
+                            Log.d("FlipperRemote", "Fallback: Found custom service with Notify+Write: ${s.uuid}")
+                            break
+                        }
+                    }
+                }
+            }
+
+            if (foundService != null) {
+                for (c in foundService.characteristics) {
+                    Log.d("FlipperRemote", "Service ${foundService.uuid} Char: ${c.uuid}, props=${c.properties}")
+                }
+
+                val knownRxUuids = listOf(
+                    UUID.fromString("30810001-51e3-417b-9294-51cd141be538"),
+                    UUID.fromString("00003081-0000-1000-8000-00805f9b34fb")
+                )
+                val knownTxUuids = listOf(
+                    UUID.fromString("30820001-51e3-417b-9294-51cd141be538"),
+                    UUID.fromString("00003082-0000-1000-8000-00805f9b34fb")
+                )
+
+                for (ruid in knownRxUuids) {
+                    rxChar = foundService.getCharacteristic(ruid)
+                    if (rxChar != null) break
+                }
+                for (tuid in knownTxUuids) {
+                    txChar = foundService.getCharacteristic(tuid)
+                    if (txChar != null) break
+                }
+
+                if (rxChar == null || txChar == null) {
+                    for (c in foundService.characteristics) {
+                        val cStr = c.uuid.toString().lowercase()
+                        val props = c.properties
+                        if (rxChar == null && (cStr.contains("3081") || (props and (BluetoothGattCharacteristic.PROPERTY_NOTIFY or BluetoothGattCharacteristic.PROPERTY_INDICATE)) != 0)) {
+                            rxChar = c
+                        } else if (txChar == null && (cStr.contains("3082") || (props and (BluetoothGattCharacteristic.PROPERTY_WRITE or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0)) {
+                            txChar = c
+                        }
+                    }
+                }
+            }
+
             if (rxChar != null && txChar != null) {
+                Log.d("FlipperRemote", "RPC setup successful! RX Char: ${rxChar.uuid}, TX Char: ${txChar.uuid}")
                 txCharacteristic = txChar
                 gatt.setCharacteristicNotification(rxChar, true)
+
                 val descriptor = rxChar.getDescriptor(CCCD_UUID)
-                descriptor?.let {
-                    it.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                    gatt.writeDescriptor(it)
+                if (descriptor != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        gatt.writeDescriptor(descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                        @Suppress("DEPRECATION")
+                        gatt.writeDescriptor(descriptor)
+                    }
+                } else {
+                    Log.w("FlipperRemote", "CCCD Descriptor not found, starting streaming directly")
+                    isConfigured = true
+                    mainHandler.post {
+                        connectionStatus.value = "READY"
+                        mainHandler.postDelayed({ startScreenStreaming() }, 200)
+                    }
                 }
             } else {
+                Log.e("FlipperRemote", "Failed to setup RPC. Service: ${foundService?.uuid}, RX: ${rxChar?.uuid}, TX: ${txChar?.uuid}")
                 mainHandler.post { connectionStatus.value = "RPC SERVICE ERROR" }
             }
         }
 
         override fun onDescriptorWrite(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor, status: Int) {
+            Log.d("FlipperRemote", "onDescriptorWrite called for ${descriptor.uuid}, status=$status")
             if (descriptor.uuid == CCCD_UUID && status == BluetoothGatt.GATT_SUCCESS) {
+                Log.d("FlipperRemote", "CCCD Write successful. System ready.")
                 isConfigured = true
                 mainHandler.post { 
                     connectionStatus.value = "READY"
-                    startScreenStreaming()
+                    mainHandler.postDelayed({ startScreenStreaming() }, 200)
+                }
+            } else {
+                Log.w("FlipperRemote", "onDescriptorWrite completed with status: $status")
+                if (!isConfigured) {
+                    isConfigured = true
+                    mainHandler.post {
+                        connectionStatus.value = "READY"
+                        mainHandler.postDelayed({ startScreenStreaming() }, 200)
+                    }
                 }
             }
         }
 
         override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
-            if (characteristic.uuid == RX_CHAR_UUID) {
-                handleInboundData(characteristic.value)
-            }
+            val bytes = characteristic.value ?: return
+            Log.d("FlipperRemote", "onCharacteristicChanged: received ${bytes.size} bytes: ${bytes.joinToString(" ") { "%02X".format(it) }}")
+            handleInboundData(bytes)
         }
 
         override fun onCharacteristicWrite(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
+            Log.d("FlipperRemote", "onCharacteristicWrite: char=${characteristic.uuid}, status=$status")
             if (status != BluetoothGatt.GATT_SUCCESS) {
-                Log.e("FlipperRemote", "Write failed: $status")
+                Log.e("FlipperRemote", "Characteristic write failed with status: $status")
             }
         }
     }
 
     private fun disconnectFlipper() {
-        bluetoothGatt?.disconnect()
-        bluetoothGatt?.close()
+        val gatt = bluetoothGatt
         bluetoothGatt = null
+        txCharacteristic = null
+        if (gatt != null) {
+            try { gatt.disconnect() } catch (e: Exception) {}
+            try { gatt.close() } catch (e: Exception) {}
+        }
     }
 
     private fun startScreenStreaming() {
-        // Main Message with GuiStartScreenStreamRequest (Tag 8)
+        Log.d("FlipperRemote", "Sending start screen stream request...")
         val payload = byteArrayOf(
             0x08, 0x01,       // command_id = 1
             0x42, 0x00        // gui_start_screen_stream_request (Tag 8, Length 0)
@@ -368,15 +581,13 @@ class FlipperRemoteActivity : ComponentActivity() {
         val keyVal = when(key) { "UP"->0; "DOWN"->1; "LEFT"->2; "RIGHT"->3; "OK"->4; "BACK"->5; else->5 }
         val typeVal = when(type) { "PRESS"->0; "RELEASE"->1; "SHORT"->2; "LONG"->3; else->2 }
         
-        // GuiSendInputEventRequest (Tag 62) -> 0xF2 0x03
         val inner = byteArrayOf(
             0x08, keyVal.toByte(), 
             0x10, typeVal.toByte()
         )
-        // Main Message wrapping
         val payload = ByteArray(inner.size + 5)
         payload[0] = 0x08
-        payload[1] = 0x05 // random command_id
+        payload[1] = 0x05 // command_id
         payload[2] = 0xF2.toByte()
         payload[3] = 0x03.toByte()
         payload[4] = inner.size.toByte()
@@ -386,10 +597,13 @@ class FlipperRemoteActivity : ComponentActivity() {
     }
 
     private fun sendRpcPacket(payload: ByteArray) {
-        val char = txCharacteristic ?: return
-        val gatt = bluetoothGatt ?: return
+        val char = txCharacteristic
+        val gatt = bluetoothGatt
+        if (char == null || gatt == null) {
+            Log.e("FlipperRemote", "sendRpcPacket failed: char or gatt is null")
+            return
+        }
         
-        // Standard Flipper RPC framing: [Length Varint] [Payload]
         val header = if (payload.size < 128) {
             byteArrayOf(payload.size.toByte())
         } else {
@@ -403,48 +617,100 @@ class FlipperRemoteActivity : ComponentActivity() {
         System.arraycopy(header, 0, frame, 0, header.size)
         System.arraycopy(payload, 0, frame, header.size, payload.size)
         
-        char.value = frame
-        char.writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
-        gatt.writeCharacteristic(char)
+        Log.d("FlipperRemote", "Writing RPC Frame (${frame.size} bytes) with WRITE_TYPE_DEFAULT to char ${char.uuid}")
+
+        val writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            gatt.writeCharacteristic(char, frame, writeType)
+        } else {
+            @Suppress("DEPRECATION")
+            char.value = frame
+            @Suppress("DEPRECATION")
+            char.writeType = writeType
+            @Suppress("DEPRECATION")
+            gatt.writeCharacteristic(char)
+        }
     }
 
     private fun handleInboundData(data: ByteArray) {
+        if (data.isEmpty()) return
         inboundBuffer += data
-        
-        var processedUntil = 0
-        while (inboundBuffer.size - processedUntil >= 1030) {
-            var foundFrame = false
-            for (i in processedUntil..inboundBuffer.size - 1030) {
-                // Look for GuiScreenFrame sequence: Tag 9, Len 1027, Tag 1, Len 1024
-                // 0x4A, 0x83, 0x08, 0x0A, 0x80, 0x08
-                if (inboundBuffer[i] == 0x4A.toByte() && 
-                    inboundBuffer[i+1] == 0x83.toByte() && 
-                    inboundBuffer[i+2] == 0x08.toByte() &&
-                    inboundBuffer[i+3] == 0x0A.toByte() &&
-                    inboundBuffer[i+4] == 0x80.toByte() &&
-                    inboundBuffer[i+5] == 0x08.toByte()) {
-                    
-                    val pixelOffset = i + 6
-                    val pixelData = inboundBuffer.copyOfRange(pixelOffset, pixelOffset + 1024)
-                    
-                    val bitmap = Bitmap.createBitmap(128, 64, Bitmap.Config.ARGB_8888)
-                    for (j in 0 until 1024) {
-                        val b = pixelData[j].toInt() and 0xFF
-                        for (bit in 0 until 8) {
-                            val x = (j * 8 + bit) % 128
-                            val y = (j * 8 + bit) / 128
-                            if (y < 64) {
-                                bitmap.setPixel(x, y, if ((b and (1 shl bit)) != 0) AndroidColor.BLACK else AndroidColor.TRANSPARENT)
+        Log.d("FlipperRemote", "Inbound buffer size: ${inboundBuffer.size}")
+
+        if (inboundBuffer.size >= 5) {
+            for (i in 0..inboundBuffer.size - 5) {
+                if (inboundBuffer[i] == 0x08.toByte() && inboundBuffer[i+2] == 0x10.toByte()) {
+                    val cmdStatus = inboundBuffer[i+3].toInt() and 0xFF
+                    Log.d("FlipperRemote", "Parsed RPC Response status: $cmdStatus")
+                    if (cmdStatus == 3) {
+                        Log.w("FlipperRemote", "Flipper returned ERROR_LOCKED (status 3). Attempting auto-unlock via BACK key...")
+                        if (!isUnlockAttempted) {
+                            isUnlockAttempted = true
+                            mainHandler.post {
+                                connectionStatus.value = "UNLOCKING FLIPPER..."
+                                sendInputKey("BACK", "PRESS")
+                                mainHandler.postDelayed({
+                                    sendInputKey("BACK", "RELEASE")
+                                    mainHandler.postDelayed({
+                                        startScreenStreaming()
+                                    }, 500)
+                                }, 150)
+                            }
+                        } else {
+                            mainHandler.post {
+                                connectionStatus.value = "FLIPPER IS LOCKED (PRESS BACK ON FLIPPER)"
                             }
                         }
                     }
+                }
+            }
+        }
+        
+        var processedUntil = 0
+        while (inboundBuffer.size - processedUntil >= 1027) {
+            var foundFrame = false
+            for (i in processedUntil..inboundBuffer.size - 1027) {
+                val isDataHeader = inboundBuffer[i] == 0x0A.toByte() && 
+                                   inboundBuffer[i+1] == 0x80.toByte() && 
+                                   inboundBuffer[i+2] == 0x08.toByte()
+                val isGuiHeader = (i + 5 < inboundBuffer.size) &&
+                                  inboundBuffer[i] == 0x4A.toByte() && 
+                                  inboundBuffer[i+1] == 0x83.toByte() && 
+                                  inboundBuffer[i+2] == 0x08.toByte() &&
+                                  inboundBuffer[i+3] == 0x0A.toByte() &&
+                                  inboundBuffer[i+4] == 0x80.toByte() &&
+                                  inboundBuffer[i+5] == 0x08.toByte()
 
-                    mainHandler.post {
-                        screenState.value = bitmap
+                if (isDataHeader || isGuiHeader) {
+                    val pixelOffset = if (isGuiHeader) i + 6 else i + 3
+                    if (inboundBuffer.size - pixelOffset >= 1024) {
+                        Log.d("FlipperRemote", "FOUND SCREEN FRAME at offset $i!")
+                        val pixelData = inboundBuffer.copyOfRange(pixelOffset, pixelOffset + 1024)
+                        
+                        val bitmap = Bitmap.createBitmap(128, 64, Bitmap.Config.ARGB_8888)
+                        for (j in 0 until 1024) {
+                            val b = pixelData[j].toInt() and 0xFF
+                            val x = j % 128
+                            val page = j / 128
+                            for (bit in 0 until 8) {
+                                val y = page * 8 + bit
+                                if ((b and (1 shl bit)) != 0) {
+                                    bitmap.setPixel(x, y, AndroidColor.WHITE)
+                                } else {
+                                    bitmap.setPixel(x, y, AndroidColor.TRANSPARENT)
+                                }
+                            }
+                        }
+
+                        mainHandler.post {
+                            screenState.value = bitmap
+                            connectionStatus.value = "READY (STREAMING)"
+                        }
+                        processedUntil = pixelOffset + 1024
+                        foundFrame = true
+                        break
                     }
-                    processedUntil = i + 1030
-                    foundFrame = true
-                    break
                 }
             }
             if (!foundFrame) break
@@ -454,9 +720,8 @@ class FlipperRemoteActivity : ComponentActivity() {
             inboundBuffer = inboundBuffer.copyOfRange(processedUntil, inboundBuffer.size)
         }
         
-        // If buffer gets too large without finding a frame, purge old data
-        if (inboundBuffer.size > 8192) {
-            inboundBuffer = inboundBuffer.copyOfRange(inboundBuffer.size - 2048, inboundBuffer.size)
+        if (inboundBuffer.size > 16384) {
+            inboundBuffer = inboundBuffer.copyOfRange(inboundBuffer.size - 4096, inboundBuffer.size)
         }
     }
 }
@@ -469,19 +734,20 @@ fun FlipperRemoteContent(
     showPairingDialog: Boolean,
     onPairingConfirm: (String) -> Unit,
     onPairingDismiss: () -> Unit,
+    onRetry: () -> Unit,
+    onForcePairing: () -> Unit,
     onBackPressed: () -> Unit,
     onSendKey: (String, String) -> Unit
 ) {
     val view = LocalView.current
-    val context = LocalContext.current
     var pairingCode by remember { mutableStateOf("") }
 
-    if (status == "RPC SERVICE ERROR") {
+    if (status == "RPC SERVICE ERROR" || status.startsWith("GATT ERROR") || status.contains("LOCKED") || status.contains("NOT PAIRED")) {
         AlertDialog(
-            onDismissRequest = { /* Keep dialog visible */ },
+            onDismissRequest = { },
             title = {
                 Text(
-                    "RPC Service Error",
+                    if (status.contains("LOCKED")) "Flipper Screen Locked" else "Flipper Bluetooth Setup",
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
@@ -489,25 +755,43 @@ fun FlipperRemoteContent(
                 )
             },
             text = {
-                Text(
-                    "The required RPC services were not found on this Flipper. " +
-                    "For full remote features and firmware updates, please use the official Flipper Mobile app.",
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily.Monospace
-                )
+                Column {
+                    Text(
+                        if (status.contains("LOCKED")) {
+                            "Your Flipper is currently locked.\n\n" +
+                            "• Press BACK on your Flipper to unlock its home screen.\n" +
+                            "• Or tap 'TRIGGER PAIRING PIN' below to send a new pairing request."
+                        } else {
+                            "Connection to '$deviceName' requires Bluetooth pairing.\n\n" +
+                            "If Flipper does not show a PIN popup:\n" +
+                            "1. On Flipper go to: Settings -> Bluetooth -> Forget All Bonded Devices.\n" +
+                            "2. Then tap 'TRIGGER PAIRING PIN' below."
+                        },
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
             },
             confirmButton = {
-                Button(
-                    onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/flipperdevices/Flipper-Android-App"))
-                        context.startActivity(intent)
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("VISIT REPOSITORY", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary, fontFamily = FontFamily.Monospace)
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Button(
+                        onClick = onForcePairing,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("TRIGGER PAIRING PIN", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary, fontFamily = FontFamily.Monospace)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = onRetry,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("RECONNECT", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimary, fontFamily = FontFamily.Monospace)
+                    }
                 }
             },
             dismissButton = {
@@ -515,7 +799,7 @@ fun FlipperRemoteContent(
                     onClick = onBackPressed,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("CLOSE", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace)
+                    Text("DISCOVER DEVICES", color = MaterialTheme.colorScheme.onSurfaceVariant, fontFamily = FontFamily.Monospace)
                 }
             },
             containerColor = MaterialTheme.colorScheme.surface,
@@ -548,13 +832,13 @@ fun FlipperRemoteContent(
                         value = pairingCode,
                         onValueChange = { if (it.all { char -> char.isDigit() } && it.length <= 6) pairingCode = it },
                         modifier = Modifier.fillMaxWidth(),
-                        textStyle = androidx.compose.ui.text.TextStyle(
+                        textStyle = TextStyle(
                             fontFamily = FontFamily.Monospace,
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 8.sp,
                             color = MaterialTheme.colorScheme.secondary,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            textAlign = TextAlign.Center
                         ),
                         placeholder = { 
                             Text(
@@ -614,7 +898,6 @@ fun FlipperRemoteContent(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
         Row(
             modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -631,7 +914,6 @@ fun FlipperRemoteContent(
 
         Spacer(modifier = Modifier.weight(0.1f))
 
-        // Physical Flipper Body (Whisper Pair / Hacker Aesthetic)
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
@@ -644,7 +926,6 @@ fun FlipperRemoteContent(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Flipper Screen (Black Frame, Neon Green Content)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -659,7 +940,7 @@ fun FlipperRemoteContent(
                             .background(Color.Black, RoundedCornerShape(2.dp))
                             .padding(2.dp)
                     ) {
-                        androidx.compose.foundation.Image(
+                        Image(
                             bitmap = screenBitmap.asImageBitmap(),
                             contentDescription = "Flipper Screen",
                             modifier = Modifier.fillMaxSize(),
@@ -671,13 +952,11 @@ fun FlipperRemoteContent(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                // Control Layout
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // D-Pad
                     Box(modifier = Modifier.size(140.dp)) {
                         FlipperDpadButton("▲", Modifier.align(Alignment.TopCenter)) { type ->
                             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
@@ -696,7 +975,6 @@ fun FlipperRemoteContent(
                             onSendKey("RIGHT", type)
                         }
                         
-                        // OK Center Button
                         Box(
                             modifier = Modifier
                                 .size(44.dp)
@@ -730,7 +1008,6 @@ fun FlipperRemoteContent(
                         }
                     }
 
-                    // Hardware-style Back Button
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Box(
                             modifier = Modifier

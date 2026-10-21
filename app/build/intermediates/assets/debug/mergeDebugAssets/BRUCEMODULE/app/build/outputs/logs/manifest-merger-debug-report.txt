@@ -1,0 +1,361 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:2:1-40:12
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:2:1-40:12
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:2:1-40:12
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:2:1-40:12
+MERGED from [androidx.activity:activity:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/359621610ef3e853d4228a85ffad55a7/transformed/activity-1.9.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/85cc46b5838f3d0c75afb5d448c9c990/transformed/activity-ktx-1.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/58c8b5479ee43f72ba4ee35983547ef0/transformed/material3-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material:material-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/38ff94e5f43f2e3b2b66aec7bf20634d/transformed/material-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/82c4f7d2c3478e9bc499df3d2423c847/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/daf604bba1dab87b71ae0c2d8e78fd49/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a7b8554b5d187d755a5a08b900c2ed74/transformed/animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ed7ae5ae6603ba86ce3ab92d96ac169c/transformed/foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/3b7729bc9f9a7465d8418f7e1d33b1ca/transformed/foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/666609ff8fb15eeda3acd1936d7dd750/transformed/ui-tooling-data-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6790a0f84c1de084b38f2d0b96861f49/transformed/ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/387b97bd7397c14b252d717df0e17de5/transformed/ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/72744ceb0183800e76e736580e3a39bc/transformed/ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/779e2dd96573d1321ab048b75ec93aaf/transformed/ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca6e3ac03ba0c4040ec467cdfb7239b1/transformed/ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6d660c5f0528c7d74e48afdab7a2de29/transformed/ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.activity:activity-compose:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/3e724f00186e2904eb935da28d690c5c/transformed/activity-compose-1.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/be4c5030ce3359fceef602a063ecb359/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/9b6361924819bc3b03a0a42a9d5ad56e/transformed/lifecycle-livedata-core-2.8.4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/8bfe14266f9d80e2405c37c0565a7257/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/4049b1c8f045203f76584075f3a4d0d5/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5b02d3a514dd173e8e0a31cf8f700bef/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/4a0eb7c8058dcc53776b39e7dda7aaa4/transformed/lifecycle-runtime-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/306f2e29ca774d01d6f66a23689a0d82/transformed/lifecycle-viewmodel-ktx-2.8.4/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/f79f4f23bda5dd7f7347d69584068f52/transformed/lifecycle-viewmodel-savedstate-2.8.4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a5da097283f93bf0440bafb5e0567d5/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/a40c6775185333ccc64e53494940b656/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/600c804ed3ca7c30dc605143f6461b4c/transformed/material-icons-extended-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d4eba1d8f0f14662dd96eef25c809e52/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca095c5657f47ec32ebd2f3243ac0dcc/transformed/ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d081a7dc4a1797a203f9240a083881b8/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/c07c1451d5e966a373b66c2d3c534e2d/transformed/graphics-path-1.0.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/57cdce4073a294d1911d73279adb9635/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/f40b8a2fc10329b06f5e105202320b5f/transformed/core-ktx-1.13.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/951797bcd6b6116b2db25d7955e151c0/transformed/runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/903f1d8a1aae6538ad3856392987027e/transformed/runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/c23254d00052a448ef9458d2ae5d45b7/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.mik3y:usb-serial-for-android:3.8.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/be29cbfd7d56f15fa5e2fdf14c3fd125/transformed/usb-serial-for-android-3.8.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a2b6065e8da2646cb8d6b899151de94d/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/1d99c012fe1495a7af5aa73e590a1b7d/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ae109a22263908c43781aca8869bf316/transformed/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/738fa6ce6b400204cceb69e5e7442e0e/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+	package
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:6:22-76
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:7:5-108
+	android:maxSdkVersion
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:7:79-105
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:7:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:8:5-107
+	android:maxSdkVersion
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:8:78-104
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:8:22-77
+uses-permission#android.permission.MANAGE_EXTERNAL_STORAGE
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:9:5-111
+	tools:ignore
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:9:80-108
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:9:22-79
+uses-feature#android.hardware.usb.host
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:11:5-86
+	android:required
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:11:60-83
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:11:19-59
+application
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:13:5-39:19
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:13:5-39:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:28:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/1d99c012fe1495a7af5aa73e590a1b7d/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/1d99c012fe1495a7af5aa73e590a1b7d/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:18:9-35
+	android:label
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:16:9-41
+	android:icon
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:15:9-43
+	android:allowBackup
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:14:9-35
+	android:theme
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:17:9-49
+	android:usesCleartextTraffic
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:19:9-44
+activity#com.bruceremote.app.MainActivity
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:21:9-38:20
+	android:launchMode
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:24:13-43
+	android:exported
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:23:13-36
+	android:configChanges
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:25:13-74
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:22:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:26:13-29:29
+action#android.intent.action.MAIN
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:27:17-69
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:27:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:28:17-77
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:28:27-74
+intent-filter#action:name:android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:32:13-34:29
+action#android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:33:17-90
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:33:25-87
+meta-data#android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:35:13-37:57
+	android:resource
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:37:17-54
+	android:name
+		ADDED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml:36:17-79
+uses-sdk
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+MERGED from [androidx.activity:activity:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/359621610ef3e853d4228a85ffad55a7/transformed/activity-1.9.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/359621610ef3e853d4228a85ffad55a7/transformed/activity-1.9.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/85cc46b5838f3d0c75afb5d448c9c990/transformed/activity-ktx-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/85cc46b5838f3d0c75afb5d448c9c990/transformed/activity-ktx-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/58c8b5479ee43f72ba4ee35983547ef0/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/58c8b5479ee43f72ba4ee35983547ef0/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/38ff94e5f43f2e3b2b66aec7bf20634d/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/38ff94e5f43f2e3b2b66aec7bf20634d/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/82c4f7d2c3478e9bc499df3d2423c847/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/82c4f7d2c3478e9bc499df3d2423c847/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/daf604bba1dab87b71ae0c2d8e78fd49/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/daf604bba1dab87b71ae0c2d8e78fd49/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a7b8554b5d187d755a5a08b900c2ed74/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a7b8554b5d187d755a5a08b900c2ed74/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ed7ae5ae6603ba86ce3ab92d96ac169c/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ed7ae5ae6603ba86ce3ab92d96ac169c/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/3b7729bc9f9a7465d8418f7e1d33b1ca/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/3b7729bc9f9a7465d8418f7e1d33b1ca/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/666609ff8fb15eeda3acd1936d7dd750/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/666609ff8fb15eeda3acd1936d7dd750/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6790a0f84c1de084b38f2d0b96861f49/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6790a0f84c1de084b38f2d0b96861f49/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/387b97bd7397c14b252d717df0e17de5/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/387b97bd7397c14b252d717df0e17de5/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/72744ceb0183800e76e736580e3a39bc/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/72744ceb0183800e76e736580e3a39bc/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/779e2dd96573d1321ab048b75ec93aaf/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/779e2dd96573d1321ab048b75ec93aaf/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca6e3ac03ba0c4040ec467cdfb7239b1/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca6e3ac03ba0c4040ec467cdfb7239b1/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6d660c5f0528c7d74e48afdab7a2de29/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/6d660c5f0528c7d74e48afdab7a2de29/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/3e724f00186e2904eb935da28d690c5c/transformed/activity-compose-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/3e724f00186e2904eb935da28d690c5c/transformed/activity-compose-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/be4c5030ce3359fceef602a063ecb359/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/be4c5030ce3359fceef602a063ecb359/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/9b6361924819bc3b03a0a42a9d5ad56e/transformed/lifecycle-livedata-core-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/9b6361924819bc3b03a0a42a9d5ad56e/transformed/lifecycle-livedata-core-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/8bfe14266f9d80e2405c37c0565a7257/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/8bfe14266f9d80e2405c37c0565a7257/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/4049b1c8f045203f76584075f3a4d0d5/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/4049b1c8f045203f76584075f3a4d0d5/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5b02d3a514dd173e8e0a31cf8f700bef/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5b02d3a514dd173e8e0a31cf8f700bef/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/4a0eb7c8058dcc53776b39e7dda7aaa4/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/4a0eb7c8058dcc53776b39e7dda7aaa4/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/306f2e29ca774d01d6f66a23689a0d82/transformed/lifecycle-viewmodel-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/306f2e29ca774d01d6f66a23689a0d82/transformed/lifecycle-viewmodel-ktx-2.8.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/f79f4f23bda5dd7f7347d69584068f52/transformed/lifecycle-viewmodel-savedstate-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/f79f4f23bda5dd7f7347d69584068f52/transformed/lifecycle-viewmodel-savedstate-2.8.4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a5da097283f93bf0440bafb5e0567d5/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a5da097283f93bf0440bafb5e0567d5/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/a40c6775185333ccc64e53494940b656/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/a40c6775185333ccc64e53494940b656/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/600c804ed3ca7c30dc605143f6461b4c/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/600c804ed3ca7c30dc605143f6461b4c/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d4eba1d8f0f14662dd96eef25c809e52/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d4eba1d8f0f14662dd96eef25c809e52/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca095c5657f47ec32ebd2f3243ac0dcc/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ca095c5657f47ec32ebd2f3243ac0dcc/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d081a7dc4a1797a203f9240a083881b8/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/d081a7dc4a1797a203f9240a083881b8/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/c07c1451d5e966a373b66c2d3c534e2d/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/c07c1451d5e966a373b66c2d3c534e2d/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/57cdce4073a294d1911d73279adb9635/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/57cdce4073a294d1911d73279adb9635/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/f40b8a2fc10329b06f5e105202320b5f/transformed/core-ktx-1.13.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/f40b8a2fc10329b06f5e105202320b5f/transformed/core-ktx-1.13.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/951797bcd6b6116b2db25d7955e151c0/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/951797bcd6b6116b2db25d7955e151c0/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/903f1d8a1aae6538ad3856392987027e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/903f1d8a1aae6538ad3856392987027e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/c23254d00052a448ef9458d2ae5d45b7/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/c23254d00052a448ef9458d2ae5d45b7/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.github.mik3y:usb-serial-for-android:3.8.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/be29cbfd7d56f15fa5e2fdf14c3fd125/transformed/usb-serial-for-android-3.8.0/AndroidManifest.xml:5:5-44
+MERGED from [com.github.mik3y:usb-serial-for-android:3.8.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/be29cbfd7d56f15fa5e2fdf14c3fd125/transformed/usb-serial-for-android-3.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a2b6065e8da2646cb8d6b899151de94d/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/a2b6065e8da2646cb8d6b899151de94d/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/1d99c012fe1495a7af5aa73e590a1b7d/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/1d99c012fe1495a7af5aa73e590a1b7d/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ae109a22263908c43781aca8869bf316/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/ae109a22263908c43781aca8869bf316/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/738fa6ce6b400204cceb69e5e7442e0e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/738fa6ce6b400204cceb69e5e7442e0e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+	android:targetSdkVersion
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/AndroidManifest.xml
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.4] /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/AndroidManifest.xml:30:17-78
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+permission#com.bruceremote.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+uses-permission#com.bruceremote.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92

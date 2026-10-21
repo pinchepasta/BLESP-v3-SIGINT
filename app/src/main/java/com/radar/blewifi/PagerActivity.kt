@@ -13,6 +13,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -60,13 +65,18 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         }
     }
 
+    private var lastMessageCount = -1
+
     private fun updateChatUI() {
         activeChatId?.let { chatId ->
             val messages = allMessages[chatId] ?: mutableListOf()
-            chatAdapter.updateData(messages)
-            if (messages.isNotEmpty()) {
-                binding.rvChatHistory.post {
-                    binding.rvChatHistory.scrollToPosition(messages.size - 1)
+            if (messages.size != lastMessageCount) {
+                lastMessageCount = messages.size
+                chatAdapter.updateData(messages)
+                if (messages.isNotEmpty()) {
+                    binding.rvChatHistory.post {
+                        binding.rvChatHistory.scrollToPosition(messages.size - 1)
+                    }
                 }
             }
         }
@@ -305,18 +315,28 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         binding.rvChatHistory.layoutManager = LinearLayoutManager(this)
         binding.rvChatHistory.adapter = chatAdapter
 
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = android.graphics.Rect()
-            binding.root.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = binding.root.rootView.height
-            val keypadHeight = screenHeight - rect.bottom
-            if (keypadHeight > screenHeight * 0.15) { // keyboard is opened
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val sysBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            
+            val basePadding = (16 * resources.displayMetrics.density).toInt()
+            val bottomInset = if (imeInsets.bottom > 0) imeInsets.bottom + basePadding else sysBarInsets.bottom + basePadding
+            val topInset = sysBarInsets.top + basePadding
+
+            binding.root.setPadding(basePadding, topInset, basePadding, bottomInset)
+
+            val isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            if (isKeyboardVisible) {
                 if (chatMessages.isNotEmpty()) {
                     binding.rvChatHistory.post {
                         binding.rvChatHistory.scrollToPosition(chatMessages.size - 1)
                     }
                 }
+            } else {
+                setupImmersiveMode()
             }
+
+            insets
         }
 
         val prefs = getSharedPreferences("pager_prefs", MODE_PRIVATE)
@@ -717,22 +737,12 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
             window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.setDecorFitsSystemWindows(false)
-            val controller = window.insetsController
-            if (controller != null) {
-                controller.hide(android.view.WindowInsets.Type.statusBars() or android.view.WindowInsets.Type.navigationBars())
-                controller.systemBarsBehavior = android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN)
-        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.isAppearanceLightStatusBars = isHighContrastMode
+        controller.isAppearanceLightNavigationBars = isHighContrastMode
     }
 
     override fun onScanStatusChanged(scanning: Boolean) {}
@@ -751,6 +761,18 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
         setupImmersiveMode() // Re-apply in case it was lost
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupImmersiveMode()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            setupImmersiveMode()
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         scanner.removeListener(this)
@@ -760,6 +782,7 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
     override fun onDestroy() {
         super.onDestroy()
         nearbyManager.removeListener(nearbyListener)
+        ioExecutor.shutdown()
     }
 
     @SuppressLint("MissingSuperCall")
@@ -848,33 +871,28 @@ class PagerActivity : AppCompatActivity(), ScannerManager.ScanListener {
 
             val params = holder.container.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
             
+            val colors = ThemeUtils.getThemeColors(currentTheme)
+            val isHighContrast = currentTheme == RadarView.Theme.HIGH_CONTRAST
+
             if (msg.isMe) {
-                params.startToStart = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.UNSET
-                params.endToEnd = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+                params.startToStart = ConstraintLayout.LayoutParams.UNSET
+                params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
                 params.horizontalBias = 1.0f
-                holder.container.setBackgroundResource(R.drawable.chat_bubble_sent)
-                holder.text.setTextColor(Color.WHITE)
-                holder.audioIcon.setTextColor(Color.WHITE)
-                holder.info.setTextColor(Color.parseColor("#CCFFFFFF"))
+                holder.container.setBackgroundResource(colors.buttonRes)
+                val sentTextColor = if (isHighContrast) Color.WHITE else Color.BLACK
+                holder.text.setTextColor(sentTextColor)
+                holder.audioIcon.setTextColor(sentTextColor)
+                holder.info.setTextColor(if (isHighContrast) Color.argb(200, 255, 255, 255) else Color.argb(200, 0, 0, 0))
             } else {
-                params.startToStart = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
-                params.endToEnd = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.UNSET
+                params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                params.endToEnd = ConstraintLayout.LayoutParams.UNSET
                 params.horizontalBias = 0.0f
-                holder.container.setBackgroundResource(R.drawable.chat_bubble_received)
+                holder.container.setBackgroundResource(colors.statusBoxRes)
                 
-                val colors = ThemeUtils.getThemeColors(currentTheme)
                 val receivedColor = colors.primary
-                
                 holder.text.setTextColor(receivedColor)
                 holder.audioIcon.setTextColor(receivedColor)
-                
-                val infoColor = Color.argb(
-                    (0.4 * 255).toInt(),
-                    Color.red(receivedColor),
-                    Color.green(receivedColor),
-                    Color.blue(receivedColor)
-                )
-                holder.info.setTextColor(infoColor)
+                holder.info.setTextColor(colors.dim)
             }
             holder.container.layoutParams = params
             

@@ -1,0 +1,12 @@
+R_DEF: Internal format may change without notice
+local
+color node_accent
+color node_bg
+color node_primary
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+font pixelfont
+mipmap ic_launcher
+string app_name
+style Theme.BruceRemote
+xml device_filter

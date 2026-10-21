@@ -3088,6 +3088,7 @@ drawable ic_help
 drawable ic_keyboard_black_24dp
 drawable ic_launcher
 drawable ic_lock
+drawable ic_lock_open
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3102,6 +3103,7 @@ drawable ic_mtrl_chip_close_circle
 drawable ic_offline
 drawable ic_online
 drawable ic_pager
+drawable ic_pbj
 drawable ic_qr
 drawable ic_search_black_24
 drawable ic_settings
@@ -3199,6 +3201,9 @@ drawable osm_ic_center_map
 drawable osm_ic_follow_me
 drawable osm_ic_follow_me_on
 drawable osm_ic_ic_map_ortho
+drawable pbj_logo
+drawable pbj_logo_dark
+drawable pbjlogo
 drawable person
 drawable previous
 drawable round_navigation_white_48
@@ -3226,6 +3231,7 @@ drawable tv_pulsate_bg
 drawable twotone_navigation_black_48
 drawable zoom_in
 drawable zoom_out
+font pixelfont
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3368,10 +3374,12 @@ id btnExt
 id btnGenerateIr
 id btnGlobeListTop
 id btnKillswitch
+id btnLockRadar
 id btnMinus
 id btnMultiply
 id btnOpenFile
 id btnPager
+id btnPbj
 id btnPercent
 id btnPickFile
 id btnPlus
@@ -4475,6 +4483,7 @@ string item_view_role_description
 string label_author
 string label_core_version
 string label_development
+string lock_radar
 string m3_exceed_max_badge_text_suffix
 string m3_ref_typeface_brand_medium
 string m3_ref_typeface_brand_regular
@@ -4647,6 +4656,8 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string pbj_app_name
+string pbj_tools
 string public_transport
 string qr_header_title
 string qr_tools
@@ -4678,9 +4689,11 @@ string tab_send
 string template_percent
 string terminal_btn_abort
 string terminal_btn_back
+string terminal_btn_bruce_module
 string terminal_btn_connect
 string terminal_btn_flipper
 string terminal_btn_logout
+string terminal_btn_mult1pass
 string terminal_btn_uplink
 string terminal_external_node_title
 string terminal_host_hint
@@ -5993,7 +6006,10 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+xml app_usb_device_filter
+xml bruce_device_filter
 xml device_filter
 xml file_paths
+xml pbj_device_filter
 xml qr_file_paths
 xml usb_device_filter

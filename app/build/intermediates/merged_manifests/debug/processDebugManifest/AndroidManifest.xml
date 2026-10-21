@@ -107,6 +107,7 @@
         <activity
             android:name="com.radar.blewifi.CalculatorActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.BLEWifiRadar.Fullscreen" >
             <intent-filter>
@@ -114,6 +115,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/app_usb_device_filter" />
         </activity>
         <activity
             android:name="com.radar.blewifi.SplashActivity"
@@ -171,10 +179,35 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.BLEWifiRadar" />
         <activity
+            android:name="com.radar.blewifi.masdr.SdrRemoteActivity"
+            android:exported="false"
+            android:label="MOSTLY-A-SDR"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.bruceremote.app.BruceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
+            android:exported="true"
+            android:label="MULT1PASS"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar" >
+        </activity>
+        <activity
             android:name="com.radar.blewifi.qr.ui.QrActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.BLEWifiRadar.Fullscreen" />
+        <activity
+            android:name="com.radar.blewifi.pbj.PbjActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
+            android:exported="true"
+            android:label="@string/pbj_app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BLEWifiRadar" >
+        </activity>
         <activity
             android:name="com.radar.blewifi.drone.DroneActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -182,15 +215,6 @@
             android:label="@string/drone_app_name"
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor" >
-
-            <!-- Auto-launch when an RTL-SDR dongle is connected -->
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/usb_device_filter" />
         </activity>
 
         <provider

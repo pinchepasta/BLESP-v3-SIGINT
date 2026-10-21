@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "de.mostlyasdr.neonremote.app-debug-31:/drawable_ic_launcher.xml.flat",
+        "source": "de.mostlyasdr.neonremote.app-main-33:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "de.mostlyasdr.neonremote.app-debug-31:/xml_network_security_config.xml.flat",
+        "source": "de.mostlyasdr.neonremote.app-main-33:/xml/network_security_config.xml"
+    }
+]

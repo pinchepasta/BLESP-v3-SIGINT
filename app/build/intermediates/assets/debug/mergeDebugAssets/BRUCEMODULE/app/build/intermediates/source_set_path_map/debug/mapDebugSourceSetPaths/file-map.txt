@@ -1,0 +1,50 @@
+com.bruceremote.app-core-1.13.1-0 /Users/feinlabsfilms/.gradle/caches/transforms-4/0a1fa8a95530696a8d735173f12296f5/transformed/core-1.13.1/res
+com.bruceremote.app-emoji2-1.3.0-1 /Users/feinlabsfilms/.gradle/caches/transforms-4/286521fd53d59a27a5041591217b530d/transformed/emoji2-1.3.0/res
+com.bruceremote.app-lifecycle-viewmodel-ktx-2.8.4-2 /Users/feinlabsfilms/.gradle/caches/transforms-4/306f2e29ca774d01d6f66a23689a0d82/transformed/lifecycle-viewmodel-ktx-2.8.4/res
+com.bruceremote.app-activity-1.9.1-3 /Users/feinlabsfilms/.gradle/caches/transforms-4/359621610ef3e853d4228a85ffad55a7/transformed/activity-1.9.1/res
+com.bruceremote.app-ui-geometry-release-4 /Users/feinlabsfilms/.gradle/caches/transforms-4/387b97bd7397c14b252d717df0e17de5/transformed/ui-geometry-release/res
+com.bruceremote.app-material-release-5 /Users/feinlabsfilms/.gradle/caches/transforms-4/38ff94e5f43f2e3b2b66aec7bf20634d/transformed/material-release/res
+com.bruceremote.app-foundation-release-6 /Users/feinlabsfilms/.gradle/caches/transforms-4/3b7729bc9f9a7465d8418f7e1d33b1ca/transformed/foundation-release/res
+com.bruceremote.app-activity-compose-1.9.1-7 /Users/feinlabsfilms/.gradle/caches/transforms-4/3e724f00186e2904eb935da28d690c5c/transformed/activity-compose-1.9.1/res
+com.bruceremote.app-savedstate-1.2.1-8 /Users/feinlabsfilms/.gradle/caches/transforms-4/4049b1c8f045203f76584075f3a4d0d5/transformed/savedstate-1.2.1/res
+com.bruceremote.app-lifecycle-runtime-release-9 /Users/feinlabsfilms/.gradle/caches/transforms-4/4a0eb7c8058dcc53776b39e7dda7aaa4/transformed/lifecycle-runtime-release/res
+com.bruceremote.app-ui-tooling-release-10 /Users/feinlabsfilms/.gradle/caches/transforms-4/5156d51180156060ab26a8b9c9c9b302/transformed/ui-tooling-release/res
+com.bruceremote.app-lifecycle-process-2.8.4-11 /Users/feinlabsfilms/.gradle/caches/transforms-4/55333de626e86a064ede9c98cf88e8f7/transformed/lifecycle-process-2.8.4/res
+com.bruceremote.app-customview-poolingcontainer-1.0.0-12 /Users/feinlabsfilms/.gradle/caches/transforms-4/57cdce4073a294d1911d73279adb9635/transformed/customview-poolingcontainer-1.0.0/res
+com.bruceremote.app-material3-release-13 /Users/feinlabsfilms/.gradle/caches/transforms-4/58c8b5479ee43f72ba4ee35983547ef0/transformed/material3-release/res
+com.bruceremote.app-lifecycle-runtime-ktx-release-14 /Users/feinlabsfilms/.gradle/caches/transforms-4/5a5da097283f93bf0440bafb5e0567d5/transformed/lifecycle-runtime-ktx-release/res
+com.bruceremote.app-startup-runtime-1.1.1-15 /Users/feinlabsfilms/.gradle/caches/transforms-4/5a615b6ec0118384655de2ed8cca5c3b/transformed/startup-runtime-1.1.1/res
+com.bruceremote.app-lifecycle-viewmodel-release-16 /Users/feinlabsfilms/.gradle/caches/transforms-4/5b02d3a514dd173e8e0a31cf8f700bef/transformed/lifecycle-viewmodel-release/res
+com.bruceremote.app-material-icons-extended-release-17 /Users/feinlabsfilms/.gradle/caches/transforms-4/600c804ed3ca7c30dc605143f6461b4c/transformed/material-icons-extended-release/res
+com.bruceremote.app-ui-tooling-data-release-18 /Users/feinlabsfilms/.gradle/caches/transforms-4/666609ff8fb15eeda3acd1936d7dd750/transformed/ui-tooling-data-release/res
+com.bruceremote.app-profileinstaller-1.3.1-19 /Users/feinlabsfilms/.gradle/caches/transforms-4/675e5d0ec0a4d050bca367f7b11a7e7e/transformed/profileinstaller-1.3.1/res
+com.bruceremote.app-ui-unit-release-20 /Users/feinlabsfilms/.gradle/caches/transforms-4/6790a0f84c1de084b38f2d0b96861f49/transformed/ui-unit-release/res
+com.bruceremote.app-ui-graphics-release-21 /Users/feinlabsfilms/.gradle/caches/transforms-4/6d660c5f0528c7d74e48afdab7a2de29/transformed/ui-graphics-release/res
+com.bruceremote.app-ui-util-release-22 /Users/feinlabsfilms/.gradle/caches/transforms-4/72744ceb0183800e76e736580e3a39bc/transformed/ui-util-release/res
+com.bruceremote.app-core-runtime-2.2.0-23 /Users/feinlabsfilms/.gradle/caches/transforms-4/738fa6ce6b400204cceb69e5e7442e0e/transformed/core-runtime-2.2.0/res
+com.bruceremote.app-ui-text-release-24 /Users/feinlabsfilms/.gradle/caches/transforms-4/779e2dd96573d1321ab048b75ec93aaf/transformed/ui-text-release/res
+com.bruceremote.app-animation-core-release-25 /Users/feinlabsfilms/.gradle/caches/transforms-4/82c4f7d2c3478e9bc499df3d2423c847/transformed/animation-core-release/res
+com.bruceremote.app-activity-ktx-1.9.1-26 /Users/feinlabsfilms/.gradle/caches/transforms-4/85cc46b5838f3d0c75afb5d448c9c990/transformed/activity-ktx-1.9.1/res
+com.bruceremote.app-savedstate-ktx-1.2.1-27 /Users/feinlabsfilms/.gradle/caches/transforms-4/8bfe14266f9d80e2405c37c0565a7257/transformed/savedstate-ktx-1.2.1/res
+com.bruceremote.app-runtime-release-28 /Users/feinlabsfilms/.gradle/caches/transforms-4/903f1d8a1aae6538ad3856392987027e/transformed/runtime-release/res
+com.bruceremote.app-runtime-saveable-release-29 /Users/feinlabsfilms/.gradle/caches/transforms-4/951797bcd6b6116b2db25d7955e151c0/transformed/runtime-saveable-release/res
+com.bruceremote.app-lifecycle-livedata-core-2.8.4-30 /Users/feinlabsfilms/.gradle/caches/transforms-4/9b6361924819bc3b03a0a42a9d5ad56e/transformed/lifecycle-livedata-core-2.8.4/res
+com.bruceremote.app-lifecycle-viewmodel-compose-release-31 /Users/feinlabsfilms/.gradle/caches/transforms-4/a40c6775185333ccc64e53494940b656/transformed/lifecycle-viewmodel-compose-release/res
+com.bruceremote.app-animation-release-32 /Users/feinlabsfilms/.gradle/caches/transforms-4/a7b8554b5d187d755a5a08b900c2ed74/transformed/animation-release/res
+com.bruceremote.app-lifecycle-runtime-compose-release-33 /Users/feinlabsfilms/.gradle/caches/transforms-4/be4c5030ce3359fceef602a063ecb359/transformed/lifecycle-runtime-compose-release/res
+com.bruceremote.app-graphics-path-1.0.1-34 /Users/feinlabsfilms/.gradle/caches/transforms-4/c07c1451d5e966a373b66c2d3c534e2d/transformed/graphics-path-1.0.1/res
+com.bruceremote.app-annotation-experimental-1.4.0-35 /Users/feinlabsfilms/.gradle/caches/transforms-4/c23254d00052a448ef9458d2ae5d45b7/transformed/annotation-experimental-1.4.0/res
+com.bruceremote.app-ui-release-36 /Users/feinlabsfilms/.gradle/caches/transforms-4/ca095c5657f47ec32ebd2f3243ac0dcc/transformed/ui-release/res
+com.bruceremote.app-ui-tooling-preview-release-37 /Users/feinlabsfilms/.gradle/caches/transforms-4/ca6e3ac03ba0c4040ec467cdfb7239b1/transformed/ui-tooling-preview-release/res
+com.bruceremote.app-material-icons-core-release-38 /Users/feinlabsfilms/.gradle/caches/transforms-4/d4eba1d8f0f14662dd96eef25c809e52/transformed/material-icons-core-release/res
+com.bruceremote.app-material-ripple-release-39 /Users/feinlabsfilms/.gradle/caches/transforms-4/daf604bba1dab87b71ae0c2d8e78fd49/transformed/material-ripple-release/res
+com.bruceremote.app-foundation-layout-release-40 /Users/feinlabsfilms/.gradle/caches/transforms-4/ed7ae5ae6603ba86ce3ab92d96ac169c/transformed/foundation-layout-release/res
+com.bruceremote.app-core-ktx-1.13.1-41 /Users/feinlabsfilms/.gradle/caches/transforms-4/f40b8a2fc10329b06f5e105202320b5f/transformed/core-ktx-1.13.1/res
+com.bruceremote.app-lifecycle-viewmodel-savedstate-2.8.4-42 /Users/feinlabsfilms/.gradle/caches/transforms-4/f79f4f23bda5dd7f7347d69584068f52/transformed/lifecycle-viewmodel-savedstate-2.8.4/res
+com.bruceremote.app-pngs-43 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/build/generated/res/pngs/debug
+com.bruceremote.app-resValues-44 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/build/generated/res/resValues/debug
+com.bruceremote.app-packageDebugResources-45 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.bruceremote.app-packageDebugResources-46 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.bruceremote.app-debug-47 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.bruceremote.app-debug-48 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/debug/res
+com.bruceremote.app-main-49 /Volumes/SSD EXT - Data/Previous Content/Macbook Pro M1 Files/Applications SSD/BruceRemoteControl/app/src/main/res

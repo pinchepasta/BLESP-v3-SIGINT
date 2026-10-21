@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-debug-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-debug-47:/xml_device_filter.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-main-49:/xml/device_filter.xml"
+    },
+    {
+        "merged": "com.bruceremote.app-debug-47:/font_pixelfont.ttf.flat",
+        "source": "com.bruceremote.app-main-49:/font/pixelfont.ttf"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-debug-47:/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-main-49:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-debug-47:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/Users/feinlabsfilms/.gradle/daemon/8.7/com.bruceremote.app-main-49:/drawable/ic_launcher_foreground.xml"
+    }
+]

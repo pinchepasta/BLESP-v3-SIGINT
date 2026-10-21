@@ -117,10 +117,16 @@ private fun JammerTheme(theme: AppTheme, content: @Composable () -> Unit) {
         colorScheme = darkColorScheme(
             background = theme.bg,
             surface = theme.panel,
-            primary = theme.acc,
+            surfaceVariant = theme.panel2,
+            primary = theme.line,
             onPrimary = theme.fg,
+            secondary = theme.acc,
+            onSecondary = theme.fg,
+            tertiary = theme.acc,
             onBackground = theme.fg,
-            onSurface = theme.fg
+            onSurface = theme.fg,
+            onSurfaceVariant = theme.dim,
+            outline = theme.line
         ),
         content = content
     )

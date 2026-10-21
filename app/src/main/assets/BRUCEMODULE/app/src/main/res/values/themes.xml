@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.BruceRemote" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/node_bg</item>
+        <item name="android:statusBarColor">@color/node_bg</item>
+        <item name="android:navigationBarColor">@color/node_bg</item>
+    </style>
+</resources>

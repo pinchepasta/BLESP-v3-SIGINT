@@ -3,7 +3,7 @@
     <string name="app_name">[ BLESP v3 ]</string>
     <string name="about_title">LICENSE &amp; CREDENTIALS</string>
     <string name="label_core_version">CORE VERSION</string>
-    <string name="core_version">3.4 </string>
+    <string name="core_version">3.5.4 // Public Release </string>
     <string name="label_author">AUTHOR</string>
     <string name="author_name">Chris Edgar</string>
     <string name="label_development">DEVELOPMENT</string>
@@ -14,6 +14,8 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="esl_tag_tools">ESL Tag Tools</string>
     <string name="qr_tools">QR Tools</string>
+    <string name="pbj_tools">PBJ</string>
+    <string name="pbj_app_name">PBJ</string>
 
     <!-- UAV Signal Intelligence Strings -->
     <string name="drone_app_name">UAV Signal Intelligence</string>
@@ -79,14 +81,9 @@
     <string name="terminal_key_label">KEY: %s</string>
     <string name="terminal_external_node_title">EXTERNAL NODE</string>
     <string name="terminal_target_ip_label">TARGET IP ADDRESS:</string>
-    <string name="terminal_btn_uplink">UPLINK</string>
+    <string name="terminal_btn_bruce_module">MULT1PASS</string>
+    <string name="terminal_btn_uplink">BRUCE WEB</string>
     <string name="terminal_btn_flipper">MOSTLY-A-FLIPPER</string>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <string name="terminal_btn_mult1pass">MOSTLY-A-SDR</string>
-=======
->>>>>>> parent of 1ed2e71 (v3.5.3)
     <string name="lock_radar">Lock Radar Orientation</string>
-=======
->>>>>>> parent of 5dc96b0 (v3.5.3)
 </resources>
