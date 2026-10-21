@@ -94,7 +94,7 @@ The little icon right next to the settings icon opens the networks statistics sc
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n4.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%">
 
 <br>
-Yes of course it can, for example to the <a href="https://github.com/pinchepasta/PBJ3000-ESP32-Jammer" target="_blank">PBJ3000 module</a> as in the screenshots above, these show the PBJ3000 Jammer Module's menu.
+Yes of course it can, the ssh login is used for all kinds of unix or linux server, and devices like a raspberry pi or jetson. But there's many more, for example the <a href="https://github.com/pinchepasta/PBJ3000-ESP32-Jammer" target="_blank">PBJ3000 module</a> as in the screenshots above, these show the PBJ3000 Jammer Module's menu.
 <br>
 <br>
 And of course there's a remote interface for mostly-a-Flipper and mostly-a-SDR devices, and Bruce devices as well:
