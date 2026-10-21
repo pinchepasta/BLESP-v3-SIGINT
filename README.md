@@ -149,11 +149,11 @@ And that's for a reason, cause it contains dangerous stuff like an ADS-B spoofer
 <h2>And that's what I'm currently working on:</h2>
 
 - Write ESL Shelf Tags via NFC/Bluetooth
-- ADS-B Transmitter integration
-- DeAuth Attack Detector
+- <s>ADS-B Transmitter integration</s>
+- <s>DeAuth Attack Detector</s>
 - Better Messenger UI
 - LoRa integration
-- Data Transfer through QR
+- <s>Data Transfer through QR</s>
 
   
 <br>
