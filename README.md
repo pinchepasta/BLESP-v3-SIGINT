@@ -94,7 +94,7 @@ The little icon right next to the settings icon opens the networks statistics sc
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n4.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%">
 
 <br>
-Yes of course it can, for example to the <a href="https://github.com/pinchepasta/PBJ3000-ESP32-Jammer">PBJ3000 module</a> like in the screenshots above, they show the PBJ3000 Jammer Module menu.
+Yes of course it can, for example to the <a href="https://github.com/pinchepasta/PBJ3000-ESP32-Jammer" target="blank">PBJ3000 module</a> like in the screenshots above, they show the PBJ3000 Jammer Module menu.
 <br>
 <br>
 And of course there's a remote interface for mostly-a-Flipper and mostly-a-SDR devices, and Bruce devices as well:
