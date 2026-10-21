@@ -136,6 +136,12 @@ Yes! Imagine you need your teammate to have a file but you know you're being wat
 
 <br>
 <br>
+<h2>Is there a non-public version for official use only?:</h2>
+
+Yes there is!
+And that's for a reason, cause it contains dangerous stuff like an ADS-B spoofer which could cause a whole lot of chaos, it's basically acting as a plane transponder everyone can receive. Or a rolling code bypass or Rolljam system combined with an ai coordinated attack on any kinda protocol or lock (I host the ai, so there's a very limited amount of clients possible right now), means you can pass any gate without much trouble, and open a good amount of modern cars.
+<br>
+<br>
 
 <h2>And that's what I'm currently working on:</h2>
 
