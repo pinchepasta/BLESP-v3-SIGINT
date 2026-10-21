@@ -86,12 +86,20 @@ The little icon right next to the settings icon opens the networks statistics sc
 
 <br>
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ext.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n7.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n4.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%">
+
+And of course there's a remote interface for mostly-a-Flipper and mostly-a-SDR devices:
+
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n10.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%">
 
 By clicking on the [ext] button, you can initiate a connection to a device like mostly-a-Flipper, Bruce, Flipper Zero, Cardputer ADV and so on, wirelessly. Now you can forward SubGHz or Infrared payloads in .sub and .ir format, for example if you want to flash an ESL Tag via .ir payload.
 
+And now you got even more power in one control center, BLESP now connects to a standalone Radio Jammer on ESP32-S3 base, no additional hardware needed, just click the PBJ icon and you're in for a nice jam session! Or you click the mostly-a-SDR button in [ext] to connect your BLESP to a raspberry pi with mostly-a-SDR software and it's api, you can do a whole lot of cool RF stuff, like DVB-T transmission, or transmitting flipper zero compatible .sub files. In combination with an RTLSDR you can use it as a relay or replay station too, you can even hijack microphones and transmit your own voice through a PA.
+
 If you need more power, or a very specific function, just click [ssh], it starts a terminal window and lets you ssh into your favorite hacking devices like a Raspberry Pi or just a plain old Linux computer, for example to jam a radio signal on 433.92MHz via RPITX, or you include openclaw for automated hacking tasks.
-Btw, I'm already working on a deeper integration of agents like hermes or openclaw.
+Btw, I'm already working on a deeper integration of agents like hermes or openclaw. 
 
 <br>
 <br>
