@@ -39,7 +39,8 @@ ___
 
 <h2>What does it detect/manipulate?:</h2>
 
-2.4GHz and 5GHz Wifi, Bluetooth and BLE, ZigBee and Matter, Cars, Drones, RC and Nintendo RC, IMSI Catchers, ADS-B Planes, 433MHz/315MHz Key fobs, Garage doors, Rolling code in general, CCTV / Surveillance cameras, Computers, Headphones, Smartphones and last but not least: Rockets and Military Drones ( it can display their video feed with additional rtlsdr/mostly-a-sdr component)
+2.4GHz and 5GHz Wifi, Bluetooth and BLE, ZigBee and Matter, Cars, Drones, RC and Nintendo RC, IMSI Catchers, ADS-B Planes, 433MHz/315MHz Key fobs, Garage doors, Rolling code in general, CCTV / Surveillance cameras, Computers, Headphones, Smartphones and last but not least: Rockets and Military Drones ( it can display their video feed with additional rtlsdr/mostly-a-sdr component). The device basically is able to see, hear and manipulate pretty much most signals and hardware around you.
+With an added mostly-a-Flipper device or a raspberry pi for example you gain rfid/nfc capabilities, but also a UART shell and as many probe hooks as you like via gpio, thus making the system a suitable tool for hardware hackers and engineers too.
 
 <br>
 <br>
