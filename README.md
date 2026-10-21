@@ -86,7 +86,7 @@ The little icon right next to the settings icon opens the networks statistics sc
 
 <br>
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n7.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n14.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/ssh.jpg" alt="BLESP v3" width="25%" height="25%"> <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/booklet/dvice.jpg" alt="BLESP v3" width="45%" height="45%">  
 
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n3.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n4.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n6.jpg" alt="BLESP v3" width="25%" height="25%">
 
