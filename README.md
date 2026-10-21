@@ -92,7 +92,7 @@ The little icon right next to the settings icon opens the networks statistics sc
 
 And of course there's a remote interface for mostly-a-Flipper and mostly-a-SDR devices:
 
-<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n11.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%">
+<img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n11.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n9.jpg" alt="BLESP v3" width="25%" height="25%"><img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/n12.jpg" alt="BLESP v3" width="25%" height="25%">
 
 By clicking on the [ext] button, you can initiate a connection to a device like mostly-a-Flipper, Bruce, Flipper Zero, Cardputer ADV and so on, wirelessly. Now you can forward SubGHz or Infrared payloads in .sub and .ir format, for example if you want to flash an ESL Tag via .ir payload.
 
