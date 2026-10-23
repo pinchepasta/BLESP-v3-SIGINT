@@ -149,6 +149,11 @@ And that's for a reason, cause it contains dangerous stuff like an ADS-B spoofer
 <h2>And that's the ADS-B Spoofer:</h2>
 <img src="https://github.com/pinchepasta/BLESP-v3-SIGINT/blob/main/spf.jpg" alt="BLESP v3" width="25%" height="25%">
 <br>
+<h2>Can I have it?</h2>
+
+<b>-> Text me to get more insight or eventually a link <-</b>
+<h2></h2></h2Y>
+<br>
 <br>
 
 <h2>And that's what I'm currently working on:</h2>
